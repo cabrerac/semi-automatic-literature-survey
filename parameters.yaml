@@ -1,0 +1,39 @@
+# Domains to retrieve in the search
+domains:
+- autonomous vehicle
+# Technology of interest applied to domains
+interests:
+  - machine learning
+  - artificial intelligence
+# Keywords of such applications
+keywords:
+  - deployment
+  - deployed
+  - real experiment
+  - real implementation
+# Search fields
+fields:
+  - title
+  - abstract
+# Domains and interests can have synonyms
+autonomous vehicle:
+  - self-driving vehicle
+  - self-driving vehicles
+  - self-driving car
+  - self-driving cars
+  - autonomous car
+  - autonomous cars
+  - driverless car
+  - driverless cars
+  - driverless vehicle
+  - driverless vehicles
+  - unmanned car
+  - unmanned cars
+  - unmanned vehicle
+  - unmanned vehicles
+  - unmanned aerial vehicle
+  - unmanned aerial vehicles
+machine learning:
+  - ML
+artificial intelligence:
+  - AI
