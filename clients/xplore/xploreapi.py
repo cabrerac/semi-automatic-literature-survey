@@ -406,7 +406,7 @@ class XPLORE:
         # boolean query
         elif (self.usingBoolean):
 
-             url += '&querytext=(' + urllib.quote_plus(self.parameters['boolean_text']) + ')'
+             url += '&querytext=(' + urllib.parse.quote_plus(self.parameters['boolean_text']) + ')'
 
         else:
 
@@ -414,12 +414,12 @@ class XPLORE:
 
                 if (self.usingFacet and self.facetApplied is False):
 
-                    url += '&querytext=' + urllib.quote_plus(self.parameters[key]) + '&facet=' + key
+                    url += '&querytext=' + urllib.parse.quote_plus(self.parameters[key]) + '&facet=' + key
                     self.facetApplied = True
 
                 else:
 
-                    url += '&' + key + '=' + urllib.quote_plus(self.parameters[key])
+                    url += '&' + key + '=' + urllib.parse.quote_plus(self.parameters[key])
 
 
         # add in filters
