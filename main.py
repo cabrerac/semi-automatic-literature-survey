@@ -1,5 +1,6 @@
 from clients import arxiv
 from clients import ieeexplore
+from clients import springer
 import yaml
 
 with open(r'parameters.yaml') as file:
@@ -19,8 +20,12 @@ for interest in interests:
 
 #ieee_explore_papers = ieeexplore.get_papers(domains, interests, keywords, synonyms, fields, types)
 #print(ieee_explore_papers)
+springer_papers = springer.get_papers(domains, interests, keywords, synonyms, fields, types)
+print(springer_papers)
 #arxiv_papers = arxiv.get_papers(domains, interests, keywords, synonyms, fields, types)
 #print(arxiv_papers)
+
+papers = {}
 
 
 

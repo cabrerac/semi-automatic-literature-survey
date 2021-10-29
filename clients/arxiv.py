@@ -5,7 +5,7 @@ api_url = 'http://export.arxiv.org/api/'
 arxiv_fields = {'title': 'ti', 'abstract': 'abs'}
 
 
-def get_papers(domains, interests, keywords, synonyms, fields):
+def get_papers(domains, interests, keywords, synonyms, fields, types):
     a_fields = []
     for field in fields:
         a_field = arxiv_fields[field]

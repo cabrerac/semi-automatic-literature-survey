@@ -1,5 +1,4 @@
 import time
-
 from .xplore.xploreapi import XPLORE
 import json
 import pandas as pd
@@ -8,6 +7,7 @@ api_access = 'xmknyxp8j436aun5c5tj7g75'
 ieee_fields = {'title': 'article_title', 'abstract': 'abstract'}
 ieee_types = {'books': 'Books', 'courses':'Courses', 'conferences': 'Conferences',
               'early access': 'Early Access', 'journals': 'Journals', 'standards': 'Standards'}
+
 
 def get_papers(domains, interests, keywords, synonyms, fields, types):
     i_fields = []
