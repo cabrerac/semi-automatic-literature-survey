@@ -78,6 +78,10 @@ class Generic:
                     #queries.append(query)
         return queries
 
+    def save(self, file_name, papers):
+        with open('./papers/' + file_name, 'a', newline='', encoding='utf-8') as f:
+            papers.to_csv(f, encoding='utf-8', index=False, header=f.tell() == 0)
+
     def filterByField(self, papers, field, keywords):
         filtered_papers = []
         for keyword in keywords:

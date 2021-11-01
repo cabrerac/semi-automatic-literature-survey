@@ -13,47 +13,36 @@ database = 'springer'
 client = Generic()
 
 
-def get_papers(domains, interests, keywords, synonyms, fields, types, retrieve):
+def get_papers(domain, interests, keywords, synonyms, fields, types):
     c_fields = []
     papers = []
     for field in fields:
         if field in client_fields:
             c_fields.append(client_fields[field])
-    parameters = {'domains': domains, 'synonyms': synonyms,
+    parameters = {'domains': [domain], 'interests': interests, 'synonyms': synonyms,
                   'fields': c_fields, 'types': types}
     req = create_request(parameters)
     raw_papers = client.request(req, 'get', {})
-    stats, total, papers = process_raw_papers(papers, raw_papers, retrieve)
-    if total > 100 and retrieve:
-        times = int(total/100) - 1
-        mod = int(total) % 100
+    total, papers = process_raw_papers(raw_papers)
+    file_name = domain.lower().replace(' ', '_') + '_' + database + '.csv'
+    client.save(file_name, papers)
+    print(str(total))
+    if total > max_papers:
+        times = int(total/max_papers) - 1
+        mod = int(total) % max_papers
         if mod > 0:
             times = times + 1
         for t in range(1, times + 1):
             print(str(t))
             time.sleep(5)
             global start
-            start = (max_papers * t) + 1
+            start = (max_papers * t)
             req = create_request(parameters)
             raw_papers = client.request(req, 'get', {})
             if raw_papers != {}:
-                stats, total, papers = process_raw_papers(papers, raw_papers, retrieve)
-    if retrieve:
-        filters_interest = []
-        for interest in interests:
-            filters_interest.append(interest)
-            synonyms_interest = synonyms[interest]
-            for synonym in synonyms_interest:
-                filters_interest.append(synonym)
-        papers = client.filterByField(papers, 'abstract', filters_interest)
-        papers = client.filterByField(papers, 'abstract', keywords)
-        stats[2] = len(papers.index)
-        papers = papers.drop(columns=['creators', 'bookEditors', 'openaccess', 'printIsbn', 'electronicIsbn',
-                                      'isbn', 'genre', 'copyright', 'conferenceInfo', 'issn', 'eIssn', 'volume',
-                                      'number', 'issueType', 'topicalCollection', 'startingPage', 'endingPage',
-                                      'journalId', 'printDate', 'coverDate', 'keyword'])
-    stats.append(domains[0])
-    return stats, papers
+                total, papers = process_raw_papers(raw_papers)
+                file_name = domain.lower().replace(' ', '_') + '_' + database + '.csv'
+                client.save(file_name, papers)
 
 
 def create_request(parameters):
@@ -64,7 +53,8 @@ def create_request(parameters):
     return req
 
 
-def process_raw_papers(papers, raw_papers, retrieve):
+def process_raw_papers(raw_papers):
+    papers = []
     json_results = json.loads(raw_papers)
     total = int(json_results['result'][0]['total'])
     if 'records' in json_results:
@@ -73,6 +63,16 @@ def process_raw_papers(papers, raw_papers, retrieve):
             papers = df
         else:
             papers = papers.append(df)
+    papers = papers[papers['language'].str.contains('en')]
+    urls = []
+    for record in papers['url']:
+        url = record[0]['value']
+        urls.append(url)
+
+    papers = papers.drop(columns=['url', 'creators', 'bookEditors', 'openaccess', 'printIsbn', 'electronicIsbn',
+                        'isbn', 'genre', 'copyright', 'conferenceInfo', 'issn', 'eIssn', 'volume', 'publicationType',
+                        'number', 'issueType', 'topicalCollection', 'startingPage', 'endingPage', 'language',
+                        'journalId', 'printDate', 'coverDate', 'keyword'])
+    papers['url'] = urls
     papers['database'] = database
-    stats = [database, retrieve, int(total)]
-    return stats, total, papers
+    return total, papers

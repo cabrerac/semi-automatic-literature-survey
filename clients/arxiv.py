@@ -9,21 +9,19 @@ database = 'arxiv'
 client = Generic()
 
 
-def get_papers(domains, interests, keywords, synonyms, fields, types, retrieve):
+def get_papers(domain, interests, keywords, synonyms, fields, types):
     c_fields = []
     for field in fields:
         if field in client_fields:
             c_fields.append(client_fields[field])
-    parameters = {'domains': domains, 'interests': interests, 'keywords': keywords, 'synonyms': synonyms,
+    parameters = {'domains': [domain], 'interests': interests, 'keywords': keywords, 'synonyms': synonyms,
                   'fields': c_fields, 'types': types}
     req = create_request(parameters)
     raw_papers = client.request(req, 'get', {})
-    stats, papers = process_raw_papers(raw_papers, retrieve)
-    #papers = client.filterByField(papers, 'summary', keywords)
-    if retrieve:
-        stats[2] = len(papers.index)
-    stats.append(domains[0])
-    return stats, papers
+    papers = process_raw_papers(raw_papers)
+    papers = papers.drop(columns=['author', 'comment', 'link', 'primary_category', 'category', 'doi', 'journal_ref'])
+    file_name = domain.lower().replace(' ', '_') + '_' + database + '.csv'
+    client.save(file_name, papers)
 
 
 def create_request(parameters):
@@ -33,12 +31,13 @@ def create_request(parameters):
     return req
 
 
-def process_raw_papers(raw_papers, retrieve):
-    papers = []
-    feed = feedparser.parse(raw_papers)
-    count = feed.feed.opensearch_totalresults
-    stats = [database, retrieve, int(count)]
-    if retrieve:
-        papers = pd.read_xml(raw_papers, xpath='//feed:entry', namespaces={"feed": "http://www.w3.org/2005/Atom"})
-        papers['database'] = database
-    return stats, papers
+def process_raw_papers(raw_papers):
+    papers = pd.read_xml(raw_papers, xpath='//feed:entry', namespaces={"feed": "http://www.w3.org/2005/Atom"})
+    papers['database'] = database
+    #feed = feedparser.parse(raw_papers)
+    #count = feed.feed.opensearch_totalresults
+    #stats = [database, retrieve, int(count)]
+    #if retrieve:
+    #    papers = pd.read_xml(raw_papers, xpath='//feed:entry', namespaces={"feed": "http://www.w3.org/2005/Atom"})
+    #    papers['database'] = database
+    return papers
