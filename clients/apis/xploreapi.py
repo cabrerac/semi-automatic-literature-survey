@@ -366,10 +366,13 @@ class XPLORE:
         
             if self.queryProvided is False:
                 print("No search criteria provided")
-        
-            data = self.queryAPI(str)
-            formattedData = self.formatData(data)
-            return formattedData
+            data = {}
+            try:
+                data = self.queryAPI(str)
+                data = self.formatData(data)
+            except urllib.error.HTTPError:
+                print('request exception')
+            return data
 
 
     # creates the URL for the Open Access Document API call
