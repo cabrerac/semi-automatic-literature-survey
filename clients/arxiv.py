@@ -1,11 +1,13 @@
 import pandas as pd
-import feedparser
 from .apis.generic import Generic
+from analysis import util
+
 
 api_url = 'http://export.arxiv.org/api/query?search_query='
 max = 5000
 client_fields = {'title': 'ti', 'abstract': 'abs'}
 database = 'arxiv'
+format = 'utf-8'
 client = Generic()
 
 
@@ -21,7 +23,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types):
     papers = process_raw_papers(raw_papers)
     papers = papers.drop(columns=['author', 'comment', 'link', 'primary_category', 'category', 'doi', 'journal_ref'])
     file_name = domain.lower().replace(' ', '_') + '_' + database + '.csv'
-    client.save(file_name, papers)
+    util.save(file_name, papers, format)
 
 
 def create_request(parameters):
@@ -34,10 +36,4 @@ def create_request(parameters):
 def process_raw_papers(raw_papers):
     papers = pd.read_xml(raw_papers, xpath='//feed:entry', namespaces={"feed": "http://www.w3.org/2005/Atom"})
     papers['database'] = database
-    #feed = feedparser.parse(raw_papers)
-    #count = feed.feed.opensearch_totalresults
-    #stats = [database, retrieve, int(count)]
-    #if retrieve:
-    #    papers = pd.read_xml(raw_papers, xpath='//feed:entry', namespaces={"feed": "http://www.w3.org/2005/Atom"})
-    #    papers['database'] = database
     return papers
