@@ -10,12 +10,12 @@ start = 1
 max_papers = 100
 client_fields = {'title': 'title', 'abstract': 'keyword'}
 database = 'springer'
+format = 'utf-8'
 client = Generic()
 
 
 def get_papers(domain, interests, keywords, synonyms, fields, types):
     c_fields = []
-    papers = []
     for field in fields:
         if field in client_fields:
             c_fields.append(client_fields[field])
@@ -25,7 +25,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types):
     raw_papers = client.request(req, 'get', {})
     total, papers = process_raw_papers(raw_papers)
     file_name = domain.lower().replace(' ', '_') + '_' + database + '.csv'
-    client.save(file_name, papers)
+    util.save(file_name, papers, format)
     print(str(total))
     if total > max_papers:
         times = int(total/max_papers) - 1
@@ -42,7 +42,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types):
             if raw_papers != {}:
                 total, papers = process_raw_papers(raw_papers)
                 file_name = domain.lower().replace(' ', '_') + '_' + database + '.csv'
-                client.save(file_name, papers)
+                util.save(file_name, papers, format)
 
 
 def create_request(parameters):
@@ -67,7 +67,10 @@ def process_raw_papers(raw_papers):
     urls = []
     for record in papers['url']:
         url = record[0]['value']
+        if "[{'snippet-format':" in url:
+            print('here')
         urls.append(url)
+
 
     papers = papers.drop(columns=['url', 'creators', 'bookEditors', 'openaccess', 'printIsbn', 'electronicIsbn',
                         'isbn', 'genre', 'copyright', 'conferenceInfo', 'issn', 'eIssn', 'volume', 'publicationType',
@@ -75,4 +78,10 @@ def process_raw_papers(raw_papers):
                         'journalId', 'printDate', 'coverDate', 'keyword'])
     papers['url'] = urls
     papers['database'] = database
+    papers.drop(papers.index[papers['identifier'] == 'doi:10.1007/978-981-15-6106-1_12'], inplace=True)
+    papers.drop(papers.index[papers['identifier'] == 'doi:10.1007/978-3-030-65729-1_1'], inplace=True)
+    nan_value = float("NaN")
+    papers.replace("", nan_value, inplace=True)
+    papers.dropna(how='all', axis=1, inplace=True)
+    papers.drop(papers.index[papers['abstract'] == ''], inplace=True)
     return total, papers
