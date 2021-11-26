@@ -1,0 +1,1764 @@
+id,updated,published,title,summary,database
+http://arxiv.org/abs/1912.06321v2,2020-08-17T03:26:55Z,2019-12-13T04:29:38Z,"Sim2Real Predictivity: Does Evaluation in Simulation Predict Real-World
+  Performance?","Does progress in simulation translate to progress on robots? If one method
+outperforms another in simulation, how likely is that trend to hold in reality
+on a robot? We examine this question for embodied PointGoal navigation,
+developing engineering tools and a research paradigm for evaluating a simulator
+by its sim2real predictivity. First, we develop Habitat-PyRobot Bridge (HaPy),
+a library for seamless execution of identical code on simulated agents and
+robots, transferring simulation-trained agents to a LoCoBot platform with a
+one-line code change. Second, we investigate the sim2real predictivity of
+Habitat-Sim for PointGoal navigation. We 3D-scan a physical lab space to create
+a virtualized replica, and run parallel tests of 9 different models in reality
+and simulation. We present a new metric called Sim-vs-Real Correlation
+Coefficient (SRCC) to quantify predictivity. We find that SRCC for Habitat as
+used for the CVPR19 challenge is low (0.18 for the success metric), suggesting
+that performance differences in this simulator-based challenge do not persist
+after physical deployment. This gap is largely due to AI agents learning to
+exploit simulator imperfections, abusing collision dynamics to 'slide' along
+walls, leading to shortcuts through otherwise non-navigable space. Naturally,
+such exploits do not work in the real world. Our experiments show that it is
+possible to tune simulation parameters to improve sim2real predictivity (e.g.
+improving $SRCC_{Succ}$ from 0.18 to 0.844), increasing confidence that
+in-simulation comparisons will translate to deployed systems in reality.",arxiv
+http://arxiv.org/abs/2001.05703v1,2020-01-16T09:13:31Z,2020-01-16T09:13:31Z,"A Markerless Deep Learning-based 6 Degrees of Freedom PoseEstimation for
+  with Mobile Robots using RGB Data","Augmented Reality has been subject to various integration efforts within
+industries due to its ability to enhance human machine interaction and
+understanding. Neural networks have achieved remarkable results in areas of
+computer vision, which bear great potential to assist and facilitate an
+enhanced Augmented Reality experience. However, most neural networks are
+computationally intensive and demand huge processing power thus, are not
+suitable for deployment on Augmented Reality devices. In this work we propose a
+method to deploy state of the art neural networks for real time 3D object
+localization on augmented reality devices. As a result, we provide a more
+automated method of calibrating the AR devices with mobile robotic systems. To
+accelerate the calibration process and enhance user experience, we focus on
+fast 2D detection approaches which are extracting the 3D pose of the object
+fast and accurately by using only 2D input. The results are implemented into an
+Augmented Reality application for intuitive robot control and sensor data
+visualization. For the 6D annotation of 2D images, we developed an annotation
+tool, which is, to our knowledge, the first open source tool to be available.
+We achieve feasible results which are generally applicable to any AR device
+thus making this work promising for further research in combining high
+demanding neural networks with Internet of Things devices.",arxiv
+http://arxiv.org/abs/2103.05293v1,2021-03-09T08:38:28Z,2021-03-09T08:38:28Z,"Decentralized Circle Formation Control for Fish-like Robots in the
+  Real-world via Reinforcement Learning","In this paper, the circle formation control problem is addressed for a group
+of cooperative underactuated fish-like robots involving unknown nonlinear
+dynamics and disturbances. Based on the reinforcement learning and cognitive
+consistency theory, we propose a decentralized controller without the knowledge
+of the dynamics of the fish-like robots. The proposed controller can be
+transferred from simulation to reality. It is only trained in our established
+simulation environment, and the trained controller can be deployed to real
+robots without any manual tuning. Simulation results confirm that the proposed
+model-free robust formation control method is scalable with respect to the
+group size of the robots and outperforms other representative RL algorithms.
+Several experiments in the real world verify the effectiveness of our RL-based
+approach for circle formation control.",arxiv
+http://arxiv.org/abs/2012.01356v1,2020-12-02T17:56:44Z,2020-12-02T17:56:44Z,"Coinbot: Intelligent Robotic Coin Bag Manipulation Using Deep
+  Reinforcement Learning And Machine Teaching","Given the laborious difficulty of moving heavy bags of physical currency in
+the cash center of the bank, there is a large demand for training and deploying
+safe autonomous systems capable of conducting such tasks in a collaborative
+workspace. However, the deformable properties of the bag along with the large
+quantity of rigid-body coins contained within it, significantly increases the
+challenges of bag detection, grasping and manipulation by a robotic gripper and
+arm. In this paper, we apply deep reinforcement learning and machine learning
+techniques to the task of controlling a collaborative robot to automate the
+unloading of coin bags from a trolley. To accomplish the task-specific process
+of gripping flexible materials like coin bags where the center of the mass
+changes during manipulation, a special gripper was implemented in simulation
+and designed in physical hardware. Leveraging a depth camera and object
+detection using deep learning, a bag detection and pose estimation has been
+done for choosing the optimal point of grasping. An intelligent approach based
+on deep reinforcement learning has been introduced to propose the best
+configuration of the robot end-effector to maximize successful grasping. A
+boosted motion planning is utilized to increase the speed of motion planning
+during robot operation. Real-world trials with the proposed pipeline have
+demonstrated success rates over 96\% in a real-world setting.",arxiv
+http://arxiv.org/abs/1903.02503v1,2019-03-06T17:24:11Z,2019-03-06T17:24:11Z,The AI Driving Olympics at NeurIPS 2018,"Despite recent breakthroughs, the ability of deep learning and reinforcement
+learning to outperform traditional approaches to control physically embodied
+robotic agents remains largely unproven. To help bridge this gap, we created
+the 'AI Driving Olympics' (AI-DO), a competition with the objective of
+evaluating the state of the art in machine learning and artificial intelligence
+for mobile robotics. Based on the simple and well specified autonomous driving
+and navigation environment called 'Duckietown', AI-DO includes a series of
+tasks of increasing complexity -- from simple lane-following to fleet
+management. For each task, we provide tools for competitors to use in the form
+of simulators, logs, code templates, baseline implementations and low-cost
+access to robotic hardware. We evaluate submissions in simulation online, on
+standardized hardware environments, and finally at the competition event. The
+first AI-DO, AI-DO 1, occurred at the Neural Information Processing Systems
+(NeurIPS) conference in December 2018. The results of AI-DO 1 highlight the
+need for better benchmarks, which are lacking in robotics, as well as improved
+mechanisms to bridge the gap between simulation and reality.",arxiv
+http://arxiv.org/abs/2002.04349v1,2020-02-11T12:41:01Z,2020-02-11T12:41:01Z,Robot Navigation with Map-Based Deep Reinforcement Learning,"This paper proposes an end-to-end deep reinforcement learning approach for
+mobile robot navigation with dynamic obstacles avoidance. Using experience
+collected in a simulation environment, a convolutional neural network (CNN) is
+trained to predict proper steering actions of a robot from its egocentric local
+occupancy maps, which accommodate various sensors and fusion algorithms. The
+trained neural network is then transferred and executed on a real-world mobile
+robot to guide its local path planning. The new approach is evaluated both
+qualitatively and quantitatively in simulation and real-world robot
+experiments. The results show that the map-based end-to-end navigation model is
+easy to be deployed to a robotic platform, robust to sensor noise and
+outperforms other existing DRL-based models in many indicators.",arxiv
+http://arxiv.org/abs/2005.13857v1,2020-05-28T09:15:14Z,2020-05-28T09:15:14Z,"Deep Reinforcement learning for real autonomous mobile robot navigation
+  in indoor environments","Deep Reinforcement Learning has been successfully applied in various computer
+games [8]. However, it is still rarely used in real-world applications,
+especially for the navigation and continuous control of real mobile robots
+[13]. Previous approaches lack safety and robustness and/or need a structured
+environment. In this paper we present our proof of concept for autonomous
+self-learning robot navigation in an unknown environment for a real robot
+without a map or planner. The input for the robot is only the fused data from a
+2D laser scanner and a RGB-D camera as well as the orientation to the goal. The
+map of the environment is unknown. The output actions of an Asynchronous
+Advantage Actor-Critic network (GA3C) are the linear and angular velocities for
+the robot. The navigator/controller network is pretrained in a high-speed,
+parallel, and self-implemented simulation environment to speed up the learning
+process and then deployed to the real robot. To avoid overfitting, we train
+relatively small networks, and we add random Gaussian noise to the input laser
+data. The sensor data fusion with the RGB-D camera allows the robot to navigate
+in real environments with real 3D obstacle avoidance and without the need to
+fit the environment to the sensory capabilities of the robot. To further
+increase the robustness, we train on environments of varying difficulties and
+run 32 training instances simultaneously. Video: supplementary File / YouTube,
+Code: GitHub",arxiv
+http://arxiv.org/abs/1903.02090v2,2020-01-27T17:51:39Z,2019-03-05T22:21:13Z,Open-Sourced Reinforcement Learning Environments for Surgical Robotics,"Reinforcement Learning (RL) is a machine learning framework for artificially
+intelligent systems to solve a variety of complex problems. Recent years has
+seen a surge of successes solving challenging games and smaller domain
+problems, including simple though non-specific robotic manipulation and
+grasping tasks. Rapid successes in RL have come in part due to the strong
+collaborative effort by the RL community to work on common, open-sourced
+environment simulators such as OpenAI's Gym that allow for expedited
+development and valid comparisons between different, state-of-art strategies.
+In this paper, we aim to start the bridge between the RL and the surgical
+robotics communities by presenting the first open-sourced reinforcement
+learning environments for surgical robots, called dVRL[3]{dVRL available at
+https://github.com/ucsdarclab/dVRL}. Through the proposed RL environments,
+which are functionally equivalent to Gym, we show that it is easy to prototype
+and implement state-of-art RL algorithms on surgical robotics problems that aim
+to introduce autonomous robotic precision and accuracy to assisting,
+collaborative, or repetitive tasks during surgery. Learned policies are
+furthermore successfully transferable to a real robot. Finally, combining dVRL
+with the over 40+ international network of da Vinci Surgical Research Kits in
+active use at academic institutions, we see dVRL as enabling the broad surgical
+robotics community to fully leverage the newest strategies in reinforcement
+learning, and for reinforcement learning scientists with no knowledge of
+surgical robotics to test and develop new algorithms that can solve the
+real-world, high-impact challenges in autonomous surgery.",arxiv
+http://arxiv.org/abs/1802.02395v1,2018-02-07T12:01:13Z,2018-02-07T12:01:13Z,Evaluation of Deep Reinforcement Learning Methods for Modular Robots,"We propose a novel framework for Deep Reinforcement Learning (DRL) in modular
+robotics using traditional robotic tools that extend state-of-the-art DRL
+implementations and provide an end-to-end approach which trains a robot
+directly from joint states. Moreover, we present a novel technique to transfer
+these DLR methods into the real robot, aiming to close the simulation-reality
+gap. We demonstrate the robustness of the performance of state-of-the-art DRL
+methods for continuous action spaces in modular robots, with an empirical study
+both in simulation and in the real robot where we also evaluate how
+accelerating the simulation time affects the robot's performance. Our results
+show that extending the modular robot from 3 degrees-of-freedom (DoF), to 4
+DoF, does not affect the robot's learning. This paves the way towards training
+modular robots using DRL techniques.",arxiv
+http://arxiv.org/abs/2011.08728v2,2020-11-30T06:30:25Z,2020-11-17T16:01:06Z,Fault-Aware Robust Control via Adversarial Reinforcement Learning,"Robots have limited adaptation ability compared to humans and animals in the
+case of damage. However, robot damages are prevalent in real-world
+applications, especially for robots deployed in extreme environments. The
+fragility of robots greatly limits their widespread application. We propose an
+adversarial reinforcement learning framework, which significantly increases
+robot robustness over joint damage cases in both manipulation tasks and
+locomotion tasks. The agent is trained iteratively under the joint damage cases
+where it has poor performance. We validate our algorithm on a three-fingered
+robot hand and a quadruped robot. Our algorithm can be trained only in
+simulation and directly deployed on a real robot without any fine-tuning. It
+also demonstrates exceeding success rates over arbitrary joint damage cases.",arxiv
+http://arxiv.org/abs/2002.11573v2,2020-10-02T17:02:25Z,2020-02-26T15:47:11Z,"Efficient reinforcement learning control for continuum robots based on
+  Inexplicit Prior Knowledge","Compared to rigid robots that are generally studied in reinforcement
+learning, the physical characteristics of some sophisticated robots such as
+soft or continuum robots are higher complicated. Moreover, recent reinforcement
+learning methods are data-inefficient and can not be directly deployed to the
+robot without simulation. In this paper, we propose an efficient reinforcement
+learning method based on inexplicit prior knowledge in response to such
+problems. We first corroborate the method by simulation and employed directly
+in the real world. By using our method, we can achieve active visual tracking
+and distance maintenance of a tendon-driven robot which will be critical in
+minimally invasive procedures. Codes are available at
+https://github.com/Skylark0924/TendonTrack.",arxiv
+http://arxiv.org/abs/1610.04213v4,2017-12-12T08:02:31Z,2016-10-13T19:39:58Z,Reset-free Trial-and-Error Learning for Robot Damage Recovery,"The high probability of hardware failures prevents many advanced robots
+(e.g., legged robots) from being confidently deployed in real-world situations
+(e.g., post-disaster rescue). Instead of attempting to diagnose the failures,
+robots could adapt by trial-and-error in order to be able to complete their
+tasks. In this situation, damage recovery can be seen as a Reinforcement
+Learning (RL) problem. However, the best RL algorithms for robotics require the
+robot and the environment to be reset to an initial state after each episode,
+that is, the robot is not learning autonomously. In addition, most of the RL
+methods for robotics do not scale well with complex robots (e.g., walking
+robots) and either cannot be used at all or take too long to converge to a
+solution (e.g., hours of learning). In this paper, we introduce a novel
+learning algorithm called ""Reset-free Trial-and-Error"" (RTE) that (1) breaks
+the complexity by pre-generating hundreds of possible behaviors with a dynamics
+simulator of the intact robot, and (2) allows complex robots to quickly recover
+from damage while completing their tasks and taking the environment into
+account. We evaluate our algorithm on a simulated wheeled robot, a simulated
+six-legged robot, and a real six-legged walking robot that are damaged in
+several ways (e.g., a missing leg, a shortened leg, faulty motor, etc.) and
+whose objective is to reach a sequence of targets in an arena. Our experiments
+show that the robots can recover most of their locomotion abilities in an
+environment with obstacles, and without any human intervention.",arxiv
+http://arxiv.org/abs/2004.10190v2,2020-07-31T13:43:53Z,2020-04-21T17:57:04Z,"Never Stop Learning: The Effectiveness of Fine-Tuning in Robotic
+  Reinforcement Learning","One of the great promises of robot learning systems is that they will be able
+to learn from their mistakes and continuously adapt to ever-changing
+environments. Despite this potential, most of the robot learning systems today
+are deployed as a fixed policy and they are not being adapted after their
+deployment. Can we efficiently adapt previously learned behaviors to new
+environments, objects and percepts in the real world? In this paper, we present
+a method and empirical evidence towards a robot learning framework that
+facilitates continuous adaption. In particular, we demonstrate how to adapt
+vision-based robotic manipulation policies to new variations by fine-tuning via
+off-policy reinforcement learning, including changes in background, object
+shape and appearance, lighting conditions, and robot morphology. Further, this
+adaptation uses less than 0.2% of the data necessary to learn the task from
+scratch. We find that our approach of adapting pre-trained policies leads to
+substantial performance gains over the course of fine-tuning, and that
+pre-training via RL is essential: training from scratch or adapting from
+supervised ImageNet features are both unsuccessful with such small amounts of
+data. We also find that these positive results hold in a limited continual
+learning setting, in which we repeatedly fine-tune a single lineage of policies
+using data from a succession of new tasks. Our empirical conclusions are
+consistently supported by experiments on simulated manipulation tasks, and by
+52 unique fine-tuning experiments on a real robotic grasping system pre-trained
+on 580,000 grasps.",arxiv
+http://arxiv.org/abs/1912.01715v1,2019-12-02T12:07:23Z,2019-12-02T12:07:23Z,"Human-Robot Collaboration via Deep Reinforcement Learning of Real-World
+  Interactions","We present a robotic setup for real-world testing and evaluation of
+human-robot and human-human collaborative learning. Leveraging the
+sample-efficiency of the Soft Actor-Critic algorithm, we have implemented a
+robotic platform able to learn a non-trivial collaborative task with a human
+partner, without pre-training in simulation, and using only 30 minutes of
+real-world interactions. This enables us to study Human-Robot and Human-Human
+collaborative learning through real-world interactions. We present preliminary
+results, showing that state-of-the-art deep learning methods can take
+human-robot collaborative learning a step closer to that of humans interacting
+with each other.",arxiv
+http://arxiv.org/abs/1703.04550v1,2017-03-13T20:08:39Z,2017-03-13T20:08:39Z,Sensor Fusion for Robot Control through Deep Reinforcement Learning,"Deep reinforcement learning is becoming increasingly popular for robot
+control algorithms, with the aim for a robot to self-learn useful feature
+representations from unstructured sensory input leading to the optimal
+actuation policy. In addition to sensors mounted on the robot, sensors might
+also be deployed in the environment, although these might need to be accessed
+via an unreliable wireless connection. In this paper, we demonstrate deep
+neural network architectures that are able to fuse information coming from
+multiple sensors and are robust to sensor failures at runtime. We evaluate our
+method on a search and pick task for a robot both in simulation and the real
+world.",arxiv
+http://arxiv.org/abs/2003.04956v1,2020-03-10T20:26:26Z,2020-03-10T20:26:26Z,"SQUIRL: Robust and Efficient Learning from Video Demonstration of
+  Long-Horizon Robotic Manipulation Tasks","Recent advances in deep reinforcement learning (RL) have demonstrated its
+potential to learn complex robotic manipulation tasks. However, RL still
+requires the robot to collect a large amount of real-world experience. To
+address this problem, recent works have proposed learning from expert
+demonstrations (LfD), particularly via inverse reinforcement learning (IRL),
+given its ability to achieve robust performance with only a small number of
+expert demonstrations. Nevertheless, deploying IRL on real robots is still
+challenging due to the large number of robot experiences it requires. This
+paper aims to address this scalability challenge with a robust,
+sample-efficient, and general meta-IRL algorithm, SQUIRL, that performs a new
+but related long-horizon task robustly given only a single video demonstration.
+First, this algorithm bootstraps the learning of a task encoder and a
+task-conditioned policy using behavioral cloning (BC). It then collects
+real-robot experiences and bypasses reward learning by directly recovering a
+Q-function from the combined robot and expert trajectories. Next, this
+algorithm uses the Q-function to re-evaluate all cumulative experiences
+collected by the robot to improve the policy quickly. In the end, the policy
+performs more robustly (90%+ success) than BC on new tasks while requiring no
+trial-and-errors at test time. Finally, our real-robot and simulated
+experiments demonstrate our algorithm's generality across different state
+spaces, action spaces, and vision-based manipulation tasks, e.g.,
+pick-pour-place and pick-carry-drop.",arxiv
+http://arxiv.org/abs/2012.08174v2,2021-03-29T17:15:00Z,2020-12-15T09:49:22Z,"Towards open and expandable cognitive AI architectures for large-scale
+  multi-agent human-robot collaborative learning","Learning from Demonstration (LfD) constitutes one of the most robust
+methodologies for constructing efficient cognitive robotic systems. Despite the
+large body of research works already reported, current key technological
+challenges include those of multi-agent learning and long-term autonomy.
+Towards this direction, a novel cognitive architecture for multi-agent LfD
+robotic learning is introduced, targeting to enable the reliable deployment of
+open, scalable and expandable robotic systems in large-scale and complex
+environments. In particular, the designed architecture capitalizes on the
+recent advances in the Artificial Intelligence (AI) field, by establishing a
+Federated Learning (FL)-based framework for incarnating a multi-human
+multi-robot collaborative learning environment. The fundamental
+conceptualization relies on employing multiple AI-empowered cognitive processes
+(implementing various robotic tasks) that operate at the edge nodes of a
+network of robotic platforms, while global AI models (underpinning the
+aforementioned robotic tasks) are collectively created and shared among the
+network, by elegantly combining information from a large number of human-robot
+interaction instances. Regarding pivotal novelties, the designed cognitive
+architecture a) introduces a new FL-based formalism that extends the
+conventional LfD learning paradigm to support large-scale multi-agent
+operational settings, b) elaborates previous FL-based self-learning robotic
+schemes so as to incorporate the human in the learning loop and c) consolidates
+the fundamental principles of FL with additional sophisticated AI-enabled
+learning methodologies for modelling the multi-level inter-dependencies among
+the robotic tasks. The applicability of the proposed framework is explained
+using an example of a real-world industrial case study for agile
+production-based Critical Raw Materials (CRM) recovery.",arxiv
+http://arxiv.org/abs/1906.06969v1,2019-06-17T11:44:15Z,2019-06-17T11:44:15Z,Robotic Navigation using Entropy-Based Exploration,"Robotic navigation concerns the task in which a robot should be able to find
+a safe and feasible path and traverse between two points in a complex
+environment. We approach the problem of robotic navigation using reinforcement
+learning and use deep $Q$-networks to train agents to solve the task of robotic
+navigation. We compare the Entropy-Based Exploration (EBE) with the widely used
+$\epsilon$-greedy exploration strategy by training agents using both of them in
+simulation. The trained agents are then tested on different versions of the
+environment to test the generalization ability of the learned policies. We also
+implement the learned policies on a real robot in complex real environment
+without any fine tuning and compare the effectiveness of the above-mentioned
+exploration strategies in the real world setting. Video showing experiments on
+TurtleBot3 platform is available at \url{https://youtu.be/NHT-EiN_4n8}.",arxiv
+http://arxiv.org/abs/2104.07282v1,2021-04-15T07:40:27Z,2021-04-15T07:40:27Z,"Rule-Based Reinforcement Learning for Efficient Robot Navigation with
+  Space Reduction","For real-world deployments, it is critical to allow robots to navigate in
+complex environments autonomously. Traditional methods usually maintain an
+internal map of the environment, and then design several simple rules, in
+conjunction with a localization and planning approach, to navigate through the
+internal map. These approaches often involve a variety of assumptions and prior
+knowledge. In contrast, recent reinforcement learning (RL) methods can provide
+a model-free, self-learning mechanism as the robot interacts with an initially
+unknown environment, but are expensive to deploy in real-world scenarios due to
+inefficient exploration. In this paper, we focus on efficient navigation with
+the RL technique and combine the advantages of these two kinds of methods into
+a rule-based RL (RuRL) algorithm for reducing the sample complexity and cost of
+time. First, we use the rule of wall-following to generate a closed-loop
+trajectory. Second, we employ a reduction rule to shrink the trajectory, which
+in turn effectively reduces the redundant exploration space. Besides, we give
+the detailed theoretical guarantee that the optimal navigation path is still in
+the reduced space. Third, in the reduced space, we utilize the Pledge rule to
+guide the exploration strategy for accelerating the RL process at the early
+stage. Experiments conducted on real robot navigation problems in hex-grid
+environments demonstrate that RuRL can achieve improved navigation performance.",arxiv
+http://arxiv.org/abs/2111.01777v1,2021-11-02T17:53:54Z,2021-11-02T17:53:54Z,"A Framework for Real-World Multi-Robot Systems Running Decentralized
+  GNN-Based Policies","Graph Neural Networks (GNNs) are a paradigm-shifting neural architecture to
+facilitate the learning of complex multi-agent behaviors. Recent work has
+demonstrated remarkable performance in tasks such as flocking, multi-agent path
+planning and cooperative coverage. However, the policies derived through
+GNN-based learning schemes have not yet been deployed to the real-world on
+physical multi-robot systems. In this work, we present the design of a system
+that allows for fully decentralized execution of GNN-based policies. We create
+a framework based on ROS2 and elaborate its details in this paper. We
+demonstrate our framework on a case-study that requires tight coordination
+between robots, and present first-of-a-kind results that show successful
+real-world deployment of GNN-based policies on a decentralized multi-robot
+system relying on Adhoc communication. A video demonstration of this case-study
+can be found online. https://www.youtube.com/watch?v=COh-WLn4iO4",arxiv
+http://arxiv.org/abs/1706.02501v1,2017-06-08T10:10:44Z,2017-06-08T10:10:44Z,Unlocking the Potential of Simulators: Design with RL in Mind,"Using Reinforcement Learning (RL) in simulation to construct policies useful
+in real life is challenging. This is often attributed to the sequential
+decision making aspect: inaccuracies in simulation accumulate over multiple
+steps, hence the simulated trajectories diverge from what would happen in
+reality.
+  In our work we show the need to consider another important aspect: the
+mismatch in simulating control. We bring attention to the need for modeling
+control as well as dynamics, since oversimplifying assumptions about applying
+actions of RL policies could make the policies fail on real-world systems.
+  We design a simulator for solving a pivoting task (of interest in Robotics)
+and demonstrate that even a simple simulator designed with RL in mind
+outperforms high-fidelity simulators when it comes to learning a policy that is
+to be deployed on a real robotic system. We show that a phenomenon that is hard
+to model - friction - could be exploited successfully, even when RL is
+performed using a simulator with a simple dynamics and noise model. Hence, we
+demonstrate that as long as the main sources of uncertainty are identified, it
+could be possible to learn policies applicable to real systems even using a
+simple simulator.
+  RL-compatible simulators could open the possibilities for applying a wide
+range of RL algorithms in various fields. This is important, since currently
+data sparsity in fields like healthcare and education frequently forces
+researchers and engineers to only consider sample-efficient RL approaches.
+Successful simulator-aided RL could increase flexibility of experimenting with
+RL algorithms and help applying RL policies to real-world settings in fields
+where data is scarce. We believe that lessons learned in Robotics could help
+other fields design RL-compatible simulators, so we summarize our experience
+and conclude with suggestions.",arxiv
+http://arxiv.org/abs/1604.04384v2,2016-10-14T08:13:52Z,2016-04-15T07:35:32Z,The STRANDS Project: Long-Term Autonomy in Everyday Environments,"Thanks to the efforts of the robotics and autonomous systems community,
+robots are becoming ever more capable. There is also an increasing demand from
+end-users for autonomous service robots that can operate in real environments
+for extended periods. In the STRANDS project we are tackling this demand
+head-on by integrating state-of-the-art artificial intelligence and robotics
+research into mobile service robots, and deploying these systems for long-term
+installations in security and care environments. Over four deployments, our
+robots have been operational for a combined duration of 104 days autonomously
+performing end-user defined tasks, covering 116km in the process. In this
+article we describe the approach we have used to enable long-term autonomous
+operation in everyday environments, and how our robots are able to use their
+long run times to improve their own performance.",arxiv
+http://arxiv.org/abs/2109.09180v1,2021-09-19T18:00:51Z,2021-09-19T18:00:51Z,Lifelong Robotic Reinforcement Learning by Retaining Experiences,"Multi-task learning ideally allows robots to acquire a diverse repertoire of
+useful skills. However, many multi-task reinforcement learning efforts assume
+the robot can collect data from all tasks at all times. In reality, the tasks
+that the robot learns arrive sequentially, depending on the user and the
+robot's current environment. In this work, we study a practical sequential
+multi-task RL problem that is motivated by the practical constraints of
+physical robotic systems, and derive an approach that effectively leverages the
+data and policies learned for previous tasks to cumulatively grow the robot's
+skill-set. In a series of simulated robotic manipulation experiments, our
+approach requires less than half the samples than learning each task from
+scratch, while avoiding impractical round-robin data collection. On a Franka
+Emika Panda robot arm, our approach incrementally learns ten challenging tasks,
+including bottle capping and block insertion.",arxiv
+http://arxiv.org/abs/2106.09357v1,2021-06-17T10:20:45Z,2021-06-17T10:20:45Z,"Cat-like Jumping and Landing of Legged Robots in Low-gravity Using Deep
+  Reinforcement Learning","In this article, we show that learned policies can be applied to solve legged
+locomotion control tasks with extensive flight phases, such as those
+encountered in space exploration. Using an off-the-shelf deep reinforcement
+learning algorithm, we trained a neural network to control a jumping quadruped
+robot while solely using its limbs for attitude control. We present tasks of
+increasing complexity leading to a combination of three-dimensional
+(re-)orientation and landing locomotion behaviors of a quadruped robot
+traversing simulated low-gravity celestial bodies. We show that our approach
+easily generalizes across these tasks and successfully trains policies for each
+case. Using sim-to-real transfer, we deploy trained policies in the real world
+on the SpaceBok robot placed on an experimental testbed designed for
+two-dimensional micro-gravity experiments. The experimental results demonstrate
+that repetitive, controlled jumping and landing with natural agility is
+possible.",arxiv
+http://arxiv.org/abs/2003.02655v2,2020-03-13T08:26:45Z,2020-03-02T10:14:52Z,"PPMC RL Training Algorithm: Rough Terrain Intelligent Robots through
+  Reinforcement Learning","Robots can now learn how to make decisions and control themselves,
+generalizing learned behaviors to unseen scenarios. In particular, AI powered
+robots show promise in rough environments like the lunar surface, due to the
+environmental uncertainties. We address this critical generalization aspect for
+robot locomotion in rough terrain through a training algorithm we have created
+called the Path Planning and Motion Control (PPMC) Training Algorithm. This
+algorithm is coupled with any generic reinforcement learning algorithm to teach
+robots how to respond to user commands and to travel to designated locations on
+a single neural network. In this paper, we show that the algorithm works
+independent of the robot structure, demonstrating that it works on a wheeled
+rover in addition the past results on a quadruped walking robot. Further, we
+take several big steps towards real world practicality by introducing a rough
+highly uneven terrain. Critically, we show through experiments that the robot
+learns to generalize to new rough terrain maps, retaining a 100% success rate.
+To the best of our knowledge, this is the first paper to introduce a generic
+training algorithm teaching generalized PPMC in rough environments to any
+robot, with just the use of reinforcement learning.",arxiv
+http://arxiv.org/abs/1902.05703v1,2019-02-15T06:34:31Z,2019-02-15T06:34:31Z,"Network Offloading Policies for Cloud Robotics: a Learning-based
+  Approach","Today's robotic systems are increasingly turning to computationally expensive
+models such as deep neural networks (DNNs) for tasks like localization,
+perception, planning, and object detection. However, resource-constrained
+robots, like low-power drones, often have insufficient on-board compute
+resources or power reserves to scalably run the most accurate, state-of-the art
+neural network compute models. Cloud robotics allows mobile robots the benefit
+of offloading compute to centralized servers if they are uncertain locally or
+want to run more accurate, compute-intensive models. However, cloud robotics
+comes with a key, often understated cost: communicating with the cloud over
+congested wireless networks may result in latency or loss of data. In fact,
+sending high data-rate video or LIDAR from multiple robots over congested
+networks can lead to prohibitive delay for real-time applications, which we
+measure experimentally. In this paper, we formulate a novel Robot Offloading
+Problem --- how and when should robots offload sensing tasks, especially if
+they are uncertain, to improve accuracy while minimizing the cost of cloud
+communication? We formulate offloading as a sequential decision making problem
+for robots, and propose a solution using deep reinforcement learning. In both
+simulations and hardware experiments using state-of-the art vision DNNs, our
+offloading strategy improves vision task performance by between 1.3-2.6x of
+benchmark offloading strategies, allowing robots the potential to significantly
+transcend their on-board sensing accuracy but with limited cost of cloud
+communication.",arxiv
+http://arxiv.org/abs/2110.04697v1,2021-10-10T03:51:39Z,2021-10-10T03:51:39Z,"An Augmented Reality Platform for Introducing Reinforcement Learning to
+  K-12 Students with Robots","Interactive reinforcement learning, where humans actively assist during an
+agent's learning process, has the promise to alleviate the sample complexity
+challenges of practical algorithms. However, the inner workings and state of
+the robot are typically hidden from the teacher when humans provide feedback.
+To create a common ground between the human and the learning robot, in this
+paper, we propose an Augmented Reality (AR) system that reveals the hidden
+state of the learning to the human users. This paper describes our system's
+design and implementation and concludes with a discussion on two directions for
+future work which we are pursuing: 1) use of our system in AI education
+activities at the K-12 level; and 2) development of a framework for an AR-based
+human-in-the-loop reinforcement learning, where the human teacher can see
+sensory and cognitive representations of the robot overlaid in the real world.",arxiv
+http://arxiv.org/abs/1903.00959v1,2019-03-03T18:46:40Z,2019-03-03T18:46:40Z,"DESK: A Robotic Activity Dataset for Dexterous Surgical Skills Transfer
+  to Medical Robots","Datasets are an essential component for training effective machine learning
+models. In particular, surgical robotic datasets have been key to many advances
+in semi-autonomous surgeries, skill assessment, and training. Simulated
+surgical environments can enhance the data collection process by making it
+faster, simpler and cheaper than real systems. In addition, combining data from
+multiple robotic domains can provide rich and diverse training data for
+transfer learning algorithms. In this paper, we present the DESK (Dexterous
+Surgical Skill) dataset. It comprises a set of surgical robotic skills
+collected during a surgical training task using three robotic platforms: the
+Taurus II robot, Taurus II simulated robot, and the YuMi robot. This dataset
+was used to test the idea of transferring knowledge across different domains
+(e.g. from Taurus to YuMi robot) for a surgical gesture classification task
+with seven gestures. We explored three different scenarios: 1) No transfer, 2)
+Transfer from simulated Taurus to real Taurus and 3) Transfer from Simulated
+Taurus to the YuMi robot. We conducted extensive experiments with three
+supervised learning models and provided baselines in each of these scenarios.
+Results show that using simulation data during training enhances the
+performance on the real robot where limited real data is available. In
+particular, we obtained an accuracy of 55% on the real Taurus data using a
+model that is trained only on the simulator data. Furthermore, we achieved an
+accuracy improvement of 34% when 3% of the real data is added into the training
+process.",arxiv
+http://arxiv.org/abs/2002.08242v1,2020-02-11T08:23:14Z,2020-02-11T08:23:14Z,AI Online Filters to Real World Image Recognition,"Deep artificial neural networks, trained with labeled data sets are widely
+used in numerous vision and robotics applications today. In terms of AI, these
+are called reflex models, referring to the fact that they do not self-evolve or
+actively adapt to environmental changes. As demand for intelligent robot
+control expands to many high level tasks, reinforcement learning and state
+based models play an increasingly important role. Herein, in computer vision
+and robotics domain, we study a novel approach to add reinforcement controls
+onto the image recognition reflex models to attain better overall performance,
+specifically to a wider environment range beyond what is expected of the task
+reflex models. Follow a common infrastructure with environment sensing and AI
+based modeling of self-adaptive agents, we implement multiple types of AI
+control agents. To the end, we provide comparative results of these agents with
+baseline, and an insightful analysis of their benefit to improve overall image
+recognition performance in real world.",arxiv
+http://arxiv.org/abs/1809.06716v1,2018-09-16T07:58:09Z,2018-09-16T07:58:09Z,A Fog Robotic System for Dynamic Visual Servoing,"Cloud Robotics is a paradigm where distributed robots are connected to cloud
+services via networks to access unlimited computation power, at the cost of
+network communication. However, due to limitations such as network latency and
+variability, it is difficult to control dynamic, human compliant service robots
+directly from the cloud. In this work, by leveraging asynchronous protocol with
+a heartbeat signal, we combine cloud robotics with a smart edge device to build
+a Fog Robotic system. We use the system to enable robust teleoperation of a
+dynamic self-balancing robot from the cloud. We first use the system to pick up
+boxes from static locations, a task commonly performed in warehouse logistics.
+To make cloud teleoperation more efficient, we deploy image based visual
+servoing (IBVS) to perform box pickups automatically. Visual feedbacks,
+including apriltag recognition and tracking, are performed in the cloud to
+emulate a Fog Robotic object recognition system for IBVS. We demonstrate the
+feasibility of real-time dynamic automation system using this cloud-edge
+hybrid, which opens up possibilities of deploying dynamic robotic control with
+deep-learning recognition systems in Fog Robotics. Finally, we show that Fog
+Robotics enables the self-balancing service robot to pick up a box
+automatically from a person under unstructured environments.",arxiv
+http://arxiv.org/abs/1809.07731v1,2018-09-20T16:46:04Z,2018-09-20T16:46:04Z,Benchmarking Reinforcement Learning Algorithms on Real-World Robots,"Through many recent successes in simulation, model-free reinforcement
+learning has emerged as a promising approach to solving continuous control
+robotic tasks. The research community is now able to reproduce, analyze and
+build quickly on these results due to open source implementations of learning
+algorithms and simulated benchmark tasks. To carry forward these successes to
+real-world applications, it is crucial to withhold utilizing the unique
+advantages of simulations that do not transfer to the real world and experiment
+directly with physical robots. However, reinforcement learning research with
+physical robots faces substantial resistance due to the lack of benchmark tasks
+and supporting source code. In this work, we introduce several reinforcement
+learning tasks with multiple commercially available robots that present varying
+levels of learning difficulty, setup, and repeatability. On these tasks, we
+test the learning performance of off-the-shelf implementations of four
+reinforcement learning algorithms and analyze sensitivity to their
+hyper-parameters to determine their readiness for applications in various
+real-world tasks. Our results show that with a careful setup of the task
+interface and computations, some of these implementations can be readily
+applicable to physical robots. We find that state-of-the-art learning
+algorithms are highly sensitive to their hyper-parameters and their relative
+ordering does not transfer across tasks, indicating the necessity of re-tuning
+them for each task for best performance. On the other hand, the best
+hyper-parameter configuration from one task may often result in effective
+learning on held-out tasks even with different robots, providing a reasonable
+default. We make the benchmark tasks publicly available to enhance
+reproducibility in real-world reinforcement learning.",arxiv
+http://arxiv.org/abs/2109.02823v1,2021-09-07T02:26:54Z,2021-09-07T02:26:54Z,"Robot Sound Interpretation: Learning Visual-Audio Representations for
+  Voice-Controlled Robots","Inspired by sensorimotor theory, we propose a novel pipeline for
+voice-controlled robots. Previous work relies on explicit labels of sounds and
+images as well as extrinsic reward functions. Not only do such approaches have
+little resemblance to human sensorimotor development, but also require
+hand-tuning rewards and extensive human labor. To address these problems, we
+learn a representation that associates images and sound commands with minimal
+supervision. Using this representation, we generate an intrinsic reward
+function to learn robotic tasks with reinforcement learning. We demonstrate our
+approach on three robot platforms, a TurtleBot3, a Kuka-IIWA arm, and a Kinova
+Gen3 robot, which hear a command word, identify the associated target object,
+and perform precise control to approach the target. We show that our method
+outperforms previous work across various sound types and robotic tasks
+empirically. We successfully deploy the policy learned in simulator to a
+real-world Kinova Gen3.",arxiv
+http://arxiv.org/abs/1804.05259v1,2018-04-14T18:22:29Z,2018-04-14T18:22:29Z,"Intrinsically motivated reinforcement learning for human-robot
+  interaction in the real-world","For a natural social human-robot interaction, it is essential for a robot to
+learn the human-like social skills. However, learning such skills is
+notoriously hard due to the limited availability of direct instructions from
+people to teach a robot. In this paper, we propose an intrinsically motivated
+reinforcement learning framework in which an agent gets the intrinsic
+motivation-based rewards through the action-conditional predictive model. By
+using the proposed method, the robot learned the social skills from the
+human-robot interaction experiences gathered in the real uncontrolled
+environments. The results indicate that the robot not only acquired human-like
+social skills but also took more human-like decisions, on a test dataset, than
+a robot which received direct rewards for the task achievement.",arxiv
+http://arxiv.org/abs/2105.05873v1,2021-05-12T18:00:14Z,2021-05-12T18:00:14Z,Out of the Box: Embodied Navigation in the Real World,"The research field of Embodied AI has witnessed substantial progress in
+visual navigation and exploration thanks to powerful simulating platforms and
+the availability of 3D data of indoor and photorealistic environments. These
+two factors have opened the doors to a new generation of intelligent agents
+capable of achieving nearly perfect PointGoal Navigation. However, such
+architectures are commonly trained with millions, if not billions, of frames
+and tested in simulation. Together with great enthusiasm, these results yield a
+question: how many researchers will effectively benefit from these advances? In
+this work, we detail how to transfer the knowledge acquired in simulation into
+the real world. To that end, we describe the architectural discrepancies that
+damage the Sim2Real adaptation ability of models trained on the Habitat
+simulator and propose a novel solution tailored towards the deployment in
+real-world scenarios. We then deploy our models on a LoCoBot, a Low-Cost Robot
+equipped with a single Intel RealSense camera. Different from previous work,
+our testing scene is unavailable to the agent in simulation. The environment is
+also inaccessible to the agent beforehand, so it cannot count on scene-specific
+semantic priors. In this way, we reproduce a setting in which a research group
+(potentially from other fields) needs to employ the agent visual navigation
+capabilities as-a-Service. Our experiments indicate that it is possible to
+achieve satisfying results when deploying the obtained model in the real world.
+Our code and models are available at https://github.com/aimagelab/LoCoNav.",arxiv
+http://arxiv.org/abs/1912.07067v1,2019-12-15T16:33:16Z,2019-12-15T16:33:16Z,"Aggressive Online Control of a Quadrotor via Deep Network
+  Representations of Optimality Principles","Optimal control holds great potential to improve a variety of robotic
+applications. The application of optimal control on-board limited platforms has
+been severely hindered by the large computational requirements of current state
+of the art implementations. In this work, we make use of a deep neural network
+to directly map the robot states to control actions. The network is trained
+offline to imitate the optimal control computed by a time consuming direct
+nonlinear method. A mixture of time optimality and power optimality is
+considered with a continuation parameter used to select the predominance of
+each objective. We apply our networks (termed G\&CNets) to aggressive quadrotor
+control, first in simulation and then in the real world. We give insight into
+the factors that influence the `reality gap' between the quadrotor model used
+by the offline optimal control method and the real quadrotor. Furthermore, we
+explain how we set up the model and the control structure on-board of the real
+quadrotor to successfully close this gap and perform time-optimal maneuvers in
+the real world. Finally, G\&CNet's performance is compared to state-of-the-art
+differential-flatness-based optimal control methods. We show, in the
+experiments, that G\&CNets lead to significantly faster trajectory execution
+due to, in part, the less restrictive nature of the allowed state-to-input
+mappings.",arxiv
+http://arxiv.org/abs/1601.06473v2,2016-01-26T04:43:20Z,2016-01-25T03:31:24Z,Teaching Robots to Do Object Assembly using Multi-modal 3D Vision,"The motivation of this paper is to develop a smart system using multi-modal
+vision for next-generation mechanical assembly. It includes two phases where in
+the first phase human beings teach the assembly structure to a robot and in the
+second phase the robot finds objects and grasps and assembles them using AI
+planning. The crucial part of the system is the precision of 3D visual
+detection and the paper presents multi-modal approaches to meet the
+requirements: AR markers are used in the teaching phase since human beings can
+actively control the process. Point cloud matching and geometric constraints
+are used in the robot execution phase to avoid unexpected noises. Experiments
+are performed to examine the precision and correctness of the approaches. The
+study is practical: The developed approaches are integrated with graph
+model-based motion planning, implemented on an industrial robots and applicable
+to real-world scenarios.",arxiv
+http://arxiv.org/abs/1906.02003v1,2019-06-05T12:54:27Z,2019-06-05T12:54:27Z,"Machine Learning and System Identification for Estimation in Physical
+  Systems","In this thesis, we draw inspiration from both classical system identification
+and modern machine learning in order to solve estimation problems for
+real-world, physical systems. The main approach to estimation and learning
+adopted is optimization based. Concepts such as regularization will be utilized
+for encoding of prior knowledge and basis-function expansions will be used to
+add nonlinear modeling power while keeping data requirements practical. The
+thesis covers a wide range of applications, many inspired by applications
+within robotics, but also extending outside this already wide field. Usage of
+the proposed methods and algorithms are in many cases illustrated in the
+real-world applications that motivated the research. Topics covered include
+dynamics modeling and estimation, model-based reinforcement learning, spectral
+estimation, friction modeling and state estimation and calibration in robotic
+machining. In the work on modeling and identification of dynamics, we develop
+regularization strategies that allow us to incorporate prior domain knowledge
+into flexible, overparameterized models. We make use of classical control
+theory to gain insight into training and regularization while using flexible
+tools from modern deep learning. A particular focus of the work is to allow use
+of modern methods in scenarios where gathering data is associated with a high
+cost. In the robotics-inspired parts of the thesis, we develop methods that are
+practically motivated and ensure that they are implementable also outside the
+research setting. We demonstrate this by performing experiments in realistic
+settings and providing open-source implementations of all proposed methods and
+algorithms.",arxiv
+http://arxiv.org/abs/1909.04812v2,2019-09-19T14:29:10Z,2019-09-11T01:49:14Z,Proceedings of the AI-HRI Symposium at AAAI-FSS 2019,"The past few years have seen rapid progress in the development of service
+robots. Universities and companies alike have launched major research efforts
+toward the deployment of ambitious systems designed to aid human operators
+performing a variety of tasks. These robots are intended to make those who may
+otherwise need to live in assisted care facilities more independent, to help
+workers perform their jobs, or simply to make life more convenient. Service
+robots provide a powerful platform on which to study Artificial Intelligence
+(AI) and Human-Robot Interaction (HRI) in the real world. Research sitting at
+the intersection of AI and HRI is crucial to the success of service robots if
+they are to fulfill their mission.
+  This symposium seeks to highlight research enabling robots to effectively
+interact with people autonomously while modeling, planning, and reasoning about
+the environment that the robot operates in and the tasks that it must perform.
+AI-HRI deals with the challenge of interacting with humans in environments that
+are relatively unstructured or which are structured around people rather than
+machines, as well as the possibility that the robot may need to interact
+naturally with people rather than through teach pendants, programming, or
+similar interfaces.",arxiv
+http://arxiv.org/abs/1803.07067v1,2018-03-19T17:59:05Z,2018-03-19T17:59:05Z,Setting up a Reinforcement Learning Task with a Real-World Robot,"Reinforcement learning is a promising approach to developing hard-to-engineer
+adaptive solutions for complex and diverse robotic tasks. However, learning
+with real-world robots is often unreliable and difficult, which resulted in
+their low adoption in reinforcement learning research. This difficulty is
+worsened by the lack of guidelines for setting up learning tasks with robots.
+In this work, we develop a learning task with a UR5 robotic arm to bring to
+light some key elements of a task setup and study their contributions to the
+challenges with robots. We find that learning performance can be highly
+sensitive to the setup, and thus oversights and omissions in setup details can
+make effective learning, reproducibility, and fair comparison hard. Our study
+suggests some mitigating steps to help future experimenters avoid difficulties
+and pitfalls. We show that highly reliable and repeatable experiments can be
+performed in our setup, indicating the possibility of reinforcement learning
+research extensively based on real-world robots.",arxiv
+http://arxiv.org/abs/1909.02129v1,2019-09-04T21:50:03Z,2019-09-04T21:50:03Z,"Towards Precise Robotic Grasping by Probabilistic Post-grasp
+  Displacement Estimation","Precise robotic grasping is important for many industrial applications, such
+as assembly and palletizing, where the location of the object needs to be
+controlled and known. However, achieving precise grasps is challenging due to
+noise in sensing and control, as well as unknown object properties. We propose
+a method to plan robotic grasps that are both robust and precise by training
+two convolutional neural networks - one to predict the robustness of a grasp
+and another to predict a distribution of post-grasp object displacements. Our
+networks are trained with depth images in simulation on a dataset of over 1000
+industrial parts and were successfully deployed on a real robot without having
+to be further fine-tuned. The proposed displacement estimator achieves a mean
+prediction errors of 0.68cm and 3.42deg on novel objects in real world
+experiments.",arxiv
+http://arxiv.org/abs/1702.01182v1,2017-02-03T21:57:13Z,2017-02-03T21:57:13Z,Uncertainty-Aware Reinforcement Learning for Collision Avoidance,"Reinforcement learning can enable complex, adaptive behavior to be learned
+automatically for autonomous robotic platforms. However, practical deployment
+of reinforcement learning methods must contend with the fact that the training
+process itself can be unsafe for the robot. In this paper, we consider the
+specific case of a mobile robot learning to navigate an a priori unknown
+environment while avoiding collisions. In order to learn collision avoidance,
+the robot must experience collisions at training time. However, high-speed
+collisions, even at training time, could damage the robot. A successful
+learning method must therefore proceed cautiously, experiencing only low-speed
+collisions until it gains confidence. To this end, we present an
+uncertainty-aware model-based learning algorithm that estimates the probability
+of collision together with a statistical estimate of uncertainty. By
+formulating an uncertainty-dependent cost function, we show that the algorithm
+naturally chooses to proceed cautiously in unfamiliar environments, and
+increases the velocity of the robot in settings where it has high confidence.
+Our predictive model is based on bootstrapped neural networks using dropout,
+allowing it to process raw sensory inputs from high-bandwidth sensors such as
+cameras. Our experimental evaluation demonstrates that our method effectively
+minimizes dangerous collisions at training time in an obstacle avoidance task
+for a simulated and real-world quadrotor, and a real-world RC car. Videos of
+the experiments can be found at https://sites.google.com/site/probcoll.",arxiv
+http://arxiv.org/abs/1903.09870v2,2019-08-28T19:32:23Z,2019-03-23T19:36:11Z,Long Range Neural Navigation Policies for the Real World,"Learned Neural Network based policies have shown promising results for robot
+navigation. However, most of these approaches fall short of being used on a
+real robot due to the extensive simulated training they require. These
+simulations lack the visuals and dynamics of the real world, which makes it
+infeasible to deploy on a real robot. We present a novel Neural Net based
+policy, NavNet, which allows for easy deployment on a real robot. It consists
+of two sub policies -- a high level policy which can understand real images and
+perform long range planning expressed in high level commands; a low level
+policy that can translate the long range plan into low level commands on a
+specific platform in a safe and robust manner. For every new deployment, the
+high level policy is trained on an easily obtainable scan of the environment
+modeling its visuals and layout. We detail the design of such an environment
+and how one can use it for training a final navigation policy. Further, we
+demonstrate a learned low-level policy. We deploy the model in a large office
+building and test it extensively, achieving $0.80$ success rate over long
+navigation runs and outperforming SLAM-based models in the same settings.",arxiv
+http://arxiv.org/abs/2006.03647v2,2020-06-23T16:54:09Z,2020-06-05T19:33:19Z,"Deployment-Efficient Reinforcement Learning via Model-Based Offline
+  Optimization","Most reinforcement learning (RL) algorithms assume online access to the
+environment, in which one may readily interleave updates to the policy with
+experience collection using that policy. However, in many real-world
+applications such as health, education, dialogue agents, and robotics, the cost
+or potential risk of deploying a new data-collection policy is high, to the
+point that it can become prohibitive to update the data-collection policy more
+than a few times during learning. With this view, we propose a novel concept of
+deployment efficiency, measuring the number of distinct data-collection
+policies that are used during policy learning. We observe that na\""{i}vely
+applying existing model-free offline RL algorithms recursively does not lead to
+a practical deployment-efficient and sample-efficient algorithm. We propose a
+novel model-based algorithm, Behavior-Regularized Model-ENsemble (BREMEN) that
+can effectively optimize a policy offline using 10-20 times fewer data than
+prior works. Furthermore, the recursive application of BREMEN is able to
+achieve impressive deployment efficiency while maintaining the same or better
+sample efficiency, learning successful policies from scratch on simulated
+robotic environments with only 5-10 deployments, compared to typical values of
+hundreds to millions in standard RL baselines. Codes and pre-trained models are
+available at https://github.com/matsuolab/BREMEN .",arxiv
+http://arxiv.org/abs/2103.09402v2,2021-08-29T13:52:06Z,2021-03-17T02:11:58Z,In-air Knotting of Rope using Dual-Arm Robot based on Deep Learning,"In this study, we report the successful execution of in-air knotting of rope
+using a dual-arm two-finger robot based on deep learning. Owing to its
+flexibility, the state of the rope was in constant flux during the operation of
+the robot. This required the robot control system to dynamically correspond to
+the state of the object at all times. However, a manual description of
+appropriate robot motions corresponding to all object states is difficult to be
+prepared in advance. To resolve this issue, we constructed a model that
+instructed the robot to perform bowknots and overhand knots based on two deep
+neural networks trained using the data gathered from its sensorimotor,
+including visual and proximity sensors. The resultant model was verified to be
+capable of predicting the appropriate robot motions based on the sensory
+information available online. In addition, we designed certain task motions
+based on the Ian knot method using the dual-arm two-fingers robot. The designed
+knotting motions do not require a dedicated workbench or robot hand, thereby
+enhancing the versatility of the proposed method. Finally, experiments were
+performed to estimate the knotting performance of the real robot while
+executing overhand knots and bowknots on rope and its success rate. The
+experimental results established the effectiveness and high performance of the
+proposed method.",arxiv
+http://arxiv.org/abs/1701.08878v1,2017-01-31T00:16:15Z,2017-01-31T00:16:15Z,"Deep Reinforcement Learning for Robotic Manipulation-The state of the
+  art","The focus of this work is to enumerate the various approaches and algorithms
+that center around application of reinforcement learning in robotic ma-
+]]nipulation tasks. Earlier methods utilized specialized policy representations
+and human demonstrations to constrict the policy. Such methods worked well with
+continuous state and policy space of robots but failed to come up with
+generalized policies. Subsequently, high dimensional non-linear function
+approximators like neural networks have been used to learn policies from
+scratch. Several novel and recent approaches have also embedded control policy
+with efficient perceptual representation using deep learning. This has led to
+the emergence of a new branch of dynamic robot control system called deep r
+inforcement learning(DRL). This work embodies a survey of the most recent
+algorithms, architectures and their implementations in simulations and real
+world robotic platforms. The gamut of DRL architectures are partitioned into
+two different branches namely, discrete action space algorithms(DAS) and
+continuous action space algorithms(CAS). Further, the CAS algorithms are
+divided into stochastic continuous action space(SCAS) and deterministic
+continuous action space(DCAS) algorithms. Along with elucidating an organ-
+isation of the DRL algorithms this work also manifests some of the state of the
+art applications of these approaches in robotic manipulation tasks.",arxiv
+http://arxiv.org/abs/2105.04261v1,2021-05-10T10:59:38Z,2021-05-10T10:59:38Z,"Neuroscience-inspired perception-action in robotics: applying active
+  inference for state estimation, control and self-perception","Unlike robots, humans learn, adapt and perceive their bodies by interacting
+with the world. Discovering how the brain represents the body and generates
+actions is of major importance for robotics and artificial intelligence. Here
+we discuss how neuroscience findings open up opportunities to improve current
+estimation and control algorithms in robotics. In particular, how active
+inference, a mathematical formulation of how the brain resists a natural
+tendency to disorder, provides a unified recipe to potentially solve some of
+the major challenges in robotics, such as adaptation, robustness, flexibility,
+generalization and safe interaction. This paper summarizes some experiments and
+lessons learned from developing such a computational model on real embodied
+platforms, i.e., humanoid and industrial robots. Finally, we showcase the
+limitations and challenges that we are still facing to give robots human-like
+perception",arxiv
+http://arxiv.org/abs/2108.05962v1,2021-08-12T21:03:44Z,2021-08-12T21:03:44Z,DRQN-based 3D Obstacle Avoidance with a Limited Field of View,"In this paper, we propose a map-based end-to-end DRL approach for
+three-dimensional (3D) obstacle avoidance in a partially observed environment,
+which is applied to achieve autonomous navigation for an indoor mobile robot
+using a depth camera with a narrow field of view. We first train a neural
+network with LSTM units in a 3D simulator of mobile robots to approximate the
+Q-value function in double DRQN. We also use a curriculum learning strategy to
+accelerate and stabilize the training process. Then we deploy the trained model
+to a real robot to perform 3D obstacle avoidance in its navigation. We evaluate
+the proposed approach both in the simulated environment and on a robot in the
+real world. The experimental results show that the approach is efficient and
+easy to be deployed, and it performs well for 3D obstacle avoidance with a
+narrow observation angle, which outperforms other existing DRL-based models by
+15.5% on success rate.",arxiv
+http://arxiv.org/abs/2010.10903v1,2020-10-21T11:22:30Z,2020-10-21T11:22:30Z,"Visual Navigation in Real-World Indoor Environments Using End-to-End
+  Deep Reinforcement Learning","Visual navigation is essential for many applications in robotics, from
+manipulation, through mobile robotics to automated driving. Deep reinforcement
+learning (DRL) provides an elegant map-free approach integrating image
+processing, localization, and planning in one module, which can be trained and
+therefore optimized for a given environment. However, to date, DRL-based visual
+navigation was validated exclusively in simulation, where the simulator
+provides information that is not available in the real world, e.g., the robot's
+position or image segmentation masks. This precludes the use of the learned
+policy on a real robot. Therefore, we propose a novel approach that enables a
+direct deployment of the trained policy on real robots. We have designed visual
+auxiliary tasks, a tailored reward scheme, and a new powerful simulator to
+facilitate domain randomization. The policy is fine-tuned on images collected
+from real-world environments. We have evaluated the method on a mobile robot in
+a real office environment. The training took ~30 hours on a single GPU. In 30
+navigation experiments, the robot reached a 0.3-meter neighborhood of the goal
+in more than 86.7% of cases. This result makes the proposed method directly
+applicable to tasks like mobile manipulation.",arxiv
+http://arxiv.org/abs/1804.10332v2,2018-05-16T20:35:34Z,2018-04-27T03:42:55Z,Sim-to-Real: Learning Agile Locomotion For Quadruped Robots,"Designing agile locomotion for quadruped robots often requires extensive
+expertise and tedious manual tuning. In this paper, we present a system to
+automate this process by leveraging deep reinforcement learning techniques. Our
+system can learn quadruped locomotion from scratch using simple reward signals.
+In addition, users can provide an open loop reference to guide the learning
+process when more control over the learned gait is needed. The control policies
+are learned in a physics simulator and then deployed on real robots. In
+robotics, policies trained in simulation often do not transfer to the real
+world. We narrow this reality gap by improving the physics simulator and
+learning robust policies. We improve the simulation using system
+identification, developing an accurate actuator model and simulating latency.
+We learn robust controllers by randomizing the physical environments, adding
+perturbations and designing a compact observation space. We evaluate our system
+on two agile locomotion gaits: trotting and galloping. After learning in
+simulation, a quadruped robot can successfully perform both gaits in the real
+world.",arxiv
+http://arxiv.org/abs/1611.01235v1,2016-11-04T01:10:07Z,2016-11-04T01:10:07Z,"A Self-Driving Robot Using Deep Convolutional Neural Networks on
+  Neuromorphic Hardware","Neuromorphic computing is a promising solution for reducing the size, weight
+and power of mobile embedded systems. In this paper, we introduce a realization
+of such a system by creating the first closed-loop battery-powered
+communication system between an IBM TrueNorth NS1e and an autonomous
+Android-Based Robotics platform. Using this system, we constructed a dataset of
+path following behavior by manually driving the Android-Based robot along steep
+mountain trails and recording video frames from the camera mounted on the robot
+along with the corresponding motor commands. We used this dataset to train a
+deep convolutional neural network implemented on the TrueNorth NS1e. The NS1e,
+which was mounted on the robot and powered by the robot's battery, resulted in
+a self-driving robot that could successfully traverse a steep mountain path in
+real time. To our knowledge, this represents the first time the TrueNorth NS1e
+neuromorphic chip has been embedded on a mobile platform under closed-loop
+control.",arxiv
+http://arxiv.org/abs/2012.01913v1,2020-12-03T13:51:05Z,2020-12-03T13:51:05Z,Transfer Learning as an Enabler of the Intelligent Digital Twin,"Digital Twins have been described as beneficial in many areas, such as
+virtual commissioning, fault prediction or reconfiguration planning. Equipping
+Digital Twins with artificial intelligence functionalities can greatly expand
+those beneficial applications or open up altogether new areas of application,
+among them cross-phase industrial transfer learning. In the context of machine
+learning, transfer learning represents a set of approaches that enhance
+learning new tasks based upon previously acquired knowledge. Here, knowledge is
+transferred from one lifecycle phase to another in order to reduce the amount
+of data or time needed to train a machine learning algorithm. Looking at common
+challenges in developing and deploying industrial machinery with deep learning
+functionalities, embracing this concept would offer several advantages: Using
+an intelligent Digital Twin, learning algorithms can be designed, configured
+and tested in the design phase before the physical system exists and real data
+can be collected. Once real data becomes available, the algorithms must merely
+be fine-tuned, significantly speeding up commissioning and reducing the
+probability of costly modifications. Furthermore, using the Digital Twin's
+simulation capabilities virtually injecting rare faults in order to train an
+algorithm's response or using reinforcement learning, e.g. to teach a robot,
+become practically feasible. This article presents several cross-phase
+industrial transfer learning use cases utilizing intelligent Digital Twins. A
+real cyber physical production system consisting of an automated welding
+machine and an automated guided vehicle equipped with a robot arm is used to
+illustrate the respective benefits.",arxiv
+http://arxiv.org/abs/2109.05795v1,2021-09-13T09:17:11Z,2021-09-13T09:17:11Z,"A Q-learning Control Method for a Soft Robotic Arm Utilizing Training
+  Data from a Rough Simulator","It is challenging to control a soft robot, where reinforcement learning
+methods have been applied with promising results. However, due to the poor
+sample efficiency, reinforcement learning methods require a large collection of
+training data, which limits their applications. In this paper, we propose a
+Q-learning controller for a physical soft robot, in which pre-trained models
+using data from a rough simulator are applied to improve the performance of the
+controller. We implement the method on our soft robot, i.e., Honeycomb
+Pneumatic Network (HPN) arm. The experiments show that the usage of pre-trained
+models can not only reduce the amount of the real-world training data, but also
+greatly improve its accuracy and convergence rate.",arxiv
+http://arxiv.org/abs/1909.07096v3,2020-08-03T07:33:28Z,2019-09-16T09:58:42Z,Virtual Reality for Robots,"This paper applies the principles of Virtual Reality (VR) to robots, rather
+than living organisms. A simulator, of either physical states or information
+states, renders outputs to custom displays that fool the robot's sensors. This
+enables a robot to experience a combination of real and virtual sensor inputs,
+combining the efficiency of simulation and the benefits of real world sensor
+inputs. Thus, the robot can be taken through targeted experiences that are more
+realistic than pure simulation, yet more feasible and controllable than pure
+real-world experiences. We define two distinctive methods for applying VR to
+robots, namely black box and white box; based on these methods we identify
+potential applications, such as testing and verification procedures that are
+better than simulation, the study of spoofing attacks and anti-spoofing
+techniques, and sample generation for machine learning. A general mathematical
+framework is presented, along with a simple experiment, detailed examples, and
+discussion of the implications.",arxiv
+http://arxiv.org/abs/1612.00429v2,2017-03-09T19:46:12Z,2016-12-01T20:48:39Z,Generalizing Skills with Semi-Supervised Reinforcement Learning,"Deep reinforcement learning (RL) can acquire complex behaviors from low-level
+inputs, such as images. However, real-world applications of such methods
+require generalizing to the vast variability of the real world. Deep networks
+are known to achieve remarkable generalization when provided with massive
+amounts of labeled data, but can we provide this breadth of experience to an RL
+agent, such as a robot? The robot might continuously learn as it explores the
+world around it, even while deployed. However, this learning requires access to
+a reward function, which is often hard to measure in real-world domains, where
+the reward could depend on, for example, unknown positions of objects or the
+emotional state of the user. Conversely, it is often quite practical to provide
+the agent with reward functions in a limited set of situations, such as when a
+human supervisor is present or in a controlled setting. Can we make use of this
+limited supervision, and still benefit from the breadth of experience an agent
+might collect on its own? In this paper, we formalize this problem as
+semisupervised reinforcement learning, where the reward function can only be
+evaluated in a set of ""labeled"" MDPs, and the agent must generalize its
+behavior to the wide range of states it might encounter in a set of ""unlabeled""
+MDPs, by using experience from both settings. Our proposed method infers the
+task objective in the unlabeled MDPs through an algorithm that resembles
+inverse RL, using the agent's own prior experience in the labeled MDPs as a
+kind of demonstration of optimal behavior. We evaluate our method on
+challenging tasks that require control directly from images, and show that our
+approach can improve the generalization of a learned deep neural network policy
+by using experience for which no reward function is available. We also show
+that our method outperforms direct supervised learning of the reward.",arxiv
+http://arxiv.org/abs/1511.03791v2,2015-11-13T05:41:08Z,2015-11-12T06:19:59Z,"Towards Vision-Based Deep Reinforcement Learning for Robotic Motion
+  Control","This paper introduces a machine learning based system for controlling a
+robotic manipulator with visual perception only. The capability to autonomously
+learn robot controllers solely from raw-pixel images and without any prior
+knowledge of configuration is shown for the first time. We build upon the
+success of recent deep reinforcement learning and develop a system for learning
+target reaching with a three-joint robot manipulator using external visual
+observation. A Deep Q Network (DQN) was demonstrated to perform target reaching
+after training in simulation. Transferring the network to real hardware and
+real observation in a naive approach failed, but experiments show that the
+network works when replacing camera images with synthetic images.",arxiv
+http://arxiv.org/abs/2108.04867v1,2021-08-10T18:37:54Z,2021-08-10T18:37:54Z,AuraSense: Robot Collision Avoidance by Full Surface Proximity Detection,"Perceiving obstacles and avoiding collisions is fundamental to the safe
+operation of a robot system, particularly when the robot must operate in highly
+dynamic human environments. Proximity detection using on-robot sensors can be
+used to avoid or mitigate impending collisions. However, existing proximity
+sensing methods are orientation and placement dependent, resulting in blind
+spots even with large numbers of sensors. In this paper, we introduce the
+phenomenon of the Leaky Surface Wave (LSW), a novel sensing modality, and
+present AuraSense, a proximity detection system using the LSW. AuraSense is the
+first system to realize no-dead-spot proximity sensing for robot arms. It
+requires only a single pair of piezoelectric transducers, and can easily be
+applied to off-the-shelf robots with minimal modifications. We further
+introduce a set of signal processing techniques and a lightweight neural
+network to address the unique challenges in using the LSW for proximity
+sensing. Finally, we demonstrate a prototype system consisting of a single
+piezoelectric element pair on a robot manipulator, which validates our design.
+We conducted several micro benchmark experiments and performed more than 2000
+on-robot proximity detection trials with various potential robot arm materials,
+colliding objects, approach patterns, and robot movement patterns. AuraSense
+achieves 100% and 95.3% true positive proximity detection rates when the arm
+approaches static and mobile obstacles respectively, with a true negative rate
+over 99%, showing the real-world viability of this system.",arxiv
+http://arxiv.org/abs/2012.06413v1,2020-12-11T15:11:18Z,2020-12-11T15:11:18Z,A Vision-based Sensing Approach for a Spherical Soft Robotic Arm,"Sensory feedback is essential for the control of soft robotic systems and to
+enable deployment in a variety of different tasks. Proprioception refers to
+sensing the robot's own state and is of crucial importance in order to deploy
+soft robotic systems outside of laboratory environments, i.e. where no external
+sensing, such as motion capture systems, is available.
+  A vision-based sensing approach for a soft robotic arm made from fabric is
+presented, leveraging the high-resolution sensory feedback provided by cameras.
+No mechanical interaction between the sensor and the soft structure is required
+and consequently, the compliance of the soft system is preserved. The
+integration of a camera into an inflatable, fabric-based bellow actuator is
+discussed. Three actuators, each featuring an integrated camera, are used to
+control the spherical robotic arm and simultaneously provide sensory feedback
+of the two rotational degrees of freedom. A convolutional neural network
+architecture predicts the two angles describing the robot's orientation from
+the camera images. Ground truth data is provided by a motion capture system
+during the training phase of the supervised learning approach and its
+evaluation thereafter.
+  The camera-based sensing approach is able to provide estimates of the
+orientation in real-time with an accuracy of about one degree. The reliability
+of the sensing approach is demonstrated by using the sensory feedback to
+control the orientation of the robotic arm in closed-loop.",arxiv
+http://arxiv.org/abs/2003.11334v3,2020-11-09T09:39:59Z,2020-03-25T11:28:12Z,"ACNMP: Skill Transfer and Task Extrapolation through Learning from
+  Demonstration and Reinforcement Learning via Representation Sharing","To equip robots with dexterous skills, an effective approach is to first
+transfer the desired skill via Learning from Demonstration (LfD), then let the
+robot improve it by self-exploration via Reinforcement Learning (RL). In this
+paper, we propose a novel LfD+RL framework, namely Adaptive Conditional Neural
+Movement Primitives (ACNMP), that allows efficient policy improvement in novel
+environments and effective skill transfer between different agents. This is
+achieved through exploiting the latent representation learned by the underlying
+Conditional Neural Process (CNP) model, and simultaneous training of the model
+with supervised learning (SL) for acquiring the demonstrated trajectories and
+via RL for new trajectory discovery. Through simulation experiments, we show
+that (i) ACNMP enables the system to extrapolate to situations where pure LfD
+fails; (ii) Simultaneous training of the system through SL and RL preserves the
+shape of demonstrations while adapting to novel situations due to the shared
+representations used by both learners; (iii) ACNMP enables order-of-magnitude
+sample-efficient RL in extrapolation of reaching tasks compared to the existing
+approaches; (iv) ACNMPs can be used to implement skill transfer between robots
+having different morphology, with competitive learning speeds and importantly
+with less number of assumptions compared to the state-of-the-art approaches.
+Finally, we show the real-world suitability of ACNMPs through real robot
+experiments that involve obstacle avoidance, pick and place and pouring
+actions.",arxiv
+http://arxiv.org/abs/1808.03841v1,2018-08-11T17:33:40Z,2018-08-11T17:33:40Z,"Fully Distributed Multi-Robot Collision Avoidance via Deep Reinforcement
+  Learning for Safe and Efficient Navigation in Complex Scenarios","In this paper, we present a decentralized sensor-level collision avoidance
+policy for multi-robot systems, which shows promising results in practical
+applications. In particular, our policy directly maps raw sensor measurements
+to an agent's steering commands in terms of the movement velocity. As a first
+step toward reducing the performance gap between decentralized and centralized
+methods, we present a multi-scenario multi-stage training framework to learn an
+optimal policy. The policy is trained over a large number of robots in rich,
+complex environments simultaneously using a policy gradient based reinforcement
+learning algorithm. The learning algorithm is also integrated into a hybrid
+control framework to further improve the policy's robustness and effectiveness.
+  We validate the learned sensor-level collision avoidance policy in a variety
+of simulated and real-world scenarios with thorough performance evaluations for
+large-scale multi-robot systems. The generalization of the learned policy is
+verified in a set of unseen scenarios including the navigation of a group of
+heterogeneous robots and a large-scale scenario with 100 robots. Although the
+policy is trained using simulation data only, we have successfully deployed it
+on physical robots with shapes and dynamics characteristics that are different
+from the simulated agents, in order to demonstrate the controller's robustness
+against the sim-to-real modeling error. Finally, we show that the
+collision-avoidance policy learned from multi-robot navigation tasks provides
+an excellent solution to the safe and effective autonomous navigation for a
+single robot working in a dense real human crowd. Our learned policy enables a
+robot to make effective progress in a crowd without getting stuck. Videos are
+available at https://sites.google.com/view/hybridmrca",arxiv
+http://arxiv.org/abs/1511.03154v2,2016-02-02T18:00:54Z,2015-11-10T15:49:44Z,"Evolution of Collective Behaviors for a Real Swarm of Aquatic Surface
+  Robots","Swarm robotics is a promising approach for the coordination of large numbers
+of robots. While previous studies have shown that evolutionary robotics
+techniques can be applied to obtain robust and efficient self-organized
+behaviors for robot swarms, most studies have been conducted in simulation, and
+the few that have been conducted on real robots have been confined to
+laboratory environments. In this paper, we demonstrate for the first time a
+swarm robotics system with evolved control successfully operating in a real and
+uncontrolled environment. We evolve neural network-based controllers in
+simulation for canonical swarm robotics tasks, namely homing, dispersion,
+clustering, and monitoring. We then assess the performance of the controllers
+on a real swarm of up to ten aquatic surface robots. Our results show that the
+evolved controllers transfer successfully to real robots and achieve a
+performance similar to the performance obtained in simulation. We validate that
+the evolved controllers display key properties of swarm intelligence-based
+control, namely scalability, flexibility, and robustness on the real swarm. We
+conclude with a proof-of-concept experiment in which the swarm performs a
+complete environmental monitoring task by combining multiple evolved
+controllers.",arxiv
+http://arxiv.org/abs/2010.08054v2,2021-09-09T22:05:59Z,2020-10-15T22:38:37Z,"Pose Estimation for Robot Manipulators via Keypoint Optimization and
+  Sim-to-Real Transfer","Keypoint detection is an essential building block for many robotic
+applications like motion capture and pose estimation. Historically, keypoints
+are detected using uniquely engineered markers such as checkerboards or
+fiducials. More recently, deep learning methods have been explored as they have
+the ability to detect user-defined keypoints in a marker-less manner. However,
+different manually selected keypoints can have uneven performance when it comes
+to detection and localization. An example of this can be found on symmetric
+robotic tools where DNN detectors cannot solve the correspondence problem
+correctly. In this work, we propose a new and autonomous way to define the
+keypoint locations that overcomes these challenges. The approach involves
+finding the optimal set of keypoints on robotic manipulators for robust visual
+detection and localization. Using a robotic simulator as a medium, our
+algorithm utilizes synthetic data for DNN training, and the proposed algorithm
+is used to optimize the selection of keypoints through an iterative approach.
+The results show that when using the optimized keypoints, the detection
+performance of the DNNs improved significantly. We further use the optimized
+keypoints for real robotic applications by using domain randomization to bridge
+the reality gap between the simulator and the physical world. The physical
+world experiments show how the proposed method can be applied to the
+wide-breadth of robotic applications that require visual feedback, such as
+camera-to-robot calibration, robotic tool tracking, and end-effector pose
+estimation.",arxiv
+http://arxiv.org/abs/1904.11082v1,2019-04-24T21:41:04Z,2019-04-24T21:41:04Z,"How You Act Tells a Lot: Privacy-Leakage Attack on Deep Reinforcement
+  Learning","Machine learning has been widely applied to various applications, some of
+which involve training with privacy-sensitive data. A modest number of data
+breaches have been studied, including credit card information in natural
+language data and identities from face dataset. However, most of these studies
+focus on supervised learning models. As deep reinforcement learning (DRL) has
+been deployed in a number of real-world systems, such as indoor robot
+navigation, whether trained DRL policies can leak private information requires
+in-depth study. To explore such privacy breaches in general, we mainly propose
+two methods: environment dynamics search via genetic algorithm and candidate
+inference based on shadow policies. We conduct extensive experiments to
+demonstrate such privacy vulnerabilities in DRL under various settings. We
+leverage the proposed algorithms to infer floor plans from some trained Grid
+World navigation DRL agents with LiDAR perception. The proposed algorithm can
+correctly infer most of the floor plans and reaches an average recovery rate of
+95.83% using policy gradient trained agents. In addition, we are able to
+recover the robot configuration in continuous control environments and an
+autonomous driving simulator with high accuracy. To the best of our knowledge,
+this is the first work to investigate privacy leakage in DRL settings and we
+show that DRL-based agents do potentially leak privacy-sensitive information
+from the trained policies.",arxiv
+http://arxiv.org/abs/1610.00673v1,2016-10-03T18:54:00Z,2016-10-03T18:54:00Z,"Collective Robot Reinforcement Learning with Distributed Asynchronous
+  Guided Policy Search","In principle, reinforcement learning and policy search methods can enable
+robots to learn highly complex and general skills that may allow them to
+function amid the complexity and diversity of the real world. However, training
+a policy that generalizes well across a wide range of real-world conditions
+requires far greater quantity and diversity of experience than is practical to
+collect with a single robot. Fortunately, it is possible for multiple robots to
+share their experience with one another, and thereby, learn a policy
+collectively. In this work, we explore distributed and asynchronous policy
+learning as a means to achieve generalization and improved training times on
+challenging, real-world manipulation tasks. We propose a distributed and
+asynchronous version of Guided Policy Search and use it to demonstrate
+collective policy learning on a vision-based door opening task using four
+robots. We show that it achieves better generalization, utilization, and
+training times than the single robot alternative.",arxiv
+http://arxiv.org/abs/1603.08047v1,2016-03-25T22:13:50Z,2016-03-25T22:13:50Z,"Persistent self-supervised learning principle: from stereo to monocular
+  vision for obstacle avoidance","Self-Supervised Learning (SSL) is a reliable learning mechanism in which a
+robot uses an original, trusted sensor cue for training to recognize an
+additional, complementary sensor cue. We study for the first time in SSL how a
+robot's learning behavior should be organized, so that the robot can keep
+performing its task in the case that the original cue becomes unavailable. We
+study this persistent form of SSL in the context of a flying robot that has to
+avoid obstacles based on distance estimates from the visual cue of stereo
+vision. Over time it will learn to also estimate distances based on monocular
+appearance cues. A strategy is introduced that has the robot switch from stereo
+vision based flight to monocular flight, with stereo vision purely used as
+'training wheels' to avoid imminent collisions. This strategy is shown to be an
+effective approach to the 'feedback-induced data bias' problem as also
+experienced in learning from demonstration. Both simulations and real-world
+experiments with a stereo vision equipped AR drone 2.0 show the feasibility of
+this approach, with the robot successfully using monocular vision to avoid
+obstacles in a 5 x 5 room. The experiments show the potential of persistent SSL
+as a robust learning approach to enhance the capabilities of robots. Moreover,
+the abundant training data coming from the own sensors allows to gather large
+data sets necessary for deep learning approaches.",arxiv
+http://arxiv.org/abs/2003.08876v3,2020-08-04T10:41:38Z,2020-03-19T15:55:39Z,Learning to Fly via Deep Model-Based Reinforcement Learning,"Learning to control robots without requiring engineered models has been a
+long-term goal, promising diverse and novel applications. Yet, reinforcement
+learning has only achieved limited impact on real-time robot control due to its
+high demand of real-world interactions. In this work, by leveraging a learnt
+probabilistic model of drone dynamics, we learn a thrust-attitude controller
+for a quadrotor through model-based reinforcement learning. No prior knowledge
+of the flight dynamics is assumed; instead, a sequential latent variable model,
+used generatively and as an online filter, is learnt from raw sensory input.
+The controller and value function are optimised entirely by propagating
+stochastic analytic gradients through generated latent trajectories. We show
+that ""learning to fly"" can be achieved with less than 30 minutes of experience
+with a single drone, and can be deployed solely using onboard computational
+resources and sensors, on a self-built drone.",arxiv
+http://arxiv.org/abs/2007.13715v1,2020-07-27T17:46:59Z,2020-07-27T17:46:59Z,"Point Cloud Based Reinforcement Learning for Sim-to-Real and Partial
+  Observability in Visual Navigation","Reinforcement Learning (RL), among other learning-based methods, represents
+powerful tools to solve complex robotic tasks (e.g., actuation, manipulation,
+navigation, etc.), with the need for real-world data to train these systems as
+one of its most important limitations. The use of simulators is one way to
+address this issue, yet knowledge acquired in simulations does not work
+directly in the real-world, which is known as the sim-to-real transfer problem.
+While previous works focus on the nature of the images used as observations
+(e.g., textures and lighting), which has proven useful for a sim-to-sim
+transfer, they neglect other concerns regarding said observations, such as
+precise geometrical meanings, failing at robot-to-robot, and thus in
+sim-to-real transfers. We propose a method that learns on an observation space
+constructed by point clouds and environment randomization, generalizing among
+robots and simulators to achieve sim-to-real, while also addressing partial
+observability. We demonstrate the benefits of our methodology on the point goal
+navigation task, in which our method proves to be highly unaffected to unseen
+scenarios produced by robot-to-robot transfer, outperforms image-based
+baselines in robot-randomized experiments, and presents high performances in
+sim-to-sim conditions. Finally, we perform several experiments to validate the
+sim-to-real transfer to a physical domestic robot platform, confirming the
+out-of-the-box performance of our system.",arxiv
+http://arxiv.org/abs/1610.03518v1,2016-10-11T20:24:31Z,2016-10-11T20:24:31Z,"Transfer from Simulation to Real World through Learning Deep Inverse
+  Dynamics Model","Developing control policies in simulation is often more practical and safer
+than directly running experiments in the real world. This applies to policies
+obtained from planning and optimization, and even more so to policies obtained
+from reinforcement learning, which is often very data demanding. However, a
+policy that succeeds in simulation often doesn't work when deployed on a real
+robot. Nevertheless, often the overall gist of what the policy does in
+simulation remains valid in the real world. In this paper we investigate such
+settings, where the sequence of states traversed in simulation remains
+reasonable for the real world, even if the details of the controls are not, as
+could be the case when the key differences lie in detailed friction, contact,
+mass and geometry properties. During execution, at each time step our approach
+computes what the simulation-based control policy would do, but then, rather
+than executing these controls on the real robot, our approach computes what the
+simulation expects the resulting next state(s) will be, and then relies on a
+learned deep inverse dynamics model to decide which real-world action is most
+suitable to achieve those next states. Deep models are only as good as their
+training data, and we also propose an approach for data collection to
+(incrementally) learn the deep inverse dynamics model. Our experiments shows
+our approach compares favorably with various baselines that have been developed
+for dealing with simulation to real world model discrepancy, including output
+error control and Gaussian dynamics adaptation.",arxiv
+http://arxiv.org/abs/2012.02417v2,2020-12-07T02:34:05Z,2020-12-04T06:02:26Z,"Autonomous Navigation with Mobile Robots using Deep Learning and the
+  Robot Operating System","Autonomous navigation is a long-standing field of robotics research, which
+provides an essential capability for mobile robots to execute a series of tasks
+on the same environments performed by human everyday. In this chapter, we
+present a set of algorithms to train and deploy deep networks for autonomous
+navigation of mobile robots using the Robot Operation System (ROS). We describe
+three main steps to tackle this problem: i) collecting data in simulation
+environments using ROS and Gazebo; ii) designing deep network for autonomous
+navigation, and iii) deploying the learned policy on mobile robots in both
+simulation and real-world. Theoretically, we present deep learning
+architectures for robust navigation in normal environments (e.g., man-made
+houses, roads) and complex environments (e.g., collapsed cities, or natural
+caves). We further show that the use of visual modalities such as RGB, Lidar,
+and point cloud is essential to improve the autonomy of mobile robots. Our
+project website and demonstration video can be found at
+https://sites.google.com/site/autonomousnavigationros.",arxiv
+http://arxiv.org/abs/1607.04436v2,2017-09-19T09:31:28Z,2016-07-15T09:58:08Z,A Real-Time Deep Learning Pedestrian Detector for Robot Navigation,"A real-time Deep Learning based method for Pedestrian Detection (PD) is
+applied to the Human-Aware robot navigation problem. The pedestrian detector
+combines the Aggregate Channel Features (ACF) detector with a deep
+Convolutional Neural Network (CNN) in order to obtain fast and accurate
+performance. Our solution is firstly evaluated using a set of real images taken
+from onboard and offboard cameras and, then, it is validated in a typical robot
+navigation environment with pedestrians (two distinct experiments are
+conducted). The results on both tests show that our pedestrian detector is
+robust and fast enough to be used on robot navigation applications.",arxiv
+http://arxiv.org/abs/1702.08626v1,2017-02-28T03:16:40Z,2017-02-28T03:16:40Z,"Show, Attend and Interact: Perceivable Human-Robot Social Interaction
+  through Neural Attention Q-Network","For a safe, natural and effective human-robot social interaction, it is
+essential to develop a system that allows a robot to demonstrate the
+perceivable responsive behaviors to complex human behaviors. We introduce the
+Multimodal Deep Attention Recurrent Q-Network using which the robot exhibits
+human-like social interaction skills after 14 days of interacting with people
+in an uncontrolled real world. Each and every day during the 14 days, the
+system gathered robot interaction experiences with people through a
+hit-and-trial method and then trained the MDARQN on these experiences using
+end-to-end reinforcement learning approach. The results of interaction based
+learning indicate that the robot has learned to respond to complex human
+behaviors in a perceivable and socially acceptable manner.",arxiv
+http://arxiv.org/abs/1305.7432v1,2013-05-31T14:50:36Z,2013-05-31T14:50:36Z,"Real-world Transfer of Evolved Artificial Immune System Behaviours
+  between Small and Large Scale Robotic Platforms","In mobile robotics, a solid test for adaptation is the ability of a control
+system to function not only in a diverse number of physical environments, but
+also on a number of different robotic platforms. This paper demonstrates that a
+set of behaviours evolved in simulation on a miniature robot (epuck) can be
+transferred to a much larger-scale platform (Pioneer), both in simulation and
+in the real world. The chosen architecture uses artificial evolution of epuck
+behaviours to obtain a genetic sequence, which is then employed to seed an
+idiotypic, artificial immune system (AIS) on the Pioneers. Despite numerous
+hardware and software differences between the platforms, navigation and
+target-finding experiments show that the evolved behaviours transfer very well
+to the larger robot when the idiotypic AIS technique is used. In contrast,
+transferability is poor when reinforcement learning alone is used, which
+validates the adaptability of the chosen architecture.",arxiv
+http://arxiv.org/abs/2107.00127v1,2021-06-30T22:18:49Z,2021-06-30T22:18:49Z,"SQRP: Sensing Quality-aware Robot Programming System for Non-expert
+  Programmers","Robot programming typically makes use of a set of mechanical skills that is
+acquired by machine learning. Because there is in general no guarantee that
+machine learning produces robot programs that are free of surprising behavior,
+the safe execution of a robot program must utilize monitoring modules that take
+sensor data as inputs in real time to ensure the correctness of the skill
+execution. Owing to the fact that sensors and monitoring algorithms are usually
+subject to physical restrictions and that effective robot programming is
+sensitive to the selection of skill parameters, these considerations may lead
+to different sensor input qualities such as the view coverage of a vision
+system that determines whether a skill can be successfully deployed in
+performing a task. Choosing improper skill parameters may cause the monitoring
+modules to delay or miss the detection of important events such as a mechanical
+failure. These failures may reduce the throughput in robotic manufacturing and
+could even cause a destructive system crash. To address above issues, we
+propose a sensing quality-aware robot programming system that automatically
+computes the sensing qualities as a function of the robot's environment and
+uses the information to guide non-expert users to select proper skill
+parameters in the programming phase. We demonstrate our system framework on a
+6DOF robot arm for an object pick-up task.",arxiv
+http://arxiv.org/abs/2008.00376v1,2020-08-02T01:18:18Z,2020-08-02T01:18:18Z,"Velocity Regulation of 3D Bipedal Walking Robots with Uncertain Dynamics
+  Through Adaptive Neural Network Controller","This paper presents a neural-network based adaptive feedback control
+structure to regulate the velocity of 3D bipedal robots under dynamics
+uncertainties. Existing Hybrid Zero Dynamics (HZD)-based controllers regulate
+velocity through the implementation of heuristic regulators that do not
+consider model and environmental uncertainties, which may significantly affect
+the tracking performance of the controllers. In this paper, we address the
+uncertainties in the robot dynamics from the perspective of the reduced
+dimensional representation of virtual constraints and propose the integration
+of an adaptive neural network-based controller to regulate the robot velocity
+in the presence of model parameter uncertainties. The proposed approach yields
+improved tracking performance under dynamics uncertainties. The shallow
+adaptive neural network used in this paper does not require training a priori
+and has the potential to be implemented on the real-time robotic controller. A
+comparative simulation study of a 3D Cassie robot is presented to illustrate
+the performance of the proposed approach under various scenarios.",arxiv
+http://arxiv.org/abs/1912.04443v3,2020-06-21T20:16:28Z,2019-12-10T01:36:18Z,"AVID: Learning Multi-Stage Tasks via Pixel-Level Translation of Human
+  Videos","Robotic reinforcement learning (RL) holds the promise of enabling robots to
+learn complex behaviors through experience. However, realizing this promise for
+long-horizon tasks in the real world requires mechanisms to reduce human burden
+in terms of defining the task and scaffolding the learning process. In this
+paper, we study how these challenges can be alleviated with an automated
+robotic learning framework, in which multi-stage tasks are defined simply by
+providing videos of a human demonstrator and then learned autonomously by the
+robot from raw image observations. A central challenge in imitating human
+videos is the difference in appearance between the human and robot, which
+typically requires manual correspondence. We instead take an automated approach
+and perform pixel-level image translation via CycleGAN to convert the human
+demonstration into a video of a robot, which can then be used to construct a
+reward function for a model-based RL algorithm. The robot then learns the task
+one stage at a time, automatically learning how to reset each stage to retry it
+multiple times without human-provided resets. This makes the learning process
+largely automatic, from intuitive task specification via a video to automated
+training with minimal human intervention. We demonstrate that our approach is
+capable of learning complex tasks, such as operating a coffee machine, directly
+from raw image observations, requiring only 20 minutes to provide human
+demonstrations and about 180 minutes of robot interaction.",arxiv
+http://arxiv.org/abs/1908.10398v1,2019-08-27T18:30:49Z,2019-08-27T18:30:49Z,"A Data-Efficient Deep Learning Approach for Deployable Multimodal Social
+  Robots","The deep supervised and reinforcement learning paradigms (among others) have
+the potential to endow interactive multimodal social robots with the ability of
+acquiring skills autonomously. But it is still not very clear yet how they can
+be best deployed in real world applications. As a step in this direction, we
+propose a deep learning-based approach for efficiently training a humanoid
+robot to play multimodal games---and use the game of `Noughts & Crosses' with
+two variants as a case study. Its minimum requirements for learning to perceive
+and interact are based on a few hundred example images, a few example
+multimodal dialogues and physical demonstrations of robot manipulation, and
+automatic simulations. In addition, we propose novel algorithms for robust
+visual game tracking and for competitive policy learning with high winning
+rates, which substantially outperform DQN-based baselines. While an automatic
+evaluation shows evidence that the proposed approach can be easily extended to
+new games with competitive robot behaviours, a human evaluation with 130 humans
+playing with the Pepper robot confirms that highly accurate visual perception
+is required for successful game play.",arxiv
+http://arxiv.org/abs/2102.03705v1,2021-02-07T03:14:12Z,2021-02-07T03:14:12Z,"An Analytic Layer-wise Deep Learning Framework with Applications to
+  Robotics","Deep learning has achieved great success in many applications, but it has
+been less well analyzed from the theoretical perspective. To deploy deep
+learning algorithms in a predictable and stable manner is particularly
+important in robotics, as robots are active agents that need to interact safely
+with the physical world. This paper presents an analytic deep learning
+framework for fully connected neural networks, which can be applied for both
+regression problems and classification problems. Examples for regression and
+classification problems include online robot control and robot vision. We
+present two layer-wise learning algorithms such that the convergence of the
+learning systems can be analyzed. Firstly, an inverse layer-wise learning
+algorithm for multilayer networks with convergence analysis for each layer is
+presented to understand the problems of layer-wise deep learning. Secondly, a
+forward progressive learning algorithm where the deep networks are built
+progressively by using single hidden layer networks is developed to achieve
+better accuracy. It is shown that the progressive learning method can be used
+for fine-tuning of weights from convergence point of view. The effectiveness of
+the proposed framework is illustrated based on classical benchmark recognition
+tasks using the MNIST and CIFAR-10 datasets and the results show a good balance
+between performance and explainability. The proposed method is subsequently
+applied for online learning of robot kinematics and experimental results on
+kinematic control of UR5e robot with unknown model are presented.",arxiv
+http://arxiv.org/abs/2011.08811v2,2020-12-10T02:25:19Z,2020-11-17T18:14:21Z,"Circus ANYmal: A Quadruped Learning Dexterous Manipulation with Its
+  Limbs","Quadrupedal robots are skillful at locomotion tasks while lacking
+manipulation skills, not to mention dexterous manipulation abilities. Inspired
+by the animal behavior and the duality between multi-legged locomotion and
+multi-fingered manipulation, we showcase a circus ball challenge on a
+quadrupedal robot, ANYmal. We employ a model-free reinforcement learning
+approach to train a deep policy that enables the robot to balance and
+manipulate a light-weight ball robustly using its limbs without any contact
+measurement sensor. The policy is trained in the simulation, in which we
+randomize many physical properties with additive noise and inject random
+disturbance force during manipulation, and achieves zero-shot deployment on the
+real robot without any adjustment. In the hardware experiments, dynamic
+performance is achieved with a maximum rotation speed of 15 deg/s, and robust
+recovery is showcased under external poking. To our best knowledge, it is the
+first work that demonstrates the dexterous dynamic manipulation on a real
+quadrupedal robot.",arxiv
+http://arxiv.org/abs/1904.01698v1,2019-04-02T22:55:43Z,2019-04-02T22:55:43Z,VRGym: A Virtual Testbed for Physical and Interactive AI,"We propose VRGym, a virtual reality testbed for realistic human-robot
+interaction. Different from existing toolkits and virtual reality environments,
+the VRGym emphasizes on building and training both physical and interactive
+agents for robotics, machine learning, and cognitive science. VRGym leverages
+mechanisms that can generate diverse 3D scenes with high realism through
+physics-based simulation. We demonstrate that VRGym is able to (i) collect
+human interactions and fine manipulations, (ii) accommodate various robots with
+a ROS bridge, (iii) support experiments for human-robot interaction, and (iv)
+provide toolkits for training the state-of-the-art machine learning algorithms.
+We hope VRGym can help to advance general-purpose robotics and machine learning
+agents, as well as assisting human studies in the field of cognitive science.",arxiv
+http://arxiv.org/abs/1808.07921v3,2019-04-19T19:02:53Z,2018-08-23T19:49:53Z,"SOTER: A Runtime Assurance Framework for Programming Safe Robotics
+  Systems","The recent drive towards achieving greater autonomy and intelligence in
+robotics has led to high levels of complexity. Autonomous robots increasingly
+depend on third party off-the-shelf components and complex machine-learning
+techniques. This trend makes it challenging to provide strong design-time
+certification of correct operation.
+  To address these challenges, we present SOTER, a robotics programming
+framework with two key components: (1) a programming language for implementing
+and testing high-level reactive robotics software and (2) an integrated runtime
+assurance (RTA) system that helps enable the use of uncertified components,
+while still providing safety guarantees. SOTER provides language primitives to
+declaratively construct a RTA module consisting of an advanced,
+high-performance controller (uncertified), a safe, lower-performance controller
+(certified), and the desired safety specification. The framework provides a
+formal guarantee that a well-formed RTA module always satisfies the safety
+specification, without completely sacrificing performance by using higher
+performance uncertified components whenever safe. SOTER allows the complex
+robotics software stack to be constructed as a composition of RTA modules,
+where each uncertified component is protected using a RTA module.
+  To demonstrate the efficacy of our framework, we consider a real-world
+case-study of building a safe drone surveillance system. Our experiments both
+in simulation and on actual drones show that the SOTER-enabled RTA ensures the
+safety of the system, including when untrusted third-party components have bugs
+or deviate from the desired behavior.",arxiv
+http://arxiv.org/abs/2011.15100v1,2020-11-30T18:32:20Z,2020-11-30T18:32:20Z,"From the DESK (Dexterous Surgical Skill) to the Battlefield -- A
+  Robotics Exploratory Study","Short response time is critical for future military medical operations in
+austere settings or remote areas. Such effective patient care at the point of
+injury can greatly benefit from the integration of semi-autonomous robotic
+systems. To achieve autonomy, robots would require massive libraries of
+maneuvers. While this is possible in controlled settings, obtaining surgical
+data in austere settings can be difficult. Hence, in this paper, we present the
+Dexterous Surgical Skill (DESK) database for knowledge transfer between robots.
+The peg transfer task was selected as it is one of 6 main tasks of laparoscopic
+training. Also, we provide a ML framework to evaluate novel transfer learning
+methodologies on this database. The collected DESK dataset comprises a set of
+surgical robotic skills using the four robotic platforms: Taurus II, simulated
+Taurus II, YuMi, and the da Vinci Research Kit. Then, we explored two different
+learning scenarios: no-transfer and domain-transfer. In the no-transfer
+scenario, the training and testing data were obtained from the same domain;
+whereas in the domain-transfer scenario, the training data is a blend of
+simulated and real robot data that is tested on a real robot. Using simulation
+data enhances the performance of the real robot where limited or no real data
+is available. The transfer model showed an accuracy of 81% for the YuMi robot
+when the ratio of real-to-simulated data was 22%-78%. For Taurus II and da
+Vinci robots, the model showed an accuracy of 97.5% and 93% respectively,
+training only with simulation data. Results indicate that simulation can be
+used to augment training data to enhance the performance of models in real
+scenarios. This shows the potential for future use of surgical data from the
+operating room in deployable surgical robots in remote areas.",arxiv
+http://arxiv.org/abs/2001.11710v2,2020-11-13T04:38:34Z,2020-01-31T08:50:22Z,"Context-Aware Deep Q-Network for Decentralized Cooperative
+  Reconnaissance by a Robotic Swarm","One of the crucial problems in robotic swarm-based operation is to search and
+neutralize heterogeneous targets in an unknown and uncertain environment,
+without any communication within the swarm. Here, some targets can be
+neutralized by a single robot, while others need multiple robots in a
+particular sequence to neutralize them. The complexity in the problem arises
+due to the scalability and information uncertainty, which restricts the robot's
+awareness of the swarm and the target distribution. In this paper, this problem
+is addressed by proposing a novel Context-Aware Deep Q-Network (CA-DQN)
+framework to obtain communication free cooperation between the robots in the
+swarm. Each robot maintains an adaptive grid representation of the vicinity
+with the context information embedded into it to keep the swarm intact while
+searching and neutralizing the targets. The problem formulation uses a
+reinforcement learning framework where two Deep Q-Networks (DQNs) handle
+'conflict' and 'conflict-free' scenarios separately. The self-play-in-based
+approach is used to determine the optimal policy for the DQNs. Monte-Carlo
+simulations and comparison studies with a state-of-the-art coalition formation
+algorithm are performed to verify the performance of CA-DQN with varying
+environmental parameters. The results show that the approach is invariant to
+the number of detected targets and the number of robots in the swarm. The paper
+also presents the real-time implementation of CA-DQN for different scenarios
+using ground robots in a laboratory environment to demonstrate the working of
+CA-DQN with low-power computing devices.",arxiv
+http://arxiv.org/abs/2102.05382v2,2021-02-23T21:45:49Z,2021-02-10T11:11:08Z,"Learning Interaction-Aware Trajectory Predictions for Decentralized
+  Multi-Robot Motion Planning in Dynamic Environments","This paper presents a data-driven decentralized trajectory optimization
+approach for multi-robot motion planning in dynamic environments. When
+navigating in a shared space, each robot needs accurate motion predictions of
+neighboring robots to achieve predictive collision avoidance. These motion
+predictions can be obtained among robots by sharing their future planned
+trajectories with each other via communication. However, such communication may
+not be available nor reliable in practice. In this paper, we introduce a novel
+trajectory prediction model based on recurrent neural networks (RNN) that can
+learn multi-robot motion behaviors from demonstrated trajectories generated
+using a centralized sequential planner. The learned model can run efficiently
+online for each robot and provide interaction-aware trajectory predictions of
+its neighbors based on observations of their history states. We then
+incorporate the trajectory prediction model into a decentralized model
+predictive control (MPC) framework for multi-robot collision avoidance.
+Simulation results show that our decentralized approach can achieve a
+comparable level of performance to a centralized planner while being
+communication-free and scalable to a large number of robots. We also validate
+our approach with a team of quadrotors in real-world experiments.",arxiv
+http://arxiv.org/abs/1802.00285v4,2018-10-28T04:56:58Z,2018-02-01T13:52:38Z,Virtual-to-Real: Learning to Control in Visual Semantic Segmentation,"Collecting training data from the physical world is usually time-consuming
+and even dangerous for fragile robots, and thus, recent advances in robot
+learning advocate the use of simulators as the training platform.
+Unfortunately, the reality gap between synthetic and real visual data prohibits
+direct migration of the models trained in virtual worlds to the real world.
+This paper proposes a modular architecture for tackling the virtual-to-real
+problem. The proposed architecture separates the learning model into a
+perception module and a control policy module, and uses semantic image
+segmentation as the meta representation for relating these two modules. The
+perception module translates the perceived RGB image to semantic image
+segmentation. The control policy module is implemented as a deep reinforcement
+learning agent, which performs actions based on the translated image
+segmentation. Our architecture is evaluated in an obstacle avoidance task and a
+target following task. Experimental results show that our architecture
+significantly outperforms all of the baseline methods in both virtual and real
+environments, and demonstrates a faster learning curve than them. We also
+present a detailed analysis for a variety of variant configurations, and
+validate the transferability of our modular architecture.",arxiv
+http://arxiv.org/abs/2107.01281v2,2021-07-12T15:26:57Z,2021-07-02T21:10:35Z,Prescient teleoperation of humanoid robots,"Humanoid robots could be versatile and intuitive human avatars that operate
+remotely in inaccessible places: the robot could reproduce in the remote
+location the movements of an operator equipped with a wearable motion capture
+device while sending visual feedback to the operator. While substantial
+progress has been made on transferring (""retargeting"") human motions to
+humanoid robots, a major problem preventing the deployment of such systems in
+real applications is the presence of communication delays between the human
+input and the feedback from the robot: even a few hundred milliseconds of delay
+can irreversibly disturb the operator, let alone a few seconds. To overcome
+these delays, we introduce a system in which a humanoid robot executes commands
+before it actually receives them, so that the visual feedback appears to be
+synchronized to the operator, whereas the robot executed the commands in the
+past. To do so, the robot continuously predicts future commands by querying a
+machine learning model that is trained on past trajectories and conditioned on
+the last received commands. In our experiments, an operator was able to
+successfully control a humanoid robot (32 degrees of freedom) with stochastic
+delays up to 2 seconds in several whole-body manipulation tasks, including
+reaching different targets, picking up, and placing a box at distinct
+locations.",arxiv
+http://arxiv.org/abs/2007.00487v3,2020-12-08T17:08:29Z,2020-07-01T13:44:33Z,"Continual Learning: Tackling Catastrophic Forgetting in Deep Neural
+  Networks with Replay Processes","Humans learn all their life long. They accumulate knowledge from a sequence
+of learning experiences and remember the essential concepts without forgetting
+what they have learned previously. Artificial neural networks struggle to learn
+similarly. They often rely on data rigorously preprocessed to learn solutions
+to specific problems such as classification or regression. In particular, they
+forget their past learning experiences if trained on new ones. Therefore,
+artificial neural networks are often inept to deal with real-life settings such
+as an autonomous-robot that has to learn on-line to adapt to new situations and
+overcome new problems without forgetting its past learning-experiences.
+Continual learning (CL) is a branch of machine learning addressing this type of
+problem. Continual algorithms are designed to accumulate and improve knowledge
+in a curriculum of learning-experiences without forgetting. In this thesis, we
+propose to explore continual algorithms with replay processes. Replay processes
+gather together rehearsal methods and generative replay methods. Generative
+Replay consists of regenerating past learning experiences with a generative
+model to remember them. Rehearsal consists of saving a core-set of samples from
+past learning experiences to rehearse them later. The replay processes make
+possible a compromise between optimizing the current learning objective and the
+past ones enabling learning without forgetting in sequences of tasks settings.
+We show that they are very promising methods for continual learning. Notably,
+they enable the re-evaluation of past data with new knowledge and the
+confrontation of data from different learning-experiences. We demonstrate their
+ability to learn continually through unsupervised learning, supervised learning
+and reinforcement learning tasks.",arxiv
+http://arxiv.org/abs/1709.08945v1,2017-09-26T11:26:08Z,2017-09-26T11:26:08Z,"Gesture-based Human-robot Interaction for Field Programmable Autonomous
+  Underwater Robots","The uncertainty and variability of underwater environment propose the request
+to control underwater robots in real time and dynamically, especially in the
+scenarios where human and robots need to work collaboratively in the field.
+However, the underwater environment imposes harsh restrictions on the
+application of typical control and communication methods. Considering that
+gestures are a natural and efficient interactive way for human, we, utilizing
+convolution neural network, implement a real-time gesture-based recognition
+system, who can recognize 50 kinds of gestures from images captured by one
+normal monocular camera, and apply this recognition system in human and
+underwater robot interaction. We design A Flexible and Extendable Interaction
+Scheme (AFEIS) through which underwater robots can be programmed in situ
+underwater by human operators using customized gesture-based sign language.
+This paper elaborates the design of gesture recognition system and AFEIS, and
+presents our field trial results when applying this system and scheme on
+underwater robots.",arxiv
+http://arxiv.org/abs/2001.02366v2,2020-06-12T01:04:07Z,2020-01-08T04:32:10Z,What can robotics research learn from computer vision research?,"The computer vision and robotics research communities are each strong.
+However progress in computer vision has become turbo-charged in recent years
+due to big data, GPU computing, novel learning algorithms and a very effective
+research methodology. By comparison, progress in robotics seems slower. It is
+true that robotics came later to exploring the potential of learning -- the
+advantages over the well-established body of knowledge in dynamics, kinematics,
+planning and control is still being debated, although reinforcement learning
+seems to offer real potential. However, the rapid development of computer
+vision compared to robotics cannot be only attributed to the former's adoption
+of deep learning. In this paper, we argue that the gains in computer vision are
+due to research methodology -- evaluation under strict constraints versus
+experiments; bold numbers versus videos.",arxiv
+http://arxiv.org/abs/2103.03793v2,2021-09-13T12:48:02Z,2021-03-05T16:50:57Z,"Learning Collision-free and Torque-limited Robot Trajectories based on
+  Alternative Safe Behaviors","This paper presents an approach to learn online generation of collision-free
+and torque-limited robot trajectories. In order to generate future motions, a
+neural network is periodically invoked. Based on the current kinematic state of
+the robot and the network prediction, a trajectory for the current time
+interval can be calculated. The main idea of our paper is to execute the
+predicted motion only if a collision-free and torque-limited way to continue
+the trajectory is known. In practice, the motion predicted for the current time
+interval is extended by a braking trajectory and simulated using a physics
+engine. If the simulated trajectory complies with all safety constraints, the
+predicted motion is carried out. Otherwise, the braking trajectory calculated
+in the previous time interval serves as an alternative safe behavior. Given a
+task-specific reward function, the neural network is trained using
+reinforcement learning. The design of the action space used for reinforcement
+learning ensures that all predicted trajectories comply with kinematic joint
+limits. For our evaluation, simulated industrial robots and humanoid robots are
+trained to reach as many randomly placed target points as possible. We show
+that our method reliably prevents collisions with static obstacles and
+collisions between the robot arms, while generating motions that respect both
+torque limits and kinematic joint limits. Experiments with a real robot
+demonstrate that safe trajectories can be generated in real-time.",arxiv
+http://arxiv.org/abs/2006.04343v1,2020-06-08T03:53:54Z,2020-06-08T03:53:54Z,"Deep Neural Network Based Real-time Kiwi Fruit Flower Detection in an
+  Orchard Environment","In this paper, we present a novel approach to kiwi fruit flower detection
+using Deep Neural Networks (DNNs) to build an accurate, fast, and robust
+autonomous pollination robot system. Recent work in deep neural networks has
+shown outstanding performance on object detection tasks in many areas. Inspired
+this, we aim for exploiting DNNs for kiwi fruit flower detection and present
+intensive experiments and their analysis on two state-of-the-art object
+detectors; Faster R-CNN and Single Shot Detector (SSD) Net, and feature
+extractors; Inception Net V2 and NAS Net with real-world orchard datasets. We
+also compare those approaches to find an optimal model which is suitable for a
+real-time agricultural pollination robot system in terms of accuracy and
+processing speed. We perform experiments with dataset collected from different
+seasons and locations (spatio-temporal consistency) in order to demonstrate the
+performance of the generalized model. The proposed system demonstrates
+promising results of 0.919, 0.874, and 0.889 for precision, recall, and
+F1-score respectively on our real-world dataset, and the performance satisfies
+the requirement for deploying the system onto an autonomous pollination
+robotics system.",arxiv
+http://arxiv.org/abs/1912.08116v1,2019-12-17T16:18:32Z,2019-12-17T16:18:32Z,When Your Robot Breaks: Active Learning During Plant Failure,"Detecting and adapting to catastrophic failures in robotic systems requires a
+robot to learn its new dynamics quickly and safely to best accomplish its
+goals. To address this challenging problem, we propose probabilistically-safe,
+online learning techniques to infer the altered dynamics of a robot at the
+moment a failure (e.g., physical damage) occurs. We combine model predictive
+control and active learning within a chance-constrained optimization framework
+to safely and efficiently learn the new plant model of the robot. We leverage a
+neural network for function approximation in learning the latent dynamics of
+the robot under failure conditions. Our framework generalizes to various damage
+conditions while being computationally light-weight to advance real-time
+deployment. We empirically validate within a virtual environment that we can
+regain control of a severely damaged aircraft in seconds and require only 0.1
+seconds to find safe, information-rich trajectories, outperforming
+state-of-the-art approaches.",arxiv
+http://arxiv.org/abs/2008.13585v1,2020-08-26T14:03:25Z,2020-08-26T14:03:25Z,At Your Service: Coffee Beans Recommendation From a Robot Assistant,"With advances in the field of machine learning, precisely algorithms for
+recommendation systems, robot assistants are envisioned to become more present
+in the hospitality industry. Additionally, the COVID-19 pandemic has also
+highlighted the need to have more service robots in our everyday lives, to
+minimise the risk of human to-human transmission. One such example would be
+coffee shops, which have become intrinsic to our everyday lives. However,
+serving an excellent cup of coffee is not a trivial feat as a coffee blend
+typically comprises rich aromas, indulgent and unique flavours and a lingering
+aftertaste. Our work addresses this by proposing a computational model which
+recommends optimal coffee beans resulting from the user's preferences.
+Specifically, given a set of coffee bean properties (objective features), we
+apply different supervised learning techniques to predict coffee qualities
+(subjective features). We then consider an unsupervised learning method to
+analyse the relationship between coffee beans in the subjective feature space.
+Evaluated on a real coffee beans dataset based on digitised reviews, our
+results illustrate that the proposed computational model gives up to 92.7
+percent recommendation accuracy for coffee beans prediction. From this, we
+propose how this computational model can be deployed on a service robot to
+reliably predict customers' coffee bean preferences, starting from the user
+inputting their coffee preferences to the robot recommending the coffee beans
+that best meet the user's likings.",arxiv
+http://arxiv.org/abs/1707.01489v1,2017-07-05T17:42:42Z,2017-07-05T17:42:42Z,Creative Robot Dance with Variational Encoder,"What we appreciate in dance is the ability of people to sponta- neously
+improvise new movements and choreographies, sur- rendering to the music rhythm,
+being inspired by the cur- rent perceptions and sensations and by previous
+experiences, deeply stored in their memory. Like other human abilities, this,
+of course, is challenging to reproduce in an artificial entity such as a robot.
+Recent generations of anthropomor- phic robots, the so-called humanoids,
+however, exhibit more and more sophisticated skills and raised the interest in
+robotic communities to design and experiment systems devoted to automatic dance
+generation. In this work, we highlight the importance to model a computational
+creativity behavior in dancing robots to avoid a mere execution of
+preprogrammed dances. In particular, we exploit a deep learning approach that
+allows a robot to generate in real time new dancing move- ments according to to
+the listened music.",arxiv
+http://arxiv.org/abs/1810.04941v2,2018-10-16T12:04:43Z,2018-10-11T10:20:52Z,Online Visual Robot Tracking and Identification using Deep LSTM Networks,"Collaborative robots working on a common task are necessary for many
+applications. One of the challenges for achieving collaboration in a team of
+robots is mutual tracking and identification. We present a novel pipeline for
+online visionbased detection, tracking and identification of robots with a
+known and identical appearance. Our method runs in realtime on the limited
+hardware of the observer robot. Unlike previous works addressing robot tracking
+and identification, we use a data-driven approach based on recurrent neural
+networks to learn relations between sequential inputs and outputs. We formulate
+the data association problem as multiple classification problems. A deep LSTM
+network was trained on a simulated dataset and fine-tuned on small set of real
+data. Experiments on two challenging datasets, one synthetic and one real,
+which include long-term occlusions, show promising results.",arxiv
+http://arxiv.org/abs/1803.02007v1,2018-03-06T04:01:37Z,2018-03-06T04:01:37Z,"Occupancy Map Prediction Using Generative and Fully Convolutional
+  Networks for Vehicle Navigation","Fast, collision-free motion through unknown environments remains a
+challenging problem for robotic systems. In these situations, the robot's
+ability to reason about its future motion is often severely limited by sensor
+field of view (FOV). By contrast, biological systems routinely make decisions
+by taking into consideration what might exist beyond their FOV based on prior
+experience. In this paper, we present an approach for predicting occupancy map
+representations of sensor data for future robot motions using deep neural
+networks. We evaluate several deep network architectures, including purely
+generative and adversarial models. Testing on both simulated and real
+environments we demonstrated performance both qualitatively and quantitatively,
+with SSIM similarity measure up to 0.899. We showed that it is possible to make
+predictions about occupied space beyond the physical robot's FOV from simulated
+training data. In the future, this method will allow robots to navigate through
+unknown environments in a faster, safer manner.",arxiv
+http://arxiv.org/abs/1711.10137v2,2017-11-29T02:56:39Z,2017-11-28T06:03:14Z,"One-Shot Reinforcement Learning for Robot Navigation with Interactive
+  Replay","Recently, model-free reinforcement learning algorithms have been shown to
+solve challenging problems by learning from extensive interaction with the
+environment. A significant issue with transferring this success to the robotics
+domain is that interaction with the real world is costly, but training on
+limited experience is prone to overfitting. We present a method for learning to
+navigate, to a fixed goal and in a known environment, on a mobile robot. The
+robot leverages an interactive world model built from a single traversal of the
+environment, a pre-trained visual feature encoder, and stochastic environmental
+augmentation, to demonstrate successful zero-shot transfer under real-world
+environmental variations without fine-tuning.",arxiv
+http://arxiv.org/abs/1702.06329v1,2017-02-21T11:07:27Z,2017-02-21T11:07:27Z,"Towards a Common Implementation of Reinforcement Learning for Multiple
+  Robotic Tasks","Mobile robots are increasingly being employed for performing complex tasks in
+dynamic environments. Reinforcement learning (RL) methods are recognized to be
+promising for specifying such tasks in a relatively simple manner. However, the
+strong dependency between the learning method and the task to learn is a
+well-known problem that restricts practical implementations of RL in robotics,
+often requiring major modifications of parameters and adding other techniques
+for each particular task. In this paper we present a practical core
+implementation of RL which enables the learning process for multiple robotic
+tasks with minimal per-task tuning or none. Based on value iteration methods,
+this implementation includes a novel approach for action selection, called
+Q-biased softmax regression (QBIASSR), which avoids poor performance of the
+learning process when the robot reaches new unexplored states. Our approach
+takes advantage of the structure of the state space by attending the physical
+variables involved (e.g., distances to obstacles, X,Y,{\theta} pose, etc.),
+thus experienced sets of states may favor the decision-making process of
+unexplored or rarely-explored states. This improvement has a relevant role in
+reducing the tuning of the algorithm for particular tasks. Experiments with
+real and simulated robots, performed with the software framework also
+introduced here, show that our implementation is effectively able to learn
+different robotic tasks without tuning the learning method. Results also
+suggest that the combination of true online SARSA({\lambda}) with QBIASSR can
+outperform the existing RL core algorithms in low-dimensional robotic tasks.",arxiv
+http://arxiv.org/abs/2003.01156v2,2020-07-31T19:10:10Z,2020-03-02T19:34:07Z,Real-World Human-Robot Collaborative Reinforcement Learning,"The intuitive collaboration of humans and intelligent robots (embodied AI) in
+the real-world is an essential objective for many desirable applications of
+robotics. Whilst there is much research regarding explicit communication, we
+focus on how humans and robots interact implicitly, on motor adaptation level.
+We present a real-world setup of a human-robot collaborative maze game,
+designed to be non-trivial and only solvable through collaboration, by limiting
+the actions to rotations of two orthogonal axes, and assigning each axes to one
+player. This results in neither the human nor the agent being able to solve the
+game on their own. We use deep reinforcement learning for the control of the
+robotic agent, and achieve results within 30 minutes of real-world play,
+without any type of pre-training. We then use this setup to perform systematic
+experiments on human/agent behaviour and adaptation when co-learning a policy
+for the collaborative game. We present results on how co-policy learning occurs
+over time between the human and the robotic agent resulting in each
+participant's agent serving as a representation of how they would play the
+game. This allows us to relate a person's success when playing with different
+agents than their own, by comparing the policy of the agent with that of their
+own agent.",arxiv
+http://arxiv.org/abs/1706.01977v1,2017-06-06T21:02:46Z,2017-06-06T21:02:46Z,"From the Lab to the Desert: Fast Prototyping and Learning of Robot
+  Locomotion","We present a methodology for fast prototyping of morphologies and controllers
+for robot locomotion. Going beyond simulation-based approaches, we argue that
+the form and function of a robot, as well as their interplay with real-world
+environmental conditions are critical. Hence, fast design and learning cycles
+are necessary to adapt robot shape and behavior to their environment. To this
+end, we present a combination of laminate robot manufacturing and
+sample-efficient reinforcement learning. We leverage this methodology to
+conduct an extensive robot learning experiment. Inspired by locomotion in sea
+turtles, we design a low-cost crawling robot with variable, interchangeable
+fins. Learning is performed using both bio-inspired and original fin designs in
+an artificial indoor environment as well as a natural environment in the
+Arizona desert. The findings of this study show that static policies developed
+in the laboratory do not translate to effective locomotion strategies in
+natural environments. In contrast to that, sample-efficient reinforcement
+learning can help to rapidly accommodate changes in the environment or the
+robot.",arxiv
+http://arxiv.org/abs/1811.02213v1,2018-11-06T08:05:24Z,2018-11-06T08:05:24Z,"Hybrid Approach to Automation, RPA and Machine Learning: a Method for
+  the Human-centered Design of Software Robots","One of the more prominent trends within Industry 4.0 is the drive to employ
+Robotic Process Automation (RPA), especially as one of the elements of the Lean
+approach. The full implementation of RPA is riddled with challenges relating
+both to the reality of everyday business operations, from SMEs to SSCs and
+beyond, and the social effects of the changing job market. To successfully
+address these points there is a need to develop a solution that would adjust to
+the existing business operations and at the same time lower the negative social
+impact of the automation process.
+  To achieve these goals we propose a hybrid, human-centered approach to the
+development of software robots. This design and implementation method combines
+the Living Lab approach with empowerment through participatory design to
+kick-start the co-development and co-maintenance of hybrid software robots
+which, supported by variety of AI methods and tools, including interactive and
+collaborative ML in the cloud, transform menial job posts into higher-skilled
+positions, allowing former employees to stay on as robot co-designers and
+maintainers, i.e. as co-programmers who supervise the machine learning
+processes with the use of tailored high-level RPA Domain Specific Languages
+(DSLs) to adjust the functioning of the robots and maintain operational
+flexibility.",arxiv
+http://arxiv.org/abs/2012.12142v1,2020-12-22T16:25:12Z,2020-12-22T16:25:12Z,High-Speed Robot Navigation using Predicted Occupancy Maps,"Safe and high-speed navigation is a key enabling capability for real world
+deployment of robotic systems. A significant limitation of existing approaches
+is the computational bottleneck associated with explicit mapping and the
+limited field of view (FOV) of existing sensor technologies. In this paper, we
+study algorithmic approaches that allow the robot to predict spaces extending
+beyond the sensor horizon for robust planning at high speeds. We accomplish
+this using a generative neural network trained from real-world data without
+requiring human annotated labels. Further, we extend our existing control
+algorithms to support leveraging the predicted spaces to improve collision-free
+planning and navigation at high speeds. Our experiments are conducted on a
+physical robot based on the MIT race car using an RGBD sensor where were able
+to demonstrate improved performance at 4 m/s compared to a controller not
+operating on predicted regions of the map.",arxiv

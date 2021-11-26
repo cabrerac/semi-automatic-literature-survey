@@ -1,0 +1,1609 @@
+id,updated,published,title,summary,database
+http://arxiv.org/abs/1912.02102v1,2019-12-03T02:11:50Z,2019-12-03T02:11:50Z,"Artificial Intelligence for Low-Resource Communities: Influence
+  Maximization in an Uncertain World","The potential of Artificial Intelligence (AI) to tackle challenging problems
+that afflict society is enormous, particularly in the areas of healthcare,
+conservation and public safety and security. Many problems in these domains
+involve harnessing social networks of under-served communities to enable
+positive change, e.g., using social networks of homeless youth to raise
+awareness about Human Immunodeficiency Virus (HIV) and other STDs.
+Unfortunately, most of these real-world problems are characterized by
+uncertainties about social network structure and influence models, and previous
+research in AI fails to sufficiently address these uncertainties. This thesis
+addresses these shortcomings by advancing the state-of-the-art to a new
+generation of algorithms for interventions in social networks. In particular,
+this thesis describes the design and development of new influence maximization
+algorithms which can handle various uncertainties that commonly exist in
+real-world social networks. These algorithms utilize techniques from sequential
+planning problems and social network theory to develop new kinds of AI
+algorithms. Further, this thesis also demonstrates the real-world impact of
+these algorithms by describing their deployment in three pilot studies to
+spread awareness about HIV among actual homeless youth in Los Angeles. This
+represents one of the first-ever deployments of computer science based
+influence maximization algorithms in this domain. Our results show that our AI
+algorithms improved upon the state-of-the-art by 160% in the real-world. We
+discuss research and implementation challenges faced in deploying these
+algorithms, and lessons that can be gleaned for future deployment of such
+algorithms. The positive results from these deployments illustrate the enormous
+potential of AI in addressing societally relevant problems.",arxiv
+http://arxiv.org/abs/1908.05376v1,2019-08-15T00:06:23Z,2019-08-15T00:06:23Z,"Maximum Relevance and Minimum Redundancy Feature Selection Methods for a
+  Marketing Machine Learning Platform","In machine learning applications for online product offerings and marketing
+strategies, there are often hundreds or thousands of features available to
+build such models. Feature selection is one essential method in such
+applications for multiple objectives: improving the prediction accuracy by
+eliminating irrelevant features, accelerating the model training and prediction
+speed, reducing the monitoring and maintenance workload for feature data
+pipeline, and providing better model interpretation and diagnosis capability.
+However, selecting an optimal feature subset from a large feature space is
+considered as an NP-complete problem. The mRMR (Minimum Redundancy and Maximum
+Relevance) feature selection framework solves this problem by selecting the
+relevant features while controlling for the redundancy within the selected
+features. This paper describes the approach to extend, evaluate, and implement
+the mRMR feature selection methods for classification problem in a marketing
+machine learning platform at Uber that automates creation and deployment of
+targeting and personalization models at scale. This study first extends the
+existing mRMR methods by introducing a non-linear feature redundancy measure
+and a model-based feature relevance measure. Then an extensive empirical
+evaluation is performed for eight different feature selection methods, using
+one synthetic dataset and three real-world marketing datasets at Uber to cover
+different use cases. Based on the empirical results, the selected mRMR method
+is implemented in production for the marketing machine learning platform. A
+description of the production implementation is provided and an online
+experiment deployed through the platform is discussed.",arxiv
+http://arxiv.org/abs/2102.01998v1,2021-02-03T10:56:58Z,2021-02-03T10:56:58Z,"Unbox the Black-box for the Medical Explainable AI via Multi-modal and
+  Multi-centre Data Fusion: A Mini-Review, Two Showcases and Beyond","Explainable Artificial Intelligence (XAI) is an emerging research topic of
+machine learning aimed at unboxing how AI systems' black-box choices are made.
+This research field inspects the measures and models involved in
+decision-making and seeks solutions to explain them explicitly. Many of the
+machine learning algorithms can not manifest how and why a decision has been
+cast. This is particularly true of the most popular deep neural network
+approaches currently in use. Consequently, our confidence in AI systems can be
+hindered by the lack of explainability in these black-box models. The XAI
+becomes more and more crucial for deep learning powered applications,
+especially for medical and healthcare studies, although in general these deep
+neural networks can return an arresting dividend in performance. The
+insufficient explainability and transparency in most existing AI systems can be
+one of the major reasons that successful implementation and integration of AI
+tools into routine clinical practice are uncommon. In this study, we first
+surveyed the current progress of XAI and in particular its advances in
+healthcare applications. We then introduced our solutions for XAI leveraging
+multi-modal and multi-centre data fusion, and subsequently validated in two
+showcases following real clinical scenarios. Comprehensive quantitative and
+qualitative analyses can prove the efficacy of our proposed XAI solutions, from
+which we can envisage successful applications in a broader range of clinical
+questions.",arxiv
+http://arxiv.org/abs/1912.12115v1,2019-12-27T14:39:58Z,2019-12-27T14:39:58Z,Split Learning for collaborative deep learning in healthcare,"Shortage of labeled data has been holding the surge of deep learning in
+healthcare back, as sample sizes are often small, patient information cannot be
+shared openly, and multi-center collaborative studies are a burden to set up.
+Distributed machine learning methods promise to mitigate these problems. We
+argue for a split learning based approach and apply this distributed learning
+method for the first time in the medical field to compare performance against
+(1) centrally hosted and (2) non collaborative configurations for a range of
+participants. Two medical deep learning tasks are used to compare split
+learning to conventional single and multi center approaches: a binary
+classification problem of a data set of 9000 fundus photos, and multi-label
+classification problem of a data set of 156,535 chest X-rays. The several
+distributed learning setups are compared for a range of 1-50 distributed
+participants. Performance of the split learning configuration remained constant
+for any number of clients compared to a single center study, showing a marked
+difference compared to the non collaborative configuration after 2 clients (p <
+0.001) for both sets. Our results affirm the benefits of collaborative training
+of deep neural networks in health care. Our work proves the significant benefit
+of distributed learning in healthcare, and paves the way for future real-world
+implementations.",arxiv
+http://arxiv.org/abs/2011.03274v1,2020-11-06T10:41:39Z,2020-11-06T10:41:39Z,"Trust Issues: Uncertainty Estimation Does Not Enable Reliable OOD
+  Detection On Medical Tabular Data","When deploying machine learning models in high-stakes real-world environments
+such as health care, it is crucial to accurately assess the uncertainty
+concerning a model's prediction on abnormal inputs. However, there is a
+scarcity of literature analyzing this problem on medical data, especially on
+mixed-type tabular data such as Electronic Health Records. We close this gap by
+presenting a series of tests including a large variety of contemporary
+uncertainty estimation techniques, in order to determine whether they are able
+to identify out-of-distribution (OOD) patients. In contrast to previous work,
+we design tests on realistic and clinically relevant OOD groups, and run
+experiments on real-world medical data. We find that almost all techniques fail
+to achieve convincing results, partly disagreeing with earlier findings.",arxiv
+http://arxiv.org/abs/2104.09164v1,2021-04-19T09:41:32Z,2021-04-19T09:41:32Z,"HEAR: Human Action Recognition via Neural Networks on Homomorphically
+  Encrypted Data","Remote monitoring to support ""aging in place"" is an active area of research.
+Advanced computer vision technology based on deep learning can provide near
+real-time home monitoring to detect falling and symptoms related to seizure,
+and stroke. Affordable webcams, together with cloud computing services (to run
+machine learning algorithms), can potentially bring significant social and
+health benefits. However, it has not been deployed in practice because of
+privacy and security concerns. People may feel uncomfortable sending their
+videos of daily activities (with potentially sensitive private information) to
+a computing service provider (e.g., on a commercial cloud). In this paper, we
+propose a novel strategy to resolve this dilemma by applying fully homomorphic
+encryption (FHE) to an alternative representation of human actions (i.e.,
+skeleton joints), which guarantees information confidentiality while retaining
+high-performance action detection at a low cost. We design an FHE-friendly
+neural network for action recognition and present a secure neural network
+evaluation strategy to achieve near real-time action detection. Our framework
+for private inference achieves an 87.99% recognition accuracy (86.21%
+sensitivity and 99.14% specificity in detecting falls) with a latency of 3.1
+seconds on real-world datasets. Our evaluation shows that our elaborated and
+fine-tuned method reduces the inference latency by 23.81%~74.67% over a
+straightforward implementation.",arxiv
+http://arxiv.org/abs/1804.05296v3,2019-02-04T06:03:22Z,2018-04-15T02:33:08Z,Adversarial Attacks Against Medical Deep Learning Systems,"The discovery of adversarial examples has raised concerns about the practical
+deployment of deep learning systems. In this paper, we demonstrate that
+adversarial examples are capable of manipulating deep learning systems across
+three clinical domains. For each of our representative medical deep learning
+classifiers, both white and black box attacks were highly successful. Our
+models are representative of the current state of the art in medical computer
+vision and, in some cases, directly reflect architectures already seeing
+deployment in real world clinical settings. In addition to the technical
+contribution of our paper, we synthesize a large body of knowledge about the
+healthcare system to argue that medicine may be uniquely susceptible to
+adversarial attacks, both in terms of monetary incentives and technical
+vulnerability. To this end, we outline the healthcare economy and the
+incentives it creates for fraud and provide concrete examples of how and why
+such attacks could be realistically carried out. We urge practitioners to be
+aware of current vulnerabilities when deploying deep learning systems in
+clinical settings, and encourage the machine learning community to further
+investigate the domain-specific characteristics of medical learning systems.",arxiv
+http://arxiv.org/abs/1909.13343v2,2019-10-01T16:06:39Z,2019-09-29T19:15:08Z,"ISTHMUS: Secure, Scalable, Real-time and Robust Machine Learning
+  Platform for Healthcare","In recent times, machine learning (ML) and artificial intelligence (AI) based
+systems have evolved and scaled across different industries such as finance,
+retail, insurance, energy utilities, etc. Among other things, they have been
+used to predict patterns of customer behavior, to generate pricing models, and
+to predict the return on investments. But the successes in deploying machine
+learning models at scale in those industries have not translated into the
+healthcare setting. There are multiple reasons why integrating ML models into
+healthcare has not been widely successful, but from a technical perspective,
+general-purpose commercial machine learning platforms are not a good fit for
+healthcare due to complexities in handling data quality issues, mandates to
+demonstrate clinical relevance, and a lack of ability to monitor performance in
+a highly regulated environment with stringent security and privacy needs. In
+this paper, we describe Isthmus, a turnkey, cloud-based platform which
+addresses the challenges above and reduces time to market for operationalizing
+ML/AI in healthcare. Towards the end, we describe three case studies which shed
+light on Isthmus capabilities. These include (1) supporting an end-to-end
+lifecycle of a model which predicts trauma survivability at hospital trauma
+centers, (2) bringing in and harmonizing data from disparate sources to create
+a community data platform for inferring population as well as patient level
+insights for Social Determinants of Health (SDoH), and (3) ingesting
+live-streaming data from various IoT sensors to build models, which can
+leverage real-time and longitudinal information to make advanced time-sensitive
+predictions.",arxiv
+http://arxiv.org/abs/1706.02501v1,2017-06-08T10:10:44Z,2017-06-08T10:10:44Z,Unlocking the Potential of Simulators: Design with RL in Mind,"Using Reinforcement Learning (RL) in simulation to construct policies useful
+in real life is challenging. This is often attributed to the sequential
+decision making aspect: inaccuracies in simulation accumulate over multiple
+steps, hence the simulated trajectories diverge from what would happen in
+reality.
+  In our work we show the need to consider another important aspect: the
+mismatch in simulating control. We bring attention to the need for modeling
+control as well as dynamics, since oversimplifying assumptions about applying
+actions of RL policies could make the policies fail on real-world systems.
+  We design a simulator for solving a pivoting task (of interest in Robotics)
+and demonstrate that even a simple simulator designed with RL in mind
+outperforms high-fidelity simulators when it comes to learning a policy that is
+to be deployed on a real robotic system. We show that a phenomenon that is hard
+to model - friction - could be exploited successfully, even when RL is
+performed using a simulator with a simple dynamics and noise model. Hence, we
+demonstrate that as long as the main sources of uncertainty are identified, it
+could be possible to learn policies applicable to real systems even using a
+simple simulator.
+  RL-compatible simulators could open the possibilities for applying a wide
+range of RL algorithms in various fields. This is important, since currently
+data sparsity in fields like healthcare and education frequently forces
+researchers and engineers to only consider sample-efficient RL approaches.
+Successful simulator-aided RL could increase flexibility of experimenting with
+RL algorithms and help applying RL policies to real-world settings in fields
+where data is scarce. We believe that lessons learned in Robotics could help
+other fields design RL-compatible simulators, so we summarize our experience
+and conclude with suggestions.",arxiv
+http://arxiv.org/abs/1803.04873v2,2018-03-14T15:30:00Z,2018-03-13T15:17:30Z,"Using Convolutional Neural Networks for Determining Reticulocyte
+  Percentage in Cats","Recent advances in artificial intelligence (AI), specifically in computer
+vision (CV) and deep learning (DL), have created opportunities for novel
+systems in many fields. In the last few years, deep learning applications have
+demonstrated impressive results not only in fields such as autonomous driving
+and robotics, but also in the field of medicine, where they have, in some
+cases, even exceeded human-level performance. However, despite the huge
+potential, adoption of deep learning-based methods is still slow in many areas,
+especially in veterinary medicine, where we haven't been able to find any
+research papers using modern convolutional neural networks (CNNs) in medical
+image processing. We believe that using deep learning-based medical imaging can
+enable more accurate, faster and less expensive diagnoses in veterinary
+medicine. In order to do so, however, these methods have to be accessible to
+everyone in this field, not just to computer scientists. To show the potential
+of this technology, we present results on a real-world task in veterinary
+medicine that is usually done manually: feline reticulocyte percentage. Using
+an open source Keras implementation of the Single-Shot MultiBox Detector (SSD)
+model architecture and training it on only 800 labeled images, we achieve an
+accuracy of 98.7% at predicting the correct number of aggregate reticulocytes
+in microscope images of cat blood smears. The main motivation behind this paper
+is to show not only that deep learning can approach or even exceed human-level
+performance on a task like this, but also that anyone in the field can
+implement it, even without a background in computer science.",arxiv
+http://arxiv.org/abs/2110.04249v1,2021-10-08T16:58:57Z,2021-10-08T16:58:57Z,How Can AI Recognize Pain and Express Empathy,"Sensory and emotional experiences such as pain and empathy are relevant to
+mental and physical health. The current drive for automated pain recognition is
+motivated by a growing number of healthcare requirements and demands for social
+interaction make it increasingly essential. Despite being a trending area, they
+have not been explored in great detail. Over the past decades, behavioral
+science and neuroscience have uncovered mechanisms that explain the
+manifestations of pain. Recently, also artificial intelligence research has
+allowed empathic machine learning methods to be approachable. Generally, the
+purpose of this paper is to review the current developments for computational
+pain recognition and artificial empathy implementation. Our discussion covers
+the following topics: How can AI recognize pain from unimodality and
+multimodality? Is it necessary for AI to be empathic? How can we create an AI
+agent with proactive and reactive empathy? This article explores the challenges
+and opportunities of real-world multimodal pain recognition from a
+psychological, neuroscientific, and artificial intelligence perspective.
+Finally, we identify possible future implementations of artificial empathy and
+analyze how humans might benefit from an AI agent equipped with empathy.",arxiv
+http://arxiv.org/abs/2109.14885v1,2021-09-30T07:05:20Z,2021-09-30T07:05:20Z,"Out-of-Distribution Detection for Medical Applications: Guidelines for
+  Practical Evaluation","Detection of Out-of-Distribution (OOD) samples in real time is a crucial
+safety check for deployment of machine learning models in the medical field.
+Despite a growing number of uncertainty quantification techniques, there is a
+lack of evaluation guidelines on how to select OOD detection methods in
+practice. This gap impedes implementation of OOD detection methods for
+real-world applications. Here, we propose a series of practical considerations
+and tests to choose the best OOD detector for a specific medical dataset. These
+guidelines are illustrated on a real-life use case of Electronic Health Records
+(EHR). Our results can serve as a guide for implementation of OOD detection
+methods in clinical practice, mitigating risks associated with the use of
+machine learning models in healthcare.",arxiv
+http://arxiv.org/abs/2010.02715v1,2020-10-03T23:18:05Z,2020-10-03T23:18:05Z,"Assessing Automated Machine Learning service to detect COVID-19 from
+  X-Ray and CT images: A Real-time Smartphone Application case study","The recent outbreak of SARS COV-2 gave us a unique opportunity to study for a
+non interventional and sustainable AI solution. Lung disease remains a major
+healthcare challenge with high morbidity and mortality worldwide. The
+predominant lung disease was lung cancer. Until recently, the world has
+witnessed the global pandemic of COVID19, the Novel coronavirus outbreak. We
+have experienced how viral infection of lung and heart claimed thousands of
+lives worldwide. With the unprecedented advancement of Artificial Intelligence
+in recent years, Machine learning can be used to easily detect and classify
+medical imagery. It is much faster and most of the time more accurate than
+human radiologists. Once implemented, it is more cost-effective and
+time-saving. In our study, we evaluated the efficacy of Microsoft Cognitive
+Service to detect and classify COVID19 induced pneumonia from other
+Viral/Bacterial pneumonia based on X-Ray and CT images. We wanted to assess the
+implication and accuracy of the Automated ML-based Rapid Application
+Development (RAD) environment in the field of Medical Image diagnosis. This
+study will better equip us to respond with an ML-based diagnostic Decision
+Support System(DSS) for a Pandemic situation like COVID19. After optimization,
+the trained network achieved 96.8% Average Precision which was implemented as a
+Web Application for consumption. However, the same trained network did not
+perform the same like Web Application when ported to Smartphone for Real-time
+inference. Which was our main interest of study. The authors believe, there is
+scope for further study on this issue. One of the main goal of this study was
+to develop and evaluate the performance of AI-powered Smartphone-based
+Real-time Application. Facilitating primary diagnostic services in less
+equipped and understaffed rural healthcare centers of the world with unreliable
+internet service.",arxiv
+http://arxiv.org/abs/1907.07296v4,2019-10-03T19:38:48Z,2019-07-17T00:50:37Z,"Explaining Vulnerabilities to Adversarial Machine Learning through
+  Visual Analytics","Machine learning models are currently being deployed in a variety of
+real-world applications where model predictions are used to make decisions
+about healthcare, bank loans, and numerous other critical tasks. As the
+deployment of artificial intelligence technologies becomes ubiquitous, it is
+unsurprising that adversaries have begun developing methods to manipulate
+machine learning models to their advantage. While the visual analytics
+community has developed methods for opening the black box of machine learning
+models, little work has focused on helping the user understand their model
+vulnerabilities in the context of adversarial attacks. In this paper, we
+present a visual analytics framework for explaining and exploring model
+vulnerabilities to adversarial attacks. Our framework employs a multi-faceted
+visualization scheme designed to support the analysis of data poisoning attacks
+from the perspective of models, data instances, features, and local structures.
+We demonstrate our framework through two case studies on binary classifiers and
+illustrate model vulnerabilities with respect to varying attack strategies.",arxiv
+http://arxiv.org/abs/1812.00825v2,2018-12-04T05:36:36Z,2018-11-21T21:02:50Z,"Microscope 2.0: An Augmented Reality Microscope with Real-time
+  Artificial Intelligence Integration","The brightfield microscope is instrumental in the visual examination of both
+biological and physical samples at sub-millimeter scales. One key clinical
+application has been in cancer histopathology, where the microscopic assessment
+of the tissue samples is used for the diagnosis and staging of cancer and thus
+guides clinical therapy. However, the interpretation of these samples is
+inherently subjective, resulting in significant diagnostic variability.
+Moreover, in many regions of the world, access to pathologists is severely
+limited due to lack of trained personnel. In this regard, Artificial
+Intelligence (AI) based tools promise to improve the access and quality of
+healthcare. However, despite significant advances in AI research, integration
+of these tools into real-world cancer diagnosis workflows remains challenging
+because of the costs of image digitization and difficulties in deploying AI
+solutions. Here we propose a cost-effective solution to the integration of AI:
+the Augmented Reality Microscope (ARM). The ARM overlays AI-based information
+onto the current view of the sample through the optical pathway in real-time,
+enabling seamless integration of AI into the regular microscopy workflow. We
+demonstrate the utility of ARM in the detection of lymph node metastases in
+breast cancer and the identification of prostate cancer with a latency that
+supports real-time workflows. We anticipate that ARM will remove barriers
+towards the use of AI in microscopic analysis and thus improve the accuracy and
+efficiency of cancer diagnosis. This approach is applicable to other microscopy
+tasks and AI algorithms in the life sciences and beyond.",arxiv
+http://arxiv.org/abs/2006.03647v2,2020-06-23T16:54:09Z,2020-06-05T19:33:19Z,"Deployment-Efficient Reinforcement Learning via Model-Based Offline
+  Optimization","Most reinforcement learning (RL) algorithms assume online access to the
+environment, in which one may readily interleave updates to the policy with
+experience collection using that policy. However, in many real-world
+applications such as health, education, dialogue agents, and robotics, the cost
+or potential risk of deploying a new data-collection policy is high, to the
+point that it can become prohibitive to update the data-collection policy more
+than a few times during learning. With this view, we propose a novel concept of
+deployment efficiency, measuring the number of distinct data-collection
+policies that are used during policy learning. We observe that na\""{i}vely
+applying existing model-free offline RL algorithms recursively does not lead to
+a practical deployment-efficient and sample-efficient algorithm. We propose a
+novel model-based algorithm, Behavior-Regularized Model-ENsemble (BREMEN) that
+can effectively optimize a policy offline using 10-20 times fewer data than
+prior works. Furthermore, the recursive application of BREMEN is able to
+achieve impressive deployment efficiency while maintaining the same or better
+sample efficiency, learning successful policies from scratch on simulated
+robotic environments with only 5-10 deployments, compared to typical values of
+hundreds to millions in standard RL baselines. Codes and pre-trained models are
+available at https://github.com/matsuolab/BREMEN .",arxiv
+http://arxiv.org/abs/2012.05410v1,2020-12-10T02:08:47Z,2020-12-10T02:08:47Z,Artificial Intelligence at the Edge,"The Internet of Things (IoT) and edge computing applications aim to support a
+variety of societal needs, including the global pandemic situation that the
+entire world is currently experiencing and responses to natural disasters.
+  The need for real-time interactive applications such as immersive video
+conferencing, augmented/virtual reality, and autonomous vehicles, in education,
+healthcare, disaster recovery and other domains, has never been higher. At the
+same time, there have been recent technological breakthroughs in highly
+relevant fields such as artificial intelligence (AI)/machine learning (ML),
+advanced communication systems (5G and beyond), privacy-preserving
+computations, and hardware accelerators. 5G mobile communication networks
+increase communication capacity, reduce transmission latency and error, and
+save energy -- capabilities that are essential for new applications. The
+envisioned future 6G technology will integrate many more technologies,
+including for example visible light communication, to support groundbreaking
+applications, such as holographic communications and high precision
+manufacturing. Many of these applications require computations and analytics
+close to application end-points: that is, at the edge of the network, rather
+than in a centralized cloud. AI techniques applied at the edge have tremendous
+potential both to power new applications and to need more efficient operation
+of edge infrastructure. However, it is critical to understand where to deploy
+AI systems within complex ecosystems consisting of advanced applications and
+the specific real-time requirements towards AI systems.",arxiv
+http://arxiv.org/abs/2011.03395v2,2020-11-24T19:16:02Z,2020-11-06T14:53:13Z,"Underspecification Presents Challenges for Credibility in Modern Machine
+  Learning","ML models often exhibit unexpectedly poor behavior when they are deployed in
+real-world domains. We identify underspecification as a key reason for these
+failures. An ML pipeline is underspecified when it can return many predictors
+with equivalently strong held-out performance in the training domain.
+Underspecification is common in modern ML pipelines, such as those based on
+deep learning. Predictors returned by underspecified pipelines are often
+treated as equivalent based on their training domain performance, but we show
+here that such predictors can behave very differently in deployment domains.
+This ambiguity can lead to instability and poor model behavior in practice, and
+is a distinct failure mode from previously identified issues arising from
+structural mismatch between training and deployment domains. We show that this
+problem appears in a wide variety of practical ML pipelines, using examples
+from computer vision, medical imaging, natural language processing, clinical
+risk prediction based on electronic health records, and medical genomics. Our
+results show the need to explicitly account for underspecification in modeling
+pipelines that are intended for real-world deployment in any domain.",arxiv
+http://arxiv.org/abs/2011.14966v1,2020-11-30T16:38:18Z,2020-11-30T16:38:18Z,"Depression Status Estimation by Deep Learning based Hybrid Multi-Modal
+  Fusion Model","Preliminary detection of mild depression could immensely help in effective
+treatment of the common mental health disorder. Due to the lack of proper
+awareness and the ample mix of stigmas and misconceptions present within the
+society, mental health status estimation has become a truly difficult task. Due
+to the immense variations in character level traits from person to person,
+traditional deep learning methods fail to generalize in a real world setting.
+In our study we aim to create a human allied AI workflow which could
+efficiently adapt to specific users and effectively perform in real world
+scenarios. We propose a Hybrid deep learning approach that combines the essence
+of one shot learning, classical supervised deep learning methods and human
+allied interactions for adaptation. In order to capture maximum information and
+make efficient diagnosis video, audio, and text modalities are utilized. Our
+Hybrid Fusion model achieved a high accuracy of 96.3% on the Dataset; and
+attained an AUC of 0.9682 which proves its robustness in discriminating classes
+in complex real-world scenarios making sure that no cases of mild depression
+are missed during diagnosis. The proposed method is deployed in a cloud-based
+smartphone application for robust testing. With user-specific adaptations and
+state of the art methodologies, we present a state-of-the-art model with user
+friendly experience.",arxiv
+http://arxiv.org/abs/2107.10230v4,2021-08-13T05:13:51Z,2021-07-21T17:28:46Z,"Multi-institution encrypted medical imaging AI validation without data
+  sharing","Adoption of artificial intelligence medical imaging applications is often
+impeded by barriers between healthcare systems and algorithm developers given
+that access to both private patient data and commercial model IP is important
+to perform pre-deployment evaluation. This work investigates a framework for
+secure, privacy-preserving and AI-enabled medical imaging inference using
+CrypTFlow2, a state-of-the-art end-to-end compiler allowing cryptographically
+secure 2-party Computation (2PC) protocols between the machine learning model
+vendor and target patient data owner. A common DenseNet-121 chest x-ray
+diagnosis model was evaluated on multi-institutional chest radiographic imaging
+datasets both with and without CrypTFlow2 on two test sets spanning seven sites
+across the US and India, and comprising 1,149 chest x-ray images. We measure
+comparative AUROC performance between secure and insecure inference in multiple
+pathology classification tasks, and explore model output distributional shifts
+and resource constraints introduced by secure model inference. Secure inference
+with CrypTFlow2 demonstrated no significant difference in AUROC for all
+diagnoses, and model outputs from secure and insecure inference methods were
+distributionally equivalent. The use of CrypTFlow2 may allow off-the-shelf
+secure 2PC between healthcare systems and AI model vendors for medical imaging,
+without changes in performance, and can facilitate scalable pre-deployment
+infrastructure for real-world secure model evaluation without exposure to
+patient data or model IP.",arxiv
+http://arxiv.org/abs/2104.07820v2,2021-04-29T00:11:58Z,2021-04-15T23:38:39Z,"Machine Learning Approaches for Type 2 Diabetes Prediction and Care
+  Management","Prediction of diabetes and its various complications has been studied in a
+number of settings, but a comprehensive overview of problem setting for
+diabetes prediction and care management has not been addressed in the
+literature. In this document we seek to remedy this omission in literature with
+an encompassing overview of diabetes complication prediction as well as
+situating this problem in the context of real world healthcare management. We
+illustrate various problems encountered in real world clinical scenarios via
+our own experience with building and deploying such models. In this manuscript
+we illustrate a Machine Learning (ML) framework for addressing the problem of
+predicting Type 2 Diabetes Mellitus (T2DM) together with a solution for risk
+stratification, intervention and management. These ML models align with how
+physicians think about disease management and mitigation, which comprises these
+four steps: Identify, Stratify, Engage, Measure.",arxiv
+http://arxiv.org/abs/2107.05989v1,2021-07-13T11:17:00Z,2021-07-13T11:17:00Z,"Emotion Recognition for Healthcare Surveillance Systems Using Neural
+  Networks: A Survey","Recognizing the patient's emotions using deep learning techniques has
+attracted significant attention recently due to technological advancements.
+Automatically identifying the emotions can help build smart healthcare centers
+that can detect depression and stress among the patients in order to start the
+medication early. Using advanced technology to identify emotions is one of the
+most exciting topics as it defines the relationships between humans and
+machines. Machines learned how to predict emotions by adopting various methods.
+In this survey, we present recent research in the field of using neural
+networks to recognize emotions. We focus on studying emotions' recognition from
+speech, facial expressions, and audio-visual input and show the different
+techniques of deploying these algorithms in the real world. These three emotion
+recognition techniques can be used as a surveillance system in healthcare
+centers to monitor patients. We conclude the survey with a presentation of the
+challenges and the related future work to provide an insight into the
+applications of using emotion recognition.",arxiv
+http://arxiv.org/abs/1911.08089v2,2019-12-07T03:42:06Z,2019-11-19T04:28:47Z,"""The Human Body is a Black Box"": Supporting Clinical Decision-Making
+  with Deep Learning","Machine learning technologies are increasingly developed for use in
+healthcare. While research communities have focused on creating
+state-of-the-art models, there has been less focus on real world implementation
+and the associated challenges to accuracy, fairness, accountability, and
+transparency that come from actual, situated use. Serious questions remain
+under examined regarding how to ethically build models, interpret and explain
+model output, recognize and account for biases, and minimize disruptions to
+professional expertise and work cultures. We address this gap in the literature
+and provide a detailed case study covering the development, implementation, and
+evaluation of Sepsis Watch, a machine learning-driven tool that assists
+hospital clinicians in the early diagnosis and treatment of sepsis. We, the
+team that developed and evaluated the tool, discuss our conceptualization of
+the tool not as a model deployed in the world but instead as a socio-technical
+system requiring integration into existing social and professional contexts.
+Rather than focusing on model interpretability to ensure a fair and accountable
+machine learning, we point toward four key values and practices that should be
+considered when developing machine learning to support clinical
+decision-making: rigorously define the problem in context, build relationships
+with stakeholders, respect professional discretion, and create ongoing feedback
+loops with stakeholders. Our work has significant implications for future
+research regarding mechanisms of institutional accountability and
+considerations for designing machine learning systems. Our work underscores the
+limits of model interpretability as a solution to ensure transparency,
+accuracy, and accountability in practice. Instead, our work demonstrates other
+means and goals to achieve FATML values in design and in practice.",arxiv
+http://arxiv.org/abs/2012.10020v1,2020-12-18T02:37:49Z,2020-12-18T02:37:49Z,"EVA: Generating Longitudinal Electronic Health Records Using Conditional
+  Variational Autoencoders","Researchers require timely access to real-world longitudinal electronic
+health records (EHR) to develop, test, validate, and implement machine learning
+solutions that improve the quality and efficiency of healthcare. In contrast,
+health systems value deeply patient privacy and data security. De-identified
+EHRs do not adequately address the needs of health systems, as de-identified
+data are susceptible to re-identification and its volume is also limited.
+Synthetic EHRs offer a potential solution. In this paper, we propose EHR
+Variational Autoencoder (EVA) for synthesizing sequences of discrete EHR
+encounters (e.g., clinical visits) and encounter features (e.g., diagnoses,
+medications, procedures). We illustrate that EVA can produce realistic EHR
+sequences, account for individual differences among patients, and can be
+conditioned on specific disease conditions, thus enabling disease-specific
+studies. We design efficient, accurate inference algorithms by combining
+stochastic gradient Markov Chain Monte Carlo with amortized variational
+inference. We assess the utility of the methods on large real-world EHR
+repositories containing over 250, 000 patients. Our experiments, which include
+user studies with knowledgeable clinicians, indicate the generated EHR
+sequences are realistic. We confirmed the performance of predictive models
+trained on the synthetic data are similar with those trained on real EHRs.
+Additionally, our findings indicate that augmenting real data with synthetic
+EHRs results in the best predictive performance - improving the best baseline
+by as much as 8% in top-20 recall.",arxiv
+http://arxiv.org/abs/2101.03989v1,2021-01-11T15:54:48Z,2021-01-11T15:54:48Z,Technology Readiness Levels for Machine Learning Systems,"The development and deployment of machine learning (ML) systems can be
+executed easily with modern tools, but the process is typically rushed and
+means-to-an-end. The lack of diligence can lead to technical debt, scope creep
+and misaligned objectives, model misuse and failures, and expensive
+consequences. Engineering systems, on the other hand, follow well-defined
+processes and testing standards to streamline development for high-quality,
+reliable results. The extreme is spacecraft systems, where mission critical
+measures and robustness are ingrained in the development process. Drawing on
+experience in both spacecraft engineering and ML (from research through product
+across domain areas), we have developed a proven systems engineering approach
+for machine learning development and deployment. Our ""Machine Learning
+Technology Readiness Levels"" (MLTRL) framework defines a principled process to
+ensure robust, reliable, and responsible systems while being streamlined for ML
+workflows, including key distinctions from traditional software engineering.
+Even more, MLTRL defines a lingua franca for people across teams and
+organizations to work collaboratively on artificial intelligence and machine
+learning technologies. Here we describe the framework and elucidate it with
+several real world use-cases of developing ML methods from basic research
+through productization and deployment, in areas such as medical diagnostics,
+consumer computer vision, satellite imagery, and particle physics.",arxiv
+http://arxiv.org/abs/1908.04537v2,2019-08-14T09:20:57Z,2019-08-13T08:49:33Z,"Icebreaker: Element-wise Active Information Acquisition with Bayesian
+  Deep Latent Gaussian Model","In this paper we introduce the ice-start problem, i.e., the challenge of
+deploying machine learning models when only little or no training data is
+initially available, and acquiring each feature element of data is associated
+with costs. This setting is representative for the real-world machine learning
+applications. For instance, in the health-care domain, when training an AI
+system for predicting patient metrics from lab tests, obtaining every single
+measurement comes with a high cost. Active learning, where only the label is
+associated with a cost does not apply to such problem, because performing all
+possible lab tests to acquire a new training datum would be costly, as well as
+unnecessary due to redundancy. We propose Icebreaker, a principled framework to
+approach the ice-start problem. Icebreaker uses a full Bayesian Deep Latent
+Gaussian Model (BELGAM) with a novel inference method. Our proposed method
+combines recent advances in amortized inference and stochastic gradient MCMC to
+enable fast and accurate posterior inference. By utilizing BELGAM's ability to
+fully quantify model uncertainty, we also propose two information acquisition
+functions for imputation and active prediction problems. We demonstrate that
+BELGAM performs significantly better than the previous VAE (Variational
+autoencoder) based models, when the data set size is small, using both machine
+learning benchmarks and real-world recommender systems and health-care
+applications. Moreover, based on BELGAM, Icebreaker further improves the
+performance and demonstrate the ability to use minimum amount of the training
+data to obtain the highest test time performance.",arxiv
+http://arxiv.org/abs/2106.13219v1,2021-06-24T17:52:43Z,2021-06-24T17:52:43Z,Towards Understanding and Mitigating Social Biases in Language Models,"As machine learning methods are deployed in real-world settings such as
+healthcare, legal systems, and social science, it is crucial to recognize how
+they shape social biases and stereotypes in these sensitive decision-making
+processes. Among such real-world deployments are large-scale pretrained
+language models (LMs) that can be potentially dangerous in manifesting
+undesirable representational biases - harmful biases resulting from
+stereotyping that propagate negative generalizations involving gender, race,
+religion, and other social constructs. As a step towards improving the fairness
+of LMs, we carefully define several sources of representational biases before
+proposing new benchmarks and metrics to measure them. With these tools, we
+propose steps towards mitigating social biases during text generation. Our
+empirical results and human evaluation demonstrate effectiveness in mitigating
+bias while retaining crucial contextual information for high-fidelity text
+generation, thereby pushing forward the performance-fairness Pareto frontier.",arxiv
+http://arxiv.org/abs/2008.08525v1,2020-08-19T16:05:58Z,2020-08-19T16:05:58Z,"""Name that manufacturer"". Relating image acquisition bias with task
+  complexity when training deep learning models: experiments on head CT","As interest in applying machine learning techniques for medical images
+continues to grow at a rapid pace, models are starting to be developed and
+deployed for clinical applications. In the clinical AI model development
+lifecycle (described by Lu et al. [1]), a crucial phase for machine learning
+scientists and clinicians is the proper design and collection of the data
+cohort. The ability to recognize various forms of biases and distribution
+shifts in the dataset is critical at this step. While it remains difficult to
+account for all potential sources of bias, techniques can be developed to
+identify specific types of bias in order to mitigate their impact. In this work
+we analyze how the distribution of scanner manufacturers in a dataset can
+contribute to the overall bias of deep learning models. We evaluate
+convolutional neural networks (CNN) for both classification and segmentation
+tasks, specifically two state-of-the-art models: ResNet [2] for classification
+and U-Net [3] for segmentation. We demonstrate that CNNs can learn to
+distinguish the imaging scanner manufacturer and that this bias can
+substantially impact model performance for both classification and segmentation
+tasks. By creating an original synthesis dataset of brain data mimicking the
+presence of more or less subtle lesions we also show that this bias is related
+to the difficulty of the task. Recognition of such bias is critical to develop
+robust, generalizable models that will be crucial for clinical applications in
+real-world data distributions.",arxiv
+http://arxiv.org/abs/1804.09997v1,2018-04-26T11:37:03Z,2018-04-26T11:37:03Z,PANDA: Facilitating Usable AI Development,"Recent advances in artificial intelligence (AI) and machine learning have
+created a general perception that AI could be used to solve complex problems,
+and in some situations over-hyped as a tool that can be so easily used.
+Unfortunately, the barrier to realization of mass adoption of AI on various
+business domains is too high because most domain experts have no background in
+AI. Developing AI applications involves multiple phases, namely data
+preparation, application modeling, and product deployment. The effort of AI
+research has been spent mostly on new AI models (in the model training stage)
+to improve the performance of benchmark tasks such as image recognition. Many
+other factors such as usability, efficiency and security of AI have not been
+well addressed, and therefore form a barrier to democratizing AI. Further, for
+many real world applications such as healthcare and autonomous driving,
+learning via huge amounts of possibility exploration is not feasible since
+humans are involved. In many complex applications such as healthcare, subject
+matter experts (e.g. Clinicians) are the ones who appreciate the importance of
+features that affect health, and their knowledge together with existing
+knowledge bases are critical to the end results. In this paper, we take a new
+perspective on developing AI solutions, and present a solution for making AI
+usable. We hope that this resolution will enable all subject matter experts
+(eg. Clinicians) to exploit AI like data scientists.",arxiv
+http://arxiv.org/abs/2109.07846v1,2021-09-16T10:22:31Z,2021-09-16T10:22:31Z,"Telehealthcare and Covid-19: A Noninvasive & Low Cost Invasive, Scalable
+  and Multimodal Real-Time Smartphone Application for Early Diagnosis of
+  SARS-CoV-2 Infection","The global coronavirus pandemic overwhelmed many health care systems,
+enforcing lockdown and encouraged work from home to control the spread of the
+virus and prevent overrunning of hospitalized patients. This prompted a sharp
+widespread use of telehealth to provide low-risk care for patients.
+Nevertheless, a continuous mutation into new variants and widespread
+unavailability of test kits, especially in developing countries, possess the
+challenge to control future potential waves of infection. In this paper, we
+propose a novel Smartphone application-based platform for early diagnosis of
+possible Covid-19 infected patients. The application provides three modes of
+diagnosis from possible symptoms, cough sound, and specific blood biomarkers.
+When a user chooses a particular setting and provides the necessary
+information, it sends the data to a trained machine learning (ML) model
+deployed in a remote server using the internet. The ML algorithm then predicts
+the possibility of contracting Covid-19 and sends the feedback to the user. The
+entire procedure takes place in real-time. Our machine learning models can
+identify Covid-19 patients with an accuracy of 100%, 95.65%, and 77.59% from
+blood parameters, cough sound, and symptoms respectively. Moreover, the ML
+sensitivity for blood and sound is 100%, which indicates correct identification
+of Covid positive patients. This is significant in limiting the spread of the
+virus. The multimodality offers multiplex diagnostic methods to better classify
+possible infectees and together with the instantaneous nature of our technique,
+demonstrates the power of telehealthcare as an easy and widespread low-cost
+scalable diagnostic solution for future pandemics.",arxiv
+http://arxiv.org/abs/1706.08658v1,2017-06-27T03:21:47Z,2017-06-27T03:21:47Z,Fast and accurate classification of echocardiograms using deep learning,"Echocardiography is essential to modern cardiology. However, human
+interpretation limits high throughput analysis, limiting echocardiography from
+reaching its full clinical and research potential for precision medicine. Deep
+learning is a cutting-edge machine-learning technique that has been useful in
+analyzing medical images but has not yet been widely applied to
+echocardiography, partly due to the complexity of echocardiograms' multi view,
+multi modality format. The essential first step toward comprehensive computer
+assisted echocardiographic interpretation is determining whether computers can
+learn to recognize standard views. To this end, we anonymized 834,267
+transthoracic echocardiogram (TTE) images from 267 patients (20 to 96 years, 51
+percent female, 26 percent obese) seen between 2000 and 2017 and labeled them
+according to standard views. Images covered a range of real world clinical
+variation. We built a multilayer convolutional neural network and used
+supervised learning to simultaneously classify 15 standard views. Eighty
+percent of data used was randomly chosen for training and 20 percent reserved
+for validation and testing on never seen echocardiograms. Using multiple images
+from each clip, the model classified among 12 video views with 97.8 percent
+overall test accuracy without overfitting. Even on single low resolution
+images, test accuracy among 15 views was 91.7 percent versus 70.2 to 83.5
+percent for board-certified echocardiographers. Confusional matrices, occlusion
+experiments, and saliency mapping showed that the model finds recognizable
+similarities among related views and classifies using clinically relevant image
+features. In conclusion, deep neural networks can classify essential
+echocardiographic views simultaneously and with high accuracy. Our results
+provide a foundation for more complex deep learning assisted echocardiographic
+interpretation.",arxiv
+http://arxiv.org/abs/2009.01657v1,2020-08-27T20:53:26Z,2020-08-27T20:53:26Z,"A free web service for fast COVID-19 classification of chest X-Ray
+  images","The coronavirus outbreak became a major concern for society worldwide.
+Technological innovation and ingenuity are essential to fight COVID-19 pandemic
+and bring us one step closer to overcome it. Researchers over the world are
+working actively to find available alternatives in different fields, such as
+the Healthcare System, pharmaceutic, health prevention, among others. With the
+rise of artificial intelligence (AI) in the last 10 years, IA-based
+applications have become the prevalent solution in different areas because of
+its higher capability, being now adopted to help combat against COVID-19. This
+work provides a fast detection system of COVID-19 characteristics in X-Ray
+images based on deep learning (DL) techniques. This system is available as a
+free web deployed service for fast patient classification, alleviating the high
+demand for standards method for COVID-19 diagnosis. It is constituted of two
+deep learning models, one to differentiate between X-Ray and non-X-Ray images
+based on Mobile-Net architecture, and another one to identify chest X-Ray
+images with characteristics of COVID-19 based on the DenseNet architecture. For
+real-time inference, it is provided a pair of dedicated GPUs, which reduce the
+computational time. The whole system can filter out non-chest X-Ray images, and
+detect whether the X-Ray presents characteristics of COVID-19, highlighting the
+most sensitive regions.",arxiv
+http://arxiv.org/abs/2103.16223v2,2021-06-16T09:09:50Z,2021-03-30T10:11:09Z,"LemgoRL: An open-source Benchmark Tool to Train Reinforcement Learning
+  Agents for Traffic Signal Control in a real-world simulation scenario","Sub-optimal control policies in intersection traffic signal controllers (TSC)
+contribute to congestion and lead to negative effects on human health and the
+environment. Reinforcement learning (RL) for traffic signal control is a
+promising approach to design better control policies and has attracted
+considerable research interest in recent years. However, most work done in this
+area used simplified simulation environments of traffic scenarios to train
+RL-based TSC. To deploy RL in real-world traffic systems, the gap between
+simplified simulation environments and real-world applications has to be
+closed. Therefore, we propose LemgoRL, a benchmark tool to train RL agents as
+TSC in a realistic simulation environment of Lemgo, a medium-sized town in
+Germany. In addition to the realistic simulation model, LemgoRL encompasses a
+traffic signal logic unit that ensures compliance with all regulatory and
+safety requirements. LemgoRL offers the same interface as the well-known OpenAI
+gym toolkit to enable easy deployment in existing research work. Our benchmark
+tool drives the development of RL algorithms towards real-world applications.
+We provide LemgoRL as an open-source tool at https://github.com/rl-ina/lemgorl.",arxiv
+http://arxiv.org/abs/1912.12397v1,2019-12-28T04:05:15Z,2019-12-28T04:05:15Z,"Natural language processing of MIMIC-III clinical notes for identifying
+  diagnosis and procedures with neural networks","Coding diagnosis and procedures in medical records is a crucial process in
+the healthcare industry, which includes the creation of accurate billings,
+receiving reimbursements from payers, and creating standardized patient care
+records. In the United States, Billing and Insurance related activities cost
+around $471 billion in 2012 which constitutes about 25% of all the U.S hospital
+spending. In this paper, we report the performance of a natural language
+processing model that can map clinical notes to medical codes, and predict
+final diagnosis from unstructured entries of history of present illness,
+symptoms at the time of admission, etc. Previous studies have demonstrated that
+deep learning models perform better at such mapping when compared to
+conventional machine learning models. Therefore, we employed state-of-the-art
+deep learning method, ULMFiT on the largest emergency department clinical notes
+dataset MIMIC III which has 1.2M clinical notes to select for the top-10 and
+top-50 diagnosis and procedure codes. Our models were able to predict the
+top-10 diagnoses and procedures with 80.3% and 80.5% accuracy, whereas the
+top-50 ICD-9 codes of diagnosis and procedures are predicted with 70.7% and
+63.9% accuracy. Prediction of diagnosis and procedures from unstructured
+clinical notes benefit human coders to save time, eliminate errors and minimize
+costs. With promising scores from our present model, the next step would be to
+deploy this on a small-scale real-world scenario and compare it with human
+coders as the gold standard. We believe that further research of this approach
+can create highly accurate predictions that can ease the workflow in a clinical
+setting.",arxiv
+http://arxiv.org/abs/1905.02940v1,2019-05-08T07:26:27Z,2019-05-08T07:26:27Z,"A new direction to promote the implementation of artificial intelligence
+  in natural clinical settings","Artificial intelligence (AI) researchers claim that they have made great
+`achievements' in clinical realms. However, clinicians point out the so-called
+`achievements' have no ability to implement into natural clinical settings. The
+root cause for this huge gap is that many essential features of natural
+clinical tasks are overlooked by AI system developers without medical
+background. In this paper, we propose that the clinical benchmark suite is a
+novel and promising direction to capture the essential features of the
+real-world clinical tasks, hence qualifies itself for guiding the development
+of AI systems, promoting the implementation of AI in real-world clinical
+practice.",arxiv
+http://arxiv.org/abs/2108.12242v1,2021-08-27T12:47:19Z,2021-08-27T12:47:19Z,Deep learning models are not robust against noise in clinical text,"Artificial Intelligence (AI) systems are attracting increasing interest in
+the medical domain due to their ability to learn complicated tasks that require
+human intelligence and expert knowledge. AI systems that utilize
+high-performance Natural Language Processing (NLP) models have achieved
+state-of-the-art results on a wide variety of clinical text processing
+benchmarks. They have even outperformed human accuracy on some tasks. However,
+performance evaluation of such AI systems have been limited to accuracy
+measures on curated and clean benchmark datasets that may not properly reflect
+how robustly these systems can operate in real-world situations. In order to
+address this challenge, we introduce and implement a wide variety of
+perturbation methods that simulate different types of noise and variability in
+clinical text data. While noisy samples produced by these perturbation methods
+can often be understood by humans, they may cause AI systems to make erroneous
+decisions. Conducting extensive experiments on several clinical text processing
+tasks, we evaluated the robustness of high-performance NLP models against
+various types of character-level and word-level noise. The results revealed
+that the NLP models performance degrades when the input contains small amounts
+of noise. This study is a significant step towards exposing vulnerabilities of
+AI models utilized in clinical text processing systems. The proposed
+perturbation methods can be used in performance evaluation tests to assess how
+robustly clinical NLP models can operate on noisy data, in real-world settings.",arxiv
+http://arxiv.org/abs/1807.01473v2,2018-09-17T12:58:17Z,2018-07-04T07:54:32Z,"Supervised Reinforcement Learning with Recurrent Neural Network for
+  Dynamic Treatment Recommendation","Dynamic treatment recommendation systems based on large-scale electronic
+health records (EHRs) become a key to successfully improve practical clinical
+outcomes. Prior relevant studies recommend treatments either use supervised
+learning (e.g. matching the indicator signal which denotes doctor
+prescriptions), or reinforcement learning (e.g. maximizing evaluation signal
+which indicates cumulative reward from survival rates). However, none of these
+studies have considered to combine the benefits of supervised learning and
+reinforcement learning. In this paper, we propose Supervised Reinforcement
+Learning with Recurrent Neural Network (SRL-RNN), which fuses them into a
+synergistic learning framework. Specifically, SRL-RNN applies an off-policy
+actor-critic framework to handle complex relations among multiple medications,
+diseases and individual characteristics. The ""actor"" in the framework is
+adjusted by both the indicator signal and evaluation signal to ensure effective
+prescription and low mortality. RNN is further utilized to solve the
+Partially-Observed Markov Decision Process (POMDP) problem due to the lack of
+fully observed states in real world applications. Experiments on the publicly
+real-world dataset, i.e., MIMIC-3, illustrate that our model can reduce the
+estimated mortality, while providing promising accuracy in matching doctors'
+prescriptions.",arxiv
+http://arxiv.org/abs/2106.13095v1,2021-06-24T15:25:41Z,2021-06-24T15:25:41Z,"Pre-training transformer-based framework on large-scale pediatric claims
+  data for downstream population-specific tasks","The adoption of electronic health records (EHR) has become universal during
+the past decade, which has afforded in-depth data-based research. By learning
+from the large amount of healthcare data, various data-driven models have been
+built to predict future events for different medical tasks, such as auto
+diagnosis and heart-attack prediction. Although EHR is abundant, the population
+that satisfies specific criteria for learning population-specific tasks is
+scarce, making it challenging to train data-hungry deep learning models. This
+study presents the Claim Pre-Training (Claim-PT) framework, a generic
+pre-training model that first trains on the entire pediatric claims dataset,
+followed by a discriminative fine-tuning on each population-specific task. The
+semantic meaning of medical events can be captured in the pre-training stage,
+and the effective knowledge transfer is completed through the task-aware
+fine-tuning stage. The fine-tuning process requires minimal parameter
+modification without changing the model architecture, which mitigates the data
+scarcity issue and helps train the deep learning model adequately on small
+patient cohorts. We conducted experiments on a real-world claims dataset with
+more than one million patient records. Experimental results on two downstream
+tasks demonstrated the effectiveness of our method: our general task-agnostic
+pre-training framework outperformed tailored task-specific models, achieving
+more than 10\% higher in model performance as compared to baselines. In
+addition, our framework showed a great generalizability potential to transfer
+learned knowledge from one institution to another, paving the way for future
+healthcare model pre-training across institutions.",arxiv
+http://arxiv.org/abs/2107.08189v1,2021-07-17T05:53:24Z,2021-07-17T05:53:24Z,"BEDS-Bench: Behavior of EHR-models under Distributional Shift--A
+  Benchmark","Machine learning has recently demonstrated impressive progress in predictive
+accuracy across a wide array of tasks. Most ML approaches focus on
+generalization performance on unseen data that are similar to the training data
+(In-Distribution, or IND). However, real world applications and deployments of
+ML rarely enjoy the comfort of encountering examples that are always IND. In
+such situations, most ML models commonly display erratic behavior on
+Out-of-Distribution (OOD) examples, such as assigning high confidence to wrong
+predictions, or vice-versa. Implications of such unusual model behavior are
+further exacerbated in the healthcare setting, where patient health can
+potentially be put at risk. It is crucial to study the behavior and robustness
+properties of models under distributional shift, understand common failure
+modes, and take mitigation steps before the model is deployed. Having a
+benchmark that shines light upon these aspects of a model is a first and
+necessary step in addressing the issue. Recent work and interest in increasing
+model robustness in OOD settings have focused more on image modality, while the
+Electronic Health Record (EHR) modality is still largely under-explored. We aim
+to bridge this gap by releasing BEDS-Bench, a benchmark for quantifying the
+behavior of ML models over EHR data under OOD settings. We use two open access,
+de-identified EHR datasets to construct several OOD data settings to run tests
+on, and measure relevant metrics that characterize crucial aspects of a model's
+OOD behavior. We evaluate several learning algorithms under BEDS-Bench and find
+that all of them show poor generalization performance under distributional
+shift in general. Our results highlight the need and the potential to improve
+robustness of EHR models under distributional shift, and BEDS-Bench provides
+one way to measure progress towards that goal.",arxiv
+http://arxiv.org/abs/2111.01338v2,2021-11-03T14:49:34Z,2021-11-02T02:54:30Z,"Federated Split Vision Transformer for COVID-19 CXR Diagnosis using
+  Task-Agnostic Training","Federated learning, which shares the weights of the neural network across
+clients, is gaining attention in the healthcare sector as it enables training
+on a large corpus of decentralized data while maintaining data privacy. For
+example, this enables neural network training for COVID-19 diagnosis on chest
+X-ray (CXR) images without collecting patient CXR data across multiple
+hospitals. Unfortunately, the exchange of the weights quickly consumes the
+network bandwidth if highly expressive network architecture is employed.
+So-called split learning partially solves this problem by dividing a neural
+network into a client and a server part, so that the client part of the network
+takes up less extensive computation resources and bandwidth. However, it is not
+clear how to find the optimal split without sacrificing the overall network
+performance. To amalgamate these methods and thereby maximize their distinct
+strengths, here we show that the Vision Transformer, a recently developed deep
+learning architecture with straightforward decomposable configuration, is
+ideally suitable for split learning without sacrificing performance. Even under
+the non-independent and identically distributed data distribution which
+emulates a real collaboration between hospitals using CXR datasets from
+multiple sources, the proposed framework was able to attain performance
+comparable to data-centralized training. In addition, the proposed framework
+along with heterogeneous multi-task clients also improves individual task
+performances including the diagnosis of COVID-19, eliminating the need for
+sharing large weights with innumerable parameters. Our results affirm the
+suitability of Transformer for collaborative learning in medical imaging and
+pave the way forward for future real-world implementations.",arxiv
+http://arxiv.org/abs/2008.05232v2,2020-11-23T20:38:50Z,2020-08-12T11:03:57Z,Learning to Detect Anomalous Wireless Links in IoT Networks,"After decades of research, the Internet of Things (IoT) is finally permeating
+real-life and helps improve the efficiency of infrastructures and processes as
+well as our health. As a massive number of IoT devices are deployed, they
+naturally incur great operational costs to ensure intended operations. To
+effectively handle such intended operations in massive IoT networks, automatic
+detection of malfunctioning, namely anomaly detection, becomes a critical but
+challenging task. In this paper, motivated by a real-world experimental IoT
+deployment, we introduce four types of wireless network anomalies that are
+identified at the link layer. We study the performance of threshold- and
+machine learning (ML)-based classifiers to automatically detect these
+anomalies. We examine the relative performance of three supervised and three
+unsupervised ML techniques on both non-encoded and encoded (autoencoder)
+feature representations. Our results demonstrate that; i) selected supervised
+approaches are able to detect anomalies with F1 scores of above 0.98, while
+unsupervised ones are also capable of detecting the said anomalies with F1
+scores of, on average, 0.90, and ii) OC-SVM outperforms all the other
+unsupervised ML approaches reaching at F1 scores of 0.99 for SuddenD, 0.95 for
+SuddenR, 0.93 for InstaD and 0.95 for SlowD.",arxiv
+http://arxiv.org/abs/1906.10670v2,2020-11-11T05:26:52Z,2019-06-25T17:09:34Z,"Improving performance of deep learning models with axiomatic attribution
+  priors and expected gradients","Recent research has demonstrated that feature attribution methods for deep
+networks can themselves be incorporated into training; these attribution priors
+optimize for a model whose attributions have certain desirable properties --
+most frequently, that particular features are important or unimportant. These
+attribution priors are often based on attribution methods that are not
+guaranteed to satisfy desirable interpretability axioms, such as completeness
+and implementation invariance. Here, we introduce attribution priors to
+optimize for higher-level properties of explanations, such as smoothness and
+sparsity, enabled by a fast new attribution method formulation called expected
+gradients that satisfies many important interpretability axioms. This improves
+model performance on many real-world tasks where previous attribution priors
+fail. Our experiments show that the gains from combining higher-level
+attribution priors with expected gradients attributions are consistent across
+image, gene expression, and health care data sets. We believe this work
+motivates and provides the necessary tools to support the widespread adoption
+of axiomatic attribution priors in many areas of applied machine learning. The
+implementations and our results have been made freely available to academic
+communities.",arxiv
+http://arxiv.org/abs/2106.10352v1,2021-06-18T20:54:18Z,2021-06-18T20:54:18Z,"Semi-supervised Optimal Transport with Self-paced Ensemble for
+  Cross-hospital Sepsis Early Detection","The utilization of computer technology to solve problems in medical scenarios
+has attracted considerable attention in recent years, which still has great
+potential and space for exploration. Among them, machine learning has been
+widely used in the prediction, diagnosis and even treatment of Sepsis. However,
+state-of-the-art methods require large amounts of labeled medical data for
+supervised learning. In real-world applications, the lack of labeled data will
+cause enormous obstacles if one hospital wants to deploy a new Sepsis detection
+system. Different from the supervised learning setting, we need to use known
+information (e.g., from another hospital with rich labeled data) to help build
+a model with acceptable performance, i.e., transfer learning. In this paper, we
+propose a semi-supervised optimal transport with self-paced ensemble framework
+for Sepsis early detection, called SPSSOT, to transfer knowledge from the other
+that has rich labeled data. In SPSSOT, we first extract the same clinical
+indicators from the source domain (e.g., hospital with rich labeled data) and
+the target domain (e.g., hospital with little labeled data), then we combine
+the semi-supervised domain adaptation based on optimal transport theory with
+self-paced under-sampling to avoid a negative transfer possibly caused by
+covariate shift and class imbalance. On the whole, SPSSOT is an end-to-end
+transfer learning method for Sepsis early detection which can automatically
+select suitable samples from two domains respectively according to the number
+of iterations and align feature space of two domains. Extensive experiments on
+two open clinical datasets demonstrate that comparing with other methods, our
+proposed SPSSOT, can significantly improve the AUC values with only 1% labeled
+data in the target domain in two transfer learning scenarios, MIMIC
+$rightarrow$ Challenge and Challenge $rightarrow$ MIMIC.",arxiv
+http://arxiv.org/abs/2012.11952v1,2020-12-22T12:11:42Z,2020-12-22T12:11:42Z,"A Feasibility study for Deep learning based automated brain tumor
+  segmentation using Magnetic Resonance Images","Deep learning algorithms have accounted for the rapid acceleration of
+research in artificial intelligence in medical image analysis, interpretation,
+and segmentation with many potential applications across various sub
+disciplines in medicine. However, only limited number of research which
+investigates these application scenarios, are deployed into the clinical sector
+for the evaluation of the real requirement and the practical challenges of the
+model deployment. In this research, a deep convolutional neural network (CNN)
+based classification network and Faster RCNN based localization network were
+developed for brain tumor MR image classification and tumor localization. A
+typical edge detection algorithm called Prewitt was used for tumor segmentation
+task, based on the output of the tumor localization. Overall performance of the
+proposed tumor segmentation architecture, was analyzed using objective quality
+parameters including Accuracy, Boundary Displacement Error (BDE), Dice score
+and confidence interval. A subjective quality assessment of the model was
+conducted based on the Double Stimulus Impairment Scale (DSIS) protocol using
+the input of medical expertise. It was observed that the confidence level of
+our segmented output was in a similar range to that of experts. Also, the
+Neurologists have rated the output of our model as highly accurate
+segmentation.",arxiv
+http://arxiv.org/abs/2005.08076v1,2020-05-16T19:42:16Z,2020-05-16T19:42:16Z,"A Deep Learning based Wearable Healthcare IoT Device for AI-enabled
+  Hearing Assistance Automation","With the recent booming of artificial intelligence (AI), particularly deep
+learning techniques, digital healthcare is one of the prevalent areas that
+could gain benefits from AI-enabled functionality. This research presents a
+novel AI-enabled Internet of Things (IoT) device operating from the ESP-8266
+platform capable of assisting those who suffer from impairment of hearing or
+deafness to communicate with others in conversations. In the proposed solution,
+a server application is created that leverages Google's online speech
+recognition service to convert the received conversations into texts, then
+deployed to a micro-display attached to the glasses to display the conversation
+contents to deaf people, to enable and assist conversation as normal with the
+general population. Furthermore, in order to raise alert of traffic or
+dangerous scenarios, an 'urban-emergency' classifier is developed using a deep
+learning model, Inception-v4, with transfer learning to detect/recognize
+alerting/alarming sounds, such as a horn sound or a fire alarm, with texts
+generated to alert the prospective user. The training of Inception-v4 was
+carried out on a consumer desktop PC and then implemented into the AI based IoT
+application. The empirical results indicate that the developed prototype system
+achieves an accuracy rate of 92% for sound recognition and classification with
+real-time performance.",arxiv
+http://arxiv.org/abs/2107.08574v1,2021-07-19T01:29:16Z,2021-07-19T01:29:16Z,"A Modulation Layer to Increase Neural Network Robustness Against Data
+  Quality Issues","Data quality is a common problem in machine learning, especially in
+high-stakes settings such as healthcare. Missing data affects accuracy,
+calibration, and feature attribution in complex patterns. Developers often
+train models on carefully curated datasets to minimize missing data bias;
+however, this reduces the usability of such models in production environments,
+such as real-time healthcare records. Making machine learning models robust to
+missing data is therefore crucial for practical application. While some
+classifiers naturally handle missing data, others, such as deep neural
+networks, are not designed for unknown values. We propose a novel neural
+network modification to mitigate the impacts of missing data. The approach is
+inspired by neuromodulation that is performed by biological neural networks.
+Our proposal replaces the fixed weights of a fully-connected layer with a
+function of an additional input (reliability score) at each input, mimicking
+the ability of cortex to up- and down-weight inputs based on the presence of
+other data. The modulation function is jointly learned with the main task using
+a multi-layer perceptron. We tested our modulating fully connected layer on
+multiple classification, regression, and imputation problems, and it either
+improved performance or generated comparable performance to conventional neural
+network architectures concatenating reliability to the inputs. Models with
+modulating layers were more robust against degradation of data quality by
+introducing additional missingness at evaluation time. These results suggest
+that explicitly accounting for reduced information quality with a modulating
+fully connected layer can enable the deployment of artificial intelligence
+systems in real-time settings.",arxiv
+http://arxiv.org/abs/2106.07875v1,2021-06-15T04:24:59Z,2021-06-15T04:24:59Z,S-LIME: Stabilized-LIME for Model Explanation,"An increasing number of machine learning models have been deployed in domains
+with high stakes such as finance and healthcare. Despite their superior
+performances, many models are black boxes in nature which are hard to explain.
+There are growing efforts for researchers to develop methods to interpret these
+black-box models. Post hoc explanations based on perturbations, such as LIME,
+are widely used approaches to interpret a machine learning model after it has
+been built. This class of methods has been shown to exhibit large instability,
+posing serious challenges to the effectiveness of the method itself and harming
+user trust. In this paper, we propose S-LIME, which utilizes a hypothesis
+testing framework based on central limit theorem for determining the number of
+perturbation points needed to guarantee stability of the resulting explanation.
+Experiments on both simulated and real world data sets are provided to
+demonstrate the effectiveness of our method.",arxiv
+http://arxiv.org/abs/2002.05229v1,2020-02-12T20:35:31Z,2020-02-12T20:35:31Z,"Data Efficient Training for Reinforcement Learning with Adaptive
+  Behavior Policy Sharing","Deep Reinforcement Learning (RL) is proven powerful for decision making in
+simulated environments. However, training deep RL model is challenging in real
+world applications such as production-scale health-care or recommender systems
+because of the expensiveness of interaction and limitation of budget at
+deployment. One aspect of the data inefficiency comes from the expensive
+hyper-parameter tuning when optimizing deep neural networks. We propose
+Adaptive Behavior Policy Sharing (ABPS), a data-efficient training algorithm
+that allows sharing of experience collected by behavior policy that is
+adaptively selected from a pool of agents trained with an ensemble of
+hyper-parameters. We further extend ABPS to evolve hyper-parameters during
+training by hybridizing ABPS with an adapted version of Population Based
+Training (ABPS-PBT). We conduct experiments with multiple Atari games with up
+to 16 hyper-parameter/architecture setups. ABPS achieves superior overall
+performance, reduced variance on top 25% agents, and equivalent performance on
+the best agent compared to conventional hyper-parameter tuning with independent
+training, even though ABPS only requires the same number of environmental
+interactions as training a single agent. We also show that ABPS-PBT further
+improves the convergence speed and reduces the variance.",arxiv
+http://arxiv.org/abs/1803.04837v4,2018-11-17T06:20:12Z,2018-03-13T14:32:38Z,"Learning the Joint Representation of Heterogeneous Temporal Events for
+  Clinical Endpoint Prediction","The availability of a large amount of electronic health records (EHR)
+provides huge opportunities to improve health care service by mining these
+data. One important application is clinical endpoint prediction, which aims to
+predict whether a disease, a symptom or an abnormal lab test will happen in the
+future according to patients' history records. This paper develops deep
+learning techniques for clinical endpoint prediction, which are effective in
+many practical applications. However, the problem is very challenging since
+patients' history records contain multiple heterogeneous temporal events such
+as lab tests, diagnosis, and drug administrations. The visiting patterns of
+different types of events vary significantly, and there exist complex nonlinear
+relationships between different events. In this paper, we propose a novel model
+for learning the joint representation of heterogeneous temporal events. The
+model adds a new gate to control the visiting rates of different events which
+effectively models the irregular patterns of different events and their
+nonlinear correlations. Experiment results with real-world clinical data on the
+tasks of predicting death and abnormal lab tests prove the effectiveness of our
+proposed approach over competitive baselines.",arxiv
+http://arxiv.org/abs/2011.00739v2,2021-04-06T17:11:52Z,2020-10-30T17:32:18Z,"Mutual Information-based Disentangled Neural Networks for Classifying
+  Unseen Categories in Different Domains: Application to Fetal Ultrasound
+  Imaging","Deep neural networks exhibit limited generalizability across images with
+different entangled domain features and categorical features. Learning
+generalizable features that can form universal categorical decision boundaries
+across domains is an interesting and difficult challenge. This problem occurs
+frequently in medical imaging applications when attempts are made to deploy and
+improve deep learning models across different image acquisition devices, across
+acquisition parameters or if some classes are unavailable in new training
+databases. To address this problem, we propose Mutual Information-based
+Disentangled Neural Networks (MIDNet), which extract generalizable categorical
+features to transfer knowledge to unseen categories in a target domain. The
+proposed MIDNet adopts a semi-supervised learning paradigm to alleviate the
+dependency on labeled data. This is important for real-world applications where
+data annotation is time-consuming, costly and requires training and expertise.
+We extensively evaluate the proposed method on fetal ultrasound datasets for
+two different image classification tasks where domain features are respectively
+defined by shadow artifacts and image acquisition devices. Experimental results
+show that the proposed method outperforms the state-of-the-art on the
+classification of unseen categories in a target domain with sparsely labeled
+training data.",arxiv
+http://arxiv.org/abs/1712.01785v3,2017-12-16T00:30:53Z,2017-12-05T17:49:18Z,"Towards Practical Verification of Machine Learning: The Case of Computer
+  Vision Systems","Due to the increasing usage of machine learning (ML) techniques in security-
+and safety-critical domains, such as autonomous systems and medical diagnosis,
+ensuring correct behavior of ML systems, especially for different corner cases,
+is of growing importance. In this paper, we propose a generic framework for
+evaluating security and robustness of ML systems using different real-world
+safety properties. We further design, implement and evaluate VeriVis, a
+scalable methodology that can verify a diverse set of safety properties for
+state-of-the-art computer vision systems with only blackbox access. VeriVis
+leverage different input space reduction techniques for efficient verification
+of different safety properties. VeriVis is able to find thousands of safety
+violations in fifteen state-of-the-art computer vision systems including ten
+Deep Neural Networks (DNNs) such as Inception-v3 and Nvidia's Dave self-driving
+system with thousands of neurons as well as five commercial third-party vision
+APIs including Google vision and Clarifai for twelve different safety
+properties. Furthermore, VeriVis can successfully verify local safety
+properties, on average, for around 31.7% of the test images. VeriVis finds up
+to 64.8x more violations than existing gradient-based methods that, unlike
+VeriVis, cannot ensure non-existence of any violations. Finally, we show that
+retraining using the safety violations detected by VeriVis can reduce the
+average number of violations up to 60.2%.",arxiv
+http://arxiv.org/abs/1803.07276v3,2018-08-31T05:35:08Z,2018-03-20T07:24:40Z,"Removing Confounding Factors Associated Weights in Deep Neural Networks
+  Improves the Prediction Accuracy for Healthcare Applications","The proliferation of healthcare data has brought the opportunities of
+applying data-driven approaches, such as machine learning methods, to assist
+diagnosis. Recently, many deep learning methods have been shown with impressive
+successes in predicting disease status with raw input data. However, the
+""black-box"" nature of deep learning and the high-reliability requirement of
+biomedical applications have created new challenges regarding the existence of
+confounding factors. In this paper, with a brief argument that inappropriate
+handling of confounding factors will lead to models' sub-optimal performance in
+real-world applications, we present an efficient method that can remove the
+influences of confounding factors such as age or gender to improve the
+across-cohort prediction accuracy of neural networks. One distinct advantage of
+our method is that it only requires minimal changes of the baseline model's
+architecture so that it can be plugged into most of the existing neural
+networks. We conduct experiments across CT-scan, MRA, and EEG brain wave with
+convolutional neural networks and LSTM to verify the efficiency of our method.",arxiv
+http://arxiv.org/abs/1807.03043v5,2019-02-25T21:06:08Z,2018-07-09T11:12:16Z,Convolutional Recurrent Neural Networks for Glucose Prediction,"Control of blood glucose is essential for diabetes management. Current
+digital therapeutic approaches for subjects with Type 1 diabetes mellitus
+(T1DM) such as the artificial pancreas and insulin bolus calculators leverage
+machine learning techniques for predicting subcutaneous glucose for improved
+control. Deep learning has recently been applied in healthcare and medical
+research to achieve state-of-the-art results in a range of tasks including
+disease diagnosis, and patient state prediction among others. In this work, we
+present a deep learning model that is capable of forecasting glucose levels
+with leading accuracy for simulated patient cases (RMSE = 9.38$\pm$0.71 [mg/dL]
+over a 30-minute horizon, RMSE = 18.87$\pm$2.25 [mg/dL] over a 60-minute
+horizon) and real patient cases (RMSE = 21.07$\pm$2.35 [mg/dL] for 30-minute,
+RMSE = 33.27$\pm$4.79\% for 60-minute). In addition, the model provides
+competitive performance in providing effective prediction horizon ($PH_{eff}$)
+with minimal time lag both in a simulated patient dataset ($PH_{eff}$ =
+29.0$\pm$0.7 for 30-min and $PH_{eff}$ = 49.8$\pm$2.9 for 60-min) and in a real
+patient dataset ($PH_{eff}$ = 19.3$\pm$3.1 for 30-min and $PH_{eff}$ =
+29.3$\pm$9.4 for 60-min). This approach is evaluated on a dataset of 10
+simulated cases generated from the UVa/Padova simulator and a clinical dataset
+of 10 real cases each containing glucose readings, insulin bolus, and meal
+(carbohydrate) data. Performance of the recurrent convolutional neural network
+is benchmarked against four algorithms. The proposed algorithm is implemented
+on an Android mobile phone, with an execution time of $6$ms on a phone compared
+to an execution time of $780$ms on a laptop.",arxiv
+http://arxiv.org/abs/2010.07029v2,2021-02-27T19:06:48Z,2020-09-29T21:32:28Z,"Basic principles and concept design of a real-time clinical decision
+  support system for managing medical emergencies on missions to Mars","Space agencies and private companies prepare the beginning of human space
+exploration for the 2030s with missions to put the first human on the Mars
+surface. The absence of gravity and radiation, along with distance, isolation
+and hostile environments, are expected to increase medical events where
+previously unseen manifestations may arise. The current healthcare strategy
+based on telemedicine and the possibility to stabilize and transport the
+injured crewmember to a terrestrial definitive medical facility is not
+applicable in exploration class missions. Therefore, the need for deploying the
+full autonomous capability to solve medical emergencies may guide the design of
+future onboard healthcare systems. We present ten basic principles and concept
+design of a software suite to bring onboard decision support to help the crew
+dealing with medical emergencies taking into consideration physiological
+disturbances in space and spaceflight restrictions. 1) give real-time support
+for emergency medical decision making, 2) give patient-specific advice for
+executive problem-solving, 3) take into account available information from life
+support and monitoring of crewmembers, 4) be fully autonomous from remote
+facilities, 5) continuously adapt predictions to physiological disturbance and
+changing conditions, 6) optimize emergency medical decision making in terms of
+mission fundamental priorities, 7) take into account medical supplies and
+equipment on board, 8) apply health standards for the level of care V, 9)
+implement ethics responsibilities for spaceflights, and 10) apply ethical
+standards for artificial intelligence. Based on these principles, we propose an
+autonomous clinical decision support system (CDSS) to provide real-time advice
+for emergency medical interventions on board of space exploration missions.",arxiv
+http://arxiv.org/abs/2103.16898v1,2021-03-31T08:31:07Z,2021-03-31T08:31:07Z,"Perun: Secure Multi-Stakeholder Machine Learning Framework with GPU
+  Support","Confidential multi-stakeholder machine learning (ML) allows multiple parties
+to perform collaborative data analytics while not revealing their intellectual
+property, such as ML source code, model, or datasets. State-of-the-art
+solutions based on homomorphic encryption incur a large performance overhead.
+Hardware-based solutions, such as trusted execution environments (TEEs),
+significantly improve the performance in inference computations but still
+suffer from low performance in training computations, e.g., deep neural
+networks model training, because of limited availability of protected memory
+and lack of GPU support.
+  To address this problem, we designed and implemented Perun, a framework for
+confidential multi-stakeholder machine learning that allows users to make a
+trade-off between security and performance. Perun executes ML training on
+hardware accelerators (e.g., GPU) while providing security guarantees using
+trusted computing technologies, such as trusted platform module and integrity
+measurement architecture. Less compute-intensive workloads, such as inference,
+execute only inside TEE, thus at a lower trusted computing base. The evaluation
+shows that during the ML training on CIFAR-10 and real-world medical datasets,
+Perun achieved a 161x to 1560x speedup compared to a pure TEE-based approach.",arxiv
+http://arxiv.org/abs/1709.01648v1,2017-09-06T01:36:12Z,2017-09-06T01:36:12Z,"Boosting Deep Learning Risk Prediction with Generative Adversarial
+  Networks for Electronic Health Records","The rapid growth of Electronic Health Records (EHRs), as well as the
+accompanied opportunities in Data-Driven Healthcare (DDH), has been attracting
+widespread interests and attentions. Recent progress in the design and
+applications of deep learning methods has shown promising results and is
+forcing massive changes in healthcare academia and industry, but most of these
+methods rely on massive labeled data. In this work, we propose a general deep
+learning framework which is able to boost risk prediction performance with
+limited EHR data. Our model takes a modified generative adversarial network
+namely ehrGAN, which can provide plausible labeled EHR data by mimicking real
+patient records, to augment the training dataset in a semi-supervised learning
+manner. We use this generative model together with a convolutional neural
+network (CNN) based prediction model to improve the onset prediction
+performance. Experiments on two real healthcare datasets demonstrate that our
+proposed framework produces realistic data samples and achieves significant
+improvements on classification tasks with the generated data over several
+stat-of-the-art baselines.",arxiv
+http://arxiv.org/abs/2005.12573v3,2021-05-08T11:45:24Z,2020-05-26T08:46:32Z,"Learning Global and Local Features of Normal Brain Anatomy for
+  Unsupervised Abnormality Detection","In real-world clinical practice, overlooking unanticipated findings can
+result in serious consequences. However, supervised learning, which is the
+foundation for the current success of deep learning, only encourages models to
+identify abnormalities that are defined in datasets in advance. Therefore,
+abnormality detection must be implemented in medical images that are not
+limited to a specific disease category. In this study, we demonstrate an
+unsupervised learning framework for pixel-wise abnormality detection in brain
+magnetic resonance imaging captured from a patient population with metastatic
+brain tumor. Our concept is as follows: If an image reconstruction network can
+faithfully reproduce the global features of normal anatomy, then the abnormal
+lesions in unseen images can be identified based on the local difference from
+those reconstructed as normal by a discriminative network. Both networks are
+trained on a dataset comprising only normal images without labels. In addition,
+we devise a metric to evaluate the anatomical fidelity of the reconstructed
+images and confirm that the overall detection performance is improved when the
+image reconstruction network achieves a higher score. For evaluation,
+clinically significant abnormalities are comprehensively segmented. The results
+show that the area under the receiver operating characteristics curve values
+for metastatic brain tumors, extracranial metastatic tumors, postoperative
+cavities, and structural changes are 0.78, 0.61, 0.91, and 0.60, respectively.",arxiv
+http://arxiv.org/abs/2001.11363v1,2020-01-29T17:23:16Z,2020-01-29T17:23:16Z,"REST: Robust and Efficient Neural Networks for Sleep Monitoring in the
+  Wild","In recent years, significant attention has been devoted towards integrating
+deep learning technologies in the healthcare domain. However, to safely and
+practically deploy deep learning models for home health monitoring, two
+significant challenges must be addressed: the models should be (1) robust
+against noise; and (2) compact and energy-efficient. We propose REST, a new
+method that simultaneously tackles both issues via 1) adversarial training and
+controlling the Lipschitz constant of the neural network through spectral
+regularization while 2) enabling neural network compression through sparsity
+regularization. We demonstrate that REST produces highly-robust and efficient
+models that substantially outperform the original full-sized models in the
+presence of noise. For the sleep staging task over single-channel
+electroencephalogram (EEG), the REST model achieves a macro-F1 score of 0.67
+vs. 0.39 achieved by a state-of-the-art model in the presence of Gaussian noise
+while obtaining 19x parameter reduction and 15x MFLOPS reduction on two large,
+real-world EEG datasets. By deploying these models to an Android application on
+a smartphone, we quantitatively observe that REST allows models to achieve up
+to 17x energy reduction and 9x faster inference. We open-source the code
+repository with this paper: https://github.com/duggalrahul/REST.",arxiv
+http://arxiv.org/abs/2108.00974v1,2021-08-02T15:22:05Z,2021-08-02T15:22:05Z,"Evaluating Federated Learning for Intrusion Detection in Internet of
+  Things: Review and Challenges","The application of Machine Learning (ML) techniques to the well-known
+intrusion detection systems (IDS) is key to cope with increasingly
+sophisticated cybersecurity attacks through an effective and efficient
+detection process. In the context of the Internet of Things (IoT), most
+ML-enabled IDS approaches use centralized approaches where IoT devices share
+their data with data centers for further analysis. To mitigate privacy concerns
+associated with centralized approaches, in recent years the use of Federated
+Learning (FL) has attracted a significant interest in different sectors,
+including healthcare and transport systems. However, the development of
+FL-enabled IDS for IoT is in its infancy, and still requires research efforts
+from various areas, in order to identify the main challenges for the deployment
+in real-world scenarios. In this direction, our work evaluates a FL-enabled IDS
+approach based on a multiclass classifier considering different data
+distributions for the detection of different attacks in an IoT scenario. In
+particular, we use three different settings that are obtained by partitioning
+the recent ToN\_IoT dataset according to IoT devices' IP address and types of
+attack. Furthermore, we evaluate the impact of different aggregation functions
+according to such setting by using the recent IBMFL framework as FL
+implementation. Additionally, we identify a set of challenges and future
+directions based on the existing literature and the analysis of our evaluation
+results.",arxiv
+http://arxiv.org/abs/2108.03823v3,2021-09-24T04:53:18Z,2021-08-09T05:58:49Z,Towards to Robust and Generalized Medical Image Segmentation Framework,"To mitigate the radiologist's workload, computer-aided diagnosis with the
+capability to review and analyze medical images is gradually deployed. Deep
+learning-based region of interest segmentation is among the most exciting use
+cases. However, this paradigm is restricted in real-world clinical applications
+due to poor robustness and generalization. The issue is more sinister with a
+lack of training data. In this paper, we address the challenge from the
+representation learning point of view. We investigate that the collapsed
+representations, as one of the main reasons which caused poor robustness and
+generalization, could be avoided through transfer learning. Therefore, we
+propose a novel two-stage framework for robust generalized segmentation. In
+particular, an unsupervised Tile-wise AutoEncoder (T-AE) pretraining
+architecture is coined to learn meaningful representation for improving the
+generalization and robustness of the downstream tasks. Furthermore, the learned
+knowledge is transferred to the segmentation benchmark. Coupled with an image
+reconstruction network, the representation keeps to be decoded, encouraging the
+model to capture more semantic features. Experiments of lung segmentation on
+multi chest X-ray datasets are conducted. Empirically, the related experimental
+results demonstrate the superior generalization capability of the proposed
+framework on unseen domains in terms of high performance and robustness to
+corruption, especially under the scenario of the limited training data.",arxiv
+http://arxiv.org/abs/2104.06910v1,2021-04-14T15:00:39Z,2021-04-14T15:00:39Z,"Towards a framework for evaluating the safety, acceptability and
+  efficacy of AI systems for health: an initial synthesis","The potential presented by Artificial Intelligence (AI) for healthcare has
+long been recognised by the technical community. More recently, this potential
+has been recognised by policymakers, resulting in considerable public and
+private investment in the development of AI for healthcare across the globe.
+Despite this, excepting limited success stories, real-world implementation of
+AI systems into front-line healthcare has been limited. There are numerous
+reasons for this, but a main contributory factor is the lack of internationally
+accepted, or formalised, regulatory standards to assess AI safety and impact
+and effectiveness. This is a well-recognised problem with numerous ongoing
+research and policy projects to overcome it. Our intention here is to
+contribute to this problem-solving effort by seeking to set out a minimally
+viable framework for evaluating the safety, acceptability and efficacy of AI
+systems for healthcare. We do this by conducting a systematic search across
+Scopus, PubMed and Google Scholar to identify all the relevant literature
+published between January 1970 and November 2020 related to the evaluation of:
+output performance; efficacy; and real-world use of AI systems, and
+synthesising the key themes according to the stages of evaluation: pre-clinical
+(theoretical phase); exploratory phase; definitive phase; and post-market
+surveillance phase (monitoring). The result is a framework to guide AI system
+developers, policymakers, and regulators through a sufficient evaluation of an
+AI system designed for use in healthcare.",arxiv
+http://arxiv.org/abs/2012.02048v1,2020-12-03T16:28:45Z,2020-12-03T16:28:45Z,"Ethical Testing in the Real World: Evaluating Physical Testing of
+  Adversarial Machine Learning","This paper critically assesses the adequacy and representativeness of
+physical domain testing for various adversarial machine learning (ML) attacks
+against computer vision systems involving human subjects. Many papers that
+deploy such attacks characterize themselves as ""real world."" Despite this
+framing, however, we found the physical or real-world testing conducted was
+minimal, provided few details about testing subjects and was often conducted as
+an afterthought or demonstration. Adversarial ML research without
+representative trials or testing is an ethical, scientific, and health/safety
+issue that can cause real harms. We introduce the problem and our methodology,
+and then critique the physical domain testing methodologies employed by papers
+in the field. We then explore various barriers to more inclusive physical
+testing in adversarial ML and offer recommendations to improve such testing
+notwithstanding these challenges.",arxiv
+http://arxiv.org/abs/2010.08300v1,2020-10-16T10:46:28Z,2020-10-16T10:46:28Z,"Interpretable Disease Prediction based on Reinforcement Path Reasoning
+  over Knowledge Graphs","Objective: To combine medical knowledge and medical data to interpretably
+predict the risk of disease. Methods: We formulated the disease prediction task
+as a random walk along a knowledge graph (KG). Specifically, we build a KG to
+record relationships between diseases and risk factors according to validated
+medical knowledge. Then, a mathematical object walks along the KG. It starts
+walking at a patient entity, which connects the KG based on the patient current
+diseases or risk factors and stops at a disease entity, which represents the
+predicted disease. The trajectory generated by the object represents an
+interpretable disease progression path of the given patient. The dynamics of
+the object are controlled by a policy-based reinforcement learning (RL) module,
+which is trained by electronic health records (EHRs). Experiments: We utilized
+two real-world EHR datasets to evaluate the performance of our model. In the
+disease prediction task, our model achieves 0.743 and 0.639 in terms of macro
+area under the curve (AUC) in predicting 53 circulation system diseases in the
+two datasets, respectively. This performance is comparable to the commonly used
+machine learning (ML) models in medical research. In qualitative analysis, our
+clinical collaborator reviewed the disease progression paths generated by our
+model and advocated their interpretability and reliability. Conclusion:
+Experimental results validate the proposed model in interpretably evaluating
+and optimizing disease prediction. Significance: Our work contributes to
+leveraging the potential of medical knowledge and medical data jointly for
+interpretable prediction tasks.",arxiv
+http://arxiv.org/abs/1911.07391v3,2021-11-14T16:58:11Z,2019-11-18T01:15:24Z,Justification-Based Reliability in Machine Learning,"With the advent of Deep Learning, the field of machine learning (ML) has
+surpassed human-level performance on diverse classification tasks. At the same
+time, there is a stark need to characterize and quantify reliability of a
+model's prediction on individual samples. This is especially true in
+application of such models in safety-critical domains of industrial control and
+healthcare. To address this need, we link the question of reliability of a
+model's individual prediction to the epistemic uncertainty of the model's
+prediction. More specifically, we extend the theory of Justified True Belief
+(JTB) in epistemology, created to study the validity and limits of
+human-acquired knowledge, towards characterizing the validity and limits of
+knowledge in supervised classifiers. We present an analysis of neural network
+classifiers linking the reliability of its prediction on an input to
+characteristics of the support gathered from the input and latent spaces of the
+network. We hypothesize that the JTB analysis exposes the epistemic uncertainty
+(or ignorance) of a model with respect to its inference, thereby allowing for
+the inference to be only as strong as the justification permits. We explore
+various forms of support (for e.g., k-nearest neighbors (k-NN) and l_p-norm
+based) generated for an input, using the training data to construct a
+justification for the prediction with that input. Through experiments conducted
+on simulated and real datasets, we demonstrate that our approach can provide
+reliability for individual predictions and characterize regions where such
+reliability cannot be ascertained.",arxiv
+http://arxiv.org/abs/2109.00115v1,2021-08-31T23:38:17Z,2021-08-31T23:38:17Z,"Uncertainty Quantified Deep Learning for Predicting Dice Coefficient of
+  Digital Histopathology Image Segmentation","Deep learning models (DLMs) can achieve state of the art performance in
+medical image segmentation and classification tasks. However, DLMs that do not
+provide feedback for their predictions such as Dice coefficients (Dice) have
+limited deployment potential in real world clinical settings. Uncertainty
+estimates can increase the trust of these automated systems by identifying
+predictions that need further review but remain computationally prohibitive to
+deploy. In this study, we use a DLM with randomly initialized weights and Monte
+Carlo dropout (MCD) to segment tumors from microscopic Hematoxylin and Eosin
+(H&E) dye stained prostate core biopsy RGB images. We devise a novel approach
+that uses multiple clinical region based uncertainties from a single image
+(instead of the entire image) to predict Dice of the DLM model output by linear
+models. Image level uncertainty maps were generated and showed correspondence
+between imperfect model segmentation and high levels of uncertainty associated
+with specific prostate tissue regions with or without tumors. Results from this
+study suggest that linear models can learn coefficients of uncertainty
+quantified deep learning and correlations ((Spearman's correlation (p<0.05)) to
+predict Dice scores of specific regions of medical images.",arxiv
+http://arxiv.org/abs/1702.01780v1,2017-02-06T20:10:10Z,2017-02-06T20:10:10Z,"Toward the automated analysis of complex diseases in genome-wide
+  association studies using genetic programming","Machine learning has been gaining traction in recent years to meet the demand
+for tools that can efficiently analyze and make sense of the ever-growing
+databases of biomedical data in health care systems around the world. However,
+effectively using machine learning methods requires considerable domain
+expertise, which can be a barrier of entry for bioinformaticians new to
+computational data science methods. Therefore, off-the-shelf tools that make
+machine learning more accessible can prove invaluable for bioinformaticians. To
+this end, we have developed an open source pipeline optimization tool
+(TPOT-MDR) that uses genetic programming to automatically design machine
+learning pipelines for bioinformatics studies. In TPOT-MDR, we implement
+Multifactor Dimensionality Reduction (MDR) as a feature construction method for
+modeling higher-order feature interactions, and combine it with a new expert
+knowledge-guided feature selector for large biomedical data sets. We
+demonstrate TPOT-MDR's capabilities using a combination of simulated and real
+world data sets from human genetics and find that TPOT-MDR significantly
+outperforms modern machine learning methods such as logistic regression and
+eXtreme Gradient Boosting (XGBoost). We further analyze the best pipeline
+discovered by TPOT-MDR for a real world problem and highlight TPOT-MDR's
+ability to produce a high-accuracy solution that is also easily interpretable.",arxiv
+http://arxiv.org/abs/2103.13511v1,2021-03-24T22:33:38Z,2021-03-24T22:33:38Z,Addressing catastrophic forgetting for medical domain expansion,"Model brittleness is a key concern when deploying deep learning models in
+real-world medical settings. A model that has high performance at one
+institution may suffer a significant decline in performance when tested at
+other institutions. While pooling datasets from multiple institutions and
+retraining may provide a straightforward solution, it is often infeasible and
+may compromise patient privacy. An alternative approach is to fine-tune the
+model on subsequent institutions after training on the original institution.
+Notably, this approach degrades model performance at the original institution,
+a phenomenon known as catastrophic forgetting. In this paper, we develop an
+approach to address catastrophic forget-ting based on elastic weight
+consolidation combined with modulation of batch normalization statistics under
+two scenarios: first, for expanding the domain from one imaging system's data
+to another imaging system's, and second, for expanding the domain from a large
+multi-institutional dataset to another single institution dataset. We show that
+our approach outperforms several other state-of-the-art approaches and provide
+theoretical justification for the efficacy of batch normalization modulation.
+The results of this study are generally applicable to the deployment of any
+clinical deep learning model which requires domain expansion.",arxiv
+http://arxiv.org/abs/1809.01852v3,2019-03-07T04:27:19Z,2018-09-06T07:30:13Z,"GAMENet: Graph Augmented MEmory Networks for Recommending Medication
+  Combination","Recent progress in deep learning is revolutionizing the healthcare domain
+including providing solutions to medication recommendations, especially
+recommending medication combination for patients with complex health
+conditions. Existing approaches either do not customize based on patient health
+history, or ignore existing knowledge on drug-drug interactions (DDI) that
+might lead to adverse outcomes. To fill this gap, we propose the Graph
+Augmented Memory Networks (GAMENet), which integrates the drug-drug
+interactions knowledge graph by a memory module implemented as a graph
+convolutional networks, and models longitudinal patient records as the query.
+It is trained end-to-end to provide safe and personalized recommendation of
+medication combination. We demonstrate the effectiveness and safety of GAMENet
+by comparing with several state-of-the-art methods on real EHR data. GAMENet
+outperformed all baselines in all effectiveness measures, and also achieved
+3.60% DDI rate reduction from existing EHR data.",arxiv
+http://arxiv.org/abs/2009.12406v1,2020-09-25T19:15:26Z,2020-09-25T19:15:26Z,"Why have a Unified Predictive Uncertainty? Disentangling it using Deep
+  Split Ensembles","Understanding and quantifying uncertainty in black box Neural Networks (NNs)
+is critical when deployed in real-world settings such as healthcare. Recent
+works using Bayesian and non-Bayesian methods have shown how a unified
+predictive uncertainty can be modelled for NNs. Decomposing this uncertainty to
+disentangle the granular sources of heteroscedasticity in data provides rich
+information about its underlying causes. We propose a conceptually simple
+non-Bayesian approach, deep split ensemble, to disentangle the predictive
+uncertainties using a multivariate Gaussian mixture model. The NNs are trained
+with clusters of input features, for uncertainty estimates per cluster. We
+evaluate our approach on a series of benchmark regression datasets, while also
+comparing with unified uncertainty methods. Extensive analyses using dataset
+shits and empirical rule highlight our inherently well-calibrated models. Our
+work further demonstrates its applicability in a multi-modal setting using a
+benchmark Alzheimer's dataset and also shows how deep split ensembles can
+highlight hidden modality-specific biases. The minimal changes required to NNs
+and the training procedure, and the high flexibility to group features into
+clusters makes it readily deployable and useful. The source code is available
+at https://github.com/wazeerzulfikar/deep-split-ensembles",arxiv
+http://arxiv.org/abs/1801.09271v1,2018-01-28T19:29:50Z,2018-01-28T19:29:50Z,"Deep Reinforcement Learning for Dynamic Treatment Regimes on Medical
+  Registry Data","This paper presents the first deep reinforcement learning (DRL) framework to
+estimate the optimal Dynamic Treatment Regimes from observational medical data.
+This framework is more flexible and adaptive for high dimensional action and
+state spaces than existing reinforcement learning methods to model real-life
+complexity in heterogeneous disease progression and treatment choices, with the
+goal of providing doctor and patients the data-driven personalized decision
+recommendations. The proposed DRL framework comprises (i) a supervised learning
+step to predict the most possible expert actions, and (ii) a deep reinforcement
+learning step to estimate the long-term value function of Dynamic Treatment
+Regimes. Both steps depend on deep neural networks.
+  As a key motivational example, we have implemented the proposed framework on
+a data set from the Center for International Bone Marrow Transplant Research
+(CIBMTR) registry database, focusing on the sequence of prevention and
+treatments for acute and chronic graft versus host disease after
+transplantation. In the experimental results, we have demonstrated promising
+accuracy in predicting human experts' decisions, as well as the high expected
+reward function in the DRL-based dynamic treatment regimes.",arxiv
+http://arxiv.org/abs/2106.06048v3,2021-11-07T15:41:11Z,2021-06-04T14:30:39Z,"Optimizing Bayesian Recurrent Neural Networks on an FPGA-based
+  Accelerator","Neural networks have demonstrated their outstanding performance in a wide
+range of tasks. Specifically recurrent architectures based on long-short term
+memory (LSTM) cells have manifested excellent capability to model time
+dependencies in real-world data. However, standard recurrent architectures
+cannot estimate their uncertainty which is essential for safety-critical
+applications such as in medicine. In contrast, Bayesian recurrent neural
+networks (RNNs) are able to provide uncertainty estimation with improved
+accuracy. Nonetheless, Bayesian RNNs are computationally and memory demanding,
+which limits their practicality despite their advantages. To address this
+issue, we propose an FPGA-based hardware design to accelerate Bayesian
+LSTM-based RNNs. To further improve the overall algorithmic-hardware
+performance, a co-design framework is proposed to explore the most fitting
+algorithmic-hardware configurations for Bayesian RNNs. We conduct extensive
+experiments on healthcare applications to demonstrate the improvement of our
+design and the effectiveness of our framework. Compared with GPU
+implementation, our FPGA-based design can achieve up to 10 times speedup with
+nearly 106 times higher energy efficiency. To the best of our knowledge, this
+is the first work targeting acceleration of Bayesian RNNs on FPGAs.",arxiv
+http://arxiv.org/abs/2008.13369v1,2020-08-31T05:12:57Z,2020-08-31T05:12:57Z,"Introducing Representations of Facial Affect in Automated Multimodal
+  Deception Detection","Automated deception detection systems can enhance health, justice, and
+security in society by helping humans detect deceivers in high-stakes
+situations across medical and legal domains, among others. This paper presents
+a novel analysis of the discriminative power of dimensional representations of
+facial affect for automated deception detection, along with interpretable
+features from visual, vocal, and verbal modalities. We used a video dataset of
+people communicating truthfully or deceptively in real-world, high-stakes
+courtroom situations. We leveraged recent advances in automated emotion
+recognition in-the-wild by implementing a state-of-the-art deep neural network
+trained on the Aff-Wild database to extract continuous representations of
+facial valence and facial arousal from speakers. We experimented with unimodal
+Support Vector Machines (SVM) and SVM-based multimodal fusion methods to
+identify effective features, modalities, and modeling approaches for detecting
+deception. Unimodal models trained on facial affect achieved an AUC of 80%, and
+facial affect contributed towards the highest-performing multimodal approach
+(adaptive boosting) that achieved an AUC of 91% when tested on speakers who
+were not part of training sets. This approach achieved a higher AUC than
+existing automated machine learning approaches that used interpretable visual,
+vocal, and verbal features to detect deception in this dataset, but did not use
+facial affect. Across all videos, deceptive and truthful speakers exhibited
+significant differences in facial valence and facial arousal, contributing
+computational support to existing psychological theories on affect and
+deception. The demonstrated importance of facial affect in our models informs
+and motivates the future development of automated, affect-aware machine
+learning approaches for modeling and detecting deception and other social
+behaviors in-the-wild.",arxiv
+http://arxiv.org/abs/2107.04882v1,2021-07-10T18:00:40Z,2021-07-10T18:00:40Z,"Out of Distribution Detection and Adversarial Attacks on Deep Neural
+  Networks for Robust Medical Image Analysis","Deep learning models have become a popular choice for medical image analysis.
+However, the poor generalization performance of deep learning models limits
+them from being deployed in the real world as robustness is critical for
+medical applications. For instance, the state-of-the-art Convolutional Neural
+Networks (CNNs) fail to detect adversarial samples or samples drawn
+statistically far away from the training distribution. In this work, we
+experimentally evaluate the robustness of a Mahalanobis distance-based
+confidence score, a simple yet effective method for detecting abnormal input
+samples, in classifying malaria parasitized cells and uninfected cells. Results
+indicated that the Mahalanobis confidence score detector exhibits improved
+performance and robustness of deep learning models, and achieves
+stateof-the-art performance on both out-of-distribution (OOD) and adversarial
+samples.",arxiv
+http://arxiv.org/abs/2012.02308v2,2021-03-08T10:30:50Z,2020-12-03T22:18:24Z,Concept-based model explanations for Electronic Health Records,"Recurrent Neural Networks (RNNs) are often used for sequential modeling of
+adverse outcomes in electronic health records (EHRs) due to their ability to
+encode past clinical states. These deep, recurrent architectures have displayed
+increased performance compared to other modeling approaches in a number of
+tasks, fueling the interest in deploying deep models in clinical settings. One
+of the key elements in ensuring safe model deployment and building user trust
+is model explainability. Testing with Concept Activation Vectors (TCAV) has
+recently been introduced as a way of providing human-understandable
+explanations by comparing high-level concepts to the network's gradients. While
+the technique has shown promising results in real-world imaging applications,
+it has not been applied to structured temporal inputs. To enable an application
+of TCAV to sequential predictions in the EHR, we propose an extension of the
+method to time series data. We evaluate the proposed approach on an open EHR
+benchmark from the intensive care unit, as well as synthetic data where we are
+able to better isolate individual effects.",arxiv
+http://arxiv.org/abs/2002.03763v2,2020-02-22T16:56:25Z,2020-02-03T22:58:28Z,Learning Numerical Observers using Unsupervised Domain Adaptation,"Medical imaging systems are commonly assessed by use of objective image
+quality measures. Supervised deep learning methods have been investigated to
+implement numerical observers for task-based image quality assessment. However,
+labeling large amounts of experimental data to train deep neural networks is
+tedious, expensive, and prone to subjective errors. Computer-simulated image
+data can potentially be employed to circumvent these issues; however, it is
+often difficult to computationally model complicated anatomical structures,
+noise sources, and the response of real world imaging systems. Hence, simulated
+image data will generally possess physical and statistical differences from the
+experimental image data they seek to emulate. Within the context of machine
+learning, these differences between the sets of two images is referred to as
+domain shift. In this study, we propose and investigate the use of an
+adversarial domain adaptation method to mitigate the deleterious effects of
+domain shift between simulated and experimental image data for deep
+learning-based numerical observers (DL-NOs) that are trained on simulated
+images but applied to experimental ones. In the proposed method, a DL-NO will
+initially be trained on computer-simulated image data and subsequently adapted
+for use with experimental image data, without the need for any labeled
+experimental images. As a proof of concept, a binary signal detection task is
+considered. The success of this strategy as a function of the degree of domain
+shift present between the simulated and experimental image data is
+investigated.",arxiv
+http://arxiv.org/abs/1911.08090v1,2019-11-19T04:33:05Z,2019-11-19T04:33:05Z,Deep Detector Health Management under Adversarial Campaigns,"Machine learning models are vulnerable to adversarial inputs that induce
+seemingly unjustifiable errors. As automated classifiers are increasingly used
+in industrial control systems and machinery, these adversarial errors could
+grow to be a serious problem. Despite numerous studies over the past few years,
+the field of adversarial ML is still considered alchemy, with no practical
+unbroken defenses demonstrated to date, leaving PHM practitioners with few
+meaningful ways of addressing the problem. We introduce turbidity detection as
+a practical superset of the adversarial input detection problem, coping with
+adversarial campaigns rather than statistically invisible one-offs. This
+perspective is coupled with ROC-theoretic design guidance that prescribes an
+inexpensive domain adaptation layer at the output of a deep learning model
+during an attack campaign. The result aims to approximate the Bayes optimal
+mitigation that ameliorates the detection model's degraded health. A
+proactively reactive type of prognostics is achieved via Monte Carlo simulation
+of various adversarial campaign scenarios, by sampling from the model's own
+turbidity distribution to quickly deploy the correct mitigation during a
+real-world campaign.",arxiv
+http://arxiv.org/abs/2103.15933v1,2021-03-29T20:10:51Z,2021-03-29T20:10:51Z,Learning Under Adversarial and Interventional Shifts,"Machine learning models are often trained on data from one distribution and
+deployed on others. So it becomes important to design models that are robust to
+distribution shifts. Most of the existing work focuses on optimizing for either
+adversarial shifts or interventional shifts. Adversarial methods lack
+expressivity in representing plausible shifts as they consider shifts to joint
+distributions in the data. Interventional methods allow more expressivity but
+provide robustness to unbounded shifts, resulting in overly conservative
+models. In this work, we combine the complementary strengths of the two
+approaches and propose a new formulation, RISe, for designing robust models
+against a set of distribution shifts that are at the intersection of
+adversarial and interventional shifts. We employ the distributionally robust
+optimization framework to optimize the resulting objective in both supervised
+and reinforcement learning settings. Extensive experimentation with synthetic
+and real world datasets from healthcare demonstrate the efficacy of the
+proposed approach.",arxiv
+http://arxiv.org/abs/2104.14870v1,2021-04-30T09:53:28Z,2021-04-30T09:53:28Z,"Action in Mind: A Neural Network Approach to Action Recognition and
+  Segmentation","Recognizing and categorizing human actions is an important task with
+applications in various fields such as human-robot interaction, video analysis,
+surveillance, video retrieval, health care system and entertainment industry.
+This thesis presents a novel computational approach for human action
+recognition through different implementations of multi-layer architectures
+based on artificial neural networks. Each system level development is designed
+to solve different aspects of the action recognition problem including online
+real-time processing, action segmentation and the involvement of objects. The
+analysis of the experimental results are illustrated and described in six
+articles. The proposed action recognition architecture of this thesis is
+composed of several processing layers including a preprocessing layer, an
+ordered vector representation layer and three layers of neural networks. It
+utilizes self-organizing neural networks such as Kohonen feature maps and
+growing grids as the main neural network layers. Thus the architecture presents
+a biological plausible approach with certain features such as topographic
+organization of the neurons, lateral interactions, semi-supervised learning and
+the ability to represent high dimensional input space in lower dimensional
+maps. For each level of development the system is trained with the input data
+consisting of consecutive 3D body postures and tested with generalized input
+data that the system has never met before. The experimental results of
+different system level developments show that the system performs well with
+quite high accuracy for recognizing human actions.",arxiv
+http://arxiv.org/abs/2105.06442v1,2021-05-13T17:33:28Z,2021-05-13T17:33:28Z,"An Empirical Comparison of Bias Reduction Methods on Real-World Problems
+  in High-Stakes Policy Settings","Applications of machine learning (ML) to high-stakes policy settings -- such
+as education, criminal justice, healthcare, and social service delivery -- have
+grown rapidly in recent years, sparking important conversations about how to
+ensure fair outcomes from these systems. The machine learning research
+community has responded to this challenge with a wide array of proposed
+fairness-enhancing strategies for ML models, but despite the large number of
+methods that have been developed, little empirical work exists evaluating these
+methods in real-world settings. Here, we seek to fill this research gap by
+investigating the performance of several methods that operate at different
+points in the ML pipeline across four real-world public policy and social good
+problems. Across these problems, we find a wide degree of variability and
+inconsistency in the ability of many of these methods to improve model
+fairness, but post-processing by choosing group-specific score thresholds
+consistently removes disparities, with important implications for both the ML
+research community and practitioners deploying machine learning to inform
+consequential policy decisions.",arxiv
+http://arxiv.org/abs/2109.12769v1,2021-09-27T02:34:44Z,2021-09-27T02:34:44Z,"Heterogeneous Treatment Effect Estimation using machine learning for
+  Healthcare application: tutorial and benchmark","Developing new drugs for target diseases is a time-consuming and expensive
+task, drug repurposing has become a popular topic in the drug development
+field. As much health claim data become available, many studies have been
+conducted on the data. The real-world data is noisy, sparse, and has many
+confounding factors. In addition, many studies have shown that drugs effects
+are heterogeneous among the population. Lots of advanced machine learning
+models about estimating heterogeneous treatment effects (HTE) have emerged in
+recent years, and have been applied to in econometrics and machine learning
+communities. These studies acknowledge medicine and drug development as the
+main application area, but there has been limited translational research from
+the HTE methodology to drug development. We aim to introduce the HTE
+methodology to the healthcare area and provide feasibility consideration when
+translating the methodology with benchmark experiments on healthcare
+administrative claim data. Also, we want to use benchmark experiments to show
+how to interpret and evaluate the model when it is applied to healthcare
+research. By introducing the recent HTE techniques to a broad readership in
+biomedical informatics communities, we expect to promote the wide adoption of
+causal inference using machine learning. We also expect to provide the
+feasibility of HTE for personalized drug effectiveness.",arxiv

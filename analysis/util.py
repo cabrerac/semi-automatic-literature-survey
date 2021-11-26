@@ -28,22 +28,49 @@ def save(file_name, papers, format):
 
 def plot():
     preprocessed_papers = pd.read_csv('./papers/preprocessed_papers.csv')
-    filtered_papers = pd.read_csv('./papers/filtered_papers.csv')
-    to_check_papers = pd.read_csv('./papers/to_check_papers.csv')
-    df = preprocessed_papers
-    df = df.append(filtered_papers)
-    df = df.append(to_check_papers)
-    df = pd.DataFrame(columns=['database', 'domain', 'papers'])
-    series = preprocessed_papers.groupby(by=['domain', 'database', 'type']).count()['doi']
-    series = series.append(filtered_papers.groupby(by=['domain', 'database', 'type']).count()['doi'])
+    series = preprocessed_papers.groupby(by=['domain']).count()['doi']
     df = series.to_frame()
     df = df.rename(columns={'doi': 'papers'})
     df = df.reset_index()
     fig, ax = plt.subplots()
-    ax = sns.barplot(x='database', y='papers', hue='type', data=df, ci=0)
+    sns.barplot(x='domain', y='papers', data=df, ci=0, ax=ax)
     for p in ax.patches:
         ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
                     va='center', size=10, xytext=(0, 9), textcoords='offset points')
+    plt.title('1. Papers from databases')
+    plt.xticks(rotation=30)
     plt.ylim((0, 4000))
-    plt.savefig('all_stats.png')
+    plt.savefig('preprocessed.png', bbox_inches="tight")
+
+    filtered_papers = pd.read_csv('./papers/filtered_papers.csv')
+    series = filtered_papers.groupby(by=['domain']).count()['doi']
+    df = series.to_frame()
+    df = df.rename(columns={'doi': 'papers'})
+    df = df.reset_index()
+    fig, ax = plt.subplots()
+    sns.barplot(x='domain', y='papers', data=df, ci=0, ax=ax)
+    for p in ax.patches:
+        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
+                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
+    plt.title('2. Syntactic filter')
+    plt.xticks(rotation=30)
+    plt.ylim((0, 3000))
+    plt.savefig('filtered.png', bbox_inches="tight")
+
+    to_check_papers = pd.read_csv('./papers/to_check_papers.csv')
+    series = to_check_papers.groupby(by=['domain']).count()['doi']
+    df = series.to_frame()
+    df = df.rename(columns={'doi': 'papers'})
+    df = df.reset_index()
+    fig, ax = plt.subplots()
+    sns.barplot(x='domain', y='papers', data=df, ci=0, ax=ax)
+    for p in ax.patches:
+        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
+                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
+    plt.title('3. Semantic filter')
+    plt.xticks(rotation=30)
+    plt.ylim((0, 500))
+    plt.savefig('to_check.png', bbox_inches="tight")
+
+
 

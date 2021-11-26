@@ -3,18 +3,46 @@
 # Domains to retrieve in the search
 domains:
 - autonomous vehicle
+- health
+- industry
+- smart cities
+- multimedia
+- science
+- robotics
 # Technology of interest applied to domains
 interests:
   - machine learning
   - artificial intelligence
 # Keywords of such applications
 keywords:
-  - deployment
-  - deployed
-  - real experiment
-  - real implementation
-  - real world
-  - physical world
+  - real-world:
+    - deploy
+    - deployment
+    - deployed
+    - implemented
+    - implementation
+    - software
+  - reality:
+    - deploy
+    - deployment
+    - deployed
+    - implemented
+    - implementation
+    - software
+  - real:
+    - deploy
+    - deployment
+    - deployed
+    - implemented
+    - implementation
+    - software
+  - physical world:
+    - deploy
+    - deployment
+    - deployed
+    - implemented
+    - implementation
+    - software
 # Search fields
 fields:
   - title
@@ -23,23 +51,64 @@ types:
   - conferences
   - journals
 # Domains and interests can have synonyms
+health:
+  - healthcare
+  - health care
+  - health-care
+  - medicine
+  - medical
+  - diagnosis
+robotics:
+  - robots
+  - robot
+industry:
+  - industry 4
+  - manufacture
+  - manufacturing
+  - factory
+  - manufactory
+  - industrial
+smart cities:
+  - sustainable city
+  - smart city
+  - digital city
+  - urban
+  - city
+  - cities
+  - mobility
+  - transport
+  - transportation system
+multimedia:
+  - virtual reality
+  - augmented reality
+  - 3D
+  - digital twin
+  - video games
+  - video
+  - image recognition
+  - audio
+  - speech recognition
+  - speech
+science:
+  - pyshics
+  - physicology
+  - chemistry
+  - biology
+  - geology
+  - social
+  - maths
+  - materials
+  - astronomy
+  - climatology
 autonomous vehicle:
   - self-driving vehicle
-  - self-driving vehicles
   - self-driving car
-  - self-driving cars
   - autonomous car
-  - autonomous cars
   - driverless car
-  - driverless cars
   - driverless vehicle
-  - driverless vehicles
   - unmanned car
-  - unmanned cars
   - unmanned vehicle
-  - unmanned vehicles
   - unmanned aerial vehicle
-  - unmanned aerial vehicles
 machine learning:
   - ML
   - deep learning

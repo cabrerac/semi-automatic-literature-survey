@@ -352,15 +352,15 @@ class XPLORE:
         
         if self.usingOpenAccess is True:
 
-            str = self.buildOpenAccessQuery()         
+            str1 = self.buildOpenAccessQuery()
 
         else:
 
-            str = self.buildQuery()
+            str1 = self.buildQuery()
 
         if debugModeOff is False:
         
-            return str
+            return str1
         
         else:
         
@@ -368,10 +368,11 @@ class XPLORE:
                 print("No search criteria provided")
             data = {}
             try:
-                data = self.queryAPI(str)
+                data = self.queryAPI(str1)
                 data = self.formatData(data)
-            except urllib.error.HTTPError:
-                print('request exception')
+            except urllib.error.HTTPError as ex:
+                print('Exception in request ::' + str(ex))
+                data = {}
             return data
 
 
@@ -439,6 +440,7 @@ class XPLORE:
     def queryAPI(self, url):
 
         content = urlopen(url).read()
+        #print(content)
         return content
 
 
