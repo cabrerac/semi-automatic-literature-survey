@@ -51,38 +51,47 @@ def preprocess(domains, databases):
                     df = df.drop_duplicates(subset=['doi'])
                     dates = df['publication_date']
                     df['publication_date'] = parse_dates(dates)
-                    papers_ieee = pd.DataFrame({'doi': df['doi'], 'type': df['content_type'],
-                                                'publication': df['publication_title'], 'publisher': df['publisher'],
-                                                'publication_date': df['publication_date'], 'database': df['database'],
-                                                'title': df['title'], 'url': df['html_url'], 'abstract': df['abstract']})
+                    papers_ieee = pd.DataFrame(
+                        {'doi': df['doi'], 'type': df['content_type'],
+                        'publication': df['publication_title'], 'publisher': df['publisher'],
+                        'publication_date': df['publication_date'], 'database': df['database'],
+                        'title': df['title'], 'url': df['html_url'], 'abstract': df['abstract']}
+                    )
                     papers_ieee['domain'] = domain
                     papers = papers.append(papers_ieee)
                 if database == 'springer':
                     df = df.drop_duplicates(subset=['doi'])
                     dates = df['publicationDate']
                     df['publication_date'] = parse_dates(dates)
-                    papers_springer = pd.DataFrame({'doi': df['doi'], 'type': df['contentType'],
-                                                    'publication': df['publicationName'], 'publisher': df['publisher'],
-                                                    'publication_date': df['publication_date'], 'database': df['database'],
-                                                    'title': df['title'], 'url': df['url'], 'abstract': df['abstract']})
+                    papers_springer = pd.DataFrame(
+                        {'doi': df['doi'], 'type': df['contentType'],
+                        'publication': df['publicationName'], 'publisher': df['publisher'],
+                        'publication_date': df['publication_date'], 'database': df['database'],
+                        'title': df['title'], 'url': df['url'], 'abstract': df['abstract']}
+                    )
                     papers_springer['domain'] = domain
                     papers = papers.append(papers_springer)
                 if database == 'arxiv':
                     df = df.drop_duplicates(subset=['id'])
                     dates = df['published']
                     df['publication_date'] = parse_dates(dates)
-                    papers_arxiv = pd.DataFrame({'doi': df['id'], 'type': df['database'], 'publication': df['database'],
-                                                'publisher': df['database'], 'publication_date': df['publication_date'],
-                                                'database': df['database'], 'title': df['title'], 'url': df['id'],
-                                                'abstract': df['summary']})
+                    papers_arxiv = pd.DataFrame(
+                        {'doi': df['id'], 'type': df['database'], 'publication': df['database'],
+                        'publisher': df['database'], 'publication_date': df['publication_date'],
+                        'database': df['database'], 'title': df['title'], 'url': df['id'],
+                        'abstract': df['summary']}
+                    )
                     papers_arxiv['domain'] = domain
                     papers = papers.append(papers_arxiv)
                 if database == 'sciencedirect':
                     df = df.drop_duplicates(subset=['id'])
-                    papers_sciencedirect = pd.DataFrame({'doi': df['id'], 'type': df['type'], 'publication': df['publication'],
-                                                'publisher': df['publisher'], 'publication_date': df['publication_date'],
-                                                'database': df['database'], 'title': df['title'], 'url': df['url'],
-                                                'abstract': df['abstract'], 'domain': df['domain']})
+                    papers_sciencedirect = pd.DataFrame(
+                        {'doi': df['id'], 'type': df['type'], 'publication': df['publication'],
+                        'publisher': df['publisher'], 'publication_date': df['publication_date'],
+                        'database': df['database'], 'title': df['title'], 'url': df['url'],
+                        'abstract': df['abstract']}
+                    )
+                    papers_sciencedirect['domain'] = domain
                     papers = papers.append(papers_sciencedirect)
                 if database == 'scopus':
                     df = df.drop_duplicates(subset=['id'])
@@ -90,8 +99,23 @@ def preprocess(domains, databases):
                         {'doi': df['id'], 'type': df['type'], 'publication': df['publication'],
                         'publisher': df['publisher'], 'publication_date': df['publication_date'],
                         'database': df['database'], 'title': df['title'], 'url': df['url'],
-                        'abstract': df['abstract'], 'domain': df['domain']})
+                        'abstract': df['abstract']}
+                    )
+                    papers_scopus['domain'] = domain
                     papers = papers.append(papers_scopus)
+                if database == 'core':
+                    df = df.drop_duplicates(subset=['id'])
+                    dates = df['datePublished']
+                    df['publication_date'] = parse_dates(dates)
+                    df[id] = getIds(df)
+                    papers_core = pd.DataFrame(
+                        {'doi': df['id'], 'type': df['database'], 'publication': df['journals'],
+                         'publisher': df['publisher'], 'publication_date': df['publication_date'],
+                         'database': df['database'], 'title': df['title'], 'url': df['downloadUrl'],
+                         'abstract': df['description']}
+                    )
+                    papers_core['domain'] = domain
+                    papers = papers.append(papers_core)
     papers = papers.drop_duplicates(subset=['doi', 'title'])
     papers['type'] = 'preprocessed'
     papers['abstract'].replace('', np.nan, inplace=True)
@@ -100,9 +124,20 @@ def preprocess(domains, databases):
         papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
+def getIds(df):
+    ids = []
+    for index, row in df.iterrows():
+        if len(str(row['doi']).strip()) > 0:
+            ids.append(str(row['doi']))
+        else:
+            ids.append(str(row['id']))
+    return ids
+
+
 def parse_dates(dates):
     new_dates = []
     for date in dates:
+        date = str(date)
         if date == '1 Aug1, 2021':
             print('')
         if len(date) == 4:
@@ -167,6 +202,8 @@ def parse_dates(dates):
             else:
                 date = '01/Dec/' + date.split(' ')[1]
         date = date.replace('.', '')
+        if date == 'First Quarter 2013':
+            print('here')
         date = pd.to_datetime(date)
         new_dates.append(date)
     return new_dates
