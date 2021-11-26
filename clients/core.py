@@ -1,75 +1,74 @@
-from urllib import request, parse
+from .apis.generic import Generic
+from os.path import exists
 import pandas as pd
 import json
+from analysis import util
+from analysis import retrieve
+import time
 
-api_url = 'https://core.ac.uk/api-v2articles/search?metadata=true&fulltext=false&citations=false&similar=false&duplicate=false&urls=false&faithfulMetadata=false'
-core_fields = {'title': 'title', 'abstract': 'description'}
+database = 'core'
 api_access = 'pScrltW8j9MansPfbmA63OVZNCFeXo2T'
+api_url = 'https://core.ac.uk:443/api-v2/articles/search?apiKey='+api_access
+client_fields = {'title': 'title', 'abstract': 'description'}
+max_papers = 100
+page = 1
+format = 'utf-8'
+
+client = Generic()
 
 
-def get_papers(domains, interests, keywords, synonyms, fields, types):
-    c_fields = []
-    for field in fields:
-        c_fields.append(core_fields[field])
-    query = create_query(domains, interests, keywords, synonyms, c_fields)
-    data = parse.urlencode(query).encode()
-    req = request.Request(api_url + '&apiKey=' + api_access, data=data)
-    resp = request.urlopen(req)
-    print(resp)
+def get_papers(domain, interests, keywords, synonyms, fields, types):
+    file_name = 'domains/' + domain.lower().replace(' ', '_') + '_' + database + '.csv'
+    if not exists('./papers/' + file_name):
+        c_fields = []
+        for field in fields:
+            if field in client_fields:
+                c_fields.append(client_fields[field])
+        parameters = {'domains': [domain], 'interests': interests, 'keywords': keywords, 'synonyms': synonyms,
+                      'fields': c_fields, 'types': types}
+        data = create_request(parameters)
+        raw_papers = client.request(api_url, 'post', data)
+        total, papers = process_raw_papers(raw_papers)
+        if len(papers) != 0:
+            util.save(file_name, papers, format)
+        print(str(total))
+        if total > max_papers:
+            times = int(total / max_papers) - 1
+            mod = int(total) % max_papers
+            if mod > 0:
+                times = times + 1
+            for t in range(1, times + 1):
+                print(str(t))
+                time.sleep(5)
+                global page
+                page = page + 1
+                data = create_request(parameters)
+                raw_papers = client.request(api_url, 'post', data)
+                if raw_papers != {}:
+                    total, papers = process_raw_papers(raw_papers)
+                    if len(papers) != 0:
+                        util.save(file_name, papers, format)
+        time.sleep(5)
+
+def create_request(parameters):
+    reqs = []
+    req = {}
+    query = client.core_query(parameters)
+    req['query'] = query
+    req['page'] = page
+    req['pageSize'] = max_papers
+    reqs.append(req)
+    return reqs
 
 
-def create_query(domains, interests, keywords, synonyms, c_fields):
-    search_query = ''
-    query_domains = ''
-    for domain in domains:
-        query_domains = query_domains + '<field>:%22' + domain + '%22'
-        if domain in synonyms:
-            domain_synonyms = synonyms[domain]
-            for synonym in domain_synonyms:
-                query_domains = query_domains + '+OR+<field>:%22' + synonym + '%22'
-        query_domains = query_domains + '+OR+'
-    query_domains = '%28' + query_domains + '%29'
-    query_domains = query_domains.replace('+OR+%29', '%29')
-    #query = query + query_domains
-
-    query_interests = ''
-    for interest in interests:
-        query_interests = query_interests + '<field>:%22' + interest + '%22'
-        if interest in synonyms:
-            interest_synonyms = synonyms[interest]
-            for synonym in interest_synonyms:
-                query_interests = query_interests + '+OR+<field>:%22' + synonym + '%22'
-        query_interests = query_interests + '+OR+'
-    query_interests = '%28' + query_interests + '%29'
-    query_interests = query_interests.replace('+OR+%29', '%29')
-    #if len(query) > 0 and len(query_interests) > 0:
-        #query = query + '+AND+' + query_interests
-    #if len(query) == 0 and len(query_interests) > 0:
-        #query = query + query_interests
-
-    query_keywords = ''
-    for keyword in keywords:
-        query_keywords = query_keywords + '<field>:%22' + keyword + '%22+OR+'
-    query_keywords = '%28' + query_keywords + '%29'
-    query_keywords = query_keywords.replace('+OR+%29', '%29')
-    #if len(query) > 0 and len(query_keywords) > 0:
-        #query = query + '+AND+' + query_keywords
-    #if len(query) == 0 and len(query_keywords) > 0:
-        #query = query + query_keywords
-
-    query = {}
-    query['query'] = search_query
-    query['pageSize'] = 100
-    return query
-
-
-def process_raw_data(papers, raw_papers):
-    raw_json = json.loads(raw_papers)
-    print("Results: " + str(raw_json['total_records']))
-    if 'articles' in raw_json:
-        df = pd.json_normalize(raw_json['articles'])
-        if len(papers)==0:
-            papers = df
-        else:
-            papers = papers.append(df)
-    return papers
+def process_raw_papers(raw_papers):
+    raw_json = json.loads(raw_papers.content)
+    total = raw_json[0]['totalHits']
+    papers = pd.json_normalize(raw_json[0]['data'])
+    papers = papers.drop(columns=['authors', 'contributors', 'identifiers', 'relations', 'repositories', 'subjects',
+                                  'topics', 'types', 'year', 'oai', 'repositoryDocument.pdfStatus',
+                                  'repositoryDocument.metadataAdded', 'repositoryDocument.metadataUpdated',
+                                  'repositoryDocument.depositedDate', 'fulltextIdentifier', 'language.code',
+                                  'language.id', 'language.name'], errors='ignore')
+    papers['database'] = database
+    return total, papers

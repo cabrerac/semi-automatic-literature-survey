@@ -1,5 +1,6 @@
 import pandas as pd
 from .apis.generic import Generic
+from os.path import exists
 from analysis import util
 
 
@@ -12,18 +13,20 @@ client = Generic()
 
 
 def get_papers(domain, interests, keywords, synonyms, fields, types):
-    c_fields = []
-    for field in fields:
-        if field in client_fields:
-            c_fields.append(client_fields[field])
-    parameters = {'domains': [domain], 'interests': interests, 'keywords': keywords, 'synonyms': synonyms,
-                  'fields': c_fields, 'types': types}
-    req = create_request(parameters)
-    raw_papers = client.request(req, 'get', {})
-    papers = process_raw_papers(raw_papers)
-    papers = papers.drop(columns=['author', 'comment', 'link', 'primary_category', 'category', 'doi', 'journal_ref'])
-    file_name = domain.lower().replace(' ', '_') + '_' + database + '.csv'
-    util.save(file_name, papers, format)
+    file_name = 'domains/' + domain.lower().replace(' ', '_') + '_' + database + '.csv'
+    if not exists('./papers/' + file_name):
+        c_fields = []
+        for field in fields:
+            if field in client_fields:
+                c_fields.append(client_fields[field])
+        parameters = {'domains': [domain], 'interests': interests, 'keywords': keywords, 'synonyms': synonyms,
+                    'fields': c_fields, 'types': types}
+        req = create_request(parameters)
+        raw_papers = client.request(req, 'get', {})
+        papers = process_raw_papers(raw_papers)
+        papers = papers.drop(columns=['author', 'comment', 'link', 'primary_category', 'category', 'doi',
+                                      'journal_ref'], errors='ignore')
+        util.save(file_name, papers, format)
 
 
 def create_request(parameters):

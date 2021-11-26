@@ -3,6 +3,7 @@ from .apis.xploreapi import XPLORE
 from .apis.generic import Generic
 import json
 import pandas as pd
+from os.path import exists
 from analysis import util
 
 api_access = 'xmknyxp8j436aun5c5tj7g75'
@@ -16,40 +17,46 @@ client = Generic()
 
 
 def get_papers(domain, interests, keywords, synonyms, fields, types):
-    c_fields = []
-    for field in fields:
-        if field in client_fields:
-            c_fields.append(client_fields[field])
-    c_types = []
-    for t in types:
-        if t in client_types:
-            c_types.append(client_types[t])
-    parameters = {'domains': [domain], 'interests': interests, 'keywords': keywords, 'synonyms': synonyms,
-                  'fields': c_fields, 'types': c_types}
-    queries = client.ieeexplore_query(parameters, 'domains')
-    total_requests = len(queries) * len(c_fields) * len(c_types)
-    print(str(total_requests))
-    current_request = 1
-    for query in queries:
-        for field in c_fields:
-            for t in c_types:
-                print(str(current_request))
-                papers = []
-                start_record = 1
-                raw_papers = request(query, field, t, start_record)
-                if raw_papers != {}:
-                    total, papers = process_raw_data(raw_papers, papers)
-                    if total > max_papers:
-                        while len(papers) < total:
-                            start_record = start_record + max_papers
-                            raw_papers = request(query, field, t, start_record)
-                            if raw_papers != {}:
-                                total, papers = process_raw_data(raw_papers, papers)
-                    if len(papers) > 0:
-                        file_name = domain.lower().replace(' ', '_') + '_' + database + '.csv'
-                        util.save(file_name, papers, format)
-                time.sleep(10)
-                current_request = current_request + 1
+    file_name = 'domains/' + domain.lower().replace(' ', '_') + '_' + database + '.csv'
+    if not exists('./papers/' + file_name):
+        c_fields = []
+        for field in fields:
+            if field in client_fields:
+                c_fields.append(client_fields[field])
+        c_types = []
+        for t in types:
+            if t in client_types:
+                c_types.append(client_types[t])
+        parameters = {'domains': [domain], 'interests': interests, 'keywords': keywords, 'synonyms': synonyms,
+                      'fields': c_fields, 'types': c_types}
+        queries = create_request(parameters, 'domains')
+        total_requests = len(queries) * len(c_fields) * len(c_types)
+        print(str(total_requests))
+        current_request = 1
+        for query in queries:
+            for field in c_fields:
+                for t in c_types:
+                    print(str(current_request))
+                    papers = []
+                    start_record = 1
+                    raw_papers = request(query, field, t, start_record)
+                    if raw_papers != {}:
+                        total, papers = process_raw_data(raw_papers, papers)
+                        if total > max_papers:
+                            while len(papers) < total:
+                                start_record = start_record + max_papers
+                                raw_papers = request(query, field, t, start_record)
+                                if raw_papers != {}:
+                                    total, papers = process_raw_data(raw_papers, papers)
+                        if len(papers) > 0:
+                            util.save(file_name, papers, format)
+                    time.sleep(10)
+                    current_request = current_request + 1
+
+
+def create_request(parameters, first_parameter):
+    queries = client.ieeexplore_query(parameters, first_parameter)
+    return queries
 
 
 def request(query, field, t, start_record):
