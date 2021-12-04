@@ -25,6 +25,7 @@ def get_to_check_papers(keywords):
     boolean_series = filtered_papers.doi.isin(to_check)
     to_check_papers = filtered_papers[boolean_series]
     to_check_papers['type'] = 'to_check'
+    to_check_papers['status'] = 'unknown'
     util.save('to_check_papers.csv', to_check_papers, f)
 
 

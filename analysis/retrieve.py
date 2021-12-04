@@ -6,6 +6,9 @@ from clients import ieeexplore
 from clients import springer
 from clients import elsevier
 from clients import core
+from clients import semantic_scholar
+from clients import project_academic
+from clients import google_scholar
 from analysis import util
 from os.path import exists
 
@@ -17,11 +20,11 @@ def get_papers(domains, interests, keywords, synonyms, fields, types):
         print("Requesting ArXiv for " + domain + " related papers...")
         arxiv.get_papers(domain, interests, keywords, synonyms, fields, types)
 
-        print("Requesting Springer for " + domain + " related papers...")
-        springer.get_papers(domain, interests, keywords, synonyms, fields, types)
+        #print("Requesting Springer for " + domain + " related papers...")
+        #springer.get_papers(domain, interests, keywords, synonyms, fields, types)
 
-        #print("Requesting IEEE Xplore for " + domain + " related papers...")
-        #ieeexplore.get_papers(domain, interests, keywords, synonyms, fields, types)
+        print("Requesting IEEE Xplore for " + domain + " related papers...")
+        ieeexplore.get_papers(domain, interests, keywords, synonyms, fields, types)
 
         print("Requesting Elsevier for " + domain + " related papers...")
         elsevier.get_papers(domain, interests, keywords, synonyms, fields, types)
@@ -32,6 +35,14 @@ def get_papers(domains, interests, keywords, synonyms, fields, types):
         print("Requesting CORE for " + domain + " related papers...")
         core.get_papers(domain, interests, keywords, synonyms, fields, types)
 
+        print("Requesting Semantic Scholar for " + domain + " related papers...")
+        semantic_scholar.get_papers(domain, interests, keywords, synonyms, fields, types)
+
+        print("Requesting Microsoft Research for " + domain + " related papers...")
+        project_academic.get_papers(domain, interests, keywords, synonyms, fields, types)
+
+        #print("Requesting Google Scholar for " + domain + " related papers...")
+        #google_scholar.get_papers(domain, interests, keywords, synonyms, fields, types)
 
 def get_abstracts_elsevier(domains):
     for domain in domains:
@@ -107,7 +118,7 @@ def preprocess(domains, databases):
                     df = df.drop_duplicates(subset=['id'])
                     dates = df['datePublished']
                     df['publication_date'] = parse_dates(dates)
-                    df[id] = getIds(df)
+                    df['id'] = getIds(df, database)
                     papers_core = pd.DataFrame(
                         {'doi': df['id'], 'type': df['database'], 'publication': df['journals'],
                          'publisher': df['publisher'], 'publication_date': df['publication_date'],
@@ -116,6 +127,32 @@ def preprocess(domains, databases):
                     )
                     papers_core['domain'] = domain
                     papers = papers.append(papers_core)
+                if database == 'semantic-scholar':
+                    df = df.drop_duplicates(subset=['paperId'])
+                    dates = df['year']
+                    df['publication_date'] = parse_dates(dates)
+                    df['id'] = getIds(df, database)
+                    papers_semantic = pd.DataFrame(
+                        {'doi': df['id'], 'type': df['database'], 'publication': df['database'],
+                         'publisher': df['venue'], 'publication_date': df['publication_date'],
+                         'database': df['database'], 'title': df['title'], 'url': df['url'],
+                         'abstract': df['abstract']}
+                    )
+                    papers_semantic['domain'] = domain
+                    papers = papers.append(papers_semantic)
+                if database == 'project-academic':
+                    dates = df['publication_date']
+                    df['publication_date'] = parse_dates(dates)
+                    df['id'] = getIds(df, database)
+                    papers_academic = pd.DataFrame(
+                        {'doi': df['id'], 'type': df['database'], 'publication': df['database'],
+                         'publisher': df['publisher'], 'publication_date': df['publication_date'],
+                         'database': df['database'], 'title': df['title'], 'url': df['database'],
+                         'abstract': df['abstract']}
+                    )
+                    papers_academic['domain'] = domain
+                    papers = papers.append(papers_academic)
+    papers['title'] = papers["title"].str.lower()
     papers = papers.drop_duplicates(subset=['doi', 'title'])
     papers['type'] = 'preprocessed'
     papers['abstract'].replace('', np.nan, inplace=True)
@@ -124,13 +161,18 @@ def preprocess(domains, databases):
         papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
-def getIds(df):
+def getIds(df, database):
     ids = []
     for index, row in df.iterrows():
         if len(str(row['doi']).strip()) > 0:
             ids.append(str(row['doi']))
         else:
-            ids.append(str(row['id']))
+            if database == 'core':
+                ids.append(str(row['id']))
+            if database == 'semantic-scholar':
+                ids.append(str(row['paperId']))
+            if database == 'project-academic':
+                ids.append(database + '-' + str(index))
     return ids
 
 
@@ -138,10 +180,18 @@ def parse_dates(dates):
     new_dates = []
     for date in dates:
         date = str(date)
-        if date == '1 Aug1, 2021':
-            print('')
+        #print(date)
+        date = date.replace('[', '').replace(']', '').replace('Issued on: ', '').replace('[[issued]]', '').replace('issued', '')
+        date = date.replace('First Quarter ', '')
+        date = date.split('T')[0]
+        if date == '10000-01-01' or date == '0':
+            date = '2000'
         if len(date) == 4:
+            if int(date) < 1900 or int(date) > 2021:
+                date = '2000'
             date = '01/Jan/' + date
+        if re.match('[A-z]+. [0-9]+, [0-9]+', date):
+            date = '01/Jan/' + date.split(',')[1].replace(' ', '')
         if re.match('[A-z]+-[A-z]+ [0-9]+', date):
             date = '01/' + date.split('-')[0] + '/' + date.split(' ')[1]
         if re.match('[A-z]+.-[A-z]+. [0-9]+', date):
@@ -202,8 +252,6 @@ def parse_dates(dates):
             else:
                 date = '01/Dec/' + date.split(' ')[1]
         date = date.replace('.', '')
-        if date == 'First Quarter 2013':
-            print('here')
         date = pd.to_datetime(date)
         new_dates.append(date)
     return new_dates

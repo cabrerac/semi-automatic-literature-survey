@@ -125,3 +125,5 @@ databases:
   - sciencedirect
   - scopus
   - core
+  - semantic-scholar
+  - project-academic
