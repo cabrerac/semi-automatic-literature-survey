@@ -8,3 +8,5 @@ spacey
 textacy==0.11.0
 networkx
 textblob
+scholarly==1.4.5
+free-proxy==1.0.4

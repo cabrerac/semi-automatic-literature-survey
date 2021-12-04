@@ -188,3 +188,65 @@ class Generic:
         query = '(language.code(NOT ru NOT es)) AND (subjects:(NOT *thes* AND NOT *Thes* AND NOT *tesis* ' \
                 'AND NOT *Tesis* AND NOT *Master* AND NOT *master*)) AND (' + query + ')'
         return query
+
+    def project_academic_query(self, parameters):
+        query = ''
+        for parameter in parameters:
+            if parameter != 'fields' and parameter != 'start' and parameter != 'page' \
+                    and parameter != 'synonyms' and parameter != 'keywords' and parameter != 'types':
+                parameters_list = parameters[parameter]
+                elements = []
+                for element in parameters_list:
+                    elements.append(element)
+                    if element in parameters['synonyms']:
+                        synonyms = parameters['synonyms'][element]
+                        for synonym in synonyms:
+                            elements.append(synonym)
+                query_elements=''
+                for element in elements:
+                    els = element.replace('-', ' ').split(' ')
+                    query_element = ''
+                    for el in els:
+                        query_element = query_element + "AW='" + el + "',"
+                    query_element = 'AND(' + query_element + ')'
+                    query_element = query_element.replace(',)', ')')
+                    query_elements = query_elements + query_element + ','
+                query_elements = 'OR(' + query_elements + ')'
+                query_elements = query_elements.replace(',)', ')')
+                query = query + query_elements + ','
+        query = 'AND(' + query + ')'
+        query = query.replace(',)', ')')
+        return query
+
+    def get_proxy(self, file_name):
+        proxy = ''
+        text_file = open(file_name, "r")
+        proxies = text_file.readlines()
+        text_file.close()
+        index = 0
+        while proxy == '' and index < len(proxies):
+            try:
+                proxy = 'https://' + proxies[index]
+                proxy = proxy.replace('\n', '')
+                req = urllib.request.Request('https://www.google.com')
+                req.set_proxy(proxy, 'https')
+                response = urllib.request.urlopen(req)
+            except IOError as ex:
+                proxy = ''
+            index = index + 1
+        index = 0
+        while proxy == '' and index < len(proxies):
+            try:
+                proxy = 'http://' + proxies[index]
+                proxy = proxy.replace('\n', '')
+                req = urllib.request.Request('https://www.google.com')
+                req.set_proxy(proxy, 'http')
+                response = urllib.request.urlopen(req)
+            except IOError  as ex:
+                proxy = ''
+            index = index + 1
+        if proxy == '':
+            print("No proxy selected")
+        else:
+            print("Selected proxy: " + proxy)
+        return proxy
