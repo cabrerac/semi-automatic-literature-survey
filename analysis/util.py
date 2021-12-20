@@ -39,7 +39,7 @@ def plot():
                     va='center', size=10, xytext=(0, 9), textcoords='offset points')
     plt.title('1. Papers from databases')
     plt.xticks(rotation=30)
-    plt.ylim((0, 4000))
+    plt.ylim((0, 3500))
     plt.savefig('preprocessed.png', bbox_inches="tight")
 
     filtered_papers = pd.read_csv('./papers/filtered_papers.csv')
@@ -54,7 +54,7 @@ def plot():
                     va='center', size=10, xytext=(0, 9), textcoords='offset points')
     plt.title('2. Syntactic filter')
     plt.xticks(rotation=30)
-    plt.ylim((0, 3000))
+    plt.ylim((0, 1250))
     plt.savefig('filtered.png', bbox_inches="tight")
 
     to_check_papers = pd.read_csv('./papers/to_check_papers.csv')
@@ -69,8 +69,23 @@ def plot():
                     va='center', size=10, xytext=(0, 9), textcoords='offset points')
     plt.title('3. Semantic filter')
     plt.xticks(rotation=30)
-    plt.ylim((0, 600))
+    plt.ylim((0, 250))
     plt.savefig('to_check.png', bbox_inches="tight")
+
+    filtered_by_abstract = pd.read_csv('./papers/filtered_by_abstract.csv')
+    series = filtered_by_abstract.groupby(by=['domain']).count()['doi']
+    df = series.to_frame()
+    df = df.rename(columns={'doi': 'papers'})
+    df = df.reset_index()
+    fig, ax = plt.subplots()
+    sns.barplot(x='domain', y='papers', data=df, ci=0, ax=ax)
+    for p in ax.patches:
+        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
+                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
+    plt.title('4. Manual filter - Abstract')
+    plt.xticks(rotation=30)
+    plt.ylim((0, 30))
+    plt.savefig('filtered_by_abstract.png', bbox_inches="tight")
 
 
 

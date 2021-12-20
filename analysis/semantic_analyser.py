@@ -15,17 +15,17 @@ def get_to_check_papers(keywords):
     filtered_papers = pd.read_csv('./papers/filtered_papers.csv')
     sentences_abstract = get_sentences(keywords, filtered_papers)
     to_check = []
-    for doi, sentences in sentences_abstract.items():
+    for id, sentences in sentences_abstract.items():
         dependencies = get_dependencies(sentences)
         for dependency in dependencies:
             if dependency['distance'] < (dependency['nodes']/10):
-                if doi not in to_check:
-                    to_check.append(doi)
-    #filtered_papers = pd.read_csv('./papers/filtered_papers.csv')
-    boolean_series = filtered_papers.doi.isin(to_check)
+                if id not in to_check:
+                    to_check.append(id)
+    boolean_series = filtered_papers.id.isin(to_check)
     to_check_papers = filtered_papers[boolean_series]
     to_check_papers['type'] = 'to_check'
     to_check_papers['status'] = 'unknown'
+    to_check_papers['id'] = list(range(1, len(to_check_papers) + 1))
     util.save('to_check_papers.csv', to_check_papers, f)
 
 
@@ -38,7 +38,7 @@ def get_sentences(keywords, papers):
                 if term not in words:
                     words.append(term)
     for index, paper in papers.iterrows():
-        doi = paper['doi']
+        id = paper['id']
         abstract = paper['abstract']
         try:
             doc = textacy.make_spacy_doc(abstract, lang='en_core_web_sm')
@@ -48,7 +48,7 @@ def get_sentences(keywords, papers):
                 for s in keyword_sentences:
                     d = {'keyword': word, 'sentence': s}
                     sentences.append(d)
-            sentences_abstract[doi] = sentences
+            sentences_abstract[id] = sentences
         except Exception as ex:
             print(ex)
     return sentences_abstract
@@ -87,7 +87,6 @@ def get_dependencies(sentences):
         subjects = [(x, y) for x, y in G.nodes(data=True) if y['dep'] == 'nsubj']
         noun_nodes = []
         for x, y in G.nodes(data=True):
-            print(y['text'])
             if y['text'].lower() in keywords:
                 noun_nodes.append((x, y))
 

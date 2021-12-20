@@ -20,8 +20,8 @@ def get_papers(domains, interests, keywords, synonyms, fields, types):
         print("Requesting ArXiv for " + domain + " related papers...")
         arxiv.get_papers(domain, interests, keywords, synonyms, fields, types)
 
-        #print("Requesting Springer for " + domain + " related papers...")
-        #springer.get_papers(domain, interests, keywords, synonyms, fields, types)
+        print("Requesting Springer for " + domain + " related papers...")
+        springer.get_papers(domain, interests, keywords, synonyms, fields, types)
 
         print("Requesting IEEE Xplore for " + domain + " related papers...")
         ieeexplore.get_papers(domain, interests, keywords, synonyms, fields, types)
@@ -59,7 +59,7 @@ def preprocess(domains, databases):
                 print(file_name)
                 df = pd.read_csv(file_name)
                 if database == 'ieeexplore':
-                    df = df.drop_duplicates(subset=['doi'])
+                    df = df.drop_duplicates('doi')
                     dates = df['publication_date']
                     df['publication_date'] = parse_dates(dates)
                     papers_ieee = pd.DataFrame(
@@ -71,7 +71,7 @@ def preprocess(domains, databases):
                     papers_ieee['domain'] = domain
                     papers = papers.append(papers_ieee)
                 if database == 'springer':
-                    df = df.drop_duplicates(subset=['doi'])
+                    df = df.drop_duplicates('doi')
                     dates = df['publicationDate']
                     df['publication_date'] = parse_dates(dates)
                     papers_springer = pd.DataFrame(
@@ -83,7 +83,7 @@ def preprocess(domains, databases):
                     papers_springer['domain'] = domain
                     papers = papers.append(papers_springer)
                 if database == 'arxiv':
-                    df = df.drop_duplicates(subset=['id'])
+                    df = df.drop_duplicates('id')
                     dates = df['published']
                     df['publication_date'] = parse_dates(dates)
                     papers_arxiv = pd.DataFrame(
@@ -95,7 +95,7 @@ def preprocess(domains, databases):
                     papers_arxiv['domain'] = domain
                     papers = papers.append(papers_arxiv)
                 if database == 'sciencedirect':
-                    df = df.drop_duplicates(subset=['id'])
+                    df = df.drop_duplicates('id')
                     papers_sciencedirect = pd.DataFrame(
                         {'doi': df['id'], 'type': df['type'], 'publication': df['publication'],
                         'publisher': df['publisher'], 'publication_date': df['publication_date'],
@@ -105,7 +105,7 @@ def preprocess(domains, databases):
                     papers_sciencedirect['domain'] = domain
                     papers = papers.append(papers_sciencedirect)
                 if database == 'scopus':
-                    df = df.drop_duplicates(subset=['id'])
+                    df = df.drop_duplicates('id')
                     papers_scopus = pd.DataFrame(
                         {'doi': df['id'], 'type': df['type'], 'publication': df['publication'],
                         'publisher': df['publisher'], 'publication_date': df['publication_date'],
@@ -115,7 +115,7 @@ def preprocess(domains, databases):
                     papers_scopus['domain'] = domain
                     papers = papers.append(papers_scopus)
                 if database == 'core':
-                    df = df.drop_duplicates(subset=['id'])
+                    df = df.drop_duplicates('id')
                     dates = df['datePublished']
                     df['publication_date'] = parse_dates(dates)
                     df['id'] = getIds(df, database)
@@ -126,9 +126,11 @@ def preprocess(domains, databases):
                          'abstract': df['description']}
                     )
                     papers_core['domain'] = domain
+                    papers_core['database'] = database
+                    papers_core['publication'] = database
                     papers = papers.append(papers_core)
                 if database == 'semantic-scholar':
-                    df = df.drop_duplicates(subset=['paperId'])
+                    df = df.drop_duplicates('paperId')
                     dates = df['year']
                     df['publication_date'] = parse_dates(dates)
                     df['id'] = getIds(df, database)
@@ -152,11 +154,18 @@ def preprocess(domains, databases):
                     )
                     papers_academic['domain'] = domain
                     papers = papers.append(papers_academic)
-    papers['title'] = papers["title"].str.lower()
-    papers = papers.drop_duplicates(subset=['doi', 'title'])
+    papers['title'] = papers['title'].str.lower()
+    papers = papers.drop_duplicates('title')
+    papers['doi'] = papers['doi'].str.lower()
+    papers['doi'].replace(r'\s+', 'nan', regex=True)
+    nan_doi = papers.loc[papers['doi'] == 'nan']
+    papers = papers.drop_duplicates('doi')
+    papers = papers.append(nan_doi)
     papers['type'] = 'preprocessed'
     papers['abstract'].replace('', np.nan, inplace=True)
     papers.dropna(subset=['abstract'], inplace=True)
+    papers['title'].replace('', np.nan, inplace=True)
+    papers.dropna(subset=['title'], inplace=True)
     with open('./papers/preprocessed_papers.csv', 'a', newline='', encoding=fr) as f:
         papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
@@ -281,19 +290,18 @@ def filter_by_field(papers, field, keywords):
 def filter_by_keywords(papers, keywords):
     filtered_papers = []
     for keyword in keywords:
-        for key, terms in keyword.items():
-            boolean_series = papers['abstract'].str.find(key) != -1
-            key_papers = papers[boolean_series]
-            term_papers = []
+        keys = keyword.keys()
+        for key in keys:
+            terms = keyword[key]
+            s = ''
             for term in terms:
-                boolean_series = key_papers['abstract'].str.find(term) != -1
-                if len(term_papers) == 0:
-                    term_papers = key_papers[boolean_series]
-                else:
-                    term_papers = term_papers.append(key_papers[boolean_series])
+                s = s + r'(?:\s|^)' + term.replace('-', '') + '(?:\s|$)|'
+            s = s[:-1]
+            terms_papers = papers.loc[papers['abstract'].str.contains(s)]
             if len(filtered_papers) == 0:
-                filtered_papers = term_papers
+                filtered_papers = terms_papers.loc[terms_papers['abstract'].str.contains(r'(?:\s|^)' + key.replace('-', '') + '(?:\s|$)')]
             else:
-                filtered_papers = filtered_papers.append(term_papers)
-        filtered_papers = filtered_papers.drop_duplicates(subset=['doi', 'title'])
+                filtered_papers = filtered_papers.append(terms_papers.loc[terms_papers['abstract'].str.contains(r'(?:\s|^)' + key.replace('-', '') + '(?:\s|$)')])
+    filtered_papers = filtered_papers.drop_duplicates('title')
+    filtered_papers['id'] = list(range(1, len(filtered_papers) + 1))
     return filtered_papers
