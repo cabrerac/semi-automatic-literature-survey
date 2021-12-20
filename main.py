@@ -29,9 +29,9 @@ domains, interests, keywords, synonyms, fields, types, databases = util.read_par
 #semantic_analyser.get_to_check_papers(keywords)
 
 # 6. Manual filtering of papers to check
-print('6. Manual filtering of papers to check...')
-manual.manual_filter()
+#print('6. Manual filtering of papers to check...')
+#manual.manual_filter()
 
 # 7. Plot results
-#print('7. Plotting results...')
-#util.plot()
+print('7. Plotting results...')
+util.plot()
