@@ -84,7 +84,7 @@ def plot():
                     va='center', size=10, xytext=(0, 9), textcoords='offset points')
     plt.title('4. Manual filter - Abstract')
     plt.xticks(rotation=30)
-    plt.ylim((0, 30))
+    plt.ylim((0, 50))
     plt.savefig('filtered_by_abstract.png', bbox_inches="tight")
 
 
