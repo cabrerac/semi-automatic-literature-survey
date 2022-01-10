@@ -8,8 +8,8 @@ fr = 'utf-8'
 def manual_filter():
     #update_accepted()
     #add_publication_date()
-    unknown = 1
-    while unknown > 0:
+    unknown_papers = 1
+    while unknown_papers > 0:
         to_check_papers = pd.read_csv('./papers/to_check_papers.csv')
         to_check_papers['title'] = to_check_papers['title'].str.lower()
         to_check_papers = to_check_papers.drop_duplicates('title')
@@ -21,25 +21,26 @@ def manual_filter():
         unknown_papers = len(to_check_papers.loc[to_check_papers['status'] == 'unknown'])
         included_papers = len(to_check_papers.loc[to_check_papers['status'] == 'included'])
         excluded_papers = len(to_check_papers.loc[to_check_papers['status'] == 'not included'])
-        to_check_paper = to_check_papers.loc[to_check_papers['status'] == 'unknown'].sample()
         progress = round(((total_papers - unknown_papers) / total_papers) * 100, 2)
         print('::: Progress --> ' + str(progress) + '% :::')
         print(' ::: Included (' + str(included_papers) + ') ::: Excluded(' + str(excluded_papers) + ') ::: Unknown('
               + str(unknown_papers) + ') :::')
-        print_paper_info(to_check_paper)
-        included, algorithm_type, training_schema, algorithm_goal, architecture = ask_manual_input()
-        paper_id = to_check_paper['id'].values[0]
-        if included == 'included':
-            paper_dict = {'id': (included_papers + 1), 'doi': to_check_paper['doi'],
-                          'publisher': to_check_paper['publisher'], 'database': to_check_paper['database'],
-                          'url': to_check_paper['url'], 'domain': to_check_paper['domain'],
-                          'publication_date': to_check_paper['publication_date'],
-                          'algorithm_type': algorithm_type, 'training_schema': training_schema,
-                          'algorithm_goal': algorithm_goal, 'architecture': architecture,
-                          'title': to_check_paper['title'], 'abstract': to_check_paper['abstract']}
-            paper_df = pd.DataFrame.from_dict(paper_dict)
-            util.save('filtered_by_abstract.csv', paper_df, fr)
-        update_to_check_papers(to_check_papers, paper_id, included)
+        if len(to_check_papers.loc[to_check_papers['status'] == 'unknown']) > 0:
+            to_check_paper = to_check_papers.loc[to_check_papers['status'] == 'unknown'].sample()
+            print_paper_info(to_check_paper)
+            included, algorithm_type, training_schema, algorithm_goal, architecture = ask_manual_input()
+            paper_id = to_check_paper['id'].values[0]
+            if included == 'included':
+                paper_dict = {'id': (included_papers + 1), 'doi': to_check_paper['doi'],
+                              'publisher': to_check_paper['publisher'], 'database': to_check_paper['database'],
+                              'url': to_check_paper['url'], 'domain': to_check_paper['domain'],
+                              'publication_date': to_check_paper['publication_date'],
+                            'algorithm_type': algorithm_type, 'training_schema': training_schema,
+                            'algorithm_goal': algorithm_goal, 'architecture': architecture,
+                            'title': to_check_paper['title'], 'abstract': to_check_paper['abstract']}
+                paper_df = pd.DataFrame.from_dict(paper_dict)
+                util.save('filtered_by_abstract.csv', paper_df, fr)
+            update_to_check_papers(to_check_papers, paper_id, included)
 
 
 def update_accepted():
