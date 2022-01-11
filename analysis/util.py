@@ -28,9 +28,9 @@ def save(file_name, papers, format):
 
 def plot():
     preprocessed_papers = pd.read_csv('./papers/preprocessed_papers.csv')
-    series = preprocessed_papers.groupby(by=['domain']).count()['doi']
+    series = preprocessed_papers.groupby(by=['domain']).count()['id']
     df = series.to_frame()
-    df = df.rename(columns={'doi': 'papers'})
+    df = df.rename(columns={'id': 'papers'})
     df = df.reset_index()
     fig, ax = plt.subplots()
     sns.barplot(x='domain', y='papers', data=df, ci=0, ax=ax)
@@ -39,13 +39,13 @@ def plot():
                     va='center', size=10, xytext=(0, 9), textcoords='offset points')
     plt.title('1. Papers from databases')
     plt.xticks(rotation=30)
-    plt.ylim((0, 3500))
+    plt.ylim((0, 4200))
     plt.savefig('preprocessed.png', bbox_inches="tight")
 
     filtered_papers = pd.read_csv('./papers/filtered_papers.csv')
-    series = filtered_papers.groupby(by=['domain']).count()['doi']
+    series = filtered_papers.groupby(by=['domain']).count()['id']
     df = series.to_frame()
-    df = df.rename(columns={'doi': 'papers'})
+    df = df.rename(columns={'id': 'papers'})
     df = df.reset_index()
     fig, ax = plt.subplots()
     sns.barplot(x='domain', y='papers', data=df, ci=0, ax=ax)
@@ -54,13 +54,13 @@ def plot():
                     va='center', size=10, xytext=(0, 9), textcoords='offset points')
     plt.title('2. Syntactic filter')
     plt.xticks(rotation=30)
-    plt.ylim((0, 1250))
+    plt.ylim((0, 1400))
     plt.savefig('filtered.png', bbox_inches="tight")
 
     to_check_papers = pd.read_csv('./papers/to_check_papers.csv')
-    series = to_check_papers.groupby(by=['domain']).count()['doi']
+    series = to_check_papers.groupby(by=['domain']).count()['id']
     df = series.to_frame()
-    df = df.rename(columns={'doi': 'papers'})
+    df = df.rename(columns={'id': 'papers'})
     df = df.reset_index()
     fig, ax = plt.subplots()
     sns.barplot(x='domain', y='papers', data=df, ci=0, ax=ax)
@@ -69,13 +69,13 @@ def plot():
                     va='center', size=10, xytext=(0, 9), textcoords='offset points')
     plt.title('3. Semantic filter')
     plt.xticks(rotation=30)
-    plt.ylim((0, 250))
+    plt.ylim((0, 300))
     plt.savefig('to_check.png', bbox_inches="tight")
 
     filtered_by_abstract = pd.read_csv('./papers/filtered_by_abstract.csv')
-    series = filtered_by_abstract.groupby(by=['domain']).count()['doi']
+    series = filtered_by_abstract.groupby(by=['domain']).count()['id']
     df = series.to_frame()
-    df = df.rename(columns={'doi': 'papers'})
+    df = df.rename(columns={'id': 'papers'})
     df = df.reset_index()
     fig, ax = plt.subplots()
     sns.barplot(x='domain', y='papers', data=df, ci=0, ax=ax)
@@ -84,7 +84,7 @@ def plot():
                     va='center', size=10, xytext=(0, 9), textcoords='offset points')
     plt.title('4. Manual filter - Abstract')
     plt.xticks(rotation=30)
-    plt.ylim((0, 50))
+    plt.ylim((0, 60))
     plt.savefig('filtered_by_abstract.png', bbox_inches="tight")
 
 
