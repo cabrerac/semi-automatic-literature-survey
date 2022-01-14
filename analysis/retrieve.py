@@ -50,6 +50,11 @@ def get_abstracts_elsevier(domains):
         elsevier.process_raw_papers(domain)
 
 
+def get_citations():
+    print("Requesting Semantic Scholar for final papers citations...")
+    semantic_scholar.get_citations()
+
+
 def preprocess(domains, databases):
     papers = pd.DataFrame()
     for domain in domains:
@@ -266,11 +271,12 @@ def parse_dates(dates):
     return new_dates
 
 
-def filter_papers(keywords):
-    preprocessed_papers = pd.read_csv('./papers/preprocessed_papers.csv')
+def filter_papers(keywords, to_filter, output_name):
+    preprocessed_papers = pd.read_csv(to_filter)
+    preprocessed_papers.dropna(subset=["abstract"], inplace=True)
     filtered_papers = filter_by_keywords(preprocessed_papers, keywords)
     filtered_papers['type'] = 'filtered'
-    util.save('filtered_papers.csv', filtered_papers, fr)
+    util.save(output_name, filtered_papers, fr)
 
 
 def filter_by_field(papers, field, keywords):

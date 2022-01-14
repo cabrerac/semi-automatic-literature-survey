@@ -11,8 +11,8 @@ from analysis import util
 f = 'utf-8'
 
 
-def get_to_check_papers(keywords):
-    filtered_papers = pd.read_csv('./papers/filtered_papers.csv')
+def get_to_check_papers(keywords, papers_file, output_file):
+    filtered_papers = pd.read_csv(papers_file)
     sentences_abstract = get_sentences(keywords, filtered_papers)
     to_check = []
     for id, sentences in sentences_abstract.items():
@@ -26,7 +26,7 @@ def get_to_check_papers(keywords):
     to_check_papers['type'] = 'to_check'
     to_check_papers['status'] = 'unknown'
     to_check_papers['id'] = list(range(1, len(to_check_papers) + 1))
-    util.save('to_check_papers.csv', to_check_papers, f)
+    util.save(output_file, to_check_papers, f)
 
 
 def get_sentences(keywords, papers):

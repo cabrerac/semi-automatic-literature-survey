@@ -5,12 +5,12 @@ import os
 fr = 'utf-8'
 
 
-def manual_filter_by_abstract():
+def manual_filter_by_abstract(papers_file, output_file):
     #update_accepted()
     #add_publication_date()
     unknown_papers = 1
     while unknown_papers > 0:
-        to_check_papers = pd.read_csv('./papers/to_check_papers.csv')
+        to_check_papers = pd.read_csv(papers_file)
         to_check_papers['title'] = to_check_papers['title'].str.lower()
         to_check_papers = to_check_papers.drop_duplicates('title')
         to_check_papers['abstract_norm'] = to_check_papers['abstract'].str.lower()
@@ -39,7 +39,7 @@ def manual_filter_by_abstract():
                             'algorithm_goal': algorithm_goal, 'architecture': architecture,
                             'title': to_check_paper['title'], 'abstract': to_check_paper['abstract']}
                 paper_df = pd.DataFrame.from_dict(paper_dict)
-                util.save('filtered_by_abstract.csv', paper_df, fr)
+                util.save(output_file, paper_df, fr)
             update_to_check_papers(to_check_papers, paper_id, included)
 
 
@@ -200,10 +200,10 @@ def update_to_check_papers_by_title(to_check_papers, title, included):
         to_check_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
-def manual_filter_by_full_text():
+def manual_filter_by_full_text(papers_file, output_file):
     not_classified = 1
     while not_classified > 0:
-        filtered_by_abstract = pd.read_csv('./papers/filtered_by_abstract.csv')
+        filtered_by_abstract = pd.read_csv(papers_file)
         total_papers = len(filtered_by_abstract)
         not_classified = len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'not classified'])
         architecture = len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'architecture'])
@@ -228,7 +228,7 @@ def manual_filter_by_full_text():
                               'publication_date': to_check_paper['publication_date'],
                               'title': title, 'abstract': to_check_paper['abstract']}
                 paper_df = pd.DataFrame.from_dict(paper_dict)
-                util.save('filtered_by_full_text.csv', paper_df, fr)
+                util.save(output_file, paper_df, fr)
             update_filtered_papers_by_abstract(filtered_by_abstract, paper_id, t)
 
 
@@ -272,8 +272,8 @@ def update_filtered_papers_by_abstract(filtered_papers, paper_id, included):
         filtered_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
-def remove_repeated():
-    papers = pd.read_csv('./papers/filtered_by_full_text.csv')
+def remove_repeated(papers_file):
+    papers = pd.read_csv(papers_file)
     papers['title_norm'] = papers['title'].str.lower()
     papers['title_norm'] = papers['title_norm'].str.replace(' ', '')
     papers = papers.drop_duplicates('title_norm')
