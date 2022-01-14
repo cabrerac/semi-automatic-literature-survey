@@ -5,7 +5,7 @@ import os
 fr = 'utf-8'
 
 
-def manual_filter():
+def manual_filter_by_abstract():
     #update_accepted()
     #add_publication_date()
     unknown_papers = 1
@@ -198,3 +198,90 @@ def update_to_check_papers_by_title(to_check_papers, title, included):
             to_check_papers.loc[index] = row
     with open('./papers/to_check_papers.csv', 'w', newline='', encoding=fr) as f:
         to_check_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+
+
+def manual_filter_by_full_text():
+    not_classified = 1
+    while not_classified > 0:
+        filtered_by_abstract = pd.read_csv('./papers/filtered_by_abstract.csv')
+        total_papers = len(filtered_by_abstract)
+        not_classified = len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'not classified'])
+        architecture = len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'architecture'])
+        experiments = len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'experiments'])
+        excluded = len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'excluded'])
+        included_papers = architecture + experiments
+        progress = round(((total_papers - not_classified) / total_papers) * 100, 2)
+        print('::: Progress --> ' + str(progress) + '% :::')
+        print(' ::: Architecture (' + str(architecture) + ') ::: Experiments(' + str(experiments) + ') :::')
+        print(' ::: Excluded (' + str(excluded) + ') ::: Not Classified(' + str(not_classified) + ') :::')
+        if len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'not classified']) > 0:
+            to_check_paper = filtered_by_abstract.loc[filtered_by_abstract['status'] == 'not classified'].sample()
+            print_paper_info_full_paper(to_check_paper)
+            t, title = ask_manual_input_full_paper()
+            if len(title) == 0:
+                title = to_check_paper['title']
+            paper_id = to_check_paper['id'].values[0]
+            if t != 'excluded':
+                paper_dict = {'id': (included_papers + 1), 'type': t, 'doi': to_check_paper['doi'],
+                              'publisher': to_check_paper['publisher'], 'database': to_check_paper['database'],
+                              'url': to_check_paper['url'], 'domain': to_check_paper['domain'],
+                              'publication_date': to_check_paper['publication_date'],
+                              'title': title, 'abstract': to_check_paper['abstract']}
+                paper_df = pd.DataFrame.from_dict(paper_dict)
+                util.save('filtered_by_full_text.csv', paper_df, fr)
+            update_filtered_papers_by_abstract(filtered_by_abstract, paper_id, t)
+
+
+def print_paper_info_full_paper(to_check_paper):
+    print('*** New paper ***')
+    print(' :: DOI :: ' + str(list(to_check_paper['doi'])[0]) + ' ::')
+    print(' :: Publisher :: ' + str(list(to_check_paper['publisher'])[0]) + ' ::')
+    print(' :: url :: ' + str(list(to_check_paper['url'])[0]) + ' ::')
+    print(' :: Title :: ' + str(list(to_check_paper['title'])[0].replace('\n', '')).title() + ' :: \n')
+
+
+def ask_manual_input_full_paper():
+    print('*** Manual input ***')
+    t = 'f'
+    title = ''
+    while t not in ['architecture', 'experiments', 'excluded']:
+        print('(0) excluded')
+        print('(1) architecture')
+        print('(2) experiments')
+        choice = input("Select: ")
+        if choice == '0':
+            t = 'excluded'
+        if choice == '1':
+            t = 'architecture'
+        if choice == '2':
+            t = 'experiments'
+        if t != 'excluded':
+            print('Change title?')
+            choice = input("y/n")
+            if choice == "y":
+                title = input("New title: ")
+    return t, title
+
+
+def update_filtered_papers_by_abstract(filtered_papers, paper_id, included):
+    for index, row in filtered_papers.iterrows():
+        if row['id'] == paper_id:
+            row['status'] = included
+            filtered_papers.loc[index] = row
+    with open('./papers/filtered_by_abstract.csv', 'w', newline='', encoding=fr) as f:
+        filtered_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+
+
+def remove_repeated():
+    papers = pd.read_csv('./papers/filtered_by_full_text.csv')
+    papers['title_norm'] = papers['title'].str.lower()
+    papers['title_norm'] = papers['title_norm'].str.replace(' ', '')
+    papers = papers.drop_duplicates('title_norm')
+    papers = papers.drop(columns=['title_norm'])
+
+    papers['abstract_norm'] = papers['abstract'].str.lower()
+    papers['abstract_norm'] = papers['abstract_norm'].str.replace(' ', '')
+    papers = papers.drop_duplicates('abstract_norm')
+    papers = papers.drop(columns=['abstract_norm'])
+    with open('./papers/final_papers.csv', 'w', newline='', encoding=fr) as f:
+        papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)

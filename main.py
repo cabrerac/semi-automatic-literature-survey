@@ -30,8 +30,14 @@ domains, interests, keywords, synonyms, fields, types, databases = util.read_par
 
 # 6. Manual filtering of papers to check
 #print('6. Manual filtering of papers to check...')
-#manual.manual_filter()
+#manual.manual_filter_by_abstract()
 
-# 7. Plot results
-print('7. Plotting results...')
+
+# 7. Manual filtering by full paper
+#print('7. Manual filtering by full paper...')
+#manual.manual_filter_by_full_text()
+#manual.remove_repeated()
+
+# 8. Plot results
+print('8. Plotting results...')
 util.plot()
