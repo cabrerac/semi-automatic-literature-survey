@@ -123,6 +123,38 @@ def plot():
     plt.ylim((0, 20))
     plt.savefig('papers_year.png', bbox_inches="tight")
 
+    final_papers = pd.read_csv('./papers/final_papers_merged.csv')
+    series = final_papers.groupby(by=['domain', 'type']).count()['id']
+    df = series.to_frame()
+    df = df.rename(columns={'id': 'papers'})
+    df = df.reset_index()
+    fig, ax = plt.subplots()
+    g = sns.barplot(x='domain', y='papers', hue='type', data=df, ci=0, ax=ax)
+    for p in ax.patches:
+        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
+                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
+    g.set_xticklabels(['vehicles', 'health', 'industry', 'media', 'robotics', 'science', 'smart cities'])
+    plt.title('6. Selected papers')
+    plt.ylim((0, 35))
+    plt.savefig('final_papers_merged.png', bbox_inches="tight")
+
+    final_papers = pd.read_csv('./papers/final_papers_merged.csv')
+    final_papers['publication_date'] = pd.to_datetime(final_papers['publication_date'])
+    series = final_papers.groupby(by=[final_papers['publication_date'].dt.year, 'type']).count()['id']
+    df = series.to_frame()
+    df = df.rename(columns={'id': 'papers'})
+    df = df.reset_index()
+    fig, ax = plt.subplots()
+    g = sns.barplot(x='publication_date', y='papers', hue='type', data=df, ci=0, ax=ax)
+    for p in ax.patches:
+        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
+                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
+    plt.title('Papers per year')
+    plt.xticks(rotation=90)
+    plt.legend(loc='upper left')
+    plt.ylim((0, 25))
+    plt.savefig('papers_year.png', bbox_inches="tight")
+
 
 
 

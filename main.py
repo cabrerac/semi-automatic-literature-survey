@@ -53,19 +53,15 @@ domains, interests, keywords, synonyms, fields, types, databases = util.read_par
 #                                      'to_check_citations_papers.csv')
 
 # 11. Manual filtering of citations papers to check
-print('11. Manual filtering of citations papers to check...')
-manual.manual_filter_by_abstract('./papers/to_check_citations_papers.csv', 'filtered_by_abstract_citations.csv')
+#print('11. Manual filtering of citations papers to check...')
+#manual.manual_filter_by_abstract('./papers/to_check_citations_papers.csv', 'filtered_by_abstract_citations.csv')
 
 
 # 12. Manual filtering by full citations paper
-print('12. Manual filtering by full paper...')
-manual.manual_filter_by_full_text('./papers/filtered_by_abstract_citations.csv', 'filtered_by_full_text_citations.csv')
-manual.remove_repeated('./papers/filtered_by_full_text_citations.csv')
-
-# 13. Merge final papers with citations papers
-print('13. Merging final papers with citations papers...')
+#print('12. Manual filtering by full paper...')
+#manual.manual_filter_by_full_text('./papers/filtered_by_abstract_citations.csv', 'filtered_by_full_text_citations.csv')
 
 
-# 14. Plot results
-print('14. Plotting results...')
+# 13. Plot results
+print('13. Plotting results...')
 util.plot()
