@@ -40,7 +40,7 @@ def manual_filter_by_abstract(papers_file, output_file):
                             'title': to_check_paper['title'], 'abstract': to_check_paper['abstract']}
                 paper_df = pd.DataFrame.from_dict(paper_dict)
                 util.save(output_file, paper_df, fr)
-            update_to_check_papers(to_check_papers, paper_id, included)
+            update_to_check_papers(to_check_papers, papers_file, paper_id, included)
 
 
 def update_accepted():
@@ -182,12 +182,12 @@ def ask_manual_input():
     return included, algorithm_type, training_schema, algorithm_goal, architecture
 
 
-def update_to_check_papers(to_check_papers, paper_id, included):
+def update_to_check_papers(to_check_papers, papers_file, paper_id, included):
     for index, row in to_check_papers.iterrows():
         if row['id'] == paper_id:
             row['status'] = included
             to_check_papers.loc[index] = row
-    with open('./papers/to_check_papers.csv', 'w', newline='', encoding=fr) as f:
+    with open(papers_file, 'w', newline='', encoding=fr) as f:
         to_check_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
@@ -229,7 +229,7 @@ def manual_filter_by_full_text(papers_file, output_file):
                               'title': title, 'abstract': to_check_paper['abstract']}
                 paper_df = pd.DataFrame.from_dict(paper_dict)
                 util.save(output_file, paper_df, fr)
-            update_filtered_papers_by_abstract(filtered_by_abstract, paper_id, t)
+            update_filtered_papers_by_abstract(filtered_by_abstract, papers_file, paper_id, t)
 
 
 def print_paper_info_full_paper(to_check_paper):
@@ -263,12 +263,12 @@ def ask_manual_input_full_paper():
     return t, title
 
 
-def update_filtered_papers_by_abstract(filtered_papers, paper_id, included):
+def update_filtered_papers_by_abstract(filtered_papers, papers_file, paper_id, included):
     for index, row in filtered_papers.iterrows():
         if row['id'] == paper_id:
             row['status'] = included
             filtered_papers.loc[index] = row
-    with open('./papers/filtered_by_abstract.csv', 'w', newline='', encoding=fr) as f:
+    with open(papers_file, 'w', newline='', encoding=fr) as f:
         filtered_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
