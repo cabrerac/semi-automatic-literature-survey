@@ -8,41 +8,38 @@ from clients import elsevier
 from clients import core
 from clients import semantic_scholar
 from clients import project_academic
-from clients import google_scholar
 from analysis import util
 from os.path import exists
 
 fr = 'utf-8'
 
 
-def get_papers(domains, interests, keywords, synonyms, fields, types):
+def get_papers(domains, interests, keywords, synonyms, fields, types, since, to, file_name):
     for domain in domains:
-        print("Requesting ArXiv for " + domain + " related papers...")
-        arxiv.get_papers(domain, interests, keywords, synonyms, fields, types)
+        #print("Requesting ArXiv for " + domain + " related papers...")
+        #arxiv.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
 
-        print("Requesting Springer for " + domain + " related papers...")
-        springer.get_papers(domain, interests, keywords, synonyms, fields, types)
+        #print("Requesting Springer for " + domain + " related papers...")
+        #springer.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
 
-        print("Requesting IEEE Xplore for " + domain + " related papers...")
-        ieeexplore.get_papers(domain, interests, keywords, synonyms, fields, types)
+        #print("Requesting IEEE Xplore for " + domain + " related papers...")
+        #ieeexplore.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
 
         print("Requesting Elsevier for " + domain + " related papers...")
-        elsevier.get_papers(domain, interests, keywords, synonyms, fields, types)
+        elsevier.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
         # 2.1 Getting abstracts from elsevier
         print('2.1 Getting abstracts from Sciencedirect...')
         get_abstracts_elsevier(domains)
 
         print("Requesting CORE for " + domain + " related papers...")
-        core.get_papers(domain, interests, keywords, synonyms, fields, types)
+        core.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
 
         print("Requesting Semantic Scholar for " + domain + " related papers...")
-        semantic_scholar.get_papers(domain, interests, keywords, synonyms, fields, types)
+        semantic_scholar.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
 
         print("Requesting Microsoft Research for " + domain + " related papers...")
-        project_academic.get_papers(domain, interests, keywords, synonyms, fields, types)
+        project_academic.get_papers(domain, interests, keywords, synonyms, fields, types,  since, to, file_name)
 
-        #print("Requesting Google Scholar for " + domain + " related papers...")
-        #google_scholar.get_papers(domain, interests, keywords, synonyms, fields, types)
 
 def get_abstracts_elsevier(domains):
     for domain in domains:

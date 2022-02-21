@@ -1,6 +1,3 @@
-"""
-TO-DO Check request for industry domain...
-"""
 import time
 import pandas as pd
 import json
@@ -10,7 +7,7 @@ from analysis import retrieve
 from analysis import util
 
 
-api_url = 'http://api.springernature.com/meta/v2/json?q='
+api_url = 'http://api.springernature.com/meta/v2/json?q=<dates>'
 api_access = 'd5a276d7379bb80d31ec868f7e34e386'
 start = 1
 max_papers = 100
@@ -20,8 +17,8 @@ format = 'utf-8'
 client = Generic()
 
 
-def get_papers(domain, interests, keywords, synonyms, fields, types):
-    file_name = 'domains/' + domain.lower().replace(' ', '_') + '_' + database + '.csv'
+def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name):
+    file_name = 'domains/' + file_name + '_' + domain.lower().replace(' ', '_') + '_' + database + '_' + str(to).replace('-','') + '.csv'
     if not exists('./papers/' + file_name):
         c_fields = []
         for field in fields:
@@ -29,7 +26,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types):
                 c_fields.append(client_fields[field])
         parameters = {'domains': [domain], 'interests': interests, 'synonyms': synonyms,
                     'fields': c_fields, 'types': types}
-        req = create_request(parameters)
+        req = create_request(parameters, since, to)
         raw_papers = client.request(req, 'get', {})
         total, papers = process_raw_papers(raw_papers)
         if len(papers) != 0:
@@ -55,8 +52,9 @@ def get_papers(domain, interests, keywords, synonyms, fields, types):
                         util.save(file_name, papers, format)
 
 
-def create_request(parameters):
+def create_request(parameters, since, to):
     req = api_url
+    req = req.replace('<dates>', '(onlinedatefrom:'+ str(since) +'%20onlinedateto:' + str(to) + ')')
     req = req + client.default_query(parameters)
     req = req + '&s='+str(start)+'&p='+str(max_papers)+'&api_key=' + api_access
     req = req.replace('%28', '(').replace('%29', ')').replace('+', '%20')

@@ -21,7 +21,7 @@ clientG = Generic()
 api_url = 'https://api.elsevier.com/content/<type>/'
 
 
-def get_papers(domain, interests, keywords, synonyms, fields, types):
+def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name):
     reqs = []
     for database in databases:
         c_fields = []
@@ -32,7 +32,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types):
                       'fields': c_fields, 'types': types}
         reqs.append(create_request(database, parameters))
     for req in reqs:
-        file_name = 'domains/' + domain.replace(' ', '_') + '_' + req[1] + '_raw.csv'
+        file_name = 'domains/' + file_name + '_' + domain.replace(' ', '_') + '_' + req[1] + str(to).replace('-', '') + '_raw.csv'
         if not exists('./papers/' + file_name):
             print('Getting papers from: ' + req[1])
             print('Request length: ' + str(len(req[0])))
@@ -40,6 +40,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types):
             doc_srch.execute(client, get_all=True)
             print("doc_srch has", len(doc_srch.results), "results.")
             results = doc_srch.results_df
+            results = results[(results['prism:coverDate'] >= str(since)) & (results['prism:coverDate'] <= str(to))]
             util.save(file_name, results, format)
 
 
