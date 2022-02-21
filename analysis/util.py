@@ -4,21 +4,24 @@ import seaborn as sns
 import pandas as pd
 
 
-def read_parameters(file_name):
-    with open(file_name) as file:
+def read_parameters(parameters_file_name):
+    with open(parameters_file_name) as file:
         parameters = yaml.load(file, Loader=yaml.FullLoader)
     domains = parameters['domains']
     interests = parameters['interests']
     keywords = parameters['keywords']
     fields = parameters['fields']
     types = parameters['types']
+    since = parameters['since']
+    to = parameters['to']
+    file_name = parameters['file_name']
     synonyms = {}
     for domain in domains:
         synonyms[domain] = parameters[domain]
     for interest in interests:
         synonyms[interest] = parameters[interest]
     databases = parameters['databases']
-    return domains, interests, keywords, synonyms, fields, types, databases
+    return domains, interests, keywords, synonyms, fields, types, databases, since, to, file_name
 
 
 def save(file_name, papers, format):

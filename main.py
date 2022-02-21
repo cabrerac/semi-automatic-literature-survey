@@ -6,12 +6,13 @@ from analysis import manual
 
 # 1. Reading search parameters
 print('1. Reading parameters file...')
-domains, interests, keywords, synonyms, fields, types, databases = util.read_parameters('parameters.yaml')
+domains, interests, keywords, synonyms, fields, types, databases, since, to, file_name = util.read_parameters(
+    'parameters_doa.yaml')
 
 
 # 2. Getting papers from databases
-#print('2. Getting all papers...')
-#retrieve.get_papers(domains, interests, keywords, synonyms, fields, types)
+print('2. Getting all papers...')
+retrieve.get_papers(domains, interests, keywords, synonyms, fields, types, since, to, file_name)
 
 
 # 3. Preprocessing papers
@@ -63,5 +64,5 @@ domains, interests, keywords, synonyms, fields, types, databases = util.read_par
 
 
 # 13. Plot results
-print('13. Plotting results...')
-util.plot()
+#print('13. Plotting results...')
+#util.plot()
