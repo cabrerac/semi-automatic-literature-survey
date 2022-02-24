@@ -1,0 +1,369 @@
+id,updated,published,title,summary,database
+http://arxiv.org/abs/2202.08982v1,2022-02-18T02:15:44Z,2022-02-18T02:15:44Z,"PGCN: Progressive Graph Convolutional Networks for Spatial-Temporal
+  Traffic Forecasting","The complex spatial-temporal correlations in transportation networks make the
+traffic forecasting problem challenging. Since transportation system inherently
+possesses graph structures, much research efforts have been put with graph
+neural networks. Recently, constructing adaptive graphs to the data has shown
+promising results over the models relying on a single static graph structure.
+However, the graph adaptations are applied during the training phases, and do
+not reflect the data used during the testing phases. Such shortcomings can be
+problematic especially in traffic forecasting since the traffic data often
+suffers from the unexpected changes and irregularities in the time series. In
+this study, we propose a novel traffic forecasting framework called Progressive
+Graph Convolutional Network (PGCN). PGCN constructs a set of graphs by
+progressively adapting to input data during the training and the testing
+phases. Specifically, we implemented the model to construct progressive
+adjacency matrices by learning trend similarities among graph nodes. Then, the
+model is combined with the dilated causal convolution and gated activation unit
+to extract temporal features. With residual and skip connections, PGCN performs
+the traffic prediction. When applied to four real-world traffic datasets of
+diverse geometric nature, the proposed model achieves state-of-the-art
+performance with consistency in all datasets. We conclude that the ability of
+PGCN to progressively adapt to input data enables the model to generalize in
+different study sites with robustness.",arxiv
+http://arxiv.org/abs/2202.07147v1,2022-02-15T02:39:12Z,2022-02-15T02:39:12Z,"Graph Meta-Reinforcement Learning for Transferable Autonomous
+  Mobility-on-Demand","Autonomous Mobility-on-Demand (AMoD) systems represent an attractive
+alternative to existing transportation paradigms, currently challenged by
+urbanization and increasing travel needs. By centrally controlling a fleet of
+self-driving vehicles, these systems provide mobility service to customers and
+are currently starting to be deployed in a number of cities around the world.
+Current learning-based approaches for controlling AMoD systems are limited to
+the single-city scenario, whereby the service operator is allowed to take an
+unlimited amount of operational decisions within the same transportation
+system. However, real-world system operators can hardly afford to fully
+re-train AMoD controllers for every city they operate in, as this could result
+in a high number of poor-quality decisions during training, making the
+single-city strategy a potentially impractical solution. To address these
+limitations, we propose to formalize the multi-city AMoD problem through the
+lens of meta-reinforcement learning (meta-RL) and devise an actor-critic
+algorithm based on recurrent graph neural networks. In our approach, AMoD
+controllers are explicitly trained such that a small amount of experience
+within a new city will produce good system performance. Empirically, we show
+how control policies learned through meta-RL are able to achieve near-optimal
+performance on unseen cities by learning rapidly adaptable policies, thus
+making them more robust not only to novel environments, but also to
+distribution shifts common in real-world operations, such as special events,
+unexpected congestion, and dynamic pricing schemes.",arxiv
+http://arxiv.org/abs/2202.06639v1,2022-02-14T11:47:26Z,2022-02-14T11:47:26Z,"On the Complexity of Object Detection on Real-world Public
+  Transportation Images for Social Distancing Measurement","Social distancing in public spaces has become an essential aspect in helping
+to reduce the impact of the COVID-19 pandemic. Exploiting recent advances in
+machine learning, there have been many studies in the literature implementing
+social distancing via object detection through the use of surveillance cameras
+in public spaces. However, to date, there has been no study of social distance
+measurement on public transport. The public transport setting has some unique
+challenges, including some low-resolution images and camera locations that can
+lead to the partial occlusion of passengers, which make it challenging to
+perform accurate detection. Thus, in this paper, we investigate the challenges
+of performing accurate social distance measurement on public transportation. We
+benchmark several state-of-the-art object detection algorithms using real-world
+footage taken from the London Underground and bus network. The work highlights
+the complexity of performing social distancing measurement on images from
+current public transportation onboard cameras. Further, exploiting domain
+knowledge of expected passenger behaviour, we attempt to improve the quality of
+the detections using various strategies and show improvement over using vanilla
+object detection alone.",arxiv
+http://arxiv.org/abs/2202.06608v1,2022-02-14T10:55:14Z,2022-02-14T10:55:14Z,"UnScenE: Toward Unsupervised Scenario Extraction for Automated Driving
+  Systems from Urban Naturalistic Road Traffic Data","Scenario-based testing is a promising approach to solve the challenge of
+proving the safe behavior of vehicles equipped with automated driving systems
+(ADS). Since an infinite number of concrete scenarios can theoretically occur
+in real-world road traffic, the extraction of relevant scenarios that are
+sensitive regarding the safety-related behavior of ADS-equipped vehicles is a
+key aspect for the successful verification and validation of these systems.
+Therefore, this paper provides a method for extracting multimodal urban traffic
+scenarios from naturalistic road traffic data in an unsupervised manner for
+minimizing the amount of (potentially biased) prior expert knowledge needed.
+Rather than an (expensive) rule-based assignment by extracting concrete
+scenarios into predefined functional scenarios, the presented method deploys an
+unsupervised machine learning pipeline. It includes principal feature analysis,
+feature extraction with so-called scenario grids, dimensionality reduction by
+principal component analysis, scenario clustering as well as cluster
+validation. The approach allows exploring the unknown natures of the data and
+interpreting them as scenarios that experts could not have anticipated. The
+method is demonstrated and evaluated for naturalistic road traffic data at
+urban intersections from the inD and the Silicon Valley dataset. The findings
+encourage the use of this type of data as well as unsupervised machine learning
+approaches as important pillar for a systematic construction of a relevant
+scenario database with sufficient coverage for testing ADS.",arxiv
+http://arxiv.org/abs/2202.05334v1,2022-02-10T21:26:54Z,2022-02-10T21:26:54Z,"Learning the Pedestrian-Vehicle Interaction for Pedestrian Trajectory
+  Prediction","In this paper, we study the interaction between pedestrians and vehicles and
+propose a novel neural network structure called the Pedestrian-Vehicle
+Interaction (PVI) extractor for learning the pedestrian-vehicle interaction. We
+implement the proposed PVI extractor on both sequential approaches (long
+short-term memory (LSTM) models) and non-sequential approaches (convolutional
+models). We use the Waymo Open Dataset that contains real-world urban traffic
+scenes with both pedestrian and vehicle annotations. For the LSTM-based models,
+our proposed model is compared with Social-LSTM and Social-GAN, and using our
+proposed PVI extractor reduces the average displacement error (ADE) and the
+final displacement error (FDE) by 7.46% and 5.24%, respectively. For the
+convolutional-based models, our proposed model is compared with Social-STGCNN
+and Social-IWSTCNN, and using our proposed PVI extractor reduces the ADE and
+FDE by 2.10% and 1.27%, respectively. The results show that the
+pedestrian-vehicle interaction influences pedestrian behavior, and the models
+using the proposed PVI extractor can capture the interaction between
+pedestrians and vehicles, and thereby outperform the compared methods.",arxiv
+http://arxiv.org/abs/2202.05118v1,2022-02-10T16:07:17Z,2022-02-10T16:07:17Z,"Reinforcement Learning in the Wild: Scalable RL Dispatching Algorithm
+  Deployed in Ridehailing Marketplace","In this study, a real-time dispatching algorithm based on reinforcement
+learning is proposed and for the first time, is deployed in large scale.
+Current dispatching methods in ridehailing platforms are dominantly based on
+myopic or rule-based non-myopic approaches. Reinforcement learning enables
+dispatching policies that are informed of historical data and able to employ
+the learned information to optimize returns of expected future trajectories.
+Previous studies in this field yielded promising results, yet have left room
+for further improvements in terms of performance gain, self-dependency,
+transferability, and scalable deployment mechanisms. The present study proposes
+a standalone RL-based dispatching solution that is equipped with multiple
+mechanisms to ensure robust and efficient on-policy learning and inference
+while being adaptable for full-scale deployment. A new form of value updating
+based on temporal difference is proposed that is more adapted to the inherent
+uncertainty of the problem. For the driver-order assignment, a customized
+utility function is proposed that when tuned based on the statistics of the
+market, results in remarkable performance improvement and interpretability. In
+addition, for reducing the risk of cancellation after drivers' assignment, an
+adaptive graph pruning strategy based on the multi-arm bandit problem is
+introduced. The method is evaluated using offline simulation with real data and
+yields notable performance improvement. In addition, the algorithm is deployed
+online in multiple cities under DiDi's operation for A/B testing and is
+launched in one of the major international markets as the primary mode of
+dispatch. The deployed algorithm shows over 1.3% improvement in total driver
+income from A/B testing. In addition, by causal inference analysis, as much as
+5.3% improvement in major performance metrics is detected after full-scale
+deployment.",arxiv
+http://arxiv.org/abs/2202.04628v2,2022-02-13T21:23:07Z,2022-02-09T18:45:40Z,"Reinforcement Learning with Sparse Rewards using Guidance from Offline
+  Demonstration","A major challenge in real-world reinforcement learning (RL) is the sparsity
+of reward feedback. Often, what is available is an intuitive but sparse reward
+function that only indicates whether the task is completed partially or fully.
+However, the lack of carefully designed, fine grain feedback implies that most
+existing RL algorithms fail to learn an acceptable policy in a reasonable time
+frame. This is because of the large number of exploration actions that the
+policy has to perform before it gets any useful feedback that it can learn
+from. In this work, we address this challenging problem by developing an
+algorithm that exploits the offline demonstration data generated by a
+sub-optimal behavior policy for faster and efficient online RL in such sparse
+reward settings. The proposed algorithm, which we call the Learning Online with
+Guidance Offline (LOGO) algorithm, merges a policy improvement step with an
+additional policy guidance step by using the offline demonstration data. The
+key idea is that by obtaining guidance from - not imitating - the offline data,
+LOGO orients its policy in the manner of the sub-optimal policy, while yet
+being able to learn beyond and approach optimality. We provide a theoretical
+analysis of our algorithm, and provide a lower bound on the performance
+improvement in each learning episode. We also extend our algorithm to the even
+more challenging incomplete observation setting, where the demonstration data
+contains only a censored version of the true state observation. We demonstrate
+the superior performance of our algorithm over state-of-the-art approaches on a
+number of benchmark environments with sparse rewards and censored state.
+Further, we demonstrate the value of our approach via implementing LOGO on a
+mobile robot for trajectory tracking and obstacle avoidance, where it shows
+excellent performance.",arxiv
+http://arxiv.org/abs/2202.03917v1,2022-02-08T15:09:16Z,2022-02-08T15:09:16Z,Edge-based fever screening system over private 5G,"Edge computing and 5G have made it possible to perform analytics closer to
+the source of data and achieve super-low latency response times, which is not
+possible with centralized cloud deployment. In this paper, we present a novel
+fever-screening system, which uses edge machine learning techniques and
+leverages private 5G to accurately identify and screen individuals with fever
+in real-time. Particularly, we present deep-learning based novel techniques for
+fusion and alignment of cross-spectral visual and thermal data streams at the
+edge. Our novel Cross-Spectral Generative Adversarial Network (CS-GAN)
+synthesizes visual images that have the key, representative object level
+features required to uniquely associate objects across visual and thermal
+spectrum. Two key features of CS-GAN are a novel, feature-preserving loss
+function that results in high-quality pairing of corresponding cross-spectral
+objects, and dual bottleneck residual layers with skip connections (a new,
+network enhancement) to not only accelerate real-time inference, but to also
+speed up convergence during model training at the edge. To the best of our
+knowledge, this is the first technique that leverages 5G networks and limited
+edge resources to enable real-time feature-level association of objects in
+visual and thermal streams (30 ms per full HD frame on an Intel Core i7-8650
+4-core, 1.9GHz mobile processor). To the best of our knowledge, this is also
+the first system to achieve real-time operation, which has enabled fever
+screening of employees and guests in arenas, theme parks, airports and other
+critical facilities. By leveraging edge computing and 5G, our fever screening
+system is able to achieve 98.5% accuracy and is able to process about 5X more
+people when compared to a centralized cloud deployment.",arxiv
+http://arxiv.org/abs/2202.02653v1,2022-02-05T22:49:26Z,2022-02-05T22:49:26Z,"Millisecond speed deep learning based proton dose calculation with Monte
+  Carlo accuracy","Next generation online and real-time adaptive radiotherapy workflows require
+precise particle transport simulations in sub-second times, which is unfeasible
+with current analytical pencil beam algorithms (PBA) or stochastic Monte Carlo
+(MC) methods. We present a data-driven millisecond speed dose calculation
+algorithm (DoTA) accurately predicting the dose deposited by mono-energetic
+proton pencil beams for arbitrary energies and patient geometries. Given the
+forward-scattering nature of protons, we frame 3D particle transport as
+modeling a sequence of 2D geometries in the beam's eye view. DoTA combines
+convolutional neural networks extracting spatial features (e.g., tissue and
+density contrasts) with a transformer self-attention backbone that routes
+information between the sequence of geometry slices and a vector representing
+the beam's energy, and is trained to predict low noise MC simulations of proton
+beamlets using 80,000 different head and neck, lung, and prostate geometries.
+Predicting beamlet doses in 5 ms with a very high gamma pass rate of 99.37%
+(1%, 3 mm) compared to the ground truth MC calculations, DoTA significantly
+improves upon analytical pencil beam algorithms both in precision and speed.
+Offering MC accuracy 100 times faster than PBAs for pencil beams, our model
+calculates full treatment plan doses in 10 to 15 s depending on the number of
+beamlets, achieving a 99.70% (2%, 2 mm) gamma pass rate across 9 test patients.
+Outperforming all previous analytical pencil beam and deep learning based
+approaches, DoTA represents a new state of the art in data-driven dose
+calculation and can directly compete with the speed of even commercial GPU MC
+approaches. Providing the sub-second speed required for adaptive treatments,
+straightforward implementations could offer similar benefits to other steps of
+the radiotherapy workflow or other modalities such as helium or carbon
+treatments.",arxiv
+http://arxiv.org/abs/2202.01862v1,2022-02-03T21:43:06Z,2022-02-03T21:43:06Z,Practical Imitation Learning in the Real World via Task Consistency Loss,"Recent work in visual end-to-end learning for robotics has shown the promise
+of imitation learning across a variety of tasks. Such approaches are expensive
+both because they require large amounts of real world training demonstrations
+and because identifying the best model to deploy in the real world requires
+time-consuming real-world evaluations. These challenges can be mitigated by
+simulation: by supplementing real world data with simulated demonstrations and
+using simulated evaluations to identify high performing policies. However, this
+introduces the well-known ""reality gap"" problem, where simulator inaccuracies
+decorrelate performance in simulation from that of reality. In this paper, we
+build on top of prior work in GAN-based domain adaptation and introduce the
+notion of a Task Consistency Loss (TCL), a self-supervised loss that encourages
+sim and real alignment both at the feature and action-prediction levels. We
+demonstrate the effectiveness of our approach by teaching a mobile manipulator
+to autonomously approach a door, turn the handle to open the door, and enter
+the room. The policy performs control from RGB and depth images and generalizes
+to doors not encountered in training data. We achieve 80% success across ten
+seen and unseen scenes using only ~16.2 hours of teleoperated demonstrations in
+sim and real. To the best of our knowledge, this is the first work to tackle
+latched door opening from a purely end-to-end learning approach, where the task
+of navigation and manipulation are jointly modeled by a single neural network.",arxiv
+http://arxiv.org/abs/2201.09419v1,2022-01-24T02:21:28Z,2022-01-24T02:21:28Z,"Automated machine learning for secure key rate in discrete-modulated
+  continuous-variable quantum key distribution","Continuous-variable quantum key distribution (CV QKD) with discrete
+modulation has attracted increasing attention due to its experimental
+simplicity, lower-cost implementation and compatibility with classical optical
+communication. Correspondingly, some novel numerical methods have been proposed
+to analyze the security of these protocols against collective attacks, which
+promotes key rates over one hundred kilometers of fiber distance. However,
+numerical methods are limited by their calculation time and resource
+consumption, for which they cannot play more roles on mobile platforms in
+quantum networks. To improve this issue, a neural network model predicting key
+rates in nearly real time has been proposed previously. Here, we go further and
+show a neural network model combined with Bayesian optimization. This model
+automatically designs the best architecture of neural network computing key
+rates in real time. We demonstrate our model with two variants of CV QKD
+protocols with quaternary modulation. The results show high reliability with
+secure probability as high as $99.15\%-99.59\%$, considerable tightness and
+high efficiency with speedup of approximately $10^7$ in both cases. This
+inspiring model enables the real-time computation of unstructured quantum key
+distribution protocols' key rate more automatically and efficiently, which has
+met the growing needs of implementing QKD protocols on moving platforms.",arxiv
+http://arxiv.org/abs/2201.07711v1,2022-01-19T16:51:18Z,2022-01-19T16:51:18Z,Enhancing the Security & Privacy of Wearable Brain-Computer Interfaces,"Brain computing interfaces (BCI) are used in a plethora of
+safety/privacy-critical applications, ranging from healthcare to smart
+communication and control. Wearable BCI setups typically involve a head-mounted
+sensor connected to a mobile device, combined with ML-based data processing.
+Consequently, they are susceptible to a multiplicity of attacks across the
+hardware, software, and networking stacks used that can leak users' brainwave
+data or at worst relinquish control of BCI-assisted devices to remote
+attackers. In this paper, we: (i) analyse the whole-system security and privacy
+threats to existing wearable BCI products from an operating system and
+adversarial machine learning perspective; and (ii) introduce Argus, the first
+information flow control system for wearable BCI applications that mitigates
+these attacks. Argus' domain-specific design leads to a lightweight
+implementation on Linux ARM platforms suitable for existing BCI use-cases. Our
+proof of concept attacks on real-world BCI devices (Muse, NeuroSky, and
+OpenBCI) led us to discover more than 300 vulnerabilities across the stacks of
+six major attack vectors. Our evaluation shows Argus is highly effective in
+tracking sensitive dataflows and restricting these attacks with an acceptable
+memory and performance overhead (<15%).",arxiv
+http://arxiv.org/abs/2201.07888v1,2022-01-16T23:49:20Z,2022-01-16T23:49:20Z,"Adaptive Energy Management for Self-Sustainable Wearables in Mobile
+  Health","Wearable devices that integrate multiple sensors, processors, and
+communication technologies have the potential to transform mobile health for
+remote monitoring of health parameters. However, the small form factor of the
+wearable devices limits the battery size and operating lifetime. As a result,
+the devices require frequent recharging, which has limited their widespread
+adoption. Energy harvesting has emerged as an effective method towards
+sustainable operation of wearable devices. Unfortunately, energy harvesting
+alone is not sufficient to fulfill the energy requirements of wearable devices.
+This paper studies the novel problem of adaptive energy management towards the
+goal of self-sustainable wearables by using harvested energy to supplement the
+battery energy and to reduce manual recharging by users. To solve this problem,
+we propose a principled algorithm referred as AdaEM. There are two key ideas
+behind AdaEM. First, it uses machine learning (ML) methods to learn predictive
+models of user activity and energy usage patterns. These models allow us to
+estimate the potential of energy harvesting in a day as a function of the user
+activities. Second, it reasons about the uncertainty in predictions and
+estimations from the ML models to optimize the energy management decisions
+using a dynamic robust optimization (DyRO) formulation. We propose a
+light-weight solution for DyRO to meet the practical needs of deployment. We
+validate the AdaEM approach on a wearable device prototype consisting of solar
+and motion energy harvesting using real-world data of user activities.
+Experiments show that AdaEM achieves solutions that are within 5% of the
+optimal with less than 0.005% execution time and energy overhead.",arxiv
+http://arxiv.org/abs/2201.05858v1,2022-01-15T14:15:46Z,2022-01-15T14:15:46Z,"Smart Parking Space Detection under Hazy conditions using Convolutional
+  Neural Networks: A Novel Approach","Limited urban parking space combined with urbanization has necessitated the
+development of smart parking systems that can communicate the availability of
+parking slots to the end users. Towards this, various deep learning based
+solutions using convolutional neural networks have been proposed for parking
+space occupation detection. Though these approaches are robust to partial
+obstructions and lighting conditions, their performance is found to degrade in
+the presence of haze conditions. Looking in this direction, this paper
+investigates the use of dehazing networks that improves the performance of
+parking space occupancy classifier under hazy conditions. Additionally,
+training procedures are proposed for dehazing networks to maximize the
+performance of the system on both hazy and non-hazy conditions. The proposed
+system is deployable as part of existing smart parking systems where limited
+number of cameras are used to monitor hundreds of parking spaces. To validate
+our approach, we have developed a custom hazy parking system dataset from
+real-world task-driven test set of RESIDE-\b{eta} dataset. The proposed
+approach is tested against existing state-of-the-art parking space detectors on
+CNRPark-EXT and hazy parking system datasets. Experimental results indicate
+that there is a significant accuracy improvement of the proposed approach on
+the hazy parking system dataset.",arxiv
+http://arxiv.org/abs/2201.05024v2,2022-01-14T09:17:35Z,2022-01-13T15:20:45Z,"Real-Time GPU-Accelerated Machine Learning Based Multiuser Detection for
+  5G and Beyond","Adaptive partial linear beamforming meets the need of 5G and future 6G
+applications for high flexibility and adaptability. Choosing an appropriate
+tradeoff between conflicting goals opens the recently proposed multiuser (MU)
+detection method. Due to their high spatial resolution, nonlinear beamforming
+filters can significantly outperform linear approaches in stationary scenarios
+with massive connectivity. However, a dramatic decrease in performance can be
+expected in high mobility scenarios because they are very susceptible to
+changes in the wireless channel. The robustness of linear filters is required,
+considering these changes. One way to respond appropriately is to use online
+machine learning algorithms. The theory of algorithms based on the adaptive
+projected subgradient method (APSM) is rich, and they promise accurate tracking
+capabilities in dynamic wireless environments. However, one of the main
+challenges comes from the real-time implementation of these algorithms, which
+involve projections on time-varying closed convex sets. While the projection
+operations are relatively simple, their vast number poses a challenge in
+ultralow latency (ULL) applications where latency constraints must be satisfied
+in every radio frame. Taking non-orthogonal multiple access (NOMA) systems as
+an example, this paper explores the acceleration of APSM-based algorithms
+through massive parallelization. The result is a GPU-accelerated real-time
+implementation of an orthogonal frequency-division multiplexing (OFDM)-based
+transceiver that enables detection latency of less than one millisecond and
+therefore complies with the requirements of 5G and beyond. To meet the
+stringent physical layer latency requirements, careful co-design of hardware
+and software is essential, especially in virtualized wireless systems with
+hardware accelerators.",arxiv
+http://arxiv.org/abs/2201.04349v1,2022-01-12T07:49:46Z,2022-01-12T07:49:46Z,Video Intelligence as a component of a Global Security system,"This paper describes the evolution of our research from video analytics to a
+global security system with focus on the video surveillance component. Indeed
+video surveillance has evolved from a commodity security tool up to the most
+efficient way of tracking perpetrators when terrorism hits our modern urban
+centers. As number of cameras soars, one could expect the system to leverage
+the huge amount of data carried through the video streams to provide fast
+access to video evidences, actionable intelligence for monitoring real-time
+events and enabling predictive capacities to assist operators in their
+surveillance tasks. This research explores a hybrid platform for video
+intelligence capture, automated data extraction, supervised Machine Learning
+for intelligently assisted urban video surveillance; Extension to other
+components of a global security system are discussed. Applying Knowledge
+Management principles in this research helps with deep problem understanding
+and facilitates the implementation of efficient information and experience
+sharing decision support systems providing assistance to people on the field as
+well as in operations centers. The originality of this work is also the
+creation of ""common"" human-machine and machine to machine language and a
+security ontology.",arxiv
+http://arxiv.org/abs/2201.03808v1,2022-01-11T06:48:12Z,2022-01-11T06:48:12Z,MobileFaceSwap: A Lightweight Framework for Video Face Swapping,"Advanced face swapping methods have achieved appealing results. However, most
+of these methods have many parameters and computations, which makes it
+challenging to apply them in real-time applications or deploy them on edge
+devices like mobile phones. In this work, we propose a lightweight
+Identity-aware Dynamic Network (IDN) for subject-agnostic face swapping by
+dynamically adjusting the model parameters according to the identity
+information. In particular, we design an efficient Identity Injection Module
+(IIM) by introducing two dynamic neural network techniques, including the
+weights prediction and weights modulation. Once the IDN is updated, it can be
+applied to swap faces given any target image or video. The presented IDN
+contains only 0.50M parameters and needs 0.33G FLOPs per frame, making it
+capable for real-time video face swapping on mobile phones. In addition, we
+introduce a knowledge distillation-based method for stable training, and a loss
+reweighting module is employed to obtain better synthesized results. Finally,
+our method achieves comparable results with the teacher models and other
+state-of-the-art methods.",arxiv

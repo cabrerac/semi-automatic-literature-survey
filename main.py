@@ -11,38 +11,38 @@ domains, interests, keywords, synonyms, fields, types, databases, since, to, fil
 
 
 # 2. Getting papers from databases
-print('2. Getting all papers...')
-retrieve.get_papers(domains, interests, keywords, synonyms, fields, types, since, to, file_name)
+#print('2. Getting all papers...')
+#retrieve.get_papers(domains, interests, keywords, synonyms, fields, types, file_name, since, to)
 
 
 # 3. Preprocessing papers
 #print('3. Preprocessing papers...')
-#retrieve.preprocess(domains, databases)
+#retrieve.preprocess(domains, databases, file_name, since, to)
 
 
 # 4. Filtering papers by abstract
 #print('4. Filtering papers by abstract...')
-#retrieve.filter_papers(keywords, './papers/preprocessed_papers.csv', 'filtered_papers.csv')
+#retrieve.filter_papers(keywords, file_name, to)
 
 
 # 5. Getting papers to check based on semantic analysis
 #print('5. Getting to check papers...')
-#semantic_analyser.get_to_check_papers(keywords, './papers/filtered_papers.csv', 'to_check_papers.csv')
+#semantic_analyser.get_to_check_papers(keywords, file_name, to)
 
 # 6. Manual filtering of papers to check
 #print('6. Manual filtering of papers to check...')
-#manual.manual_filter_by_abstract('./papers/to_check_papers.csv', 'filtered_by_abstract.csv')
+#manual.manual_filter_by_abstract(file_name, to)
 
 
 # 7. Manual filtering by full paper
 #print('7. Manual filtering by full paper...')
-#manual.manual_filter_by_full_text('./papers/filtered_by_abstract.csv', 'filtered_by_full_text.csv')
-#manual.remove_repeated('./papers/filtered_by_full_text.csv')
+#manual.manual_filter_by_full_text(file_name, to)
+#manual.remove_repeated(file_name, to)
 
 
 # 8. Snowballing
 #print('8. Snowballing...')
-#retrieve.get_citations()
+#retrieve.get_citations(file_name, to)
 
 # 9. Filtering citation papers by abstract
 #print('9. Filtering citation papers by abstract...')
@@ -64,5 +64,5 @@ retrieve.get_papers(domains, interests, keywords, synonyms, fields, types, since
 
 
 # 13. Plot results
-#print('13. Plotting results...')
-#util.plot()
+print('13. Plotting results...')
+util.plot()

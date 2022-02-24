@@ -11,7 +11,8 @@ from analysis import util
 f = 'utf-8'
 
 
-def get_to_check_papers(keywords, papers_file, output_file):
+def get_to_check_papers(keywords, file_name, to):
+    papers_file = './papers/'+file_name + '_filtered_papers_' + str(to).replace('-', '_') + '.csv'
     filtered_papers = pd.read_csv(papers_file)
     sentences_abstract = get_sentences(keywords, filtered_papers)
     to_check = []
@@ -26,6 +27,7 @@ def get_to_check_papers(keywords, papers_file, output_file):
     to_check_papers['type'] = 'to_check'
     to_check_papers['status'] = 'unknown'
     to_check_papers['id'] = list(range(1, len(to_check_papers) + 1))
+    output_file = file_name + '_to_check_papers_' + str(to).replace('-', '_') + '.csv'
     util.save(output_file, to_check_papers, f)
 
 

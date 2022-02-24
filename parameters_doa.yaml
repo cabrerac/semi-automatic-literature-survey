@@ -133,5 +133,5 @@ databases:
   - semantic-scholar
   - project-academic
 since: 2022-01-01
-to: 2022-02-21
+to: 2022-02-22
 file_name: doas_search
