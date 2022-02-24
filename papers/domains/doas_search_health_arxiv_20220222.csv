@@ -1,0 +1,221 @@
+id,updated,published,title,summary,database
+http://arxiv.org/abs/2202.10336v1,2022-02-15T03:34:56Z,2022-02-15T03:34:56Z,Artificial Intelligence for the Metaverse: A Survey,"Along with the massive growth of the Internet from the 1990s until now,
+various innovative technologies have been created to bring users breathtaking
+experiences with more virtual interactions in cyberspace. Many virtual
+environments with thousands of services and applications, from social networks
+to virtual gaming worlds, have been developed with immersive experience and
+digital transformation, but most are incoherent instead of being integrated
+into a platform. In this context, metaverse, a term formed by combining meta
+and universe, has been introduced as a shared virtual world that is fueled by
+many emerging technologies, such as fifth-generation networks and beyond,
+virtual reality, and artificial intelligence (AI). Among such technologies, AI
+has shown the great importance of processing big data to enhance immersive
+experience and enable human-like intelligence of virtual agents. In this
+survey, we make a beneficial effort to explore the role of AI in the foundation
+and development of the metaverse. We first deliver a preliminary of AI,
+including machine learning algorithms and deep learning architectures, and its
+role in the metaverse. We then convey a comprehensive investigation of AI-based
+methods concerning six technical aspects that have potentials for the
+metaverse: natural language processing, machine vision, blockchain, networking,
+digital twin, and neural interface, and being potential for the metaverse.
+Subsequently, several AI-aided applications, such as healthcare, manufacturing,
+smart cities, and gaming, are studied to be deployed in the virtual worlds.
+Finally, we conclude the key contribution of this survey and open some future
+research directions in AI for the metaverse.",arxiv
+http://arxiv.org/abs/2202.04361v2,2022-02-20T04:18:20Z,2022-02-09T09:50:31Z,"Molecular-scale Integration of Multi-modal Sensing and Neuromorphic
+  Computing with Organic Electrochemical Transistors","Abstract: Bionic learning with fused sensing, memory and processing functions
+outperforms artificial neural networks running on silicon chips in terms of
+efficiency and footprint. However, digital hardware implementation of bionic
+learning suffers from device heterogeneity in sensors and processing cores,
+which incurs large hardware, energy and time overheads. Here, we present a
+universal solution to simultaneously perform multi-modal sensing, memory and
+processing using organic electrochemical transistors with designed architecture
+and tailored channel morphology, selective ion injection into the
+crystalline/amorphous regions. The resultant device work as either a volatile
+receptor that shows multi-modal sensing, or a non-volatile synapse that
+features record-high 10-bit analog states, low switching stochasticity and good
+retention without the integration of any extra devices. Homogeneous integration
+of such devices enables bionic learning functions such as conditioned reflex
+and real-time cardiac disease diagnose via reservoir computing, illustrating
+the promise for future smart edge health informatics.",arxiv
+http://arxiv.org/abs/2202.02559v1,2022-02-05T14:12:01Z,2022-02-05T14:12:01Z,"Digital Twin of Wireless Systems: Overview, Taxonomy, Challenges, and
+  Opportunities","Future wireless services must be focused on improving the quality of life by
+enabling various applications, such as extended reality, brain-computer
+interaction, and healthcare. These applications have diverse performance
+requirements (e.g., user-defined quality of experience metrics, latency, and
+reliability) that are challenging to be fulfilled by existing wireless systems.
+To meet the diverse requirements of the emerging applications, the concept of a
+digital twin has been recently proposed. A digital twin uses a virtual
+representation along with security-related technologies (e.g., blockchain),
+communication technologies (e.g., 6G), computing technologies (e.g., edge
+computing), and machine learning, so as to enable the smart applications. In
+this tutorial, we present a comprehensive overview on digital twins for
+wireless systems. First, we present an overview of fundamental concepts (i.e.,
+design aspects, high-level architecture, and frameworks) of digital twin of
+wireless systems. Second, a comprehensive taxonomy is devised for both
+different aspects. These aspects are twins for wireless and wireless for twins.
+For the twins for wireless aspect, we consider parameters, such as twin objects
+design, prototyping, deployment trends, physical devices design, interface
+design, incentive mechanism, twins isolation, and decoupling. On the other
+hand, for wireless for twins, parameters such as, twin objects access aspects,
+security and privacy, and air interface design are considered. Finally, open
+research challenges and opportunities are presented along with causes and
+possible solutions.",arxiv
+http://arxiv.org/abs/2202.01176v1,2022-02-02T18:09:06Z,2022-02-02T18:09:06Z,Epidemic Dreams: Dreaming about health during the COVID-19 pandemic,"The continuity hypothesis of dreams suggests that the content of dreams is
+continuous with the dreamer's waking experiences. Given the unprecedented
+nature of the experiences during COVID-19, we studied the continuity hypothesis
+in the context of the pandemic. We implemented a deep-learning algorithm that
+can extract mentions of medical conditions from text and applied it to two
+datasets collected during the pandemic: 2,888 dream reports (dreaming life
+experiences), and 57M tweets mentioning the pandemic (waking life experiences).
+The health expressions common to both sets were typical COVID-19 symptoms
+(e.g., cough, fever, and anxiety), suggesting that dreams reflected people's
+real-world experiences. The health expressions that distinguished the two sets
+reflected differences in thought processes: expressions in waking life
+reflected a linear and logical thought process and, as such, described
+realistic symptoms or related disorders (e.g., nasal pain, SARS, H1N1); those
+in dreaming life reflected a thought process closer to the visual and emotional
+spheres and, as such, described either conditions unrelated to the virus (e.g.,
+maggots, deformities, snakebites), or conditions of surreal nature (e.g., teeth
+falling out, body crumbling into sand). Our results confirm that dream reports
+represent an understudied yet valuable source of people's health experiences in
+the real world.",arxiv
+http://arxiv.org/abs/2202.01034v1,2022-02-02T13:59:23Z,2022-02-02T13:59:23Z,"Maintaining fairness across distribution shift: do we have viable
+  solutions for real-world applications?","Fairness and robustness are often considered as orthogonal dimensions when
+evaluating machine learning models. However, recent work has revealed
+interactions between fairness and robustness, showing that fairness properties
+are not necessarily maintained under distribution shift. In healthcare
+settings, this can result in e.g. a model that performs fairly according to a
+selected metric in ""hospital A"" showing unfairness when deployed in ""hospital
+B"". While a nascent field has emerged to develop provable fair and robust
+models, it typically relies on strong assumptions about the shift, limiting its
+impact for real-world applications. In this work, we explore the settings in
+which recently proposed mitigation strategies are applicable by referring to a
+causal framing. Using examples of predictive models in dermatology and
+electronic health records, we show that real-world applications are complex and
+often invalidate the assumptions of such methods. Our work hence highlights
+technical, practical, and engineering gaps that prevent the development of
+robustly fair machine learning models for real-world applications. Finally, we
+discuss potential remedies at each step of the machine learning pipeline.",arxiv
+http://arxiv.org/abs/2201.07711v1,2022-01-19T16:51:18Z,2022-01-19T16:51:18Z,Enhancing the Security & Privacy of Wearable Brain-Computer Interfaces,"Brain computing interfaces (BCI) are used in a plethora of
+safety/privacy-critical applications, ranging from healthcare to smart
+communication and control. Wearable BCI setups typically involve a head-mounted
+sensor connected to a mobile device, combined with ML-based data processing.
+Consequently, they are susceptible to a multiplicity of attacks across the
+hardware, software, and networking stacks used that can leak users' brainwave
+data or at worst relinquish control of BCI-assisted devices to remote
+attackers. In this paper, we: (i) analyse the whole-system security and privacy
+threats to existing wearable BCI products from an operating system and
+adversarial machine learning perspective; and (ii) introduce Argus, the first
+information flow control system for wearable BCI applications that mitigates
+these attacks. Argus' domain-specific design leads to a lightweight
+implementation on Linux ARM platforms suitable for existing BCI use-cases. Our
+proof of concept attacks on real-world BCI devices (Muse, NeuroSky, and
+OpenBCI) led us to discover more than 300 vulnerabilities across the stacks of
+six major attack vectors. Our evaluation shows Argus is highly effective in
+tracking sensitive dataflows and restricting these attacks with an acceptable
+memory and performance overhead (<15%).",arxiv
+http://arxiv.org/abs/2201.07888v1,2022-01-16T23:49:20Z,2022-01-16T23:49:20Z,"Adaptive Energy Management for Self-Sustainable Wearables in Mobile
+  Health","Wearable devices that integrate multiple sensors, processors, and
+communication technologies have the potential to transform mobile health for
+remote monitoring of health parameters. However, the small form factor of the
+wearable devices limits the battery size and operating lifetime. As a result,
+the devices require frequent recharging, which has limited their widespread
+adoption. Energy harvesting has emerged as an effective method towards
+sustainable operation of wearable devices. Unfortunately, energy harvesting
+alone is not sufficient to fulfill the energy requirements of wearable devices.
+This paper studies the novel problem of adaptive energy management towards the
+goal of self-sustainable wearables by using harvested energy to supplement the
+battery energy and to reduce manual recharging by users. To solve this problem,
+we propose a principled algorithm referred as AdaEM. There are two key ideas
+behind AdaEM. First, it uses machine learning (ML) methods to learn predictive
+models of user activity and energy usage patterns. These models allow us to
+estimate the potential of energy harvesting in a day as a function of the user
+activities. Second, it reasons about the uncertainty in predictions and
+estimations from the ML models to optimize the energy management decisions
+using a dynamic robust optimization (DyRO) formulation. We propose a
+light-weight solution for DyRO to meet the practical needs of deployment. We
+validate the AdaEM approach on a wearable device prototype consisting of solar
+and motion energy harvesting using real-world data of user activities.
+Experiments show that AdaEM achieves solutions that are within 5% of the
+optimal with less than 0.005% execution time and energy overhead.",arxiv
+http://arxiv.org/abs/2201.05115v1,2022-01-13T18:20:32Z,2022-01-13T18:20:32Z,Functional Anomaly Detection: a Benchmark Study,"The increasing automation in many areas of the Industry expressly demands to
+design efficient machine-learning solutions for the detection of abnormal
+events. With the ubiquitous deployment of sensors monitoring nearly
+continuously the health of complex infrastructures, anomaly detection can now
+rely on measurements sampled at a very high frequency, providing a very rich
+representation of the phenomenon under surveillance. In order to exploit fully
+the information thus collected, the observations cannot be treated as
+multivariate data anymore and a functional analysis approach is required. It is
+the purpose of this paper to investigate the performance of recent techniques
+for anomaly detection in the functional setup on real datasets. After an
+overview of the state-of-the-art and a visual-descriptive study, a variety of
+anomaly detection methods are compared. While taxonomies of abnormalities (e.g.
+shape, location) in the functional setup are documented in the literature,
+assigning a specific type to the identified anomalies appears to be a
+challenging task. Thus, strengths and weaknesses of the existing approaches are
+benchmarked in view of these highlighted types in a simulation study. Anomaly
+detection methods are next evaluated on two datasets, related to the monitoring
+of helicopters in flight and to the spectrometry of construction materials
+namely. The benchmark analysis is concluded by recommendation guidance for
+practitioners.",arxiv
+http://arxiv.org/abs/2202.00478v1,2022-01-12T06:19:14Z,2022-01-12T06:19:14Z,"NeuraHealthNLP: An Automated Screening Pipeline to Detect Undiagnosed
+  Cognitive Impairment in Electronic Health Records with Deep Learning and
+  Natural Language Processing","Dementia related cognitive impairment (CI) affects over 55 million people
+worldwide and is growing rapidly at the rate of one new case every 3 seconds.
+With a recurring failure of clinical trials, early diagnosis is crucial, but
+75% of dementia cases go undiagnosed globally with up to 90% in
+low-and-middle-income countries. Current diagnostic methods are notoriously
+complex, involving manual review of medical notes, numerous cognitive tests,
+expensive brain scans or spinal fluid tests. Information relevant to CI is
+often found in the electronic health records (EHRs) and can provide vital clues
+for early diagnosis, but a manual review by experts is tedious and error prone.
+This project develops a novel state-of-the-art automated screening pipeline for
+scalable and high-speed discovery of undetected CI in EHRs. To understand the
+linguistic context from complex language structures in EHR, a database of 8,656
+sequences was constructed to train attention-based deep learning natural
+language processing model to classify sequences. A patient level prediction
+model based on logistic regression was developed using the sequence level
+classifier. The deep learning system achieved 93% accuracy and AUC = 0.98 to
+identify patients who had no earlier diagnosis, dementia-related diagnosis
+code, or dementia-related medications in their EHR. These patients would have
+otherwise gone undetected or detected too late. The EHR screening pipeline was
+deployed in NeuraHealthNLP, a web application for automated and real-time CI
+screening by simply uploading EHRs in a browser. NeuraHealthNLP is cheaper,
+faster, more accessible, and outperforms current clinical methods including
+text-based analytics and machine learning approaches. It makes early diagnosis
+viable in regions with scarce health care services but accessible internet or
+cellular services.",arxiv
+http://arxiv.org/abs/2201.04967v1,2022-01-11T13:55:57Z,2022-01-11T13:55:57Z,"Adherence Forecasting for Guided Internet-Delivered Cognitive Behavioral
+  Therapy: A Minimally Data-Sensitive Approach","Internet-delivered psychological treatments (IDPT) are seen as an effective
+and scalable pathway to improving the accessibility of mental healthcare.
+Within this context, treatment adherence is an especially relevant challenge to
+address due to the reduced interaction between healthcare professionals and
+patients, compared to more traditional interventions. In parallel, there are
+increasing regulations when using peoples' personal data, especially in the
+digital sphere. In such regulations, data minimization is often a core tenant
+such as within the General Data Protection Regulation (GDPR). Consequently,
+this work proposes a deep-learning approach to perform automatic adherence
+forecasting, while only relying on minimally sensitive login/logout data. This
+approach was tested on a dataset containing 342 patients undergoing guided
+internet-delivered cognitive behavioral therapy (G-ICBT) treatment. The
+proposed Self-Attention Network achieved over 70% average balanced accuracy,
+when only 1/3 of the treatment duration had elapsed. As such, this study
+demonstrates that automatic adherence forecasting for G-ICBT, is achievable
+using only minimally sensitive data, thus facilitating the implementation of
+such tools within real-world IDPT platforms.",arxiv
+http://arxiv.org/abs/2201.01943v1,2022-01-06T07:14:02Z,2022-01-06T07:14:02Z,"Machine Learning: Algorithms, Models, and Applications","Recent times are witnessing rapid development in machine learning algorithm
+systems, especially in reinforcement learning, natural language processing,
+computer and robot vision, image processing, speech, and emotional processing
+and understanding. In tune with the increasing importance and relevance of
+machine learning models, algorithms, and their applications, and with the
+emergence of more innovative uses cases of deep learning and artificial
+intelligence, the current volume presents a few innovative research works and
+their applications in real world, such as stock trading, medical and healthcare
+systems, and software automation. The chapters in the book illustrate how
+machine learning and deep learning algorithms and models are designed,
+optimized, and deployed. The volume will be useful for advanced graduate and
+doctoral students, researchers, faculty members of universities, practicing
+data scientists and data engineers, professionals, and consultants working on
+the broad areas of machine learning, deep learning, and artificial
+intelligence.",arxiv

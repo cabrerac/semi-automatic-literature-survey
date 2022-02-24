@@ -15,15 +15,15 @@ max_papers = 10000
 format = 'utf-8'
 
 
-def get_papers(domain, interests, keywords, synonyms, fields, types):
-    file_name = 'domains/' + domain.lower().replace(' ', '_') + '_' + database + '.csv'
+def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name):
+    file_name = 'domains/' + file_name + '_' + domain.replace(' ', '_') + '_' + database + '_' + str(to).replace('-', '') + '.csv'
     if not exists('./papers/' + file_name):
         parameters = {'domains': [domain], 'interests': interests, 'keywords': keywords, 'synonyms': synonyms,
                       'types': types}
         query = create_request(parameters)
         req = api_url.replace('<query>', query).replace('<max_papers>', str(max_papers))
         raw_papers = client.request(req, 'retrieve', {})
-        papers = process_raw_papers(raw_papers)
+        papers = process_raw_papers(raw_papers, since, to)
         if len(papers) != 0:
             papers = retrieve.filter_by_keywords(papers, keywords)
             util.save(file_name, papers, format)
@@ -34,21 +34,23 @@ def create_request(parameters):
     return query
 
 
-def process_raw_papers(raw_papers):
-    raw_json = json.loads(raw_papers)
-    p = pd.json_normalize(raw_json['entities'])
-    entities = raw_json['entities']
-    abstracts = []
-    for entity in entities:
-        abstracts.append(entity['IA'])
+def process_raw_papers(raw_papers, since, to):
     papers = pd.DataFrame()
-    papers['doi'] = p['DOI']
-    papers['publication_date'] = p['D']
-    papers['publication'] = p['BT']
-    papers['publisher'] = p['PB']
-    papers['title'] = p['Ti']
-    papers['abstract'] = get_abstracts(abstracts)
-    papers['database'] = database
+    if raw_papers != {}:
+        raw_json = json.loads(raw_papers)
+        p = pd.json_normalize(raw_json['entities'])
+        entities = raw_json['entities']
+        abstracts = []
+        for entity in entities:
+            abstracts.append(entity['IA'])
+        papers['doi'] = p['DOI']
+        papers['publication_date'] = p['D']
+        papers['publication'] = p['BT']
+        papers['publisher'] = p['PB']
+        papers['title'] = p['Ti']
+        papers['abstract'] = get_abstracts(abstracts)
+        papers['database'] = database
+        papers = papers[(papers['publication_date'] >= str(since)) & (papers['publication_date'] <= str(to))]
     return papers
 
 

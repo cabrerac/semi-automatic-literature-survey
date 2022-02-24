@@ -32,7 +32,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, 
                       'fields': c_fields, 'types': types}
         reqs.append(create_request(database, parameters))
     for req in reqs:
-        file_name = 'domains/' + file_name + '_' + domain.replace(' ', '_') + '_' + req[1] + str(to).replace('-', '') + '_raw.csv'
+        file_name = 'domains/' + file_name + '_' + domain.replace(' ', '_') + '_' + req[1] + '_' + str(to).replace('-', '') + '_raw.csv'
         if not exists('./papers/' + file_name):
             print('Getting papers from: ' + req[1])
             print('Request length: ' + str(len(req[0])))
@@ -55,9 +55,9 @@ def create_request(database, parameters):
     return req
 
 
-def process_raw_papers(domain):
+def process_raw_papers(domain, file_name, to):
     for database in databases:
-        file_name = 'domains/' + domain.replace(' ', '_') + '_' + database + '_raw.csv'
+        file_name = 'domains/' + file_name + '_' + domain.replace(' ', '_') + '_' + database + '_' + str(to).replace('-', '') + '_raw.csv'
         if exists('./papers/' + file_name):
             raw_papers = pd.read_csv('./papers/' + file_name)
             file_name_sciencedirect = file_name.replace('_raw.csv', '.csv').replace('scopus', 'sciencedirect')

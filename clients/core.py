@@ -17,8 +17,8 @@ format = 'utf-8'
 client = Generic()
 
 
-def get_papers(domain, interests, keywords, synonyms, fields, types):
-    file_name = 'domains/' + domain.lower().replace(' ', '_') + '_' + database + '.csv'
+def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name):
+    file_name = 'domains/' + file_name + '_' + domain.replace(' ', '_') + '_' + database + '_' + str(to).replace('-', '') + '.csv'
     if not exists('./papers/' + file_name):
         c_fields = []
         for field in fields:
@@ -28,7 +28,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types):
                       'fields': c_fields, 'types': types}
         data = create_request(parameters)
         raw_papers = client.request(api_url, 'post', data)
-        total, papers = process_raw_papers(raw_papers)
+        total, papers = process_raw_papers(raw_papers, since, to)
         if len(papers) != 0:
             util.save(file_name, papers, format)
         print(str(total))
@@ -45,7 +45,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types):
                 data = create_request(parameters)
                 raw_papers = client.request(api_url, 'post', data)
                 if raw_papers != {}:
-                    total, papers = process_raw_papers(raw_papers)
+                    total, papers = process_raw_papers(raw_papers, since, to)
                     if len(papers) != 0:
                         util.save(file_name, papers, format)
         time.sleep(5)
@@ -61,14 +61,23 @@ def create_request(parameters):
     return reqs
 
 
-def process_raw_papers(raw_papers):
+def process_raw_papers(raw_papers, since, to):
     raw_json = json.loads(raw_papers.content)
     total = raw_json[0]['totalHits']
-    papers = pd.json_normalize(raw_json[0]['data'])
-    papers = papers.drop(columns=['authors', 'contributors', 'identifiers', 'relations', 'repositories', 'subjects',
+    try:
+        papers = pd.json_normalize(raw_json[0]['data'])
+        papers = papers.drop(columns=['authors', 'contributors', 'identifiers', 'relations', 'repositories', 'subjects',
                                   'topics', 'types', 'year', 'oai', 'repositoryDocument.pdfStatus',
                                   'repositoryDocument.metadataAdded', 'repositoryDocument.metadataUpdated',
                                   'repositoryDocument.depositedDate', 'fulltextIdentifier', 'language.code',
                                   'language.id', 'language.name'], errors='ignore')
-    papers['database'] = database
+        papers['database'] = database
+        if 'datePublished' in papers.columns:
+            papers = papers[(papers['datePublished'] >= str(since)) & (papers['datePublished'] <= str(to))]
+            if len(papers) > 0:
+                print("here")
+        else:
+            papers = pd.DataFrame()
+    except:
+        papers = pd.DataFrame()
     return total, papers

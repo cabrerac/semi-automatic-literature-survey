@@ -14,22 +14,22 @@ from os.path import exists
 fr = 'utf-8'
 
 
-def get_papers(domains, interests, keywords, synonyms, fields, types, since, to, file_name):
+def get_papers(domains, interests, keywords, synonyms, fields, types, file_name, since, to):
     for domain in domains:
-        #print("Requesting ArXiv for " + domain + " related papers...")
-        #arxiv.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
+        print("Requesting ArXiv for " + domain + " related papers...")
+        arxiv.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
 
-        #print("Requesting Springer for " + domain + " related papers...")
-        #springer.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
+        print("Requesting Springer for " + domain + " related papers...")
+        springer.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
 
-        #print("Requesting IEEE Xplore for " + domain + " related papers...")
-        #ieeexplore.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
+        print("Requesting IEEE Xplore for " + domain + " related papers...")
+        ieeexplore.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
 
         print("Requesting Elsevier for " + domain + " related papers...")
         elsevier.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
         # 2.1 Getting abstracts from elsevier
         print('2.1 Getting abstracts from Sciencedirect...')
-        get_abstracts_elsevier(domains)
+        get_abstracts_elsevier(domain, file_name, to)
 
         print("Requesting CORE for " + domain + " related papers...")
         core.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
@@ -41,22 +41,21 @@ def get_papers(domains, interests, keywords, synonyms, fields, types, since, to,
         project_academic.get_papers(domain, interests, keywords, synonyms, fields, types,  since, to, file_name)
 
 
-def get_abstracts_elsevier(domains):
-    for domain in domains:
-        print('Domain: ' + domain)
-        elsevier.process_raw_papers(domain)
+def get_abstracts_elsevier(domain, file_name, to):
+    print('Domain: ' + domain)
+    elsevier.process_raw_papers(domain, file_name, to)
 
 
-def get_citations():
+def get_citations(file_name, to):
     print("Requesting Semantic Scholar for final papers citations...")
-    semantic_scholar.get_citations()
+    semantic_scholar.get_citations(file_name, to)
 
 
-def preprocess(domains, databases):
+def preprocess(domains, databases, file_name_par, since, to):
     papers = pd.DataFrame()
     for domain in domains:
         for database in databases:
-            file_name = './papers/domains/'+domain.lower().replace(' ', '_') + '_' + database + '.csv'
+            file_name = './papers/domains/' + file_name_par + '_' + domain.lower().replace(' ', '_') + '_' + database + '_' + str(to).replace('-', '') + '.csv'
             if exists(file_name):
                 print(file_name)
                 df = pd.read_csv(file_name)
@@ -168,7 +167,7 @@ def preprocess(domains, databases):
     papers.dropna(subset=['abstract'], inplace=True)
     papers['title'].replace('', np.nan, inplace=True)
     papers.dropna(subset=['title'], inplace=True)
-    with open('./papers/preprocessed_papers.csv', 'a', newline='', encoding=fr) as f:
+    with open('./papers/'+file_name_par+'_preprocessed_papers_' + str(to).replace('-', '_') + '.csv', 'a', newline='', encoding=fr) as f:
         papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
@@ -268,12 +267,14 @@ def parse_dates(dates):
     return new_dates
 
 
-def filter_papers(keywords, to_filter, output_name):
+def filter_papers(keywords, file_name, to):
+    to_filter = './papers/'+file_name+'_preprocessed_papers_' + str(to).replace('-', '_') + '.csv'
     preprocessed_papers = pd.read_csv(to_filter)
     preprocessed_papers.dropna(subset=["abstract"], inplace=True)
     filtered_papers = filter_by_keywords(preprocessed_papers, keywords)
     filtered_papers['type'] = 'filtered'
-    util.save(output_name, filtered_papers, fr)
+    output_file = file_name + '_filtered_papers_' + str(to).replace('-', '_') + '.csv'
+    util.save(output_file, filtered_papers, fr)
 
 
 def filter_by_field(papers, field, keywords):
@@ -291,6 +292,7 @@ def filter_by_field(papers, field, keywords):
 
 
 def filter_by_keywords(papers, keywords):
+    papers = papers.dropna(subset=['abstract'])
     filtered_papers = []
     for keyword in keywords:
         keys = keyword.keys()

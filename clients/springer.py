@@ -43,7 +43,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, 
                 time.sleep(5)
                 global start
                 start = (max_papers * t)
-                req = create_request(parameters)
+                req = create_request(parameters, since, to)
                 raw_papers = client.request(req, 'get', {})
                 if raw_papers != {}:
                     total, papers = process_raw_papers(raw_papers)

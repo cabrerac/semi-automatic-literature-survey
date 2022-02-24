@@ -45,6 +45,7 @@ def plot():
     plt.xticks(rotation=0)
     plt.ylim((0, 4200))
     plt.savefig('preprocessed.png', bbox_inches="tight")
+    print("1. Preprocessed done!")
 
     filtered_papers = pd.read_csv('./papers/filtered_papers.csv')
     series = filtered_papers.groupby(by=['domain']).count()['id']
@@ -61,6 +62,7 @@ def plot():
     plt.xticks(rotation=0)
     plt.ylim((0, 1400))
     plt.savefig('filtered.png', bbox_inches="tight")
+    print("2. Filtered done!")
 
     to_check_papers = pd.read_csv('./papers/to_check_papers.csv')
     series = to_check_papers.groupby(by=['domain']).count()['id']
@@ -77,6 +79,7 @@ def plot():
     plt.xticks(rotation=0)
     plt.ylim((0, 300))
     plt.savefig('to_check.png', bbox_inches="tight")
+    print("3. To check done!")
 
     filtered_by_abstract = pd.read_csv('./papers/filtered_by_abstract.csv')
     series = filtered_by_abstract.groupby(by=['domain']).count()['id']
@@ -93,6 +96,7 @@ def plot():
     plt.xticks(rotation=0)
     plt.ylim((0, 60))
     plt.savefig('filtered_by_abstract.png', bbox_inches="tight")
+    print("4. Filtered by abstract done!")
 
     final_papers = pd.read_csv('./papers/final_papers.csv')
     series = final_papers.groupby(by=['domain', 'type']).count()['id']
@@ -108,6 +112,7 @@ def plot():
     plt.title('5. Manual filter - Full text')
     plt.ylim((0, 35))
     plt.savefig('final_papers.png', bbox_inches="tight")
+    print("5. Final papers done!")
 
     final_papers = pd.read_csv('./papers/final_papers.csv')
     final_papers['publication_date'] = pd.to_datetime(final_papers['publication_date'])
@@ -125,6 +130,7 @@ def plot():
     plt.legend(loc='upper left')
     plt.ylim((0, 20))
     plt.savefig('papers_year.png', bbox_inches="tight")
+    print("6. Papers year done!")
 
     final_papers = pd.read_csv('./papers/final_papers_merged.csv')
     series = final_papers.groupby(by=['domain', 'type']).count()['id']
@@ -140,6 +146,7 @@ def plot():
     plt.title('6. Selected papers')
     plt.ylim((0, 35))
     plt.savefig('final_papers_merged.png', bbox_inches="tight")
+    print("7. Final papers merged done!")
 
     final_papers = pd.read_csv('./papers/final_papers_merged.csv')
     final_papers['publication_date'] = pd.to_datetime(final_papers['publication_date'])
@@ -157,6 +164,7 @@ def plot():
     plt.legend(loc='upper left')
     plt.ylim((0, 25))
     plt.savefig('papers_year.png', bbox_inches="tight")
+    print("8. Final papers year done!")
 
 
 
