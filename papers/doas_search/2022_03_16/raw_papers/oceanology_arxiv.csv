@@ -1,0 +1,142 @@
+id,updated,published,title,summary,database
+http://arxiv.org/abs/2202.05750v2,2022-03-02T15:41:17Z,2022-02-11T16:40:46Z,"Bounded nonlinear forecasts of partially observed geophysical systems
+  with physics-constrained deep learning","The complexity of real-world geophysical systems is often compounded by the
+fact that the observed measurements depend on hidden variables. These latent
+variables include unresolved small scales and/or rapidly evolving processes,
+partially observed couplings, or forcings in coupled systems. This is the case
+in ocean-atmosphere dynamics, for which unknown interior dynamics can affect
+surface observations. The identification of computationally-relevant
+representations of such partially-observed and highly nonlinear systems is thus
+challenging and often limited to short-term forecast applications. Here, we
+investigate the physics-constrained learning of implicit dynamical embeddings,
+leveraging neural ordinary differential equation (NODE) representations. A key
+objective is to constrain their boundedness, which promotes the generalization
+of the learned dynamics to arbitrary initial condition. The proposed
+architecture is implemented within a deep learning framework, and its relevance
+is demonstrated with respect to state-of-the-art schemes for different
+case-studies representative of geophysical dynamics.",arxiv
+http://arxiv.org/abs/2111.01773v1,2021-11-02T17:51:35Z,2021-11-02T17:51:35Z,"Data-Driven System Identification of 6-DoF Ship Motion in Waves with
+  Neural Networks","Critical evaluation and understanding of ship responses in the ocean is
+important for not only the design and engineering of future platforms but also
+the operation and safety of those that are currently deployed. Simulations or
+experiments are typically performed in nominal sea conditions during ship
+design or prior to deployment and the results may not be reflective of the
+instantaneous state of the vessel and the ocean environment while deployed.
+Short-term temporal predictions of ship responses given the current wave
+environment and ship state would enable enhanced decision-making onboard for
+both manned and unmanned vessels. However, the current state-of-the-art in
+numerical hydrodynamic simulation tools are too computationally expensive to be
+employed for real-time ship motion forecasting and the computationally
+efficient tools are too low fidelity to provide accurate responses. A
+methodology is developed with long short-term memory (LSTM) neural networks to
+represent the motions of a free running David Taylor Model Basin (DTMB) 5415
+destroyer operating at 20 knots in Sea State 7 stern-quartering irregular seas.
+Case studies are performed for both course-keeping and turning circle
+scenarios. An estimate of the vessel's encounter frame is made with the
+trajectories observed in the training dataset. Wave elevation time histories
+are given by artificial wave probes that travel with the estimated encounter
+frame and serve as input into the neural network, while the output is the 6-DOF
+temporal ship motion response. Overall, the neural network is able to predict
+the temporal response of the ship due to unseen waves accurately, which makes
+this methodology suitable for system identification and real-time ship motion
+forecasting. The methodology, the dependence of model accuracy on wave probe
+and training data quantity and the estimated encounter frame are all detailed.",arxiv
+http://arxiv.org/abs/2110.05098v1,2021-10-11T09:10:19Z,2021-10-11T09:10:19Z,SurroundNet: Towards Effective Low-Light Image Enhancement,"Although Convolution Neural Networks (CNNs) has made substantial progress in
+the low-light image enhancement task, one critical problem of CNNs is the
+paradox of model complexity and performance. This paper presents a novel
+SurroundNet which only involves less than 150$K$ parameters (about 80-98
+percent size reduction compared to SOTAs) and achieves very competitive
+performance. The proposed network comprises several Adaptive Retinex Blocks
+(ARBlock), which can be viewed as a novel extension of Single Scale Retinex in
+feature space. The core of our ARBlock is an efficient illumination estimation
+function called Adaptive Surround Function (ASF). It can be regarded as a
+general form of surround functions and be implemented by convolution layers. In
+addition, we also introduce a Low-Exposure Denoiser (LED) to smooth the
+low-light image before the enhancement. We evaluate the proposed method on the
+real-world low-light dataset. Experimental results demonstrate that the
+superiority of our submitted SurroundNet in both performance and network
+parameters against State-of-the-Art low-light image enhancement methods. Code
+is available at https: github.com/ouc-ocean-group/SurroundNet.",arxiv
+http://arxiv.org/abs/2110.00661v1,2021-10-01T21:40:10Z,2021-10-01T21:40:10Z,"A Deep Learning Approach To Dead-Reckoning Navigation For Autonomous
+  Underwater Vehicles With Limited Sensor Payloads","This paper presents a deep learning approach to aid dead-reckoning (DR)
+navigation using a limited sensor suite. A Recurrent Neural Network (RNN) was
+developed to predict the relative horizontal velocities of an Autonomous
+Underwater Vehicle (AUV) using data from an IMU, pressure sensor, and control
+inputs. The RNN network is trained using experimental data, where a doppler
+velocity logger (DVL) provided ground truth velocities. The predictions of the
+relative velocities were implemented in a dead-reckoning algorithm to
+approximate north and east positions. The studies in this paper were twofold I)
+Experimental data from a Long-Range AUV was investigated. Datasets from a
+series of surveys in Monterey Bay, California (U.S) were used to train and test
+the RNN network. II) The second study explore datasets generated by a simulated
+autonomous underwater glider. Environmental variables e.g ocean currents were
+implemented in the simulation to reflect real ocean conditions. The proposed
+neural network approach to DR navigation was compared to the on-board
+navigation system and ground truth simulated positions.",arxiv
+http://arxiv.org/abs/2101.02073v1,2021-01-06T14:49:29Z,2021-01-06T14:49:29Z,Shallow-UWnet : Compressed Model for Underwater Image Enhancement,"Over the past few decades, underwater image enhancement has attracted
+increasing amount of research effort due to its significance in underwater
+robotics and ocean engineering. Research has evolved from implementing
+physics-based solutions to using very deep CNNs and GANs. However, these
+state-of-art algorithms are computationally expensive and memory intensive.
+This hinders their deployment on portable devices for underwater exploration
+tasks. These models are trained on either synthetic or limited real world
+datasets making them less practical in real-world scenarios. In this paper we
+propose a shallow neural network architecture, \textbf{Shallow-UWnet} which
+maintains performance and has fewer parameters than the state-of-art models. We
+also demonstrated the generalization of our model by benchmarking its
+performance on combination of synthetic and real-world datasets.",arxiv
+http://arxiv.org/abs/2009.05167v2,2021-09-01T23:01:02Z,2020-09-10T22:44:29Z,Accelerating Real-Time Question Answering via Question Generation,"Although deep neural networks have achieved tremendous success for question
+answering (QA), they are still suffering from heavy computational and energy
+cost for real product deployment. Further, existing QA systems are bottlenecked
+by the encoding time of real-time questions with neural networks, thus
+suffering from detectable latency in deployment for large-volume traffic. To
+reduce the computational cost and accelerate real-time question answering
+(RTQA) for practical usage, we propose to remove all the neural networks from
+online QA systems, and present Ocean-Q (an Ocean of Questions), which
+introduces a new question generation (QG) model to generate a large pool of QA
+pairs offline, then in real time matches an input question with the candidate
+QA pool to predict the answer without question encoding. Ocean-Q can be readily
+deployed in existing distributed database systems or search engine for
+large-scale query usage, and much greener with no additional cost for
+maintaining large neural networks. Experiments on SQuAD(-open) and HotpotQA
+benchmarks demonstrate that Ocean-Q is able to accelerate the fastest
+state-of-the-art RTQA system by 4X times, with only a 3+% accuracy drop.",arxiv
+http://arxiv.org/abs/1910.14540v1,2019-10-31T15:36:34Z,2019-10-31T15:36:34Z,"Team NCTU: Toward AI-Driving for Autonomous Surface Vehicles -- From
+  Duckietown to RobotX","Robotic software and hardware systems of autonomous surface vehicles have
+been developed in transportation, military, and ocean researches for decades.
+Previous efforts in RobotX Challenges 2014 and 2016 facilitates the
+developments for important tasks such as obstacle avoidance and docking. Team
+NCTU is motivated by the AI Driving Olympics (AI-DO) developed by the
+Duckietown community, and adopts the principles to RobotX challenge. With the
+containerization (Docker) and uniformed AI agent (with observations and
+actions), we could better 1) integrate solutions developed in different
+middlewares (ROS and MOOS), 2) develop essential functionalities of from
+simulation (Gazebo) to real robots (either miniaturized or full-sized WAM-V),
+and 3) compare different approaches either from classic model-based or
+learning-based. Finally, we setup an outdoor on-surface platform with
+localization services for evaluation. Some of the preliminary results will be
+presented for the Team NCTU participations of the RobotX competition in Hawaii
+in 2018.",arxiv
+http://arxiv.org/abs/1605.00972v2,2016-05-05T18:28:21Z,2016-05-03T16:36:30Z,"Phase 2: DCL System Using Deep Learning Approaches for Land-based or
+  Ship-based Real-Time Recognition and Localization of Marine Mammals - Machine
+  Learning Detection Algorithms","Overarching goals for this work aim to advance the state of the art for
+detection, classification and localization (DCL) in the field of bioacoustics.
+This goal is primarily achieved by building a generic framework for
+detection-classification (DC) using a fast, efficient and scalable
+architecture, demonstrating the capabilities of this system using on a variety
+of low-frequency mid-frequency cetacean sounds. Two primary goals are to
+develop transferable technologies for detection and classification in, one: the
+area of advanced algorithms, such as deep learning and other methods; and two:
+advanced systems, capable of real-time and archival processing. For each key
+area, we will focus on producing publications from this work and providing
+tools and software to the community where/when possible. Currently massive
+amounts of acoustic data are being collected by various institutions,
+corporations and national defense agencies. The long-term goal is to provide
+technical capability to analyze the data using automatic algorithms for (DC)
+based on machine intelligence. The goal of the automation is to provide
+effective and efficient mechanisms by which to process large acoustic datasets
+for understanding the bioacoustic behaviors of marine mammals. This capability
+will provide insights into the potential ecological impacts and influences of
+anthropogenic ocean sounds. This work focuses on building technologies using a
+maturity model based on DARPA 6.1 and 6.2 processes, for basic and applied
+research, respectively.",arxiv

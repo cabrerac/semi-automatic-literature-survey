@@ -1,0 +1,98 @@
+id,updated,published,title,summary,database
+http://arxiv.org/abs/2202.04224v1,2022-02-09T01:45:12Z,2022-02-09T01:45:12Z,Intelligent Autonomous Intersection Management,"Connected Autonomous Vehicles will make autonomous intersection management a
+reality replacing traditional traffic signal control. Autonomous intersection
+management requires time and speed adjustment of vehicles arriving at an
+intersection for collision-free passing through the intersection. Due to its
+computational complexity, this problem has been studied only when vehicle
+arrival times towards the vicinity of the intersection are known beforehand,
+which limits the applicability of these solutions for real-time deployment. To
+solve the real-time autonomous traffic intersection management problem, we
+propose a reinforcement learning (RL) based multiagent architecture and a novel
+RL algorithm coined multi-discount Q-learning. In multi-discount Q-learning, we
+introduce a simple yet effective way to solve a Markov Decision Process by
+preserving both short-term and long-term goals, which is crucial for
+collision-free speed control. Our empirical results show that our RL-based
+multiagent solution can achieve near-optimal performance efficiently when
+minimizing the travel time through an intersection.",arxiv
+http://arxiv.org/abs/2202.02352v1,2022-02-04T19:20:58Z,2022-02-04T19:20:58Z,"Learning Interpretable, High-Performing Policies for Continuous Control
+  Problems","Gradient-based approaches in reinforcement learning (RL) have achieved
+tremendous success in learning policies for continuous control problems. While
+the performance of these approaches warrants real-world adoption in domains,
+such as in autonomous driving and robotics, these policies lack
+interpretability, limiting deployability in safety-critical and
+legally-regulated domains. Such domains require interpretable and verifiable
+control policies that maintain high performance. We propose Interpretable
+Continuous Control Trees (ICCTs), a tree-based model that can be optimized via
+modern, gradient-based, RL approaches to produce high-performing, interpretable
+policies. The key to our approach is a procedure for allowing direct
+optimization in a sparse decision-tree-like representation. We validate ICCTs
+against baselines across six domains, showing that ICCTs are capable of
+learning interpretable policy representations that parity or outperform
+baselines by up to 33$\%$ in autonomous driving scenarios while achieving a
+$300$x-$600$x reduction in the number of policy parameters against deep
+learning baselines.",arxiv
+http://arxiv.org/abs/2202.00091v1,2022-01-31T21:10:47Z,2022-01-31T21:10:47Z,"Query Efficient Decision Based Sparse Attacks Against Black-Box Deep
+  Learning Models","Despite our best efforts, deep learning models remain highly vulnerable to
+even tiny adversarial perturbations applied to the inputs. The ability to
+extract information from solely the output of a machine learning model to craft
+adversarial perturbations to black-box models is a practical threat against
+real-world systems, such as autonomous cars or machine learning models exposed
+as a service (MLaaS). Of particular interest are sparse attacks. The
+realization of sparse attacks in black-box models demonstrates that machine
+learning models are more vulnerable than we believe. Because these attacks aim
+to minimize the number of perturbed pixels measured by l_0 norm-required to
+mislead a model by solely observing the decision (the predicted label) returned
+to a model query; the so-called decision-based attack setting. But, such an
+attack leads to an NP-hard optimization problem. We develop an evolution-based
+algorithm-SparseEvo-for the problem and evaluate against both convolutional
+deep neural networks and vision transformers. Notably, vision transformers are
+yet to be investigated under a decision-based attack setting. SparseEvo
+requires significantly fewer model queries than the state-of-the-art sparse
+attack Pointwise for both untargeted and targeted attacks. The attack
+algorithm, although conceptually simple, is also competitive with only a
+limited query budget against the state-of-the-art gradient-based whitebox
+attacks in standard computer vision tasks such as ImageNet. Importantly, the
+query efficient SparseEvo, along with decision-based attacks, in general, raise
+new questions regarding the safety of deployed systems and poses new directions
+to study and understand the robustness of machine learning models.",arxiv
+http://arxiv.org/abs/2201.05797v1,2022-01-15T09:05:22Z,2022-01-15T09:05:22Z,"Finding Label and Model Errors in Perception Data With Learned
+  Observation Assertions","ML is being deployed in complex, real-world scenarios where errors have
+impactful consequences. In these systems, thorough testing of the ML pipelines
+is critical. A key component in ML deployment pipelines is the curation of
+labeled training data. Common practice in the ML literature assumes that labels
+are the ground truth. However, in our experience in a large autonomous vehicle
+development center, we have found that vendors can often provide erroneous
+labels, which can lead to downstream safety risks in trained models.
+  To address these issues, we propose a new abstraction, learned observation
+assertions, and implement it in a system called Fixy. Fixy leverages existing
+organizational resources, such as existing (possibly noisy) labeled datasets or
+previously trained ML models, to learn a probabilistic model for finding errors
+in human- or model-generated labels. Given user-provided features and these
+existing resources, Fixy learns feature distributions that specify likely and
+unlikely values (e.g., that a speed of 30mph is likely but 300mph is unlikely).
+It then uses these feature distributions to score labels for potential errors.
+We show that FIxy can automatically rank potential errors in real datasets with
+up to 2$\times$ higher precision compared to recent work on model assertions
+and standard techniques such as uncertainty sampling.",arxiv
+http://arxiv.org/abs/2201.05518v1,2022-01-14T15:41:05Z,2022-01-14T15:41:05Z,UGV-UAV Object Geolocation in Unstructured Environments,"A robotic system of multiple unmanned ground vehicles (UGVs) and unmanned
+aerial vehicles (UAVs) has the potential for advancing autonomous object
+geolocation performance. Much research has focused on algorithmic improvements
+on individual components, such as navigation, motion planning, and perception.
+In this paper, we present a UGV-UAV object detection and geolocation system,
+which performs perception, navigation, and planning autonomously in real scale
+in unstructured environment. We designed novel sensor pods equipped with
+multispectral (visible, near-infrared, thermal), high resolution (181.6 Mega
+Pixels), stereo (near-infrared pair), wide field of view (192 degree HFOV)
+array. We developed a novel on-board software-hardware architecture to process
+the high volume sensor data in real-time, and we built a custom AI subsystem
+composed of detection, tracking, navigation, and planning for autonomous
+objects geolocation in real-time.
+  This research is the first real scale demonstration of such high speed data
+processing capability. Our novel modular sensor pod can boost relevant computer
+vision and machine learning research. Our novel hardware-software architecture
+is a solid foundation for system-level and component-level research. Our system
+is validated through data-driven offline tests as well as a series of field
+tests in unstructured environments. We present quantitative results as well as
+discussions on key robotic system level challenges which manifest when we build
+and test the system. This system is the first step toward a UGV-UAV cooperative
+reconnaissance system in the future.",arxiv

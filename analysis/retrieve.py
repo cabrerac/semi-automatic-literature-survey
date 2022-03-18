@@ -1,6 +1,7 @@
 import pandas as pd
 import re
 import numpy as np
+from datetime import date
 from clients import arxiv
 from clients import ieeexplore
 from clients import springer
@@ -14,48 +15,49 @@ from os.path import exists
 fr = 'utf-8'
 
 
-def get_papers(domains, interests, keywords, synonyms, fields, types, file_name, since, to):
+def get_papers(domains, interests, keywords, synonyms, fields, types, file_name, dates, since, to, search_date):
     for domain in domains:
         print("Requesting ArXiv for " + domain + " related papers...")
-        arxiv.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
+        arxiv.get_papers(domain, interests, keywords, synonyms, fields, types, dates, since, to, file_name, search_date)
 
         print("Requesting Springer for " + domain + " related papers...")
-        springer.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
+        springer.get_papers(domain, interests, keywords, synonyms, fields, types, dates, since, to, file_name, search_date)
 
         print("Requesting IEEE Xplore for " + domain + " related papers...")
-        ieeexplore.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
+        ieeexplore.get_papers(domain, interests, keywords, synonyms, fields, types, dates, since, to, file_name, search_date)
 
         print("Requesting Elsevier for " + domain + " related papers...")
-        elsevier.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
+        elsevier.get_papers(domain, interests, keywords, synonyms, fields, types, dates, since, to, file_name, search_date)
         # 2.1 Getting abstracts from elsevier
         print('2.1 Getting abstracts from Sciencedirect...')
-        get_abstracts_elsevier(domain, file_name, to)
+        get_abstracts_elsevier(domain, file_name, to, search_date)
 
         print("Requesting CORE for " + domain + " related papers...")
-        core.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
+        core.get_papers(domain, interests, keywords, synonyms, fields, types, dates, since, to, file_name, search_date)
 
         print("Requesting Semantic Scholar for " + domain + " related papers...")
-        semantic_scholar.get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name)
+        semantic_scholar.get_papers(domain, interests, keywords, synonyms, fields, types, dates, since, to, file_name, search_date)
 
         print("Requesting Microsoft Research for " + domain + " related papers...")
-        project_academic.get_papers(domain, interests, keywords, synonyms, fields, types,  since, to, file_name)
+        project_academic.get_papers(domain, interests, keywords, synonyms, fields, types, dates,  since, to, file_name, search_date)
 
 
-def get_abstracts_elsevier(domain, file_name, to):
+def get_abstracts_elsevier(domain, file_name, to, search_date):
     print('Domain: ' + domain)
-    elsevier.process_raw_papers(domain, file_name, to)
+    elsevier.process_raw_papers(domain, file_name, to, search_date)
 
 
-def get_citations(file_name, to):
-    print("Requesting Semantic Scholar for final papers citations...")
-    semantic_scholar.get_citations(file_name, to)
+def get_citations(folder_name, search_date, step):
+    print("Requesting Semantic Scholar for papers citations...")
+    semantic_scholar.get_citations(folder_name, search_date, step)
 
 
-def preprocess(domains, databases, file_name_par, since, to):
+def preprocess(domains, databases, folder_name, search_date, since, to, step):
     papers = pd.DataFrame()
     for domain in domains:
         for database in databases:
-            file_name = './papers/domains/' + file_name_par + '_' + domain.lower().replace(' ', '_') + '_' + database + '_' + str(to).replace('-', '') + '.csv'
+            file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' + \
+                        domain.lower().replace(' ', '_') + '_' + database.lower().replace('-', '_') + '.csv'
             if exists(file_name):
                 print(file_name)
                 df = pd.read_csv(file_name)
@@ -132,7 +134,11 @@ def preprocess(domains, databases, file_name_par, since, to):
                     papers = papers.append(papers_core)
                 if database == 'semantic-scholar':
                     df = df.drop_duplicates('paperId')
-                    dates = df['year']
+                    df_dates = df['year']
+                    dates = []
+                    for df_date in df_dates:
+                        df_date = str(df_date).split('.')[0]
+                        dates.append(df_date)
                     df['publication_date'] = parse_dates(dates)
                     df['id'] = getIds(df, database)
                     papers_semantic = pd.DataFrame(
@@ -167,15 +173,24 @@ def preprocess(domains, databases, file_name_par, since, to):
     papers.dropna(subset=['abstract'], inplace=True)
     papers['title'].replace('', np.nan, inplace=True)
     papers.dropna(subset=['title'], inplace=True)
-    with open('./papers/'+file_name_par+'_preprocessed_papers_' + str(to).replace('-', '_') + '.csv', 'a', newline='', encoding=fr) as f:
+    with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
+              '_preprocessed_papers.csv', 'a+', newline='', encoding=fr) as f:
         papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
 def getIds(df, database):
     ids = []
     for index, row in df.iterrows():
-        if len(str(row['doi']).strip()) > 0:
-            ids.append(str(row['doi']))
+        if 'doi' in row:
+            if len(str(row['doi']).strip()) > 0:
+                ids.append(str(row['doi']))
+            else:
+                if database == 'core':
+                    ids.append(str(row['id']))
+                if database == 'semantic-scholar':
+                    ids.append(str(row['paperId']))
+                if database == 'project-academic':
+                    ids.append(database + '-' + str(index))
         else:
             if database == 'core':
                 ids.append(str(row['id']))
@@ -196,8 +211,10 @@ def parse_dates(dates):
         date = date.split('T')[0]
         if date == '10000-01-01' or date == '0':
             date = '2000'
+        if date == '2021.0':
+            date = '2021'
         if len(date) == 4:
-            if int(date) < 1900 or int(date) > 2021:
+            if int(date) < 1900 or int(date) > 2022:
                 date = '2000'
             date = '01/Jan/' + date
         if re.match('[A-z]+. [0-9]+, [0-9]+', date):
@@ -267,14 +284,16 @@ def parse_dates(dates):
     return new_dates
 
 
-def filter_papers(keywords, file_name, to):
-    to_filter = './papers/'+file_name+'_preprocessed_papers_' + str(to).replace('-', '_') + '.csv'
+def filter_papers(keywords, folder_name, search_date, step):
+    to_filter = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + \
+                '_preprocessed_papers.csv';
     preprocessed_papers = pd.read_csv(to_filter)
     preprocessed_papers.dropna(subset=["abstract"], inplace=True)
     filtered_papers = filter_by_keywords(preprocessed_papers, keywords)
     filtered_papers['type'] = 'filtered'
-    output_file = file_name + '_filtered_papers_' + str(to).replace('-', '_') + '.csv'
-    util.save(output_file, filtered_papers, fr)
+    with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
+              '_syntactic_filtered_papers.csv', 'a+', newline='', encoding=fr) as f:
+        filtered_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
 def filter_by_field(papers, field, keywords):
@@ -294,19 +313,37 @@ def filter_by_field(papers, field, keywords):
 def filter_by_keywords(papers, keywords):
     papers = papers.dropna(subset=['abstract'])
     filtered_papers = []
+    if len(keywords) == 0:
+        papers = papers.drop_duplicates('title')
+        papers['id'] = list(range(1, len(papers) + 1))
+        return papers
     for keyword in keywords:
-        keys = keyword.keys()
-        for key in keys:
-            terms = keyword[key]
-            s = ''
-            for term in terms:
-                s = s + r'(?:\s|^)' + term.replace('-', '') + '(?:\s|$)|'
-            s = s[:-1]
-            terms_papers = papers.loc[papers['abstract'].str.contains(s)]
+        if not isinstance(keyword, str):
+            keys = keyword.keys()
+            for key in keys:
+                terms = keyword[key]
+                s = ''
+                for term in terms:
+                    s = s + r'(?:\s|^)' + term.replace('-', '').lower() + '(?:\s|$)|'
+                s = s[:-1]
+                """papers['abstract_lower'] = papers['abstract'].str.lower()
+                papers['abstract_lower'] = papers['abstract_lower'].str.replace('-', ' ')"""
+                terms_papers = papers.loc[papers['abstract'].str.contains(s)]
+                if len(filtered_papers) == 0:
+                    filtered_papers = terms_papers.loc[terms_papers['abstract'].str.contains(r'(?:\s|^)' + key.replace('-', '').lower() + '(?:\s|$)')]
+                    #filtered_papers = terms_papers.loc[terms_papers['abstract_lower'].str.contains(key.replace('-', ' ').lower())]
+                else:
+                    filtered_papers = filtered_papers.append(terms_papers.loc[terms_papers['abstract'].str.contains(r'(?:\s|^)' + key.replace('-', '').lower() + '(?:\s|$)')])
+                    #filtered_papers = filtered_papers.append(terms_papers.loc[terms_papers['abstract_lower'].str.contains(key.replace('-', ' ').lower())])
+        else:
+            #papers['abstract_lower'] = papers['abstract'].str.lower()
             if len(filtered_papers) == 0:
-                filtered_papers = terms_papers.loc[terms_papers['abstract'].str.contains(r'(?:\s|^)' + key.replace('-', '') + '(?:\s|$)')]
+                #filtered_papers = papers.loc[papers['abstract_lower'].str.contains(keyword.lower())]
+                filtered_papers = papers.loc[papers['abstract'].str.contains(keyword.lower())]
             else:
-                filtered_papers = filtered_papers.append(terms_papers.loc[terms_papers['abstract'].str.contains(r'(?:\s|^)' + key.replace('-', '') + '(?:\s|$)')])
+                #filtered_papers = filtered_papers.append(papers.loc[papers['abstract_lower'].str.contains(keyword.lower())])
+                filtered_papers = filtered_papers.append(papers.loc[papers['abstract'].str.contains(keyword.lower())])
+    #filtered_papers = filtered_papers.drop(['abstract_lower'], axis=1)
     filtered_papers = filtered_papers.drop_duplicates('title')
     filtered_papers['id'] = list(range(1, len(filtered_papers) + 1))
     return filtered_papers

@@ -1,18 +1,16 @@
 import pandas as pd
-import numpy as np
 import textacy
 import networkx as nx
-import matplotlib.pyplot as plt
-from itertools import count
 
 
 from analysis import util
 
-f = 'utf-8'
+fr = 'utf-8'
 
 
-def get_to_check_papers(keywords, file_name, to):
-    papers_file = './papers/'+file_name + '_filtered_papers_' + str(to).replace('-', '_') + '.csv'
+def get_to_check_papers(keywords, folder_name, search_date, step):
+    papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + \
+                  '_syntactic_filtered_papers.csv'
     filtered_papers = pd.read_csv(papers_file)
     sentences_abstract = get_sentences(keywords, filtered_papers)
     to_check = []
@@ -27,18 +25,22 @@ def get_to_check_papers(keywords, file_name, to):
     to_check_papers['type'] = 'to_check'
     to_check_papers['status'] = 'unknown'
     to_check_papers['id'] = list(range(1, len(to_check_papers) + 1))
-    output_file = file_name + '_to_check_papers_' + str(to).replace('-', '_') + '.csv'
-    util.save(output_file, to_check_papers, f)
+    with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
+              '_semantic_filtered_papers.csv', 'a+', newline='', encoding=fr) as f:
+        to_check_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
 def get_sentences(keywords, papers):
     sentences_abstract = {}
     words = []
     for keyword in keywords:
-        for key, terms in keyword.items():
-            for term in terms:
-                if term not in words:
-                    words.append(term)
+        if not isinstance(keyword, str):
+            for key, terms in keyword.items():
+                for term in terms:
+                    if term not in words:
+                        words.append(term)
+        else:
+            words.append(keyword)
     for index, paper in papers.iterrows():
         id = paper['id']
         abstract = paper['abstract']

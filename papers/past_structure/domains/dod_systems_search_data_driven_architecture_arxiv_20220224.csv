@@ -1,0 +1,961 @@
+id,updated,published,title,summary,database
+http://arxiv.org/abs/2202.10565v1,2022-02-21T22:46:49Z,2022-02-21T22:46:49Z,"T-METASET: Task-Aware Generation of Metamaterial Datasets by
+  Diversity-Based Active Learning","Inspired by the recent success of deep learning in diverse domains,
+data-driven metamaterials design has emerged as a compelling design paradigm to
+unlock the potential of multiscale architecture. However, existing
+model-centric approaches lack principled methodologies dedicated to
+high-quality data generation. Resorting to space-filling design in shape
+descriptor space, existing metamaterial datasets suffer from property
+distributions that are either highly imbalanced or at odds with design tasks of
+interest. To this end, we propose t-METASET: an intelligent data acquisition
+framework for task-aware dataset generation. We seek a solution to a
+commonplace yet frequently overlooked scenario at early design stages: when a
+massive ($~\sim O(10^4)$) shape library has been prepared with no properties
+evaluated. The key idea is to exploit a data-driven shape descriptor learned
+from generative models, fit a sparse regressor as the start-up agent, and
+leverage diversity-related metrics to drive data acquisition to areas that help
+designers fulfill design goals. We validate the proposed framework in three
+hypothetical deployment scenarios, which encompass general use, task-aware use,
+and tailorable use. Two large-scale shape-only mechanical metamaterial datasets
+are used as test datasets. The results demonstrate that t-METASET can
+incrementally grow task-aware datasets. Applicable to general design
+representations, t-METASET can boost future advancements of not only
+metamaterials but data-driven design in other domains.",arxiv
+http://arxiv.org/abs/2202.07448v1,2022-02-04T02:01:02Z,2022-02-04T02:01:02Z,"Towards a Unified Pandemic Management Architecture: Survey, Challenges
+  and Future Directions","The pandemic caused by SARS-CoV-2 has left an unprecedented impact on health,
+economy and society worldwide. Emerging strains are making pandemic management
+increasingly challenging. There is an urge to collect epidemiological,
+clinical, and physiological data to make an informed decision on mitigation
+measures. Advances in the Internet of Things (IoT) and edge computing provide
+solutions for pandemic management through data collection and intelligent
+computation. While existing data-driven architectures attempt to automate
+decision-making, they do not capture the multifaceted interaction among
+computational models, communication infrastructure, and the generated data. In
+this paper, we perform a survey of the existing approaches for pandemic
+management, including online data repositories and contact-tracing
+applications. We then envision a unified pandemic management architecture that
+leverages the IoT and edge computing to automate recommendations on vaccine
+distribution, dynamic lockdown, mobility scheduling and pandemic prediction. We
+elucidate the flow of data among the layers of the architecture, namely, cloud,
+edge and end device layers. Moreover, we address the privacy implications,
+threats, regulations, and existing solutions that may be adapted to optimize
+the utility of health data with security guarantees. The paper ends with a
+lowdown on the limitations of the architecture and research directions to
+enhance its practicality.",arxiv
+http://arxiv.org/abs/2201.11289v1,2022-01-27T02:53:02Z,2022-01-27T02:53:02Z,"High throughput data-driven design of laser crystallized 2D MoS2
+  chemical sensors","High throughput characterization and processing techniques are becoming
+increasingly necessary to navigate multivariable, data-driven design challenges
+for sensors and electronic devices. For two-dimensional materials, device
+performance is highly dependent upon a vast array of material properties
+including number of layers, lattice strain, carrier concentration, defect
+density, and grain structure. In this work, laser-crystallization was used to
+locally pattern and transform hundreds of regions of amorphous MoS2 thin films
+into 2D 2H-MoS2. A high throughput Raman spectroscopy approach was subsequently
+used to assess the process-dependent structural and compositional variations
+for each illuminated region, yielding over 5500 distinct non-resonant,
+resonant, and polarized Raman spectra. The rapid generation of a comprehensive
+library of structural and compositional data elucidated important trends
+between structure-property-processing relationships involving
+laser-crystallized MoS2, including the relationships between grain size, grain
+orientation, and intrinsic strain. Moreover, extensive analysis of
+structure/property relationships allowed for intelligent design, and evaluation
+of major contributions to, device performance in MoS2 chemical sensors. In
+particular, it is found that sensor performance is strongly dependent on the
+orientation of the MoS2 grains relative to the crystal plane.",arxiv
+http://arxiv.org/abs/2201.10459v1,2022-01-25T17:02:07Z,2022-01-25T17:02:07Z,"FRAMED: Data-Driven Structural Performance Analysis of
+  Community-Designed Bicycle Frames","This paper presents a data-driven analysis of the structural performance of
+4500 community-designed bicycle frames. We present FRAMED -- a parametric
+dataset of bicycle frames based on bicycles designed by bicycle practitioners
+from across the world. To support our data-driven approach, we also provide a
+dataset of structural performance values such as weight, displacements under
+load, and safety factors for all the bicycle frame designs. By exploring a
+diverse design space of frame design parameters and a set of ten competing
+design objectives, we present an automated way to analyze the structural
+performance of bicycle frames. Our structural simulations are validated against
+physical experimentation on bicycle frames. Through our analysis, we highlight
+overall trends in bicycle frame designs created by community members, study
+several bicycle frames under different loading conditions, identify
+non-dominated design candidates that perform well on multiple objectives, and
+explore correlations between structural objectives. Our analysis shows that
+over 75\% of bicycle frames created by community members are infeasible,
+motivating the need for AI agents to support humans in designing bicycles. This
+work aims to simultaneously serve researchers focusing on bicycle design as
+well as researchers focusing on the development of data-driven design
+algorithms, such as surrogate models and Deep Generative Methods. The dataset
+and code are provided at http://decode.mit.edu/projects/framed/.",arxiv
+http://arxiv.org/abs/2112.12664v1,2021-12-23T15:58:38Z,2021-12-23T15:58:38Z,Data-driven design of safe control for polynomial systems,"We consider the problem of designing an invariant set using only a finite set
+of input-state data collected from an unknown polynomial system in continuous
+time. We consider noisy data, i.e., corrupted by an unknown-but-bounded
+disturbance. We derive a data-dependent sum-of-squares program that enforces
+invariance of a set and also optimizes the size of the invariant set while
+keeping it within a set of user-defined safety constraints; the solution of
+this program directly provides a polynomial invariant set and a state-feedback
+controller. We numerically test the design on a system of two platooning cars.",arxiv
+http://arxiv.org/abs/2202.03578v1,2021-12-21T16:44:13Z,2021-12-21T16:44:13Z,Data driven design of optical resonators,"Optical devices lie at the heart of most of the technology we see around us.
+When one actually wants to make such an optical device, one can predict its
+optical behavior using computational simulations of Maxwell's equations. If one
+then asks what the optimal design would be in order to obtain a certain optical
+behavior, the only way to go further would be to try out all of the possible
+designs and compute the electromagnetic spectrum they produce. When there are
+many design parameters, this brute force approach quickly becomes too
+computationally expensive. We therefore need other methods to create optimal
+optical devices. An alternative to the brute force approach is inverse design.
+In this paradigm, one starts from the desired optical response of a material
+and then determines the design parameters that are needed to obtain this
+optical response. There are many algorithms known in the literature that
+implement this inverse design. Some of the best performing, recent approaches
+are based on Deep Learning. The central idea is to train a neural network to
+predict the optical response for given design parameters. Since neural networks
+are completely differentiable, we can compute gradients of the response with
+respect to the design parameters. We can use these gradients to update the
+design parameters and get an optical response closer to the one we want. This
+allows us to obtain an optimal design much faster compared to the brute force
+approach. In my thesis, I use Deep Learning for the inverse design of the
+Fabry-P\'erot resonator. This system can be described fully analytically and is
+therefore ideal to study.",arxiv
+http://arxiv.org/abs/2112.08268v1,2021-12-15T17:02:07Z,2021-12-15T17:02:07Z,"Prescriptive Machine Learning for Automated Decision Making: Challenges
+  and Opportunities","Recent applications of machine learning (ML) reveal a noticeable shift from
+its use for predictive modeling in the sense of a data-driven construction of
+models mainly used for the purpose of prediction (of ground-truth facts) to its
+use for prescriptive modeling. What is meant by this is the task of learning a
+model that stipulates appropriate decisions about the right course of action in
+real-world scenarios: Which medical therapy should be applied? Should this
+person be hired for the job? As argued in this article, prescriptive modeling
+comes with new technical conditions for learning and new demands regarding
+reliability, responsibility, and the ethics of decision making. Therefore, to
+support the data-driven design of decision-making agents that act in a rational
+but at the same time responsible manner, a rigorous methodological foundation
+of prescriptive ML is needed. The purpose of this short paper is to elaborate
+on specific characteristics of prescriptive ML and to highlight some key
+challenges it implies. Besides, drawing connections to other branches of
+contemporary AI research, the grounding of prescriptive ML in a (generalized)
+decision-theoretic framework is advocated.",arxiv
+http://arxiv.org/abs/2110.09005v1,2021-10-18T04:04:09Z,2021-10-18T04:04:09Z,Unsupervised Learned Kalman Filtering,"In this paper we adapt KalmanNet, which is a recently pro-posed deep neural
+network (DNN)-aided system whose architecture follows the operation of the
+model-based Kalman filter (KF), to learn its mapping in an unsupervised manner,
+i.e., without requiring ground-truth states. The unsupervised adaptation is
+achieved by exploiting the hybrid model-based/data-driven architecture of
+KalmanNet, which internally predicts the next observation as the KF does. These
+internal features are then used to compute the loss rather than the state
+estimate at the output of the system. With the capability of unsupervised
+learning, one can use KalmanNet not only to track the hidden state, but also to
+adapt to variations in the state space (SS) model. We numerically demonstrate
+that when the noise statistics are unknown, unsupervised KalmanNet achieves a
+similar performance to KalmanNet with supervised learning. We also show that we
+can adapt a pre-trained KalmanNet to changing SS models without providing
+additional data thanks to the unsupervised capabilities.",arxiv
+http://arxiv.org/abs/2109.11658v1,2021-09-23T21:42:07Z,2021-09-23T21:42:07Z,"Relaxation approach for learning regularizers by neural networks for a
+  class of optimal control problems","The present paper deals with the data-driven design of regularizers in the
+form of artificial nerual networks, for solving inverse problems formulated as
+optimal control problems. These regularizers aim at improving accuracy,
+wellposedness or compensating uncertainties for a class of optimal control
+problems (inner-problems). Parameterized as neural networks, their weights are
+chosen in order to reduce a misfit between data and observations of the state
+solution of the inner-optimal control problems. Learning these weights
+constitutes the outer-problem. Based on necessary first-order optimality
+conditions for the inner-problems, a relaxation approach is proposed in order
+to implement efficient solving of the inner-problems, namely the forward
+operator of the outer-problem. Optimality conditions are derived for the
+latter, and numerical illustrations show the feasibility of the relaxation
+approach, first for rediscovering standard $L^2$-regularizers, and next for
+designing regularizers that compensate unknown noise on the observed state of
+the inner-problem.",arxiv
+http://arxiv.org/abs/2109.10798v1,2021-09-22T15:40:11Z,2021-09-22T15:40:11Z,Data-Driven Design of Novel Halide Perovskite Alloys,"The great tunability of the properties of halide perovskites presents new
+opportunities for optoelectronic applications as well as significant challenges
+associated with exploring combinatorial chemical spaces. In this work, we
+develop a framework powered by high-throughput computations and machine
+learning for the design and prediction of mixed cation halide perovskite
+alloys. In a chemical space of ABX$_{3}$ perovskites with a selected set of
+options for A, B, and X atoms, pseudo-cubic structures of compounds with B-site
+mixing are simulated using density functional theory (DFT) and several
+properties are computed, including stability, lattice constant, band gap,
+vacancy formation energy, refractive index, and optical absorption spectrum,
+using both semi-local and hybrid functionals. Neural networks (NN) are used to
+train predictive models for every property using tabulated elemental properties
+of A, B, and X site atoms as descriptors. Starting from the DFT dataset of 229
+points, we use the trained NN models to predict the structural, energetic,
+electronic and optical properties of a complete dataset of 17,955 compounds,
+and perform high-throughput screening in terms of stability, band gap and
+defect tolerance, to obtain 574 promising compounds that are ranked as
+potential absorbers according to their photovoltaic figure of merit.
+Compositional trends in the screened set of attractive mixed cation halide
+perovskites are revealed and additional computations are performed on selected
+compounds. The data-driven design framework developed here is promising for
+designing novel mixed compositions and can be extended to a wider perovskite
+chemical space in terms of A, B, and X atoms, different kinds of mixing at the
+A, B, or X sites, non-cubic phases, and other properties of interest.",arxiv
+http://arxiv.org/abs/2108.13178v1,2021-08-04T13:06:36Z,2021-08-04T13:06:36Z,"Black-Box and Modular Meta-Learning for Power Control via Random Edge
+  Graph Neural Networks","In this paper, we consider the problem of power control for a wireless
+network with an arbitrarily time-varying topology, including the possible
+addition or removal of nodes. A data-driven design methodology that leverages
+graph neural networks (GNNs) is adopted in order to efficiently parametrize the
+power control policy mapping the channel state information (CSI) to transmit
+powers. The specific GNN architecture, known as random edge GNN (REGNN),
+defines a non-linear graph convolutional filter whose spatial weights are tied
+to the channel coefficients. While prior work assumed a joint training approach
+whereby the REGNN-based policy is shared across all topologies, this paper
+targets adaptation of the power control policy based on limited CSI data
+regarding the current topology. To this end, we propose both black-box and
+modular meta-learning techniques. Black-box meta-learning optimizes a
+general-purpose adaptation procedure via (stochastic) gradient descent, while
+modular meta-learning finds a set of reusable modules that can form components
+of a solution for any new network topology. Numerical results validate the
+benefits of meta-learning for power control problems over joint training
+schemes, and demonstrate the advantages of modular meta-learning when data
+availability is extremely limited.",arxiv
+http://arxiv.org/abs/2107.13147v2,2021-12-07T02:24:27Z,2021-07-28T03:14:44Z,Mechanical Cloak via Data-Driven Aperiodic Metamaterial Design,"Mechanical cloaks are materials engineered to manipulate the elastic response
+around objects to make them indistinguishable from their homogeneous
+surroundings. Typically, methods based on material-parameter transformations
+are used to design optical, thermal and electric cloaks. However, they are not
+applicable in designing mechanical cloaks, since continuum-mechanics equations
+are not form-invariant under general coordinate transformations. As a result,
+existing design methods for mechanical cloaks have so far been limited to a
+narrow selection of voids with simple shapes. To address this challenge, we
+present a systematic, data-driven design approach to create mechanical cloaks
+composed of aperiodic metamaterials using a large pre-computed unit cell
+database. Our method is flexible to allow the design of cloaks with various
+boundary conditions, multiple loadings, different shapes and numbers of voids,
+and different homogeneous surroundings. It enables a concurrent optimization of
+both topology and properties distribution of the cloak. Compared to
+conventional fixed-shape solutions, this results in an overall better cloaking
+performance, and offers unparalleled versatility. Experimental measurements on
+3D-printed structures further confirm the validity of the proposed approach.
+Our research illustrates the benefits of data-driven approaches in quickly
+responding to new design scenarios and resolving the computational challenge
+associated with multiscale designs of functional structures. It could be
+generalized to accommodate other applications that require heterogeneous
+property distribution, such as soft robots and implants design.",arxiv
+http://arxiv.org/abs/2107.02968v2,2021-10-25T23:03:20Z,2021-07-07T01:30:36Z,Deep Extrapolation for Attribute-Enhanced Generation,"Attribute extrapolation in sample generation is challenging for deep neural
+networks operating beyond the training distribution. We formulate a new task
+for extrapolation in sequence generation, focusing on natural language and
+proteins, and propose GENhance, a generative framework that enhances attributes
+through a learned latent space. Trained on movie reviews and a computed protein
+stability dataset, GENhance can generate strongly-positive text reviews and
+highly stable protein sequences without being exposed to similar data during
+training. We release our benchmark tasks and models to contribute to the study
+of generative modeling extrapolation and data-driven design in biology and
+chemistry.",arxiv
+http://arxiv.org/abs/2106.14500v2,2021-06-30T19:59:45Z,2021-06-28T09:28:58Z,"Learning to Sample: Data-Driven Sampling and Reconstruction of FRI
+  Signals","Finite-rate-of-innovation (FRI) signals are ubiquitous in applications such
+as radar, ultrasound, and time of flight imaging. Due to their finite degrees
+of freedom, FRI signals can be sampled at sub-Nyquist rates using appropriate
+sampling kernels and reconstructed using sparse-recovery algorithms. Typically,
+Fourier samples of the FRI signals are used for reconstruction. The
+reconstruction quality depends on the choice of Fourier samples and recovery
+method. In this paper, we consider to jointly optimize the choice of Fourier
+samples and reconstruction parameters. Our framework is a combination of a
+greedy subsampling algorithm and a learning-based sparse recovery method.
+Unlike existing techniques, the proposed algorithm can flexibly handle changes
+in the sampling rate and does not suffer from differentiability issues during
+training. Importantly, exact knowledge of the FRI pulse is not required.
+Numerical results show that, for a given number of samples, the proposed joint
+design leads to lower reconstruction error for FRI signals compared to
+independent data-driven design methods for both noisy and clean samples. Our
+learning to sample approach can be readily applied to other sampling setups as
+well including compressed sensing problems.",arxiv
+http://arxiv.org/abs/2106.15356v2,2021-06-30T01:59:01Z,2021-06-26T02:17:23Z,"Scalable Gaussian Processes for Data-Driven Design using Big Data with
+  Categorical Factors","Scientific and engineering problems often require the use of artificial
+intelligence to aid understanding and the search for promising designs. While
+Gaussian processes (GP) stand out as easy-to-use and interpretable learners,
+they have difficulties in accommodating big datasets, categorical inputs, and
+multiple responses, which has become a common challenge for a growing number of
+data-driven design applications. In this paper, we propose a GP model that
+utilizes latent variables and functions obtained through variational inference
+to address the aforementioned challenges simultaneously. The method is built
+upon the latent variable Gaussian process (LVGP) model where categorical
+factors are mapped into a continuous latent space to enable GP modeling of
+mixed-variable datasets. By extending variational inference to LVGP models, the
+large training dataset is replaced by a small set of inducing points to address
+the scalability issue. Output response vectors are represented by a linear
+combination of independent latent functions, forming a flexible kernel
+structure to handle multiple responses that might have distinct behaviors.
+Comparative studies demonstrate that the proposed method scales well for large
+datasets with over 10^4 data points, while outperforming state-of-the-art
+machine learning methods without requiring much hyperparameter tuning. In
+addition, an interpretable latent space is obtained to draw insights into the
+effect of categorical factors, such as those associated with building blocks of
+architectures and element choices in metamaterial and materials design. Our
+approach is demonstrated for machine learning of ternary oxide materials and
+topology optimization of a multiscale compliant mechanism with aperiodic
+microstructures and multiple materials.",arxiv
+http://arxiv.org/abs/2106.01592v1,2021-06-03T04:35:34Z,2021-06-03T04:35:34Z,Data-Driven Design-by-Analogy: State of the Art and Future Directions,"Design-by-Analogy (DbA) is a design methodology wherein new solutions,
+opportunities or designs are generated in a target domain based on inspiration
+drawn from a source domain; it can benefit designers in mitigating design
+fixation and improving design ideation outcomes. Recently, the increasingly
+available design databases and rapidly advancing data science and artificial
+intelligence technologies have presented new opportunities for developing
+data-driven methods and tools for DbA support. In this study, we survey
+existing data-driven DbA studies and categorize individual studies according to
+the data, methods, and applications in four categories, namely, analogy
+encoding, retrieval, mapping, and evaluation. Based on both nuanced organic
+review and structured analysis, this paper elucidates the state of the art of
+data-driven DbA research to date and benchmarks it with the frontier of data
+science and AI research to identify promising research opportunities and
+directions for the field. Finally, we propose a future conceptual data-driven
+DbA system that integrates all propositions.",arxiv
+http://arxiv.org/abs/2105.00459v1,2021-05-02T12:43:10Z,2021-05-02T12:43:10Z,"Fast Power Control Adaptation via Meta-Learning for Random Edge Graph
+  Neural Networks","Power control in decentralized wireless networks poses a complex stochastic
+optimization problem when formulated as the maximization of the average sum
+rate for arbitrary interference graphs. Recent work has introduced data-driven
+design methods that leverage graph neural network (GNN) to efficiently
+parametrize the power control policy mapping channel state information (CSI) to
+the power vector. The specific GNN architecture, known as random edge GNN
+(REGNN), defines a non-linear graph convolutional architecture whose spatial
+weights are tied to the channel coefficients, enabling a direct adaption to
+channel conditions. This paper studies the higher-level problem of enabling
+fast adaption of the power control policy to time-varying topologies. To this
+end, we apply first-order meta-learning on data from multiple topologies with
+the aim of optimizing for a few-shot adaptation to new network configurations.",arxiv
+http://arxiv.org/abs/2104.02545v2,2021-04-13T05:22:04Z,2021-04-06T14:36:33Z,"Data-driven Design of Context-aware Monitors for Hazard Prediction in
+  Artificial Pancreas Systems","Medical Cyber-physical Systems (MCPS) are vulnerable to accidental or
+malicious faults that can target their controllers and cause safety hazards and
+harm to patients. This paper proposes a combined model and data-driven approach
+for designing context-aware monitors that can detect early signs of hazards and
+mitigate them in MCPS. We present a framework for formal specification of
+unsafe system context using Signal Temporal Logic (STL) combined with an
+optimization method for patient-specific refinement of STL formulas based on
+real or simulated faulty data from the closed-loop system for the generation of
+monitor logic. We evaluate our approach in simulation using two
+state-of-the-art closed-loop Artificial Pancreas Systems (APS). The results
+show the context-aware monitor achieves up to 1.4 times increase in average
+hazard prediction accuracy (F1-score) over several baseline monitors, reduces
+false-positive and false-negative rates, and enables hazard mitigation with a
+54% success rate while decreasing the average risk for patients.",arxiv
+http://arxiv.org/abs/2103.05844v3,2021-08-17T21:30:38Z,2021-03-10T03:12:32Z,"BIKED: A Dataset for Computational Bicycle Design with Machine Learning
+  Benchmarks","In this paper, we present ""BIKED,"" a dataset comprised of 4500 individually
+designed bicycle models sourced from hundreds of designers. We expect BIKED to
+enable a variety of data-driven design applications for bicycles and support
+the development of data-driven design methods. The dataset is comprised of a
+variety of design information including assembly images, component images,
+numerical design parameters, and class labels. In this paper, we first discuss
+the processing of the dataset, then highlight some prominent research questions
+that BIKED can help address. Of these questions, we further explore the
+following in detail: 1) Are there prominent gaps in the current bicycle market
+and design space? We explore the design space using unsupervised dimensionality
+reduction methods. 2) How does one identify the class of a bicycle and what
+factors play a key role in defining it? We address the bicycle classification
+task by training a multitude of classifiers using different forms of design
+data and identifying parameters of particular significance through
+permutation-based interpretability analysis. 3) How does one synthesize new
+bicycles using different representation methods? We consider numerous machine
+learning methods to generate new bicycle models as well as interpolate between
+and extrapolate from existing models using Variational Autoencoders. The
+dataset and code are available at http://decode.mit.edu/projects/biked/.",arxiv
+http://arxiv.org/abs/2103.04185v1,2021-03-06T20:01:08Z,2021-03-06T20:01:08Z,"EVEREST: A design environment for extreme-scale big data analytics on
+  heterogeneous platforms","High-Performance Big Data Analytics (HPDA) applications are characterized by
+huge volumes of distributed and heterogeneous data that require efficient
+computation for knowledge extraction and decision making. Designers are moving
+towards a tight integration of computing systems combining HPC, Cloud, and IoT
+solutions with artificial intelligence (AI). Matching the application and data
+requirements with the characteristics of the underlying hardware is a key
+element to improve the predictions thanks to high performance and better use of
+resources.
+  We present EVEREST, a novel H2020 project started on October 1st, 2020 that
+aims at developing a holistic environment for the co-design of HPDA
+applications on heterogeneous, distributed, and secure platforms. EVEREST
+focuses on programmability issues through a data-driven design approach, the
+use of hardware-accelerated AI, and an efficient runtime monitoring with
+virtualization support. In the different stages, EVEREST combines
+state-of-the-art programming models, emerging communication standards, and
+novel domain-specific extensions. We describe the EVEREST approach and the use
+cases that drive our research.",arxiv
+http://arxiv.org/abs/2102.04296v3,2022-02-03T18:50:48Z,2021-02-08T16:03:05Z,"Data-driven design of targeted gene panels for estimating immunotherapy
+  biomarkers","We introduce a novel data-driven framework for the design of targeted gene
+panels for estimating exome-wide biomarkers in cancer immunotherapy. Our first
+goal is to develop a generative model for the profile of mutation across the
+exome, which allows for gene- and variant type-dependent mutation rates. Based
+on this model, we then propose a new procedure for estimating biomarkers such
+as tumour mutation burden and tumour indel nurden. Our approach allows the
+practitioner to select a targeted gene panel of a prespecified size, and then
+construct an estimator that only depends on the selected genes. Alternatively,
+the practitioner may apply our method to make predictions based on an existing
+gene panel, or to augment a gene panel to a given size. We demonstrate the
+excellent performance of our proposal using data from three non-small cell lung
+cancer studies, as well as data from six other cancer types.",arxiv
+http://arxiv.org/abs/2102.02993v1,2021-02-05T04:26:05Z,2021-02-05T04:26:05Z,LoRD-Net: Unfolded Deep Detection Network with Low-Resolution Receivers,"The need to recover high-dimensional signals from their noisy low-resolution
+quantized measurements is widely encountered in communications and sensing. In
+this paper, we focus on the extreme case of one-bit quantizers, and propose a
+deep detector entitled LoRD-Net for recovering information symbols from one-bit
+measurements. Our method is a model-aware data-driven architecture based on
+deep unfolding of first-order optimization iterations. LoRD-Net has a
+task-based architecture dedicated to recovering the underlying signal of
+interest from the one-bit noisy measurements without requiring prior knowledge
+of the channel matrix through which the one-bit measurements are obtained. The
+proposed deep detector has much fewer parameters compared to black-box deep
+networks due to the incorporation of domain-knowledge in the design of its
+architecture, allowing it to operate in a data-driven fashion while benefiting
+from the flexibility, versatility, and reliability of model-based optimization
+methods. LoRD-Net operates in a blind fashion, which requires addressing both
+the non-linear nature of the data-acquisition system as well as identifying a
+proper optimization objective for signal recovery. Accordingly, we propose a
+two-stage training method for LoRD-Net, in which the first stage is dedicated
+to identifying the proper form of the optimization process to unfold, while the
+latter trains the resulting model in an end-to-end manner. We numerically
+evaluate the proposed receiver architecture for one-bit signal recovery in
+wireless communications and demonstrate that the proposed hybrid methodology
+outperforms both data-driven and model-based state-of-the-art methods, while
+utilizing small datasets, on the order of merely $\sim 500$ samples, for
+training.",arxiv
+http://arxiv.org/abs/2101.10773v1,2021-01-26T13:28:37Z,2021-01-26T13:28:37Z,Data-driven design of a new class of rare-earth free permanent magnets,"A new class of rare-earth-free permanent magnets is proposed. The parent
+compound of this class is Co$_3$Mn$_2$Ge, and its discovery is the result of
+first principles theory combined with experimental synthesis and
+characterisation. The theory is based on a high-throughput/data-mining search
+among materials listed in the ICSD database. From ab-initio theory of the
+defect free material it is predicted that the saturation magnetization is 1.71
+T, the uniaxial magnetocrystalline anisotropy is 1.44 MJ/m$^3$, and the Curie
+temperature is 700 K. Co$_3$Mn$_2$Ge samples were then synthesized and
+characterised with respect to structure and magnetism. The crystal structure
+was found to be the MgZn$_2$-type, with partial disorder of Co and Ge on the
+crystallographic lattice sites. From magnetization measurements a saturation
+polarization of 0.86 T at 10 K was detected, together with a uniaxial
+magnetocrystalline anisotropy constant of 1.18 MJ/m$^3$, and the Curie
+temperature of $T_{\rm C}$ = 359 K. These magnetic properties make
+Co$_3$Mn$_2$Ge a very promising material as a rare-earth free permanent magnet,
+and since we can demonstrate that magnetism depends critically on the amount of
+disorder of the Co and Ge atoms, a further improvement of the magnetism is
+possible. From the theoretical works, a substitution of Ge by neighboring
+elements suggest two other promising materials - Co$_3$Mn$_2$Al and
+Co$_3$Mn$_2$Ga. We demonstrate here that the class of compounds based on
+$T_3$Mn$_2$X (T = Co or alloys between Fe and Ni; X=Ge, Al or Ga) in the
+MgZn$_2$ structure type, form a new class of rare-earth free permanent magnets
+with very promising performance.",arxiv
+http://arxiv.org/abs/2101.07085v1,2021-01-18T14:17:51Z,2021-01-18T14:17:51Z,"Training collective variables for enhanced sampling via neural networks
+  based discriminant analysis","A popular way to accelerate the sampling of rare events in molecular dynamics
+simulations is to introduce a potential that increases the fluctuations of
+selected collective variables. For this strategy to be successful, it is
+critical to choose appropriate variables. Here we review some recent
+developments in the data-driven design of collective variables, with a focus on
+the combination of Fisher's discriminant analysis and neural networks. This
+approach allows to compress the fluctuations of metastable states into a
+low-dimensional representation. We illustrate through several examples the
+effectiveness of this method in accelerating the sampling, while also
+identifying the physical descriptors that undergo the most significant changes
+in the process.",arxiv
+http://arxiv.org/abs/2012.05361v1,2020-12-09T23:16:23Z,2020-12-09T23:16:23Z,Data-driven Competitive Algorithms for Online Knapsack and Set Cover,"The design of online algorithms has tended to focus on algorithms with
+worst-case guarantees, e.g., bounds on the competitive ratio. However, it is
+well-known that such algorithms are often overly pessimistic, performing
+sub-optimally on non-worst-case inputs. In this paper, we develop an approach
+for data-driven design of online algorithms that maintain near-optimal
+worst-case guarantees while also performing learning in order to perform well
+for typical inputs. Our approach is to identify policy classes that admit
+global worst-case guarantees, and then perform learning using historical data
+within the policy classes. We demonstrate the approach in the context of two
+classical problems, online knapsack and online set cover, proving competitive
+bounds for rich policy classes in each case. Additionally, we illustrate the
+practical implications via a case study on electric vehicle charging.",arxiv
+http://arxiv.org/abs/2010.09438v1,2020-10-14T15:51:14Z,2020-10-14T15:51:14Z,"How machine learning can help the design and analysis of composite
+  materials and structures?","Machine learning models are increasingly used in many engineering fields
+thanks to the widespread digital data, growing computing power, and advanced
+algorithms. Artificial neural networks (ANN) is the most popular machine
+learning model in recent years. Although many ANN models have been used in the
+design and analysis of composite materials and structures, there are still some
+unsolved issues that hinder the acceptance of ANN models in the practical
+design and analysis of composite materials and structures. Moreover, the
+emerging machine learning techniques are posting new opportunities and
+challenges in the data-based design paradigm. This paper aims to give a
+state-of-the-art literature review of ANN models in the nonlinear constitutive
+modeling, multiscale surrogate modeling, and design optimization of composite
+materials and structures. This review has been designed to focus on the
+discussion of the general frameworks and benefits of ANN models to the above
+problems. Moreover, challenges and opportunities in each key problem are
+identified and discussed. This paper is expected to open the discussion of
+future research scope and new directions to enable efficient, robust, and
+accurate data-driven design and analysis of composite materials and structures.",arxiv
+http://arxiv.org/abs/2008.04808v1,2020-08-11T16:03:51Z,2020-08-11T16:03:51Z,3D FLAT: Feasible Learned Acquisition Trajectories for Accelerated MRI,"Magnetic Resonance Imaging (MRI) has long been considered to be among the
+gold standards of today's diagnostic imaging. The most significant drawback of
+MRI is long acquisition times, prohibiting its use in standard practice for
+some applications. Compressed sensing (CS) proposes to subsample the k-space
+(the Fourier domain dual to the physical space of spatial coordinates) leading
+to significantly accelerated acquisition. However, the benefit of compressed
+sensing has not been fully exploited; most of the sampling densities obtained
+through CS do not produce a trajectory that obeys the stringent constraints of
+the MRI machine imposed in practice. Inspired by recent success of deep
+learning based approaches for image reconstruction and ideas from computational
+imaging on learning-based design of imaging systems, we introduce 3D FLAT, a
+novel protocol for data-driven design of 3D non-Cartesian accelerated
+trajectories in MRI. Our proposal leverages the entire 3D k-space to
+simultaneously learn a physically feasible acquisition trajectory with a
+reconstruction method. Experimental results, performed as a proof-of-concept,
+suggest that 3D FLAT achieves higher image quality for a given readout time
+compared to standard trajectories such as radial, stack-of-stars, or 2D learned
+trajectories (trajectories that evolve only in the 2D plane while fully
+sampling along the third dimension). Furthermore, we demonstrate evidence
+supporting the significant benefit of performing MRI acquisitions using
+non-Cartesian 3D trajectories over 2D non-Cartesian trajectories acquired
+slice-wise.",arxiv
+http://arxiv.org/abs/2008.00442v2,2020-08-09T03:15:22Z,2020-08-02T10:16:28Z,"Identifying the elastic isotropy of architectured materials based on
+  deep learning method","With the achievement on the additive manufacturing, the mechanical properties
+of architectured materials can be precisely designed by tailoring
+microstructures. As one of the primary design objectives, the elastic isotropy
+is of great significance for many engineering applications. However, the
+prevailing experimental and numerical methods are normally too costly and
+time-consuming to determine the elastic isotropy of architectured materials
+with tens of thousands of possible microstructures in design space. The quick
+mechanical characterization is thus desired for the advanced design of
+architectured materials. Here, a deep learning-based approach is developed as a
+portable and efficient tool to identify the elastic isotropy of architectured
+materials directly from the images of their representative microstructures with
+arbitrary component distributions. The measure of elastic isotropy for
+architectured materials is derived firstly in this paper to construct a
+database with associated images of microstructures. Then a convolutional neural
+network is trained with the database. It is found that the convolutional neural
+network shows good performance on the isotropy identification. Meanwhile, it
+exhibits enough robustness to maintain the performance under fluctuated
+material properties in practical fabrications. Moreover, the well-trained
+convolutional neural network can be successfully transferred among different
+types of architectured materials, including two-phase composites and porous
+materials, which greatly enhance the efficiency of the deep learning-based
+approach. This study can give new inspirations on the fast mechanical
+characterization for the big-data driven design of architectured materials.",arxiv
+http://arxiv.org/abs/2006.08052v2,2020-10-24T23:32:54Z,2020-06-14T23:22:50Z,Autofocused oracles for model-based design,"Data-driven design is making headway into a number of application areas,
+including protein, small-molecule, and materials engineering. The design goal
+is to construct an object with desired properties, such as a protein that binds
+to a therapeutic target, or a superconducting material with a higher critical
+temperature than previously observed. To that end, costly experimental
+measurements are being replaced with calls to high-capacity regression models
+trained on labeled data, which can be leveraged in an in silico search for
+design candidates. However, the design goal necessitates moving into regions of
+the design space beyond where such models were trained. Therefore, one can ask:
+should the regression model be altered as the design algorithm explores the
+design space, in the absence of new data? Herein, we answer this question in
+the affirmative. In particular, we (i) formalize the data-driven design problem
+as a non-zero-sum game, (ii) develop a principled strategy for retraining the
+regression model as the design algorithm proceeds---what we refer to as
+autofocusing, and (iii) demonstrate the promise of autofocusing empirically.",arxiv
+http://arxiv.org/abs/2006.02142v3,2020-09-15T21:13:09Z,2020-06-01T03:36:37Z,"METASET: Exploring Shape and Property Spaces for Data-Driven
+  Metamaterials Design","Data-driven design of mechanical metamaterials is an increasingly popular
+method to combat costly physical simulations and immense, often intractable,
+geometrical design spaces. Using a precomputed dataset of unit cells, a
+multiscale structure can be quickly filled via combinatorial search algorithms,
+and machine learning models can be trained to accelerate the process. However,
+the dependence on data induces a unique challenge: An imbalanced dataset
+containing more of certain shapes or physical properties can be detrimental to
+the efficacy of data-driven approaches. In answer, we posit that a smaller yet
+diverse set of unit cells leads to scalable search and unbiased learning. To
+select such subsets, we propose METASET, a methodology that 1) uses similarity
+metrics and positive semi-definite kernels to jointly measure the closeness of
+unit cells in both shape and property spaces, and 2) incorporates Determinantal
+Point Processes for efficient subset selection. Moreover, METASET allows the
+trade-off between shape and property diversity so that subsets can be tuned for
+various applications. Through the design of 2D metamaterials with target
+displacement profiles, we demonstrate that smaller, diverse subsets can indeed
+improve the search process as well as structural performance. By eliminating
+inherent overlaps in a dataset of 3D unit cells created with symmetry rules, we
+also illustrate that our flexible method can distill unique subsets regardless
+of the metric employed. Our diverse subsets are provided publicly for use by
+any designer.",arxiv
+http://arxiv.org/abs/2003.05551v1,2020-03-11T23:08:04Z,2020-03-11T23:08:04Z,Memory-efficient Learning for Large-scale Computational Imaging,"Critical aspects of computational imaging systems, such as experimental
+design and image priors, can be optimized through deep networks formed by the
+unrolled iterations of classical model-based reconstructions (termed
+physics-based networks). However, for real-world large-scale inverse problems,
+computing gradients via backpropagation is infeasible due to memory limitations
+of graphics processing units. In this work, we propose a memory-efficient
+learning procedure that exploits the reversibility of the network's layers to
+enable data-driven design for large-scale computational imaging systems. We
+demonstrate our method on a small-scale compressed sensing example, as well as
+two large-scale real-world systems: multi-channel magnetic resonance imaging
+and super-resolution optical microscopy.",arxiv
+http://arxiv.org/abs/1912.08180v2,2019-12-19T18:23:30Z,2019-12-17T18:39:39Z,Deep Radar Waveform Design for Efficient Automotive Radar Sensing,"In radar systems, unimodular (or constant-modulus) waveform design plays an
+important role in achieving better clutter/interference rejection, as well as a
+more accurate estimation of the target parameters. The design of such sequences
+has been studied widely in the last few decades, with most design algorithms
+requiring sophisticated a priori knowledge of environmental parameters which
+may be difficult to obtain in real-time scenarios. In this paper, we propose a
+novel hybrid model-driven and data-driven architecture that adapts to the ever
+changing environment and allows for adaptive unimodular waveform design. In
+particular, the approach lays the groundwork for developing extremely low-cost
+waveform design and processing frameworks for radar systems deployed in
+autonomous vehicles. The proposed model-based deep architecture imitates a
+well-known unimodular signal design algorithm in its structure, and can quickly
+infer statistical information from the environment using the observed data. Our
+numerical experiments portray the advantages of using the proposed method for
+efficient radar waveform design in time-varying environments.",arxiv
+http://arxiv.org/abs/1912.05098v2,2020-03-11T20:42:39Z,2019-12-11T03:19:48Z,"Memory-efficient Learning for Large-scale Computational Imaging --
+  NeurIPS deep inverse workshop","Computational imaging systems jointly design computation and hardware to
+retrieve information which is not traditionally accessible with standard
+imaging systems. Recently, critical aspects such as experimental design and
+image priors are optimized through deep neural networks formed by the unrolled
+iterations of classical physics-based reconstructions (termed physics-based
+networks). However, for real-world large-scale systems, computing gradients via
+backpropagation restricts learning due to memory limitations of graphical
+processing units. In this work, we propose a memory-efficient learning
+procedure that exploits the reversibility of the network's layers to enable
+data-driven design for large-scale computational imaging. We demonstrate our
+methods practicality on two large-scale systems: super-resolution optical
+microscopy and multi-channel magnetic resonance imaging.",arxiv
+http://arxiv.org/abs/1910.06115v1,2019-10-11T14:09:03Z,2019-10-11T14:09:03Z,"Microservices based Linked Data Quality Model for Buildings Energy
+  Management Services","During the production, distribution, and consumption of energy, a large
+quantity of data is generated. For efficiently using of energy resources other
+supplementary data such as building information, weather, and environmental
+data etc. are also collected and used. All these energy data and relevant data
+is published as linked data in order to enhance the reusability of data and
+maximization of energy management services capability. However, the quality of
+this linked data is questionable because of wear and tears of sensors,
+unreliable communication channels, and highly diversification of data sources.
+The provision of high-quality energy management services requires high quality
+linked data, which reduces billing cost and improve the quality of the living
+environment. Assessment and improvement methodologies for the quality of data
+along with linked data needs to process very diverse data from highly diverse
+data sources. Microservices based data-driven architecture has great
+significance to processes highly diverse linked data with modularity,
+scalability, and reliability. This paper proposed microservices based
+architecture along with domain data and metadata ontologies to enhance and
+assess energy-related linked data quality.",arxiv
+http://arxiv.org/abs/1909.10819v2,2021-09-05T13:54:39Z,2019-09-24T11:29:13Z,"Investigating Customization Strategies and Convergence Behaviors of
+  Task-specific ADMM","Alternating Direction Method of Multiplier (ADMM) has been a popular
+algorithmic framework for separable optimization problems with linear
+constraints. For numerical ADMM fail to exploit the particular structure of the
+problem at hand nor the input data information, leveraging task-specific
+modules (e.g., neural networks and other data-driven architectures) to extend
+ADMM is a significant but challenging task. This work focuses on designing a
+flexible algorithmic framework to incorporate various task-specific modules
+(with no additional constraints) to improve the performance of ADMM in
+real-world applications. Specifically, we propose Guidance from Optimality
+(GO), a new customization strategy, to embed task-specific modules into ADMM
+(GO-ADMM). By introducing an optimality-based criterion to guide the
+propagation, GO-ADMM establishes an updating scheme agnostic to the choice of
+additional modules. The existing task-specific methods just plug their
+task-specific modules into the numerical iterations in a straightforward
+manner. Even with some restrictive constraints on the plug-in modules, they can
+only obtain some relatively weaker convergence properties for the resulted ADMM
+iterations. Fortunately, without any restrictions on the embedded modules, we
+prove the convergence of GO-ADMM regarding objective values and constraint
+violations, and derive the worst-case convergence rate measured by iteration
+complexity. Extensive experiments are conducted to verify the theoretical
+results and demonstrate the efficiency of GO-ADMM.",arxiv
+http://arxiv.org/abs/1908.06778v1,2019-08-19T13:10:44Z,2019-08-19T13:10:44Z,"Symbolic Regression Discovery of New Perovskite Catalysts with High
+  Oxygen Evolution Reaction Activity","Symbolic regression (SR) is an emerging method for building analytical
+formulas to find models that best fit data sets. Here, SR was used to guide the
+design of new oxide perovskite catalysts with improved oxygen evolution
+reaction (OER) activities. An unprecedentedly simple descriptor, {\mu}/t, where
+{\mu} and t are the octahedral and tolerance factors, respectively, was
+identified, which accelerated the discovery of a series of new oxide perovskite
+catalysts with improved OER activity. We successfully synthesized five new
+oxide perovskites and characterized their OER activities. Remarkably, four of
+them, Cs0.4La0.6Mn0.25Co0.75O3, Cs0.3La0.7NiO3, SrNi0.75Co0.25O3, and
+Sr0.25Ba0.75NiO3, outperform the current state-of-the-art oxide perovskite
+catalyst, Ba0.5Sr0.5Co0.8Fe0.2O3 (BSCF). Our results demonstrate the potential
+of SR for accelerating data-driven design and discovery of new materials with
+improved properties.",arxiv
+http://arxiv.org/abs/1908.00192v1,2019-08-01T03:11:38Z,2019-08-01T03:11:38Z,"Data Changes Everything: Challenges and Opportunities in Data
+  Visualization Design Handoff","Complex data visualization design projects often entail collaboration between
+people with different visualization-related skills. For example, many teams
+include both designers who create new visualization designs and developers who
+implement the resulting visualization software. We identify gaps between data
+characterization tools, visualization design tools, and development platforms
+that pose challenges for designer-developer teams working to create new data
+visualizations. While it is common for commercial interaction design tools to
+support collaboration between designers and developers, creating data
+visualizations poses several unique challenges that are not supported by
+current tools. In particular, visualization designers must characterize and
+build an understanding of the underlying data, then specify layouts, data
+encodings, and other data-driven parameters that will be robust across many
+different data values. In larger teams, designers must also clearly communicate
+these mappings and their dependencies to developers, clients, and other
+collaborators. We report observations and reflections from five large
+multidisciplinary visualization design projects and highlight six data-specific
+visualization challenges for design specification and handoff. These challenges
+include adapting to changing data, anticipating edge cases in data,
+understanding technical challenges, articulating data-dependent interactions,
+communicating data mappings, and preserving the integrity of data mappings
+across iterations. Based on these observations, we identify opportunities for
+future tools for prototyping, testing, and communicating data-driven designs,
+which might contribute to more successful and collaborative data visualization
+design.",arxiv
+http://arxiv.org/abs/1905.08503v1,2019-05-21T08:54:21Z,2019-05-21T08:54:21Z,"A Universal Approximation Result for Difference of log-sum-exp Neural
+  Networks","We show that a neural network whose output is obtained as the difference of
+the outputs of two feedforward networks with exponential activation function in
+the hidden layer and logarithmic activation function in the output node (LSE
+networks) is a smooth universal approximator of continuous functions over
+convex, compact sets. By using a logarithmic transform, this class of networks
+maps to a family of subtraction-free ratios of generalized posynomials, which
+we also show to be universal approximators of positive functions over
+log-convex, compact subsets of the positive orthant. The main advantage of
+Difference-LSE networks with respect to classical feedforward neural networks
+is that, after a standard training phase, they provide surrogate models for
+design that possess a specific difference-of-convex-functions form, which makes
+them optimizable via relatively efficient numerical methods. In particular, by
+adapting an existing difference-of-convex algorithm to these models, we obtain
+an algorithm for performing effective optimization-based design. We illustrate
+the proposed approach by applying it to data-driven design of a diet for a
+patient with type-2 diabetes.",arxiv
+http://arxiv.org/abs/1905.06179v1,2019-05-15T13:42:25Z,2019-05-15T13:42:25Z,Differentiable Linearized ADMM,"Recently, a number of learning-based optimization methods that combine
+data-driven architectures with the classical optimization algorithms have been
+proposed and explored, showing superior empirical performance in solving
+various ill-posed inverse problems, but there is still a scarcity of rigorous
+analysis about the convergence behaviors of learning-based optimization. In
+particular, most existing analyses are specific to unconstrained problems but
+cannot apply to the more general cases where some variables of interest are
+subject to certain constraints. In this paper, we propose Differentiable
+Linearized ADMM (D-LADMM) for solving the problems with linear constraints.
+Specifically, D-LADMM is a K-layer LADMM inspired deep neural network, which is
+obtained by firstly introducing some learnable weights in the classical
+Linearized ADMM algorithm and then generalizing the proximal operator to some
+learnable activation function. Notably, we rigorously prove that there exist a
+set of learnable parameters for D-LADMM to generate globally converged
+solutions, and we show that those desired parameters can be attained by
+training D-LADMM in a proper way. To the best of our knowledge, we are the
+first to provide the convergence analysis for the learning-based optimization
+method on constrained problems.",arxiv
+http://arxiv.org/abs/1904.04175v1,2019-04-08T16:30:21Z,2019-04-08T16:30:21Z,Data-Driven Design for Fourier Ptychographic Microscopy,"Fourier Ptychographic Microscopy (FPM) is a computational imaging method that
+is able to super-resolve features beyond the diffraction-limit set by the
+objective lens of a traditional microscope. This is accomplished by using
+synthetic aperture and phase retrieval algorithms to combine many measurements
+captured by an LED array microscope with programmable source patterns. FPM
+provides simultaneous large field-of-view and high resolution imaging, but at
+the cost of reduced temporal resolution, thereby limiting live cell
+applications. In this work, we learn LED source pattern designs that compress
+the many required measurements into only a few, with negligible loss in
+reconstruction quality or resolution. This is accomplished by recasting the
+super-resolution reconstruction as a Physics-based Neural Network and learning
+the experimental design to optimize the network's overall performance.
+Specifically, we learn LED patterns for different applications (e.g. amplitude
+contrast and quantitative phase imaging) and show that the designs we learn
+through simulation generalize well in the experimental setting. Further, we
+discuss a context-specific loss function, practical memory limitations, and
+interpretability of our learned designs.",arxiv
+http://arxiv.org/abs/1903.08876v1,2019-03-21T08:50:12Z,2019-03-21T08:50:12Z,"Data-driven design of perfect reconstruction filterbank for DNN-based
+  sound source enhancement","We propose a data-driven design method of perfect-reconstruction filterbank
+(PRFB) for sound-source enhancement (SSE) based on deep neural network (DNN).
+DNNs have been used to estimate a time-frequency (T-F) mask in the short-time
+Fourier transform (STFT) domain. Their training is more stable when a simple
+cost function as mean-squared error (MSE) is utilized comparing to some
+advanced cost such as objective sound quality assessments. However, such a
+simple cost function inherits strong assumptions on the statistics of the
+target and/or noise which is often not satisfied, and the mismatch of
+assumption results in degraded performance. In this paper, we propose to design
+the frequency scale of PRFB from training data so that the assumption on MSE is
+satisfied. For designing the frequency scale, the warped filterbank frame
+(WFBF) is considered as PRFB. The frequency characteristic of learned WFBF was
+in between STFT and the wavelet transform, and its effectiveness was confirmed
+by comparison with a standard STFT-based DNN whose input feature is compressed
+into the mel scale.",arxiv
+http://arxiv.org/abs/1903.08432v1,2019-03-20T10:55:29Z,2019-03-20T10:55:29Z,"Designing nanophotonic structures using conditional-deep convolutional
+  generative adversarial networks","Data-driven design approaches based on deep-learning have been introduced in
+nanophotonics to reduce time-consuming iterative simulations which have been a
+major challenge. Here, we report the first use of conditional deep
+convolutional generative adversarial networks to design nanophotonic antennae
+that are not constrained to a predefined shape. For given input reflection
+spectra, the network generates desirable designs in the form of images; this
+form allows suggestions of new structures that cannot be represented by
+structural parameters. Simulation results obtained from the generated designs
+agreed well with the input reflection spectrum. This method opens new avenues
+towards the development of nanophotonics by providing a fast and convenient
+approach to design complex nanophotonic structures that have desired optical
+properties.",arxiv
+http://arxiv.org/abs/1811.12436v2,2019-06-19T02:09:17Z,2018-11-29T19:14:13Z,"Freeform Diffractive Metagrating Design Based on Generative Adversarial
+  Networks","A key challenge in metasurface design is the development of algorithms that
+can effectively and efficiently produce high performance devices. Design
+methods based on iterative optimization can push the performance limits of
+metasurfaces, but they require extensive computational resources that limit
+their implementation to small numbers of microscale devices. We show that
+generative neural networks can train from images of periodic,
+topology-optimized metagratings to produce high-efficiency, topologically
+complex devices operating over a broad range of deflection angles and
+wavelengths. Further iterative optimization of these designs yields devices
+with enhanced robustness and efficiencies, and these devices can be utilized as
+additional training data for network refinement. In this manner, generative
+networks can be trained, with a onetime computation cost, and used as a design
+tool to facilitate the production of near-optimal, topologically-complex device
+designs. We envision that such data-driven design methodologies can apply to
+other physical sciences domains that require the design of functional elements
+operating across a wide parameter space.",arxiv
+http://arxiv.org/abs/1811.03782v3,2018-11-13T13:46:13Z,2018-11-09T05:35:50Z,"A Theoretically Guaranteed Deep Optimization Framework for Robust
+  Compressive Sensing MRI","Magnetic Resonance Imaging (MRI) is one of the most dynamic and safe imaging
+techniques available for clinical applications. However, the rather slow speed
+of MRI acquisitions limits the patient throughput and potential indi cations.
+Compressive Sensing (CS) has proven to be an efficient technique for
+accelerating MRI acquisition. The most widely used CS-MRI model, founded on the
+premise of reconstructing an image from an incompletely filled k-space, leads
+to an ill-posed inverse problem. In the past years, lots of efforts have been
+made to efficiently optimize the CS-MRI model. Inspired by deep learning
+techniques, some preliminary works have tried to incorporate deep architectures
+into CS-MRI process. Unfortunately, the convergence issues (due to the
+experience-based networks) and the robustness (i.e., lack real-world noise
+modeling) of these deeply trained optimization methods are still missing. In
+this work, we develop a new paradigm to integrate designed numerical solvers
+and the data-driven architectures for CS-MRI. By introducing an optimal
+condition checking mechanism, we can successfully prove the convergence of our
+established deep CS-MRI optimization scheme. Furthermore, we explicitly
+formulate the Rician noise distributions within our framework and obtain an
+extended CS-MRI network to handle the real-world nosies in the MRI process.
+Extensive experimental results verify that the proposed paradigm outperforms
+the existing state-of-the-art techniques both in reconstruction accuracy and
+efficiency as well as robustness to noises in real scene.",arxiv
+http://arxiv.org/abs/1811.00961v1,2018-11-02T16:24:34Z,2018-11-02T16:24:34Z,Discovering conservation laws from data for control,"Conserved quantities, i.e. constants of motion, are critical for
+characterizing many dynamical systems in science and engineering. These
+quantities are related to underlying symmetries and they provide fundamental
+knowledge about physical laws, describe the evolution of the system, and enable
+system reduction. In this work, we formulate a data-driven architecture for
+discovering conserved quantities based on Koopman theory. The Koopman operator
+has emerged as a principled linear embedding of nonlinear dynamics, and its
+eigenfunctions establish intrinsic coordinates along which the dynamics behave
+linearly. Interestingly, eigenfunctions of the Koopman operator associated with
+vanishing eigenvalues correspond to conserved quantities of the underlying
+system. In this paper, we show that these invariants may be identified with
+data-driven regression and power series expansions, based on the infinitesimal
+generator of the Koopman operator. We further establish a connection between
+the Koopman framework, conserved quantities, and the Lie-Poisson bracket. This
+data-driven method for discovering conserved quantities is demonstrated on the
+three-dimensional rigid body equations, where we simultaneously discover the
+total energy and angular momentum and use these intrinsic coordinates to
+develop a model predictive controller to track a given reference value.",arxiv
+http://arxiv.org/abs/1809.08660v1,2018-09-23T19:00:40Z,2018-09-23T19:00:40Z,"Data-Driven Design: Exploring new Structural Forms using Machine
+  Learning and Graphic Statics","The aim of this research is to introduce a novel structural design process
+that allows architects and engineers to extend their typical design space
+horizon and thereby promoting the idea of creativity in structural design. The
+theoretical base of this work builds on the combination of structural
+form-finding and state-of-the-art machine learning algorithms. In the first
+step of the process, Combinatorial Equilibrium Modelling (CEM) is used to
+generate a large variety of spatial networks in equilibrium for given input
+parameters. In the second step, these networks are clustered and represented in
+a form-map through the implementation of a Self Organizing Map (SOM) algorithm.
+In the third step, the solution space is interpreted with the help of a Uniform
+Manifold Approximation and Projection algorithm (UMAP). This allows gaining
+important insights in the structure of the solution space. A specific case
+study is used to illustrate how the infinite equilibrium states of a given
+topology can be defined and represented by clusters. Furthermore, three
+classes, related to the non-linear interaction between the input parameters and
+the form space, are verified and a statement about the entire manifold of the
+solution space of the case study is made. To conclude, this work presents an
+innovative approach on how the manifold of a solution space can be grasped with
+a minimum amount of data and how to operate within the manifold in order to
+increase the diversity of solutions.",arxiv
+http://arxiv.org/abs/1808.07647v4,2020-06-04T15:33:19Z,2018-08-23T07:06:41Z,"Machine Learning at the Edge: A Data-Driven Architecture with
+  Applications to 5G Cellular Networks","The fifth generation of cellular networks (5G) will rely on edge cloud
+deployments to satisfy the ultra-low latency demand of future applications. In
+this paper, we argue that such deployments can also be used to enable advanced
+data-driven and Machine Learning (ML) applications in mobile networks. We
+propose an edge-controller-based architecture for cellular networks and
+evaluate its performance with real data from hundreds of base stations of a
+major U.S. operator. In this regard, we will provide insights on how to
+dynamically cluster and associate base stations and controllers, according to
+the global mobility patterns of the users. Then, we will describe how the
+controllers can be used to run ML algorithms to predict the number of users in
+each base station, and a use case in which these predictions are exploited by a
+higher-layer application to route vehicular traffic according to network Key
+Performance Indicators (KPIs). We show that the prediction accuracy improves
+when based on machine learning algorithms that rely on the controllers' view
+and, consequently, on the spatial correlation introduced by the user mobility,
+with respect to when the prediction is based only on the local data of each
+single base station.",arxiv
+http://arxiv.org/abs/1807.06699v5,2019-06-09T19:32:34Z,2018-07-17T23:01:35Z,Adaptive Neural Trees,"Deep neural networks and decision trees operate on largely separate
+paradigms; typically, the former performs representation learning with
+pre-specified architectures, while the latter is characterised by learning
+hierarchies over pre-specified features with data-driven architectures. We
+unite the two via adaptive neural trees (ANTs) that incorporates representation
+learning into edges, routing functions and leaf nodes of a decision tree, along
+with a backpropagation-based training algorithm that adaptively grows the
+architecture from primitive modules (e.g., convolutional layers). We
+demonstrate that, whilst achieving competitive performance on classification
+and regression datasets, ANTs benefit from (i) lightweight inference via
+conditional computation, (ii) hierarchical separation of features useful to the
+task e.g. learning meaningful class associations, such as separating natural
+vs. man-made objects, and (iii) a mechanism to adapt the architecture to the
+size and complexity of the training dataset.",arxiv
+http://arxiv.org/abs/1805.12475v1,2018-05-30T00:43:03Z,2018-05-30T00:43:03Z,Data-driven Design: A Case for Maximalist Game Design,"Maximalism in art refers to drawing on and combining multiple different
+sources for art creation, embracing the resulting collisions and heterogeneity.
+This paper discusses the use of maximalism in game design and particularly in
+data games, which are games that are generated partly based on open data. Using
+Data Adventures, a series of generators that create adventure games from data
+sources such as Wikipedia and OpenStreetMap, as a lens we explore several
+tradeoffs and issues in maximalist game design. This includes the tension
+between transformation and fidelity, between decorative and functional content,
+and legal and ethical issues resulting from this type of generativity. This
+paper sketches out the design space of maximalist data-driven games, a design
+space that is mostly unexplored.",arxiv
+http://arxiv.org/abs/1804.03298v1,2018-04-10T01:23:14Z,2018-04-10T01:23:14Z,Mixed H2/H-infinity Data-Driven Control Design for Hard Disk Drives,"A frequency based data-driven control design considering mixed H2/H-infinity
+control objectives is developed for multiple input-single output systems. The
+main advantage of the data-driven control over the model-based control is its
+ability to use the frequency response measurements of the controlled plant
+directly without the need to identify a model for the plant. In the proposed
+methodology, multiple sets of measurements can be considered in the design
+process to accommodate variations in the system dynamics. The controller is
+obtained by translating the mixed H2/H-infinity control objectives into a
+convex optimization problem. The H-infinity norm is used to shape closed loop
+transfer functions and guarantee closed loop stability, while the H2 norm is
+used to constrain and/or minimize the variance of signals in the time domain.
+  The proposed data-driven design methodology is used to design a track
+following controller for a dual-stage HDD. The sensitivity decoupling
+structure[16] is considered as the controller structure. The compensators
+inside this controller structure are designed and compared by decoupling the
+system into two single input-single-output systems as well as solving for a
+single input-double output controller.",arxiv
+http://arxiv.org/abs/1803.05035v2,2018-05-15T18:42:09Z,2018-03-13T20:30:28Z,Autonomous data-driven design of inorganic materials with AFLOW,"The expansion of programmatically-accessible materials data has cultivated
+opportunities for data-driven approaches. Highly-automated frameworks like
+AFLOW not only manage the generation, storage, and dissemination of materials
+data, but also leverage the information for thermodynamic formability modeling,
+such as the prediction of phase diagrams and properties of disordered
+materials. In combination with standardized parameter sets, the wealth of data
+is ideal for training machine learning algorithms, which have already been
+employed for property prediction, descriptor development, design rule
+discovery, and the identification of candidate functional materials. These
+methods promise to revolutionize the path to synthesis and, ultimately,
+transform the practice of traditional materials discovery to one of rational
+and autonomous materials design.",arxiv
+http://arxiv.org/abs/1802.00484v1,2018-02-01T20:56:59Z,2018-02-01T20:56:59Z,"Alternative Spreadsheet Model Designs for an Operations Management Model
+  Embedded in a Periodic Business Process","We present a widely-used operations management model used in supply and
+distribution planning, that is typically embedded in a periodic business
+process that necessitates model modification and reuse. We consider three
+alternative spreadsheet implementations, a data-driven design, a canonical
+(textbook) design, and a novel (table-driven) technical design. We evaluate
+each regarding suitability for accuracy, modification, analysis, and transfer.
+We consider the degree of training and technical sophistication required to
+utilize each design. The data-driven design provides insight into poor
+spreadsheet practices by na\""ive modelers. The technical design can be modified
+for new data and new structural elements without manual writing or editing of
+cell formulas, thus speeding modification and reducing risk of error. The
+technical design has potential for use with other classes of models. We
+identify opportunities for future research.",arxiv
+http://arxiv.org/abs/1707.02202v2,2018-03-21T12:54:04Z,2017-07-07T14:47:07Z,Pandeia: A Multi-mission Exposure Time Calculator for JWST and WFIRST,"Pandeia is the exposure time calculator (ETC) system developed for the James
+Webb Space Telescope (JWST) that will be used for creating JWST proposals. It
+includes a simulation-hybrid Python engine that calculates the two-dimensional
+pixel-by-pixel signal and noise properties of the JWST instruments. This allows
+for appropriate handling of realistic point spread functions, MULTIACCUM
+detector readouts, correlated detector readnoise, and multiple photometric and
+spectral extraction strategies. Pandeia includes support for all the JWST
+observing modes, including imaging, slitted/slitless spectroscopy, integral
+field spectroscopy, and coronagraphy. Its highly modular, data-driven design
+makes it easily adaptable to other observatories. An implementation for use
+with WFIRST is also available.",arxiv
+http://arxiv.org/abs/1702.07739v1,2017-02-24T19:38:40Z,2017-02-24T19:38:40Z,"Description of statistical switching in perpendicular STT-MRAM within an
+  analytical and numerical micromagnetic framework","The realistic modeling of STT-MRAM for the simulations of hybrid
+CMOS/Spintronics devices in comprehensive simulation environments require a
+full description of stochastic switching processes in state of the art
+STT-MRAM. Here, we derive an analytical formulation that takes into account the
+spin-torque asymmetry of the spin polarization function of magnetic tunnel
+junctions studying. We studied its validity range by comparing the analytical
+formulas with results achieved numerically within a full micromagnetic
+framework. We also find that a reasonable fit of the probability density
+function (PDF) of the switching time is given by a Pearson Type IV PDF. The
+main results of this work underlines the need of data-driven design of STT-MRAM
+that uses a full micromagnetic simulation framework for the statistical
+proprieties PDF of switching processes.",arxiv
+http://arxiv.org/abs/1505.01958v1,2015-05-08T08:52:33Z,2015-05-08T08:52:33Z,Direct identification of fault estimation filter for sensor faults,"We propose a systematic method to directly identify a sensor fault estimation
+filter from plant input/output data collected under fault-free condition. This
+problem is challenging, especially when omitting the step of building an
+explicit state-space plant model in data-driven design, because the inverse of
+the underlying plant dynamics is required and needs to be stable. We show that
+it is possible to address this problem by relying on a system-inversion-based
+fault estimation filter that is parameterized using identified Markov
+parameters. Our novel data-driven approach improves estimation performance by
+avoiding the propagation of model reduction errors originating from
+identification of the state-space plant model into the designed filter.
+Furthermore, it allows additional design freedom to stabilize the obtained
+filter under the same stabilizability condition as the existing model-based
+system inversion. This crucial property enables its application to sensor
+faults in unstable plants, where existing data-driven filter designs could not
+be applied so far due to the lack of such stability guarantees (even after
+stabilizing the closed-loop system). A numerical simulation example of sensor
+faults in an unstable aircraft system illustrates the effectiveness of the
+proposed new method.",arxiv
+http://arxiv.org/abs/hep-ex/9902015v1,1999-02-10T16:44:43Z,1999-02-10T16:44:43Z,"A 16-channel Digital TDC Chip with internal buffering and selective
+  readout for the DIRC Cherenkov counter of the BABAR experiment","A 16-channel digital TDC chip has been built for the DIRC Cherenkov counter
+of the BaBar experiment at the SLAC B-factory (Stanford, USA). The binning is
+0.5 ns, the conversion time 32 ns and the full-scale 32 mus. The data driven
+architecture integrates channel buffering and selective readout of data falling
+within a programmable time window. The time measuring scale is constantly
+locked to the phase of the (external) clock. The linearity is better than 80 ps
+rms. The dead time loss is less than 0.1% for incoherent random input at a rate
+of 100 khz on each channel. At such a rate the power dissipation is less than
+100 mw. The die size is 36 mm2.",arxiv

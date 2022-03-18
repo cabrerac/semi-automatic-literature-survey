@@ -44,12 +44,13 @@ class Generic:
                         for synonym in synonyms:
                             query_parameter = query_parameter + '+OR+<field>:%22' + synonym + '%22'
                     query_parameter = query_parameter + '+OR+'
-                query_parameter = '%28' + query_parameter + '%29'
-                query_parameter = query_parameter.replace('+OR+%29', '%29')
-                if len(query) == 0:
-                    query = query + query_parameter
-                else:
-                    query = query + '+AND+' + query_parameter
+                if len(parameters_list) > 0:
+                    query_parameter = '%28' + query_parameter + '%29'
+                    query_parameter = query_parameter.replace('+OR+%29', '%29')
+                    if len(query) == 0:
+                        query = query + query_parameter
+                    else:
+                        query = query + '+AND+' + query_parameter
         query = query.replace(' ', '+')
         query = query.replace('+AND+%28%29', '')
 
@@ -57,15 +58,19 @@ class Generic:
             keywords = parameters['keywords']
             query_keywords = ''
             for keyword in keywords:
-                for key, terms in keyword.items():
-                    for term in terms:
-                        query_term = '%28<field>:%22' + key + '%22+AND+<field>:%22' + term + '%22%29'
-                        query_keywords = query_keywords + query_term + '+OR+'
-            query_keywords = '%28' + query_keywords + '%29'
-            query_keywords = query_keywords.replace(' ', '+')
-            query_keywords = query_keywords.replace('+OR+%29', '%29')
-            query = query + '+AND+' + query_keywords
-        query = '%28' + query + '%29'
+                if not isinstance(keyword, str):
+                    for key, terms in keyword.items():
+                        for term in terms:
+                            query_term = '%28<field>:%22' + key + '%22+AND+<field>:%22' + term + '%22%29'
+                            query_keywords = query_keywords + query_term + '+OR+'
+                else:
+                    query_keywords = query_keywords + '<field>:%22' + keyword + '%22+OR+'
+            if len(keywords) > 0:
+                query_keywords = '%28' + query_keywords + '%29'
+                query_keywords = query_keywords.replace(' ', '+')
+                query_keywords = query_keywords.replace('+OR+%29', '%29')
+                query = query + '+AND+' + query_keywords
+                query = '%28' + query + '%29'
 
 
         if 'fields' in parameters:
@@ -106,13 +111,18 @@ class Generic:
                 keywords = parameters['keywords']
                 query_keywords = ''
                 for keyword in keywords:
-                    for key, terms in keyword.items():
-                        for term in terms:
-                            query_term = '("' + key + '"AND"' + term + '")'
-                            query_keywords = query_keywords + query_term + 'OR'
-                query_keywords = '(' + query_keywords + ')'
-                query_keywords = query_keywords.replace('OR)', ')')
-                query = query + ' AND ' + query_keywords
+                    if not isinstance(keyword, str):
+                        for key, terms in keyword.items():
+                            for key, terms in keyword.items():
+                                for term in terms:
+                                    query_term = '("' + key + '"AND"' + term + '")'
+                                    query_keywords = query_keywords + query_term + 'OR'
+                    else:
+                        query_keywords = query_keywords + '<field>:%22' + keyword + '%22+OR+'
+                if len(keywords) > 0:
+                    query_keywords = '(' + query_keywords + ')'
+                    query_keywords = query_keywords.replace('OR)', ')')
+                    query = query + ' AND ' + query_keywords
             queries.append(query)
         return queries
 
@@ -157,26 +167,31 @@ class Generic:
                         for synonym in synonyms:
                             query_parameter = query_parameter + ' OR \"' + synonym + '\"'
                     query_parameter = query_parameter + ' OR '
-                query_parameter = '<field>:(' + query_parameter + ')'
-                query_parameter = query_parameter.replace(' OR )', ')')
-                if len(query) == 0:
-                    query = query + query_parameter
-                else:
-                    query = query + ' AND ' + query_parameter
+                if len(parameters_list) > 0:
+                    query_parameter = '<field>:(' + query_parameter + ')'
+                    query_parameter = query_parameter.replace(' OR )', ')')
+                    if len(query) == 0:
+                        query = query + query_parameter
+                    else:
+                        query = query + ' AND ' + query_parameter
         query = query.replace(' AND ()', '')
 
         if 'keywords' in parameters:
             keywords = parameters['keywords']
             query_keywords = ''
             for keyword in keywords:
-                for key, terms in keyword.items():
-                    for term in terms:
-                        query_term = '(\"' + key + '\" AND \"' + term + '\")'
-                        query_keywords = query_keywords + query_term + ' OR '
-            query_keywords = '<field>:(' + query_keywords + ')'
-            query_keywords = query_keywords.replace(' OR )', ')')
-            query = query + ' AND ' + query_keywords
-        query = '(' + query + ')'
+                if not isinstance(keyword, str):
+                    for key, terms in keyword.items():
+                        for term in terms:
+                            query_term = '(\"' + key + '\" AND \"' + term + '\")'
+                            query_keywords = query_keywords + query_term + ' OR '
+                else:
+                    query_keywords = query_keywords + '(\"' + keyword + '\") OR '
+            if len(keywords)>0:
+                query_keywords = '<field>:(' + query_keywords + ')'
+                query_keywords = query_keywords.replace(' OR )', ')')
+                query = query + ' AND ' + query_keywords
+                query = '(' + query + ')'
 
         if 'fields' in parameters:
             qf = ''
@@ -202,7 +217,7 @@ class Generic:
                         synonyms = parameters['synonyms'][element]
                         for synonym in synonyms:
                             elements.append(synonym)
-                query_elements=''
+                query_elements = ''
                 for element in elements:
                     els = element.replace('-', ' ').split(' ')
                     query_element = ''
@@ -211,9 +226,10 @@ class Generic:
                     query_element = 'AND(' + query_element + ')'
                     query_element = query_element.replace(',)', ')')
                     query_elements = query_elements + query_element + ','
-                query_elements = 'OR(' + query_elements + ')'
-                query_elements = query_elements.replace(',)', ')')
-                query = query + query_elements + ','
+                if len(parameters_list) > 0:
+                    query_elements = 'OR(' + query_elements + ')'
+                    query_elements = query_elements.replace(',)', ')')
+                    query = query + query_elements + ','
         query = 'AND(' + query + ')'
         query = query.replace(',)', ')')
         return query

@@ -2,13 +2,18 @@
 # Search by specified fields and types
 # Domains to retrieve in the search
 domains:
-- autonomous vehicle
-- health
-- industry
-- smart cities
-- multimedia
-- science
-- robotics
+#- autonomous vehicle
+#- health
+#- industry
+#- smart cities
+#- multimedia
+#- science
+#- robotics
+- oceanology
+- finance
+- space
+#- networking
+- e-commerce
 # Technology of interest applied to domains
 interests:
   - machine learning
@@ -19,7 +24,6 @@ keywords:
     - deploy
     - deployment
     - deployed
-    - implement
     - implemented
     - implementation
     - software
@@ -27,7 +31,6 @@ keywords:
     - deploy
     - deployment
     - deployed
-    - implement
     - implemented
     - implementation
     - software
@@ -35,7 +38,6 @@ keywords:
     - deploy
     - deployment
     - deployed
-    - implement
     - implemented
     - implementation
     - software
@@ -43,10 +45,67 @@ keywords:
     - deploy
     - deployment
     - deployed
-    - implement
     - implemented
     - implementation
     - software
+syntactic_filters:
+  - real-world:
+      - deploy
+      - deployment
+      - deployed
+      - implemented
+      - implementation
+      - software
+  - reality:
+      - deploy
+      - deployment
+      - deployed
+      - implemented
+      - implementation
+      - software
+  - real:
+      - deploy
+      - deployment
+      - deployed
+      - implemented
+      - implementation
+      - software
+  - physical world:
+      - deploy
+      - deployment
+      - deployed
+      - implemented
+      - implementation
+      - software
+semantic_filters:
+  - real-world:
+      - deploy
+      - deployment
+      - deployed
+      - implemented
+      - implementation
+      - software
+  - reality:
+      - deploy
+      - deployment
+      - deployed
+      - implemented
+      - implementation
+      - software
+  - real:
+      - deploy
+      - deployment
+      - deployed
+      - implemented
+      - implementation
+      - software
+  - physical world:
+      - deploy
+      - deployment
+      - deployed
+      - implemented
+      - implementation
+      - software
 # Search fields
 fields:
   - title
@@ -113,7 +172,24 @@ autonomous vehicle:
   - unmanned car
   - unmanned vehicle
   - unmanned aerial vehicle
-  - autonomous driving
+oceanology:
+  - ocean
+finance:
+  - banking
+space:
+  - aerospace
+  - spacecraft
+networking:
+  - computer network
+  - intranet
+  - internet
+  - LAN
+  - world wide web
+e-commerce:
+  - marketplace
+  - electronic commerce
+  - shoping
+  - buying
 machine learning:
   - ML
   - deep learning
@@ -132,6 +208,8 @@ databases:
   - core
   - semantic-scholar
   - project-academic
+dates: False
 since: 2022-01-01
 to: 2022-02-22
-file_name: doas_search
+search_date: 2022-03-16
+folder_name: doas_search

@@ -1,0 +1,63 @@
+# Queries in the format [domains OR synonyms] AND [interests OR synonyms] AND [keywords]
+# Search by specified fields and types
+# Domains to retrieve in the search
+domains:
+  - data oriented architecture
+  - data centric architecture
+  - data driven architecture
+interests:
+# Keywords of such applications
+keywords:
+#  - architecture
+syntactic_filters:
+  - data oriented:
+    - architecture
+    - design
+  - big data:
+    - architecture
+    - design
+  - data centric:
+    - architecture
+    - design
+  - data driven:
+    - architecture
+    - design
+semantic_filters:
+  - architecture
+  - DOA
+  - data oriented architecture
+  - data centric architecture
+  - data driven architecture
+# Search fields
+fields:
+  - title
+  - abstract
+types:
+  - conferences
+  - journals
+# Domains and interests can have synonyms
+data oriented architecture:
+  - data-oriented architecture
+  - big data oriented architecture
+data centric architecture:
+  - data-centric architecture
+  - data centric design
+  - data-centric design
+data driven architecture:
+  - data-driven architecture
+  - data driven design
+  - data-driven design
+databases:
+  #- ieeexplore
+  #- springer
+  #- arxiv
+  #- sciencedirect
+  #- scopus
+  #- core
+  - semantic-scholar
+  #- project-academic
+dates: False
+since: 1950-01-01
+to: 2022-02-24
+search_date: 2022-02-24
+folder_name: dod_systems_search
