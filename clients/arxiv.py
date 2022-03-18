@@ -12,9 +12,10 @@ format = 'utf-8'
 client = Generic()
 
 
-def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name):
-    file_name = 'domains/' + file_name + '_' + domain.lower().replace(' ', '_') + '_' + database + '_' + str(to).replace('-','') + '.csv'
-    if not exists('./papers/' + file_name):
+def get_papers(domain, interests, keywords, synonyms, fields, types, dates, since, to, file_name, search_date):
+    file_name = './papers/' + file_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
+                + domain.lower().replace(' ', '_') + '_' + database + '.csv'
+    if not exists(file_name):
         c_fields = []
         for field in fields:
             if field in client_fields:
@@ -23,7 +24,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, 
                     'fields': c_fields, 'types': types}
         req = create_request(parameters)
         raw_papers = client.request(req, 'get', {})
-        papers = process_raw_papers(raw_papers, since, to)
+        papers = process_raw_papers(raw_papers, dates, since, to)
         papers = papers.drop(columns=['author', 'comment', 'link', 'primary_category', 'category', 'doi',
                                       'journal_ref'], errors='ignore')
         util.save(file_name, papers, format)
@@ -37,8 +38,9 @@ def create_request(parameters):
     return req
 
 
-def process_raw_papers(raw_papers, since, to):
+def process_raw_papers(raw_papers, dates, since, to):
     papers = pd.read_xml(raw_papers, xpath='//feed:entry', namespaces={"feed": "http://www.w3.org/2005/Atom"})
     papers['database'] = database
-    papers = papers[(papers['published'] >= str(since)) & (papers['published'] <= str(to))]
+    if dates is True:
+        papers = papers[(papers['published'] >= str(since)) & (papers['published'] <= str(to))]
     return papers

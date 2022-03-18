@@ -1,0 +1,328 @@
+id,updated,published,title,summary,database
+http://arxiv.org/abs/2001.05703v1,2020-01-16T09:13:31Z,2020-01-16T09:13:31Z,"A Markerless Deep Learning-based 6 Degrees of Freedom PoseEstimation for
+  with Mobile Robots using RGB Data","Augmented Reality has been subject to various integration efforts within
+industries due to its ability to enhance human machine interaction and
+understanding. Neural networks have achieved remarkable results in areas of
+computer vision, which bear great potential to assist and facilitate an
+enhanced Augmented Reality experience. However, most neural networks are
+computationally intensive and demand huge processing power thus, are not
+suitable for deployment on Augmented Reality devices. In this work we propose a
+method to deploy state of the art neural networks for real time 3D object
+localization on augmented reality devices. As a result, we provide a more
+automated method of calibrating the AR devices with mobile robotic systems. To
+accelerate the calibration process and enhance user experience, we focus on
+fast 2D detection approaches which are extracting the 3D pose of the object
+fast and accurately by using only 2D input. The results are implemented into an
+Augmented Reality application for intuitive robot control and sensor data
+visualization. For the 6D annotation of 2D images, we developed an annotation
+tool, which is, to our knowledge, the first open source tool to be available.
+We achieve feasible results which are generally applicable to any AR device
+thus making this work promising for further research in combining high
+demanding neural networks with Internet of Things devices.",arxiv
+http://arxiv.org/abs/1903.02503v1,2019-03-06T17:24:11Z,2019-03-06T17:24:11Z,The AI Driving Olympics at NeurIPS 2018,"Despite recent breakthroughs, the ability of deep learning and reinforcement
+learning to outperform traditional approaches to control physically embodied
+robotic agents remains largely unproven. To help bridge this gap, we created
+the 'AI Driving Olympics' (AI-DO), a competition with the objective of
+evaluating the state of the art in machine learning and artificial intelligence
+for mobile robotics. Based on the simple and well specified autonomous driving
+and navigation environment called 'Duckietown', AI-DO includes a series of
+tasks of increasing complexity -- from simple lane-following to fleet
+management. For each task, we provide tools for competitors to use in the form
+of simulators, logs, code templates, baseline implementations and low-cost
+access to robotic hardware. We evaluate submissions in simulation online, on
+standardized hardware environments, and finally at the competition event. The
+first AI-DO, AI-DO 1, occurred at the Neural Information Processing Systems
+(NeurIPS) conference in December 2018. The results of AI-DO 1 highlight the
+need for better benchmarks, which are lacking in robotics, as well as improved
+mechanisms to bridge the gap between simulation and reality.",arxiv
+http://arxiv.org/abs/1802.02395v1,2018-02-07T12:01:13Z,2018-02-07T12:01:13Z,Evaluation of Deep Reinforcement Learning Methods for Modular Robots,"We propose a novel framework for Deep Reinforcement Learning (DRL) in modular
+robotics using traditional robotic tools that extend state-of-the-art DRL
+implementations and provide an end-to-end approach which trains a robot
+directly from joint states. Moreover, we present a novel technique to transfer
+these DLR methods into the real robot, aiming to close the simulation-reality
+gap. We demonstrate the robustness of the performance of state-of-the-art DRL
+methods for continuous action spaces in modular robots, with an empirical study
+both in simulation and in the real robot where we also evaluate how
+accelerating the simulation time affects the robot's performance. Our results
+show that extending the modular robot from 3 degrees-of-freedom (DoF), to 4
+DoF, does not affect the robot's learning. This paves the way towards training
+modular robots using DRL techniques.",arxiv
+http://arxiv.org/abs/1903.02090v2,2020-01-27T17:51:39Z,2019-03-05T22:21:13Z,Open-Sourced Reinforcement Learning Environments for Surgical Robotics,"Reinforcement Learning (RL) is a machine learning framework for artificially
+intelligent systems to solve a variety of complex problems. Recent years has
+seen a surge of successes solving challenging games and smaller domain
+problems, including simple though non-specific robotic manipulation and
+grasping tasks. Rapid successes in RL have come in part due to the strong
+collaborative effort by the RL community to work on common, open-sourced
+environment simulators such as OpenAI's Gym that allow for expedited
+development and valid comparisons between different, state-of-art strategies.
+In this paper, we aim to start the bridge between the RL and the surgical
+robotics communities by presenting the first open-sourced reinforcement
+learning environments for surgical robots, called dVRL[3]{dVRL available at
+https://github.com/ucsdarclab/dVRL}. Through the proposed RL environments,
+which are functionally equivalent to Gym, we show that it is easy to prototype
+and implement state-of-art RL algorithms on surgical robotics problems that aim
+to introduce autonomous robotic precision and accuracy to assisting,
+collaborative, or repetitive tasks during surgery. Learned policies are
+furthermore successfully transferable to a real robot. Finally, combining dVRL
+with the over 40+ international network of da Vinci Surgical Research Kits in
+active use at academic institutions, we see dVRL as enabling the broad surgical
+robotics community to fully leverage the newest strategies in reinforcement
+learning, and for reinforcement learning scientists with no knowledge of
+surgical robotics to test and develop new algorithms that can solve the
+real-world, high-impact challenges in autonomous surgery.",arxiv
+http://arxiv.org/abs/2011.08728v2,2020-11-30T06:30:25Z,2020-11-17T16:01:06Z,Fault-Aware Robust Control via Adversarial Reinforcement Learning,"Robots have limited adaptation ability compared to humans and animals in the
+case of damage. However, robot damages are prevalent in real-world
+applications, especially for robots deployed in extreme environments. The
+fragility of robots greatly limits their widespread application. We propose an
+adversarial reinforcement learning framework, which significantly increases
+robot robustness over joint damage cases in both manipulation tasks and
+locomotion tasks. The agent is trained iteratively under the joint damage cases
+where it has poor performance. We validate our algorithm on a three-fingered
+robot hand and a quadruped robot. Our algorithm can be trained only in
+simulation and directly deployed on a real robot without any fine-tuning. It
+also demonstrates exceeding success rates over arbitrary joint damage cases.",arxiv
+http://arxiv.org/abs/2002.11573v2,2020-10-02T17:02:25Z,2020-02-26T15:47:11Z,"Efficient reinforcement learning control for continuum robots based on
+  Inexplicit Prior Knowledge","Compared to rigid robots that are generally studied in reinforcement
+learning, the physical characteristics of some sophisticated robots such as
+soft or continuum robots are higher complicated. Moreover, recent reinforcement
+learning methods are data-inefficient and can not be directly deployed to the
+robot without simulation. In this paper, we propose an efficient reinforcement
+learning method based on inexplicit prior knowledge in response to such
+problems. We first corroborate the method by simulation and employed directly
+in the real world. By using our method, we can achieve active visual tracking
+and distance maintenance of a tendon-driven robot which will be critical in
+minimally invasive procedures. Codes are available at
+https://github.com/Skylark0924/TendonTrack.",arxiv
+http://arxiv.org/abs/1604.04384v2,2016-10-14T08:13:52Z,2016-04-15T07:35:32Z,The STRANDS Project: Long-Term Autonomy in Everyday Environments,"Thanks to the efforts of the robotics and autonomous systems community,
+robots are becoming ever more capable. There is also an increasing demand from
+end-users for autonomous service robots that can operate in real environments
+for extended periods. In the STRANDS project we are tackling this demand
+head-on by integrating state-of-the-art artificial intelligence and robotics
+research into mobile service robots, and deploying these systems for long-term
+installations in security and care environments. Over four deployments, our
+robots have been operational for a combined duration of 104 days autonomously
+performing end-user defined tasks, covering 116km in the process. In this
+article we describe the approach we have used to enable long-term autonomous
+operation in everyday environments, and how our robots are able to use their
+long run times to improve their own performance.",arxiv
+http://arxiv.org/abs/1703.04550v1,2017-03-13T20:08:39Z,2017-03-13T20:08:39Z,Sensor Fusion for Robot Control through Deep Reinforcement Learning,"Deep reinforcement learning is becoming increasingly popular for robot
+control algorithms, with the aim for a robot to self-learn useful feature
+representations from unstructured sensory input leading to the optimal
+actuation policy. In addition to sensors mounted on the robot, sensors might
+also be deployed in the environment, although these might need to be accessed
+via an unreliable wireless connection. In this paper, we demonstrate deep
+neural network architectures that are able to fuse information coming from
+multiple sensors and are robust to sensor failures at runtime. We evaluate our
+method on a search and pick task for a robot both in simulation and the real
+world.",arxiv
+http://arxiv.org/abs/1610.04213v4,2017-12-12T08:02:31Z,2016-10-13T19:39:58Z,Reset-free Trial-and-Error Learning for Robot Damage Recovery,"The high probability of hardware failures prevents many advanced robots
+(e.g., legged robots) from being confidently deployed in real-world situations
+(e.g., post-disaster rescue). Instead of attempting to diagnose the failures,
+robots could adapt by trial-and-error in order to be able to complete their
+tasks. In this situation, damage recovery can be seen as a Reinforcement
+Learning (RL) problem. However, the best RL algorithms for robotics require the
+robot and the environment to be reset to an initial state after each episode,
+that is, the robot is not learning autonomously. In addition, most of the RL
+methods for robotics do not scale well with complex robots (e.g., walking
+robots) and either cannot be used at all or take too long to converge to a
+solution (e.g., hours of learning). In this paper, we introduce a novel
+learning algorithm called ""Reset-free Trial-and-Error"" (RTE) that (1) breaks
+the complexity by pre-generating hundreds of possible behaviors with a dynamics
+simulator of the intact robot, and (2) allows complex robots to quickly recover
+from damage while completing their tasks and taking the environment into
+account. We evaluate our algorithm on a simulated wheeled robot, a simulated
+six-legged robot, and a real six-legged walking robot that are damaged in
+several ways (e.g., a missing leg, a shortened leg, faulty motor, etc.) and
+whose objective is to reach a sequence of targets in an arena. Our experiments
+show that the robots can recover most of their locomotion abilities in an
+environment with obstacles, and without any human intervention.",arxiv
+http://arxiv.org/abs/1912.01715v1,2019-12-02T12:07:23Z,2019-12-02T12:07:23Z,"Human-Robot Collaboration via Deep Reinforcement Learning of Real-World
+  Interactions","We present a robotic setup for real-world testing and evaluation of
+human-robot and human-human collaborative learning. Leveraging the
+sample-efficiency of the Soft Actor-Critic algorithm, we have implemented a
+robotic platform able to learn a non-trivial collaborative task with a human
+partner, without pre-training in simulation, and using only 30 minutes of
+real-world interactions. This enables us to study Human-Robot and Human-Human
+collaborative learning through real-world interactions. We present preliminary
+results, showing that state-of-the-art deep learning methods can take
+human-robot collaborative learning a step closer to that of humans interacting
+with each other.",arxiv
+http://arxiv.org/abs/1809.06716v1,2018-09-16T07:58:09Z,2018-09-16T07:58:09Z,A Fog Robotic System for Dynamic Visual Servoing,"Cloud Robotics is a paradigm where distributed robots are connected to cloud
+services via networks to access unlimited computation power, at the cost of
+network communication. However, due to limitations such as network latency and
+variability, it is difficult to control dynamic, human compliant service robots
+directly from the cloud. In this work, by leveraging asynchronous protocol with
+a heartbeat signal, we combine cloud robotics with a smart edge device to build
+a Fog Robotic system. We use the system to enable robust teleoperation of a
+dynamic self-balancing robot from the cloud. We first use the system to pick up
+boxes from static locations, a task commonly performed in warehouse logistics.
+To make cloud teleoperation more efficient, we deploy image based visual
+servoing (IBVS) to perform box pickups automatically. Visual feedbacks,
+including apriltag recognition and tracking, are performed in the cloud to
+emulate a Fog Robotic object recognition system for IBVS. We demonstrate the
+feasibility of real-time dynamic automation system using this cloud-edge
+hybrid, which opens up possibilities of deploying dynamic robotic control with
+deep-learning recognition systems in Fog Robotics. Finally, we show that Fog
+Robotics enables the self-balancing service robot to pick up a box
+automatically from a person under unstructured environments.",arxiv
+http://arxiv.org/abs/1903.04824v1,2019-03-12T10:28:36Z,2019-03-12T10:28:36Z,"Proceedings of the Fifth International Conference on Cloud and Robotics
+  (ICCR2018)","The 5th edition of the International Conference on Cloud and Robotics (ICCR
+2018 - http://cloudrobotics.info) will be held on November 12-14 2018 in Paris
+and Saint-Quentin, France. The conference is a co-event with GDR ALROB and the
+industry exposition Robonumerique (http://www.robonumerique.fr).
+  The domain of cloud robotics aims to converge robots with computation,
+storage and communication resources provided by the cloud. The cloud may
+complement robotic resources in several ways, including crowd-sourcing
+knowledge databases, context information, computational offloading or
+data-intensive information processing for artificial intelligence. Today, the
+paradigms of cloud/fog/edge computing propose software architecture solutions
+for robots to share computations or offload them to ambiant and networked
+resources. Yet, combining distant computations with the real time constraints
+of robotics is very challenging. As the challenges in this domain are
+multi-disciplinary and similar in other research areas, Cloud Robotics aims at
+building bridges among experts from academia and industry working in different
+fields, such as robotics, cyber-physical systems, automotive, aerospace,
+machine learning, artificial intelligence, software architecture, big data
+analytics, Internet-of-Things, networked control and distributed cloud systems.",arxiv
+http://arxiv.org/abs/2002.04349v1,2020-02-11T12:41:01Z,2020-02-11T12:41:01Z,Robot Navigation with Map-Based Deep Reinforcement Learning,"This paper proposes an end-to-end deep reinforcement learning approach for
+mobile robot navigation with dynamic obstacles avoidance. Using experience
+collected in a simulation environment, a convolutional neural network (CNN) is
+trained to predict proper steering actions of a robot from its egocentric local
+occupancy maps, which accommodate various sensors and fusion algorithms. The
+trained neural network is then transferred and executed on a real-world mobile
+robot to guide its local path planning. The new approach is evaluated both
+qualitatively and quantitatively in simulation and real-world robot
+experiments. The results show that the map-based end-to-end navigation model is
+easy to be deployed to a robotic platform, robust to sensor noise and
+outperforms other existing DRL-based models in many indicators.",arxiv
+http://arxiv.org/abs/2005.13857v1,2020-05-28T09:15:14Z,2020-05-28T09:15:14Z,"Deep Reinforcement learning for real autonomous mobile robot navigation
+  in indoor environments","Deep Reinforcement Learning has been successfully applied in various computer
+games [8]. However, it is still rarely used in real-world applications,
+especially for the navigation and continuous control of real mobile robots
+[13]. Previous approaches lack safety and robustness and/or need a structured
+environment. In this paper we present our proof of concept for autonomous
+self-learning robot navigation in an unknown environment for a real robot
+without a map or planner. The input for the robot is only the fused data from a
+2D laser scanner and a RGB-D camera as well as the orientation to the goal. The
+map of the environment is unknown. The output actions of an Asynchronous
+Advantage Actor-Critic network (GA3C) are the linear and angular velocities for
+the robot. The navigator/controller network is pretrained in a high-speed,
+parallel, and self-implemented simulation environment to speed up the learning
+process and then deployed to the real robot. To avoid overfitting, we train
+relatively small networks, and we add random Gaussian noise to the input laser
+data. The sensor data fusion with the RGB-D camera allows the robot to navigate
+in real environments with real 3D obstacle avoidance and without the need to
+fit the environment to the sensory capabilities of the robot. To further
+increase the robustness, we train on environments of varying difficulties and
+run 32 training instances simultaneously. Video: supplementary File / YouTube,
+Code: GitHub",arxiv
+http://arxiv.org/abs/2012.08174v2,2021-03-29T17:15:00Z,2020-12-15T09:49:22Z,"Towards open and expandable cognitive AI architectures for large-scale
+  multi-agent human-robot collaborative learning","Learning from Demonstration (LfD) constitutes one of the most robust
+methodologies for constructing efficient cognitive robotic systems. Despite the
+large body of research works already reported, current key technological
+challenges include those of multi-agent learning and long-term autonomy.
+Towards this direction, a novel cognitive architecture for multi-agent LfD
+robotic learning is introduced, targeting to enable the reliable deployment of
+open, scalable and expandable robotic systems in large-scale and complex
+environments. In particular, the designed architecture capitalizes on the
+recent advances in the Artificial Intelligence (AI) field, by establishing a
+Federated Learning (FL)-based framework for incarnating a multi-human
+multi-robot collaborative learning environment. The fundamental
+conceptualization relies on employing multiple AI-empowered cognitive processes
+(implementing various robotic tasks) that operate at the edge nodes of a
+network of robotic platforms, while global AI models (underpinning the
+aforementioned robotic tasks) are collectively created and shared among the
+network, by elegantly combining information from a large number of human-robot
+interaction instances. Regarding pivotal novelties, the designed cognitive
+architecture a) introduces a new FL-based formalism that extends the
+conventional LfD learning paradigm to support large-scale multi-agent
+operational settings, b) elaborates previous FL-based self-learning robotic
+schemes so as to incorporate the human in the learning loop and c) consolidates
+the fundamental principles of FL with additional sophisticated AI-enabled
+learning methodologies for modelling the multi-level inter-dependencies among
+the robotic tasks. The applicability of the proposed framework is explained
+using an example of a real-world industrial case study for agile
+production-based Critical Raw Materials (CRM) recovery.",arxiv
+http://arxiv.org/abs/1909.04812v2,2019-09-19T14:29:10Z,2019-09-11T01:49:14Z,Proceedings of the AI-HRI Symposium at AAAI-FSS 2019,"The past few years have seen rapid progress in the development of service
+robots. Universities and companies alike have launched major research efforts
+toward the deployment of ambitious systems designed to aid human operators
+performing a variety of tasks. These robots are intended to make those who may
+otherwise need to live in assisted care facilities more independent, to help
+workers perform their jobs, or simply to make life more convenient. Service
+robots provide a powerful platform on which to study Artificial Intelligence
+(AI) and Human-Robot Interaction (HRI) in the real world. Research sitting at
+the intersection of AI and HRI is crucial to the success of service robots if
+they are to fulfill their mission.
+  This symposium seeks to highlight research enabling robots to effectively
+interact with people autonomously while modeling, planning, and reasoning about
+the environment that the robot operates in and the tasks that it must perform.
+AI-HRI deals with the challenge of interacting with humans in environments that
+are relatively unstructured or which are structured around people rather than
+machines, as well as the possibility that the robot may need to interact
+naturally with people rather than through teach pendants, programming, or
+similar interfaces.",arxiv
+http://arxiv.org/abs/1611.01235v1,2016-11-04T01:10:07Z,2016-11-04T01:10:07Z,"A Self-Driving Robot Using Deep Convolutional Neural Networks on
+  Neuromorphic Hardware","Neuromorphic computing is a promising solution for reducing the size, weight
+and power of mobile embedded systems. In this paper, we introduce a realization
+of such a system by creating the first closed-loop battery-powered
+communication system between an IBM TrueNorth NS1e and an autonomous
+Android-Based Robotics platform. Using this system, we constructed a dataset of
+path following behavior by manually driving the Android-Based robot along steep
+mountain trails and recording video frames from the camera mounted on the robot
+along with the corresponding motor commands. We used this dataset to train a
+deep convolutional neural network implemented on the TrueNorth NS1e. The NS1e,
+which was mounted on the robot and powered by the robot's battery, resulted in
+a self-driving robot that could successfully traverse a steep mountain path in
+real time. To our knowledge, this represents the first time the TrueNorth NS1e
+neuromorphic chip has been embedded on a mobile platform under closed-loop
+control.",arxiv
+http://arxiv.org/abs/2012.01913v1,2020-12-03T13:51:05Z,2020-12-03T13:51:05Z,Transfer Learning as an Enabler of the Intelligent Digital Twin,"Digital Twins have been described as beneficial in many areas, such as
+virtual commissioning, fault prediction or reconfiguration planning. Equipping
+Digital Twins with artificial intelligence functionalities can greatly expand
+those beneficial applications or open up altogether new areas of application,
+among them cross-phase industrial transfer learning. In the context of machine
+learning, transfer learning represents a set of approaches that enhance
+learning new tasks based upon previously acquired knowledge. Here, knowledge is
+transferred from one lifecycle phase to another in order to reduce the amount
+of data or time needed to train a machine learning algorithm. Looking at common
+challenges in developing and deploying industrial machinery with deep learning
+functionalities, embracing this concept would offer several advantages: Using
+an intelligent Digital Twin, learning algorithms can be designed, configured
+and tested in the design phase before the physical system exists and real data
+can be collected. Once real data becomes available, the algorithms must merely
+be fine-tuned, significantly speeding up commissioning and reducing the
+probability of costly modifications. Furthermore, using the Digital Twin's
+simulation capabilities virtually injecting rare faults in order to train an
+algorithm's response or using reinforcement learning, e.g. to teach a robot,
+become practically feasible. This article presents several cross-phase
+industrial transfer learning use cases utilizing intelligent Digital Twins. A
+real cyber physical production system consisting of an automated welding
+machine and an automated guided vehicle equipped with a robot arm is used to
+illustrate the respective benefits.",arxiv
+http://arxiv.org/abs/2103.05293v1,2021-03-09T08:38:28Z,2021-03-09T08:38:28Z,"Decentralized Circle Formation Control for Fish-like Robots in the
+  Real-world via Reinforcement Learning","In this paper, the circle formation control problem is addressed for a group
+of cooperative underactuated fish-like robots involving unknown nonlinear
+dynamics and disturbances. Based on the reinforcement learning and cognitive
+consistency theory, we propose a decentralized controller without the knowledge
+of the dynamics of the fish-like robots. The proposed controller can be
+transferred from simulation to reality. It is only trained in our established
+simulation environment, and the trained controller can be deployed to real
+robots without any manual tuning. Simulation results confirm that the proposed
+model-free robust formation control method is scalable with respect to the
+group size of the robots and outperforms other representative RL algorithms.
+Several experiments in the real world verify the effectiveness of our RL-based
+approach for circle formation control.",arxiv
+http://arxiv.org/abs/2002.08242v1,2020-02-11T08:23:14Z,2020-02-11T08:23:14Z,AI Online Filters to Real World Image Recognition,"Deep artificial neural networks, trained with labeled data sets are widely
+used in numerous vision and robotics applications today. In terms of AI, these
+are called reflex models, referring to the fact that they do not self-evolve or
+actively adapt to environmental changes. As demand for intelligent robot
+control expands to many high level tasks, reinforcement learning and state
+based models play an increasingly important role. Herein, in computer vision
+and robotics domain, we study a novel approach to add reinforcement controls
+onto the image recognition reflex models to attain better overall performance,
+specifically to a wider environment range beyond what is expected of the task
+reflex models. Follow a common infrastructure with environment sensing and AI
+based modeling of self-adaptive agents, we implement multiple types of AI
+control agents. To the end, we provide comparative results of these agents with
+baseline, and an insightful analysis of their benefit to improve overall image
+recognition performance in real world.",arxiv

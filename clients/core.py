@@ -17,9 +17,10 @@ format = 'utf-8'
 client = Generic()
 
 
-def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name):
-    file_name = 'domains/' + file_name + '_' + domain.replace(' ', '_') + '_' + database + '_' + str(to).replace('-', '') + '.csv'
-    if not exists('./papers/' + file_name):
+def get_papers(domain, interests, keywords, synonyms, fields, types, dates, since, to, file_name, search_date):
+    file_name = './papers/' + file_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
+                + domain.lower().replace(' ', '_') + '_' + database + '.csv'
+    if not exists(file_name):
         c_fields = []
         for field in fields:
             if field in client_fields:
@@ -28,7 +29,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, 
                       'fields': c_fields, 'types': types}
         data = create_request(parameters)
         raw_papers = client.request(api_url, 'post', data)
-        total, papers = process_raw_papers(raw_papers, since, to)
+        total, papers = process_raw_papers(raw_papers, dates, since, to)
         if len(papers) != 0:
             util.save(file_name, papers, format)
         print(str(total))
@@ -45,7 +46,7 @@ def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, 
                 data = create_request(parameters)
                 raw_papers = client.request(api_url, 'post', data)
                 if raw_papers != {}:
-                    total, papers = process_raw_papers(raw_papers, since, to)
+                    total, papers = process_raw_papers(raw_papers, dates, since, to)
                     if len(papers) != 0:
                         util.save(file_name, papers, format)
         time.sleep(5)
@@ -61,7 +62,7 @@ def create_request(parameters):
     return reqs
 
 
-def process_raw_papers(raw_papers, since, to):
+def process_raw_papers(raw_papers, dates, since, to):
     raw_json = json.loads(raw_papers.content)
     total = raw_json[0]['totalHits']
     try:
@@ -73,9 +74,8 @@ def process_raw_papers(raw_papers, since, to):
                                   'language.id', 'language.name'], errors='ignore')
         papers['database'] = database
         if 'datePublished' in papers.columns:
-            papers = papers[(papers['datePublished'] >= str(since)) & (papers['datePublished'] <= str(to))]
-            if len(papers) > 0:
-                print("here")
+            if dates is True:
+                papers = papers[(papers['datePublished'] >= str(since)) & (papers['datePublished'] <= str(to))]
         else:
             papers = pd.DataFrame()
     except:

@@ -5,11 +5,9 @@ import os
 fr = 'utf-8'
 
 
-def manual_filter_by_abstract(file_name, to):
-    papers_file = './papers/' + file_name + '_to_check_papers_' + str(to).replace('-', '_') + '.csv'
-    output_file = file_name + '_filtered_by_abstract_' + str(to).replace('-', '_') + '.csv'
-    #update_accepted()
-    #add_publication_date()
+def manual_filter_by_abstract(folder_name, search_date, step):
+    papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + \
+                  '_semantic_filtered_papers.csv'
     unknown_papers = 1
     while unknown_papers > 0:
         to_check_papers = pd.read_csv(papers_file)
@@ -42,12 +40,14 @@ def manual_filter_by_abstract(file_name, to):
                               'title': to_check_paper['title'], 'abstract': to_check_paper['abstract'],
                               'status': 'not classified'}
                 paper_df = pd.DataFrame.from_dict(paper_dict)
-                util.save(output_file, paper_df, fr)
+                with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
+                          '_manually_filtered_by_abstract_papers.csv', 'a+', newline='', encoding=fr) as f:
+                    paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
             update_to_check_papers(to_check_papers, papers_file, paper_id, included)
 
 
 def update_accepted():
-    previous = pd.read_csv('./papers/to_check_papers_v1.csv')
+    previous = pd.read_csv('./papers/to_check_papers_1v1.csv')
     current = pd.read_csv('./papers/to_check_papers.csv')
     known = previous.loc[previous['status'] != 'unknown']
     for index, row in known.iterrows():
@@ -81,7 +81,8 @@ def get_update_date(to_check_papers, title):
 
 def print_paper_info(to_check_paper):
     print('*** New paper ***')
-    print(' :: Domain :: ' + str(list(to_check_paper['domain'])[0]).title() + ' ::')
+    if 'domain' in to_check_paper:
+        print(' :: Domain :: ' + str(list(to_check_paper['domain'])[0]).title() + ' ::')
     print(' :: Title :: ' + str(list(to_check_paper['title'])[0].replace('\n', '')).title() + ' :: \n')
     abstract = list(to_check_paper['abstract'])[0].replace('\n', ' ').replace('</p', '').split(' ')
     i = 0
@@ -106,7 +107,7 @@ def ask_manual_input():
         choice = input("Select: ")
         if choice == '1':
             included = 'included'
-            print('Algorithm type?')
+            """print('Algorithm type?')
             while algorithm_type not in ['supervised', 'unsupervised', 'semi-supervised', 'rl', 'not defined']:
                 print('(1) supervised')
                 print('(2) unsupervised')
@@ -179,7 +180,7 @@ def ask_manual_input():
                 if choice == '3':
                     architecture = 'hybrid'
                 if choice == '4':
-                    architecture = 'not defined'
+                    architecture = 'not defined'"""
         elif choice == '0':
             included = 'not included'
     return included, algorithm_type, training_schema, algorithm_goal, architecture
@@ -203,9 +204,8 @@ def update_to_check_papers_by_title(to_check_papers, title, included):
         to_check_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
-def manual_filter_by_full_text(file_name, to):
-    papers_file = './papers/' + file_name + '_filtered_by_abstract_' + str(to).replace('-', '_') + '.csv'
-    output_file = file_name + '_filtered_by_full_text_' + str(to).replace('-', '_') + '.csv'
+def manual_filter_by_full_text(folder_name, search_date, step):
+    papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + '_manually_filtered_by_abstract_papers.csv'
     not_classified = 1
     while not_classified > 0:
         filtered_by_abstract = pd.read_csv(papers_file)
@@ -233,8 +233,13 @@ def manual_filter_by_full_text(file_name, to):
                               'publication_date': to_check_paper['publication_date'],
                               'title': title, 'abstract': to_check_paper['abstract']}
                 paper_df = pd.DataFrame.from_dict(paper_dict)
-                util.save(output_file, paper_df, fr)
+                with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
+                          '_manually_filtered_by_full_text_papers.csv', 'a+', newline='', encoding=fr) as f:
+                    paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
             update_filtered_papers_by_abstract(filtered_by_abstract, papers_file, paper_id, t)
+    file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
+                '_manually_filtered_by_full_text_papers.csv'
+    remove_repeated(file_name)
 
 
 def print_paper_info_full_paper(to_check_paper):
@@ -277,10 +282,8 @@ def update_filtered_papers_by_abstract(filtered_papers, papers_file, paper_id, i
         filtered_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
-def remove_repeated(file_name, to):
-    papers_file = './papers/' + file_name + '_filtered_by_full_text_' + str(to).replace('-', '_') + '.csv'
-    output_file = './papers/' + file_name + '_final_papers_' + str(to).replace('-', '_') + '.csv'
-    papers = pd.read_csv(papers_file)
+def remove_repeated(file_name):
+    papers = pd.read_csv(file_name)
     papers['title_norm'] = papers['title'].str.lower()
     papers['title_norm'] = papers['title_norm'].str.replace(' ', '')
     papers = papers.drop_duplicates('title_norm')
@@ -290,5 +293,5 @@ def remove_repeated(file_name, to):
     papers['abstract_norm'] = papers['abstract_norm'].str.replace(' ', '')
     papers = papers.drop_duplicates('abstract_norm')
     papers = papers.drop(columns=['abstract_norm'])
-    with open(output_file, 'w', newline='', encoding=fr) as f:
+    with open(file_name, 'w', newline='', encoding=fr) as f:
         papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)

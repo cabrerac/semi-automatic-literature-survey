@@ -17,20 +17,22 @@ format = 'utf-8'
 client = Generic()
 
 
-def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name):
-    file_name = 'domains/' + file_name + '_' + domain.lower().replace(' ', '_') + '_' + database + '_' + str(to).replace('-','') + '.csv'
-    if not exists('./papers/' + file_name):
+def get_papers(domain, interests, keywords, synonyms, fields, types, dates, since, to, file_name, search_date):
+    file_name = './papers/' + file_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
+                + domain.lower().replace(' ', '_') + '_' + database + '.csv'
+    if not exists(file_name):
         c_fields = []
         for field in fields:
             if field in client_fields:
                 c_fields.append(client_fields[field])
         parameters = {'domains': [domain], 'interests': interests, 'synonyms': synonyms,
                     'fields': c_fields, 'types': types}
-        req = create_request(parameters, since, to)
+        req = create_request(parameters, dates, since, to)
         raw_papers = client.request(req, 'get', {})
         total, papers = process_raw_papers(raw_papers)
         if len(papers) != 0:
-            papers = retrieve.filter_by_keywords(papers, keywords)
+            #if len(keywords) > 0:
+                #papers = retrieve.filter_by_keywords(papers, keywords)
             util.save(file_name, papers, format)
         print(str(total))
         if total > max_papers:
@@ -43,18 +45,21 @@ def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, 
                 time.sleep(5)
                 global start
                 start = (max_papers * t)
-                req = create_request(parameters, since, to)
+                req = create_request(parameters, dates, since, to)
                 raw_papers = client.request(req, 'get', {})
                 if raw_papers != {}:
                     total, papers = process_raw_papers(raw_papers)
                     if len(papers) != 0:
-                        papers = retrieve.filter_by_keywords(papers, keywords)
+                        #papers = retrieve.filter_by_keywords(papers, keywords)
                         util.save(file_name, papers, format)
 
 
-def create_request(parameters, since, to):
+def create_request(parameters, dates, since, to):
     req = api_url
-    req = req.replace('<dates>', '(onlinedatefrom:'+ str(since) +'%20onlinedateto:' + str(to) + ')')
+    if dates is True:
+        req = req.replace('<dates>', '(onlinedatefrom:'+ str(since) +'%20onlinedateto:' + str(to) + ')')
+    else:
+        req = req.replace('<dates>', '')
     req = req + client.default_query(parameters)
     req = req + '&s='+str(start)+'&p='+str(max_papers)+'&api_key=' + api_access
     req = req.replace('%28', '(').replace('%29', ')').replace('+', '%20')
@@ -93,9 +98,12 @@ def process_raw_papers(raw_papers):
         nan_value = float("NaN")
         papers.replace("", nan_value, inplace=True)
         papers.dropna(how='all', axis=1, inplace=True)
-        if 'abstract' in papers:
-            papers.drop(papers.index[papers['abstract'] == ''], inplace=True)
+        if len(papers) > 0:
+            if 'abstract' in papers:
+                papers.drop(papers.index[papers['abstract'] == ''], inplace=True)
+            if 'onlineDate' not in papers and 'publicationDate' in papers:
+                papers['onlineDate'] = papers['publicationDate']
+            return total, papers
         else:
-            print('here')
-        return total, papers
+            return 0, {}
     return 0, {}

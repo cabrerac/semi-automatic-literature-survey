@@ -15,15 +15,16 @@ max_papers = 10000
 format = 'utf-8'
 
 
-def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name):
-    file_name = 'domains/' + file_name + '_' + domain.replace(' ', '_') + '_' + database + '_' + str(to).replace('-', '') + '.csv'
-    if not exists('./papers/' + file_name):
+def get_papers(domain, interests, keywords, synonyms, fields, types, dates, since, to, file_name, search_date):
+    file_name = './papers/' + file_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
+                + domain.lower().replace(' ', '_') + '_' + database + '.csv'
+    if not exists(file_name):
         parameters = {'domains': [domain], 'interests': interests, 'keywords': keywords, 'synonyms': synonyms,
                       'types': types}
         query = create_request(parameters)
         req = api_url.replace('<query>', query).replace('<max_papers>', str(max_papers))
         raw_papers = client.request(req, 'retrieve', {})
-        papers = process_raw_papers(raw_papers, since, to)
+        papers = process_raw_papers(raw_papers, dates, since, to)
         if len(papers) != 0:
             papers = retrieve.filter_by_keywords(papers, keywords)
             util.save(file_name, papers, format)
@@ -34,7 +35,7 @@ def create_request(parameters):
     return query
 
 
-def process_raw_papers(raw_papers, since, to):
+def process_raw_papers(raw_papers, dates, since, to):
     papers = pd.DataFrame()
     if raw_papers != {}:
         raw_json = json.loads(raw_papers)
@@ -50,7 +51,8 @@ def process_raw_papers(raw_papers, since, to):
         papers['title'] = p['Ti']
         papers['abstract'] = get_abstracts(abstracts)
         papers['database'] = database
-        papers = papers[(papers['publication_date'] >= str(since)) & (papers['publication_date'] <= str(to))]
+        if dates is True:
+            papers = papers[(papers['publication_date'] >= str(since)) & (papers['publication_date'] <= str(to))]
     return papers
 
 

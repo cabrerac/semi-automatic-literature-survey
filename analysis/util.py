@@ -2,30 +2,48 @@ import yaml
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import numpy as np
+import os
+
+fr = 'utf-8'
 
 
 def read_parameters(parameters_file_name):
     with open(parameters_file_name) as file:
         parameters = yaml.load(file, Loader=yaml.FullLoader)
     domains = parameters['domains']
+    if domains is None:
+        domains = []
     interests = parameters['interests']
+    if interests is None:
+        interests = []
     keywords = parameters['keywords']
+    if keywords is None:
+        keywords = []
     fields = parameters['fields']
     types = parameters['types']
+    dates = parameters['dates']
     since = parameters['since']
     to = parameters['to']
-    file_name = parameters['file_name']
+    search_date = parameters['search_date']
+    folder_name = parameters['folder_name']
+    syntactic_filters = parameters['syntactic_filters']
+    semantic_filters = parameters['semantic_filters']
     synonyms = {}
     for domain in domains:
-        synonyms[domain] = parameters[domain]
+        if domain in parameters:
+            synonyms[domain] = parameters[domain]
     for interest in interests:
-        synonyms[interest] = parameters[interest]
+        if interest in parameters:
+            synonyms[interest] = parameters[interest]
     databases = parameters['databases']
-    return domains, interests, keywords, synonyms, fields, types, databases, since, to, file_name
+    return domains, interests, keywords, synonyms, fields, types, databases, dates, since, to, search_date, \
+           folder_name, syntactic_filters, semantic_filters
 
 
 def save(file_name, papers, format):
-    with open('./papers/' + file_name, 'a', newline='', encoding=format) as f:
+    os.makedirs(os.path.dirname(file_name), exist_ok=True)
+    with open(file_name, 'a', newline='', encoding=format) as f:
         papers.to_csv(f, encoding=format, index=False, header=f.tell() == 0)
 
 
@@ -167,5 +185,73 @@ def plot():
     print("8. Final papers year done!")
 
 
+def merge_papers(file1, file2, result):
+    df1 = pd.read_csv(file1)
+    df2 = pd.read_csv(file2)
+    df_result = pd.concat([df1, df2])
+    df_result['title'] = df_result['title'].str.lower()
+    df_result = df_result.drop_duplicates('title')
+    df_result['doi'] = df_result['doi'].str.lower()
+    df_result['doi'].replace(r'\s+', 'nan', regex=True)
+    nan_doi = df_result.loc[df_result['doi'] == 'nan']
+    df_result = df_result.drop_duplicates('doi')
+    df_result = df_result.append(nan_doi)
+    df_result['id'] = list(range(1, len(df_result) + 1))
+    with open(result, 'a+', newline='', encoding=fr) as f:
+        df_result.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
+def pass_papers(file1, file2, result):
+    """df1 = pd.read_csv(file1)
+    df2 = pd.read_csv(file2)
+    included_papers = 0
+    for index1, row1 in df1.iterrows():
+        if row1['status'] == 'included':
+            for index2, row2 in df2.iterrows():
+                if row1['title'] == row2['title']:
+                    included_papers = included_papers + 1
+                    paper_dict = [{'id': str(included_papers), 'doi': row2['doi'],
+                                  'publisher': row2['publisher'], 'database': row2['database'],
+                                  'url': row2['url'], 'domain': row2['domain'],
+                                  'publication_date': row2['publication_date'],
+                                  'algorithm_type': '', 'training_schema': '',
+                                  'algorithm_goal': '', 'architecture': '',
+                                  'title': row2['title'], 'abstract': row2['abstract'],
+                                  'status': row2['status']}]
+                    paper_df = pd.DataFrame(paper_dict)
+                    with open(result, 'a+', newline='', encoding=fr) as f:
+                        paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)"""
+    df1 = pd.read_csv(file1)
+    included_papers = 0
+    for index1, row1 in df1.iterrows():
+        if row1['status'] == 'experiments' or row1['status'] == 'architecture':
+            included_papers = included_papers + 1
+            paper_dict = [{'id': str(included_papers), 'type': row1['status'], 'doi': row1['doi'],
+                           'publisher': row1['publisher'], 'database': row1['database'],
+                           'url': row1['url'], 'domain': row1['domain'],
+                           'publication_date': row1['publication_date'],
+                           'title': row1['title'], 'abstract': row1['abstract']}]
+            paper_df = pd.DataFrame(paper_dict)
+            with open(result, 'a+', newline='', encoding=fr) as f:
+                paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+
+
+def remove_repeated(file):
+    df = pd.read_csv(file)
+    df['title'] = df['title'].str.lower()
+    df = df.drop_duplicates('title')
+    df['abstract'].replace('', np.nan, inplace=True)
+    df.dropna(subset=['abstract'], inplace=True)
+    df['title'].replace('', np.nan, inplace=True)
+    df.dropna(subset=['title'], inplace=True)
+    with open(file, 'w', newline='', encoding=fr) as f:
+        df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+
+
+def update_to_check_papers_by_title(to_check_papers, title, included, result):
+    for index, row in to_check_papers.iterrows():
+        if row['title'] == title:
+            row['status'] = included
+            to_check_papers.loc[index] = row
+    with open(result, 'w', newline='', encoding=fr) as f:
+        to_check_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)

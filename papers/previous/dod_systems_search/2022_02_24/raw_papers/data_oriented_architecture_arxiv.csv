@@ -1,0 +1,29 @@
+id,updated,published,title,summary,database
+http://arxiv.org/abs/1706.03968v2,2017-06-14T13:58:32Z,2017-06-13T09:32:37Z,Asynchronous Graph Pattern Matching on Multiprocessor Systems,"Pattern matching on large graphs is the foundation for a variety of
+application domains. Strict latency requirements and continuously increasing
+graph sizes demand the usage of highly parallel in-memory graph processing
+engines that need to consider non-uniform memory access (NUMA) and concurrency
+issues to scale up on modern multiprocessor systems. To tackle these aspects,
+graph partitioning becomes increasingly important. Hence, we present a
+technique to process graph pattern matching on NUMA systems in this paper. As a
+scalable pattern matching processing infrastructure, we leverage a
+data-oriented architecture that preserves data locality and minimizes
+concurrency-related bottlenecks on NUMA systems. We show in detail, how graph
+pattern matching can be asynchronously processed on a multiprocessor system.",arxiv
+http://arxiv.org/abs/1310.5488v1,2013-10-21T10:20:28Z,2013-10-21T10:20:28Z,"A practical approach to ontology-enabled control systems for
+  astronomical instrumentation","Even though modern service-oriented and data-oriented architectures promise
+to deliver loosely coupled control systems, they are inherently brittle as they
+commonly depend on a priori agreed interfaces and data models. At the same
+time, the Semantic Web and a whole set of accompanying standards and tools are
+emerging, advocating ontologies as the basis for knowledge exchange. In this
+paper we aim to identify a number of key ideas from the myriad of
+knowledge-based practices that can readily be implemented by control systems
+today. We demonstrate with a practical example (a three-channel imager for the
+Mercator Telescope) how ontologies developed in the Web Ontology Language (OWL)
+can serve as a meta-model for our instrument, covering as many engineering
+aspects of the project as needed. We show how a concrete system model can be
+built on top of this meta-model via a set of Domain Specific Languages (DSLs),
+supporting both formal verification and the generation of software and
+documentation artifacts. Finally we reason how the available semantics can be
+exposed at run-time by adding a ""semantic layer"" that can be browsed, queried,
+monitored etc. by any OPC UA-enabled client.",arxiv

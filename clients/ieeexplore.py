@@ -16,9 +16,10 @@ format = 'utf-8'
 client = Generic()
 
 
-def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name):
-    file_name = 'domains/' + file_name + '_' + domain.lower().replace(' ', '_') + '_' + database + '_' + str(to).replace('-', '') + '.csv'
-    if not exists('./papers/' + file_name):
+def get_papers(domain, interests, keywords, synonyms, fields, types, dates, since, to, file_name, search_date):
+    file_name = './papers/' + file_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
+                + domain.lower().replace(' ', '_') + '_' + database + '.csv'
+    if not exists(file_name):
         c_fields = []
         for field in fields:
             if field in client_fields:
@@ -39,13 +40,13 @@ def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, 
                     print(str(current_request))
                     papers = []
                     start_record = 1
-                    raw_papers = request(query, field, t, start_record, str(since.year))
+                    raw_papers = request(query, field, t, start_record, dates, str(since.year))
                     if raw_papers != {}:
                         total, papers = process_raw_data(raw_papers, papers)
                         if total > max_papers:
                             while len(papers) < total:
                                 start_record = start_record + max_papers
-                                raw_papers = request(query, field, t, start_record, str(since.year))
+                                raw_papers = request(query, field, t, start_record, dates, str(since.year))
                                 if raw_papers != {}:
                                     total, papers = process_raw_data(raw_papers, papers)
                         if len(papers) > 0:
@@ -59,9 +60,10 @@ def create_request(parameters, first_parameter):
     return queries
 
 
-def request(query, field, t, start_record, year):
+def request(query, field, t, start_record, dates, year):
     client_ieee = XPLORE(api_access)
-    client_ieee.publicationYear(year)
+    if dates is True:
+        client_ieee.publicationYear(year)
     client_ieee.searchField(field, query)
     client_ieee.resultsFilter("content_type", t)
     client_ieee.startingResult(start_record)

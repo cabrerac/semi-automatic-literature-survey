@@ -3,66 +3,81 @@ from analysis import retrieve
 from analysis import semantic_analyser
 from analysis import manual
 
+# Reading search parameters and getting papers from databases
+print('Reading parameters file...')
+domains, interests, keywords, synonyms, fields, types, databases, dates, since, to, search_date, folder_name, \
+syntactic_filters, semantic_filters = util.read_parameters('parameters_doa.yaml')
 
-# 1. Reading search parameters
-print('1. Reading parameters file...')
-domains, interests, keywords, synonyms, fields, types, databases, since, to, file_name = util.read_parameters(
-    'parameters_doa.yaml')
 
-
-# 2. Getting papers from databases
+# 0. Getting papers from databases
 #print('2. Getting all papers...')
-#retrieve.get_papers(domains, interests, keywords, synonyms, fields, types, file_name, since, to)
+#retrieve.get_papers(domains, interests, keywords, synonyms, fields, types, folder_name, dates, since, to, search_date)
 
 
-# 3. Preprocessing papers
-#print('3. Preprocessing papers...')
-#retrieve.preprocess(domains, databases, file_name, since, to)
+# 1. Preprocessing papers
+#print('1. Preprocessing papers...')
+#retrieve.preprocess(domains, databases, folder_name, search_date, since, to, 1)
 
 
-# 4. Filtering papers by abstract
-#print('4. Filtering papers by abstract...')
-#retrieve.filter_papers(keywords, file_name, to)
+# 2. Syntactic filter by abstract
+#print('2. Syntactic filter by abstract...')
+#retrieve.filter_papers(syntactic_filters, folder_name, search_date, 2)
 
 
-# 5. Getting papers to check based on semantic analysis
-#print('5. Getting to check papers...')
-#semantic_analyser.get_to_check_papers(keywords, file_name, to)
-
-# 6. Manual filtering of papers to check
-#print('6. Manual filtering of papers to check...')
-#manual.manual_filter_by_abstract(file_name, to)
+# 3. Semantic filter by abstract
+#print('3. Semantic filter by abstract')
+#semantic_analyser.get_to_check_papers(semantic_filters, folder_name, search_date, 3)
 
 
-# 7. Manual filtering by full paper
-#print('7. Manual filtering by full paper...')
-#manual.manual_filter_by_full_text(file_name, to)
-#manual.remove_repeated(file_name, to)
+# 4. Manual filtering by abstract
+print('4. Manual filtering by abstract...')
+manual.manual_filter_by_abstract(folder_name, search_date, 4)
+
+# 5. Manual filtering by full paper
+print('5. Manual filtering by full paper...')
+manual.manual_filter_by_full_text(folder_name, search_date, 5)
+
+#f1 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/4_manually_filtered_by_abstract_papers.csv'
+#f2 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/passed/5_manually_filtered_by_full_text_papers.csv'
+#result = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/5_manually_filtered_by_full_text_papers.csv'
+#util.pass_papers(f1, result, result)
+#util.remove_repeated(result)
+
+# Snowballing process and repeat filters on citing papers
+
+# 6. Snowballing
+#print('6. Snowballing...')
+#retrieve.get_citations(folder_name, search_date, 6)
 
 
-# 8. Snowballing
-#print('8. Snowballing...')
-#retrieve.get_citations(file_name, to)
-
-# 9. Filtering citation papers by abstract
-#print('9. Filtering citation papers by abstract...')
-#retrieve.filter_papers(keywords, './papers/citations_papers.csv', 'filtered_citations_papers.csv')
-
-# 10. Getting citations papers to check based on semantic analysis
-#print('10. Getting to check citations papers...')
-#semantic_analyser.get_to_check_papers(keywords, './papers/filtered_citations_papers.csv',
-#                                      'to_check_citations_papers.csv')
-
-# 11. Manual filtering of citations papers to check
-#print('11. Manual filtering of citations papers to check...')
-#manual.manual_filter_by_abstract('./papers/to_check_citations_papers.csv', 'filtered_by_abstract_citations.csv')
+# 7. Syntactic filter by abstract
+#print('7. Syntactic filter by abstract...')
+#retrieve.filter_papers(syntactic_filters, folder_name, search_date, 7)
 
 
-# 12. Manual filtering by full citations paper
-#print('12. Manual filtering by full paper...')
-#manual.manual_filter_by_full_text('./papers/filtered_by_abstract_citations.csv', 'filtered_by_full_text_citations.csv')
+# 8. Semantic filter by abstract
+#print('8. Getting to check citations papers...')
+#semantic_analyser.get_to_check_papers(semantic_filters, folder_name, search_date, 8)
 
 
-# 13. Plot results
-print('13. Plotting results...')
-util.plot()
+# 9. Manual filtering by abstract
+#print('9. Manual filtering by abstract...')
+#manual.manual_filter_by_abstract(folder_name, search_date, 9)
+
+
+# 10. Manual filtering by full paper
+#print('10. Manual filtering by full paper...')
+#manual.manual_filter_by_full_text(folder_name, search_date, 10)
+
+
+# 11. Merge papers
+#print('11. Merge papers...')
+#f1 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/5_manually_filtered_by_full_text_papers.csv'
+#f2 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/10_manually_filtered_by_full_text_papers.csv'
+#result = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/11_final_papers.csv'
+#util.merge_papers(f1, f2, result)
+
+
+# 12. Plot results
+#print('12. Plotting results...')
+#util.plot()

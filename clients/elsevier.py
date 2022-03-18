@@ -21,7 +21,7 @@ clientG = Generic()
 api_url = 'https://api.elsevier.com/content/<type>/'
 
 
-def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, file_name):
+def get_papers(domain, interests, keywords, synonyms, fields, types, dates, since, to, file_name, search_date):
     reqs = []
     for database in databases:
         c_fields = []
@@ -32,15 +32,17 @@ def get_papers(domain, interests, keywords, synonyms, fields, types, since, to, 
                       'fields': c_fields, 'types': types}
         reqs.append(create_request(database, parameters))
     for req in reqs:
-        file_name = 'domains/' + file_name + '_' + domain.replace(' ', '_') + '_' + req[1] + '_' + str(to).replace('-', '') + '_raw.csv'
-        if not exists('./papers/' + file_name):
+        file_name = './papers/' + file_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
+                    + domain.lower().replace(' ', '_') + '_' + database + '_raw.csv'
+        if not exists(file_name):
             print('Getting papers from: ' + req[1])
             print('Request length: ' + str(len(req[0])))
             doc_srch = ElsSearch(req[0], req[1])
             doc_srch.execute(client, get_all=True)
             print("doc_srch has", len(doc_srch.results), "results.")
             results = doc_srch.results_df
-            results = results[(results['prism:coverDate'] >= str(since)) & (results['prism:coverDate'] <= str(to))]
+            if dates is True:
+                results = results[(results['prism:coverDate'] >= str(since)) & (results['prism:coverDate'] <= str(to))]
             util.save(file_name, results, format)
 
 
@@ -55,11 +57,12 @@ def create_request(database, parameters):
     return req
 
 
-def process_raw_papers(domain, file_name, to):
+def process_raw_papers(domain, file_name, to, search_date):
     for database in databases:
-        file_name = 'domains/' + file_name + '_' + domain.replace(' ', '_') + '_' + database + '_' + str(to).replace('-', '') + '_raw.csv'
-        if exists('./papers/' + file_name):
-            raw_papers = pd.read_csv('./papers/' + file_name)
+        file_name = './papers/' + file_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
+                    + domain.lower().replace(' ', '_') + '_' + database + '_raw.csv'
+        if exists(file_name):
+            raw_papers = pd.read_csv(file_name)
             file_name_sciencedirect = file_name.replace('_raw.csv', '.csv').replace('scopus', 'sciencedirect')
             if not exists('./papers/'+file_name_sciencedirect):
                 papers = pd.DataFrame(columns=['id', 'type', 'publication', 'publisher', 'publication_date', 'database', 'title',
