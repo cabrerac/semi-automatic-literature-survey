@@ -1,119 +1,90 @@
-# Queries in the format [domains OR synonyms] AND [interests OR synonyms] AND [keywords]
-# Search by specified fields and types
-# Domains to retrieve in the search
-domains:
-#- autonomous vehicle
-#- health
-#- industry
-#- smart cities
-#- multimedia
-#- science
-#- robotics
-- oceanology
-- finance
-- space
-#- networking
-- e-commerce
-# Technology of interest applied to domains
-interests:
-  - machine learning
-  - artificial intelligence
-# Keywords of such applications
-keywords:
-  - real-world:
-    - deploy
-    - deployment
-    - deployed
-    - implemented
-    - implementation
-    - software
-  - reality:
-    - deploy
-    - deployment
-    - deployed
-    - implemented
-    - implementation
-    - software
-  - real:
-    - deploy
-    - deployment
-    - deployed
-    - implemented
-    - implementation
-    - software
-  - physical world:
-    - deploy
-    - deployment
-    - deployed
-    - implemented
-    - implementation
-    - software
+# List of queries in the format <query_name>: "<query_value>". & (and operator) ¦ (or operator).
+queries:
+  - autonomous vehicle: "'autonomous vehicle' & 'machine learning' & ('real-world' & 'deploy')"
+  - health: "'health' & 'machine learning' & ('real-world' & 'deploy')"
+  - industry: "'industry' & 'machine learning' & ('real-world' & 'deploy')"
+  - smart cities: "'smart cities' & 'machine learning' & ('real-world' & 'deploy')"
+  - multimedia: "'multimedia' & 'machine learning' & ('real-world' & 'deploy')"
+  - science: "'science' & 'machine learning' & ('real-world' & 'deploy')"
+  - robotics: "'robotics' & 'machine learning' & ('real-world' & 'deploy')"
+  - finance: "'finance' & 'machine learning' & ('real-world' & 'deploy')"
+  - e-commerce: "'e-commerce' & 'machine learning' & ('real-world' & 'deploy')"
+# There are some databases (e.g., springer) that do not allow search by abstract. Some keywords in the queries might
+# be too restrictive in such a case. So, we should specify which segments can be optional in the queries
+# when searching just in title and keywords.
+# List of optional segments in the format <query_name>: "[optional_segments]".
+optionals:
+  - autonomous vehicle:
+    - " & ('real-world' & 'deploy')"
+  - health:
+    - " & ('real-world' & 'deploy')"
+  - industry:
+    - " & ('real-world' & 'deploy')"
+  - smart cities:
+    - " & ('real-world' & 'deploy')"
+  - multimedia:
+    - " & ('real-world' & 'deploy')"
+  - science:
+    - " & ('real-world' & 'deploy')"
+  - robotics:
+    - " & ('real-world' & 'deploy')"
+  - finance:
+    - " & ('real-world' & 'deploy')"
+  - e-commerce:
+    - " & ('real-world' & 'deploy')"
+# Some APIs do not provide the functionality to filter by more specific keywords in the abstract. The syntactic filters
+# are keywords that must appear in the abstract of the papers to review. One filter can be composed by multiple
+# keywords in conjunction. Synonyms are also used for each keyword in disjunction. If you do not want to use syntactic
+# filters comment the whole block.
 syntactic_filters:
-  - real-world:
-      - deploy
-      - deployment
-      - deployed
-      - implemented
-      - implementation
-      - software
-  - reality:
-      - deploy
-      - deployment
-      - deployed
-      - implemented
-      - implementation
-      - software
-  - real:
-      - deploy
-      - deployment
-      - deployed
-      - implemented
-      - implementation
-      - software
-  - physical world:
-      - deploy
-      - deployment
-      - deployed
-      - implemented
-      - implementation
-      - software
+  - machine learning
+  - real-world
+  - deploy
+# Semantic filters are used to classify the papers and decide which ones to exclude according to their abstract content
+# The papers that belong to the excluded classes are removed. The semantic filter uses the lbl2vec algorithm described
+# here: https://towardsdatascience.com/unsupervised-text-classification-with-lbl2vec-6c5e040354de.
+# If you do not want to use semantic filters please comment the whole block.
 semantic_filters:
-  - real-world:
-      - deploy
-      - deployment
-      - deployed
-      - implemented
+  - classes:
+    - system:
+      - architecture
+      - framework
+      - platform
+      - tool
+      - prototype
+    - software:
+      - develop
+      - engineering
+      - methodology
+      - architecture
+      - design
       - implementation
-      - software
-  - reality:
-      - deploy
-      - deployment
-      - deployed
-      - implemented
-      - implementation
-      - software
-  - real:
-      - deploy
-      - deployment
-      - deployed
-      - implemented
-      - implementation
-      - software
-  - physical world:
-      - deploy
-      - deployment
-      - deployed
-      - implemented
-      - implementation
-      - software
-# Search fields
+      - open
+      - source
+      - application
+    - deploy:
+      - production
+      - real
+      - world
+      - embed
+      - physical
+      - cloud
+      - edge
+      - infrastructure
+    - simulation:
+      - synthetic
+      - simulate
+  - excluded_classes:
+      - simulation
+# Search fields for the APIs. Options: title and abstract.
 fields:
   - title
   - abstract
+# Publication types
 types:
   - conferences
   - journals
-# Domains and interests can have synonyms
+# Synonyms of the keywords
 health:
   - healthcare
   - health care
@@ -163,6 +134,8 @@ science:
   - materials
   - astronomy
   - climatology
+  - oceanology
+  - space
 autonomous vehicle:
   - self-driving vehicle
   - self-driving car
@@ -172,13 +145,8 @@ autonomous vehicle:
   - unmanned car
   - unmanned vehicle
   - unmanned aerial vehicle
-oceanology:
-  - ocean
 finance:
   - banking
-space:
-  - aerospace
-  - spacecraft
 networking:
   - computer network
   - intranet
@@ -193,23 +161,35 @@ e-commerce:
 machine learning:
   - ML
   - deep learning
-  - neural networks
+  - neural network
   - reinforcement learning
   - supervised learning
   - unsupervised learning
-artificial intelligence:
+  - artificial intelligence
   - AI
+deploy:
+  - deployment
+  - deployed
+  - implemented
+  - implementation
+  - software
+real-world:
+  - reality
+  - real
+  - physical world
+# Databases where to search for papers
 databases:
-  - ieeexplore
-  - springer
   - arxiv
+  - springer
+  - ieeexplore
   - sciencedirect
-  - scopus
   - core
-  - semantic-scholar
-  - project-academic
+  - semantic_scholar
+# If considering search set dates to True and specify the time interval
 dates: False
 since: 2022-01-01
 to: 2022-02-22
-search_date: 2022-03-16
+# Date of the search and folder name where the output will be stored
+#search_date: 2021-12-03
+search_date: 2022-07-04
 folder_name: doas_search

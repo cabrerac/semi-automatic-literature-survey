@@ -2,82 +2,92 @@ from analysis import util
 from analysis import retrieve
 from analysis import semantic_analyser
 from analysis import manual
-
-# Reading search parameters and getting papers from databases
-print('Reading parameters file...')
-domains, interests, keywords, synonyms, fields, types, databases, dates, since, to, search_date, folder_name, \
-syntactic_filters, semantic_filters = util.read_parameters('parameters_doa.yaml')
+import sys
 
 
-# 0. Getting papers from databases
-#print('2. Getting all papers...')
-#retrieve.get_papers(domains, interests, keywords, synonyms, fields, types, folder_name, dates, since, to, search_date)
+def main(parameters_file):
+
+    # Reading search parameters and getting papers from databases
+    queries, optionals, syntactic_filters, semantic_filters, fields, types, synonyms, databases, dates, since, to, \
+        search_date, folder_name = util.read_parameters(parameters_file)
+
+    # Getting papers from databases
+    step = 0
+    print(str(step) + '. Getting all papers...')
+    retrieve.get_papers(queries, optionals, synonyms, databases, fields, types, folder_name, dates, since, to,
+                        search_date)
+
+    # Preprocessing papers
+    step = step + 1
+    print(str(step) + '. Preprocessing papers...')
+    file_name = retrieve.preprocess(queries, databases, folder_name, search_date, since, to, step)
+    print('Preprocessing results can be found at: ' + file_name)
+
+    # Syntactic filter by abstract
+    if len(syntactic_filters) > 0:
+        step = step + 1
+        print(str(step) + '. Syntactic filter by abstract...')
+        file_name = retrieve.filter_papers(syntactic_filters, synonyms, folder_name, search_date, step)
+        print('Syntactic filtering results can be found at: ' + file_name)
+
+    # Semantic filter by abstract
+    if len(semantic_filters) > 0:
+        step = step + 1
+        print(str(step) + '. Semantic filter by abstract...')
+        file_name = semantic_analyser.lbl2vec(semantic_filters, folder_name, search_date, step)
+        print('Semantic filtering results can be found at: ' + file_name)
+
+    # Manual filtering by abstract
+    step = step + 1
+    print(str(step) + '. Manual filtering by abstract...')
+    manual.manual_filter_by_abstract(folder_name, search_date, step)
+
+    # Manual filtering by full paper
+    step = step + 1
+    print(str(step) + '. Manual filtering by full paper...')
+    manual.manual_filter_by_full_text(folder_name, search_date, step)
+    merge_step_1 = step
+
+    # Snowballing process and apply filters on citing papers
+    # Snowballing
+    step = step + 1
+    print(str(step) + '. Snowballing...')
+    file_name = retrieve.get_citations(folder_name, search_date, step)
+    print('Snowballing results can be found at: ' + file_name)
+
+    # Syntactic filter by abstract
+    if len(syntactic_filters) > 0:
+        step = step + 1
+        print(str(step) + '. Syntactic filter by abstract snowballing papers...')
+        file_name = retrieve.filter_papers(syntactic_filters, folder_name, search_date, step)
+        print('Syntactic filtering results can be found at: ' + file_name)
+
+    # Semantic filter by abstract
+    if len(semantic_filters) > 0:
+        step = step + 1
+        print(str(step) + '. Semantic filter snowballing papers...')
+        file_name = semantic_analyser.get_to_check_papers(semantic_filters, folder_name, search_date, step)
+        print('Semantic filtering results can be found at: ' + file_name)
+
+    # Manual filtering by abstract
+    step = step + 1
+    print(str(step) + '. Manual filtering by abstract snowballing papers...')
+    manual.manual_filter_by_abstract(folder_name, search_date, step)
+
+    # Manual filtering by full paper
+    step = step + 1
+    print(str(step) + '. Manual filtering by full paper snowballing papers...')
+    manual.manual_filter_by_full_text(folder_name, search_date, step)
+    merge_step_2 = step
+
+    # Merge papers
+    print(str(step) + '. Merging papers...')
+    file_name = util.merge_papers(merge_step_1, merge_step_2, folder_name, search_date)
+    print('Merged papers can be found at: ' + file_name)
 
 
-# 1. Preprocessing papers
-#print('1. Preprocessing papers...')
-#retrieve.preprocess(domains, databases, folder_name, search_date, since, to, 1)
-
-
-# 2. Syntactic filter by abstract
-#print('2. Syntactic filter by abstract...')
-#retrieve.filter_papers(syntactic_filters, folder_name, search_date, 2)
-
-
-# 3. Semantic filter by abstract
-#print('3. Semantic filter by abstract')
-#semantic_analyser.get_to_check_papers(semantic_filters, folder_name, search_date, 3)
-
-
-# 4. Manual filtering by abstract
-print('4. Manual filtering by abstract...')
-manual.manual_filter_by_abstract(folder_name, search_date, 4)
-
-# 5. Manual filtering by full paper
-print('5. Manual filtering by full paper...')
-manual.manual_filter_by_full_text(folder_name, search_date, 5)
-
-#f1 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/4_manually_filtered_by_abstract_papers.csv'
-#f2 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/passed/5_manually_filtered_by_full_text_papers.csv'
-#result = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/5_manually_filtered_by_full_text_papers.csv'
-#util.pass_papers(f1, result, result)
-#util.remove_repeated(result)
-
-# Snowballing process and repeat filters on citing papers
-
-# 6. Snowballing
-#print('6. Snowballing...')
-#retrieve.get_citations(folder_name, search_date, 6)
-
-
-# 7. Syntactic filter by abstract
-#print('7. Syntactic filter by abstract...')
-#retrieve.filter_papers(syntactic_filters, folder_name, search_date, 7)
-
-
-# 8. Semantic filter by abstract
-#print('8. Getting to check citations papers...')
-#semantic_analyser.get_to_check_papers(semantic_filters, folder_name, search_date, 8)
-
-
-# 9. Manual filtering by abstract
-#print('9. Manual filtering by abstract...')
-#manual.manual_filter_by_abstract(folder_name, search_date, 9)
-
-
-# 10. Manual filtering by full paper
-#print('10. Manual filtering by full paper...')
-#manual.manual_filter_by_full_text(folder_name, search_date, 10)
-
-
-# 11. Merge papers
-#print('11. Merge papers...')
-#f1 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/5_manually_filtered_by_full_text_papers.csv'
-#f2 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/10_manually_filtered_by_full_text_papers.csv'
-#result = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/11_final_papers.csv'
-#util.merge_papers(f1, f2, result)
-
-
-# 12. Plot results
-#print('12. Plotting results...')
-#util.plot()
+if __name__ == "__main__":
+    if len(sys.argv) == 2:
+        main(sys.argv[1])
+    else:
+        print('Please provide the search parameters file path in the correct format...')

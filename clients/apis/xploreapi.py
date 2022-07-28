@@ -371,8 +371,7 @@ class XPLORE:
                 data = self.queryAPI(str1)
                 data = self.formatData(data)
             except urllib.error.HTTPError as ex:
-                print('Exception in request ::' + str(ex))
-                data = {}
+                data = {'exception': str(ex)}
             return data
 
 
