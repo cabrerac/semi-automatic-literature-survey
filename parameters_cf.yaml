@@ -1,0 +1,73 @@
+# Queries in the format [domains OR synonyms] AND [interests OR synonyms] AND [keywords]
+# Search by specified fields and types
+# Domains to retrieve in the search
+domains:
+- smart cities
+# Technology of interest applied to domains
+interests:
+  - competency framework
+# Keywords of such applications
+keywords:
+#  - innovation:
+#    - digital
+#    - responsible
+#    - ethical
+syntactic_filters:
+  - innovation:
+      - digital
+      - responsible
+      - ethical
+      - governance
+      - management
+  #- environment:
+  #    - built
+  #    - construction
+  #    - civil engineering
+semantic_filters:
+#  - innovation:
+#      - digital
+#      - responsible
+#      - ethical
+# Search fields
+fields:
+  - title
+  - abstract
+types:
+  - conferences
+  - journals
+# Domains and interests can have synonyms
+smart cities:
+  - sustainable city
+  - smart city
+  - digital city
+  - urban
+  - city
+  - cities
+built environment:
+  - civil engineering
+  - construction environment
+  - construction engineering
+competency framework:
+  - competence framework
+  - competencies framework
+  - competences framework
+city managers:
+  - city planners
+  - urban planners
+  - civil servants
+  - civic servants
+  - city authorities
+databases:
+  #- ieeexplore
+  # - springer
+  #- arxiv
+  #- sciencedirect
+  #- scopus
+  #- core
+  - semantic-scholar
+  #- project-academic
+dates: False
+since: 2022-01-01
+to: 2022-02-22
+search_date: 2022-06-07
+folder_name: cf_search

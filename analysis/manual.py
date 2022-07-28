@@ -4,10 +4,10 @@ import os
 
 fr = 'utf-8'
 
-
+# Manual filter by abstract
 def manual_filter_by_abstract(folder_name, search_date, step):
-    papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + \
-                  '_semantic_filtered_papers.csv'
+    papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + '_semantic_filtered_papers.csv'
+    file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + '_manually_filtered_by_abstract_papers.csv'
     unknown_papers = 1
     while unknown_papers > 0:
         to_check_papers = pd.read_csv(papers_file)
@@ -27,62 +27,28 @@ def manual_filter_by_abstract(folder_name, search_date, step):
               + str(unknown_papers) + ') :::')
         if len(to_check_papers.loc[to_check_papers['status'] == 'unknown']) > 0:
             to_check_paper = to_check_papers.loc[to_check_papers['status'] == 'unknown'].sample()
-            print_paper_info(to_check_paper)
+            print_paper_info(to_check_paper, file_name)
             included, algorithm_type, training_schema, algorithm_goal, architecture = ask_manual_input()
             paper_id = to_check_paper['id'].values[0]
             if included == 'included':
-                paper_dict = {'id': (included_papers + 1), 'doi': to_check_paper['doi'],
+                paper_dict = {'id': (included_papers + 1), 'status': 'unknown', 'doi': to_check_paper['doi'],
                               'publisher': to_check_paper['publisher'], 'database': to_check_paper['database'],
-                              'url': to_check_paper['url'], 'domain': to_check_paper['domain'],
-                              'publication_date': to_check_paper['publication_date'],
-                              'algorithm_type': algorithm_type, 'training_schema': training_schema,
-                              'algorithm_goal': algorithm_goal, 'architecture': architecture,
-                              'title': to_check_paper['title'], 'abstract': to_check_paper['abstract'],
-                              'status': 'not classified'}
+                              'query_name': to_check_paper['query_name'], 'query_value': to_check_paper['query_value'],
+                              'url': to_check_paper['url'], 'publication_date': to_check_paper['publication_date'],
+                              'title': to_check_paper['title'], 'abstract': to_check_paper['abstract']
+                              }
                 paper_df = pd.DataFrame.from_dict(paper_dict)
-                with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
-                          '_manually_filtered_by_abstract_papers.csv', 'a+', newline='', encoding=fr) as f:
+                with open(file_name, 'a+', newline='', encoding=fr) as f:
                     paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
-            update_to_check_papers(to_check_papers, papers_file, paper_id, included)
+            update_semantic_filtered_papers(to_check_papers, papers_file, paper_id, included)
 
 
-def update_accepted():
-    previous = pd.read_csv('./papers/to_check_papers_1v1.csv')
-    current = pd.read_csv('./papers/to_check_papers.csv')
-    known = previous.loc[previous['status'] != 'unknown']
-    for index, row in known.iterrows():
-        update_to_check_papers_by_title(current, row['title'], row['status'])
-
-
-def add_publication_date():
-    to_check = pd.read_csv('./papers/to_check_papers.csv')
-    manual = pd.read_csv('./papers/filtered_by_abstract.csv')
-    papers = []
-    for index, row in manual.iterrows():
-        row['publication_date'] = get_update_date(to_check, row['title'])
-        paper_dict = {'id': str(row['id']), 'doi': row['doi'],
-                      'publisher': row['publisher'], 'database': row['database'],
-                      'url': row['url'], 'domain': row['domain'],
-                      'publication_date': row['publication_date'],
-                      'algorithm_type': row['algorithm_type'], 'training_schema': row['training_schema'],
-                      'algorithm_goal': row['algorithm_goal'], 'architecture': row['architecture'],
-                      'title': row['title'], 'abstract': row['abstract']}
-        papers.append(paper_dict)
-    paper_df = pd.DataFrame.from_dict(papers)
-    util.save('filtered_by_abstract_updated.csv', paper_df, fr)
-
-
-def get_update_date(to_check_papers, title):
-    for index, row in to_check_papers.iterrows():
-        if row['title'] == title:
-            publication_date = row['publication_date']
-            return publication_date
-
-
-def print_paper_info(to_check_paper):
+def print_paper_info(to_check_paper, file_name):
+    print(' :: Results can be found at: ' + file_name + ' ::')
     print('*** New paper ***')
     if 'domain' in to_check_paper:
-        print(' :: Domain :: ' + str(list(to_check_paper['domain'])[0]).title() + ' ::')
+        print(' :: Query Name :: ' + str(list(to_check_paper['query_name'])[0]) + ' ::')
+        print(' :: Query Value :: ' + str(list(to_check_paper['query_value'])[0]) + ' ::')
     print(' :: Title :: ' + str(list(to_check_paper['title'])[0].replace('\n', '')).title() + ' :: \n')
     abstract = list(to_check_paper['abstract'])[0].replace('\n', ' ').replace('</p', '').split(' ')
     i = 0
@@ -107,86 +73,12 @@ def ask_manual_input():
         choice = input("Select: ")
         if choice == '1':
             included = 'included'
-            """print('Algorithm type?')
-            while algorithm_type not in ['supervised', 'unsupervised', 'semi-supervised', 'rl', 'not defined']:
-                print('(1) supervised')
-                print('(2) unsupervised')
-                print('(3) semi-supervised')
-                print('(4) rl')
-                print('(5) not defined')
-                choice = input("Select: ")
-                if choice == '1':
-                    algorithm_type = 'supervised'
-                if choice == '2':
-                    algorithm_type = 'unsupervised'
-                if choice == '3':
-                    algorithm_type = 'semi-supervised'
-                if choice == '4':
-                    algorithm_type = 'rl'
-                if choice == '5':
-                    algorithm_type = 'not defined'
-            print('Training schema?')
-            while training_schema not in ['batch', 'online', 'not defined']:
-                print('(1) batch')
-                print('(2) online')
-                print('(3) not defined')
-                choice = input("Select: ")
-                if choice == '1':
-                    training_schema = 'batch'
-                if choice == '2':
-                    training_schema = 'online'
-                if choice == '3':
-                    training_schema = 'not defined'
-            print('Algorithm goal?')
-            while algorithm_goal not in ['regression', 'classification', 'clustering', 'decision making',
-                                         'association rule learning', 'blind source operation',
-                                         'dimensionality reduction', 'not defined']:
-                print('(1) regression')
-                print('(2) classification')
-                print('(3) clustering')
-                print('(4) decision making')
-                print('(5) association rule learning')
-                print('(6) blind source operation')
-                print('(7) dimensionality reduction')
-                print('(8) not defined')
-                choice = input("Select: ")
-                if choice == '1':
-                    algorithm_goal = 'regression'
-                if choice == '2':
-                    algorithm_goal = 'classification'
-                if choice == '3':
-                    algorithm_goal = 'clustering'
-                if choice == '4':
-                    algorithm_goal = 'decision making'
-                if choice == '5':
-                    algorithm_goal = 'association rule learning'
-                if choice == '6':
-                    algorithm_goal = 'blind source operation'
-                if choice == '7':
-                    algorithm_goal = 'dimensionality reduction'
-                if choice == '8':
-                    algorithm_goal = 'not defined'
-            print('Architecture?')
-            while architecture not in ['centralised', 'decentralised', 'hybrid', 'not defined']:
-                print('(1) centralised')
-                print('(2) decentralised')
-                print('(3) hybrid')
-                print('(4) not defined')
-                choice = input("Select: ")
-                if choice == '1':
-                    architecture = 'centralised'
-                if choice == '2':
-                    architecture = 'decentralised'
-                if choice == '3':
-                    architecture = 'hybrid'
-                if choice == '4':
-                    architecture = 'not defined'"""
         elif choice == '0':
             included = 'not included'
     return included, algorithm_type, training_schema, algorithm_goal, architecture
 
 
-def update_to_check_papers(to_check_papers, papers_file, paper_id, included):
+def update_semantic_filtered_papers(to_check_papers, papers_file, paper_id, included):
     for index, row in to_check_papers.iterrows():
         if row['id'] == paper_id:
             row['status'] = included
@@ -195,54 +87,41 @@ def update_to_check_papers(to_check_papers, papers_file, paper_id, included):
         to_check_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
-def update_to_check_papers_by_title(to_check_papers, title, included):
-    for index, row in to_check_papers.iterrows():
-        if row['title'] == title:
-            row['status'] = included
-            to_check_papers.loc[index] = row
-    with open('./papers/to_check_papers.csv', 'w', newline='', encoding=fr) as f:
-        to_check_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
-
-
 def manual_filter_by_full_text(folder_name, search_date, step):
     papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + '_manually_filtered_by_abstract_papers.csv'
+    file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + '_manually_filtered_by_full_text_papers.csv'
     not_classified = 1
     while not_classified > 0:
         filtered_by_abstract = pd.read_csv(papers_file)
         total_papers = len(filtered_by_abstract)
-        not_classified = len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'not classified'])
-        architecture = len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'architecture'])
-        experiments = len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'experiments'])
+        not_classified = len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'unknown'])
+        included_papers = len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'included'])
         excluded = len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'excluded'])
-        included_papers = architecture + experiments
         progress = round(((total_papers - not_classified) / total_papers) * 100, 2)
         print('::: Progress --> ' + str(progress) + '% :::')
-        print(' ::: Architecture (' + str(architecture) + ') ::: Experiments(' + str(experiments) + ') :::')
+        print(' ::: Included Papers (' + str(included_papers) + ') ::: ')
         print(' ::: Excluded (' + str(excluded) + ') ::: Not Classified(' + str(not_classified) + ') :::')
-        if len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'not classified']) > 0:
-            to_check_paper = filtered_by_abstract.loc[filtered_by_abstract['status'] == 'not classified'].sample()
-            print_paper_info_full_paper(to_check_paper)
+        if len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'unknown']) > 0:
+            to_check_paper = filtered_by_abstract.loc[filtered_by_abstract['status'] == 'unknown'].sample()
+            print_paper_info_full_paper(to_check_paper, file_name)
             t, title = ask_manual_input_full_paper()
             if len(title) == 0:
                 title = to_check_paper['title']
             paper_id = to_check_paper['id'].values[0]
-            if t != 'excluded':
-                paper_dict = {'id': (included_papers + 1), 'type': t, 'doi': to_check_paper['doi'],
+            if t == 'included':
+                paper_dict = {'id': (included_papers + 1), 'status': t, 'doi': to_check_paper['doi'],
                               'publisher': to_check_paper['publisher'], 'database': to_check_paper['database'],
-                              'url': to_check_paper['url'], 'domain': to_check_paper['domain'],
-                              'publication_date': to_check_paper['publication_date'],
+                              'query_name': to_check_paper['query_name'], 'query_value': to_check_paper['query_value'],
+                              'url': to_check_paper['url'], 'publication_date': to_check_paper['publication_date'],
                               'title': title, 'abstract': to_check_paper['abstract']}
                 paper_df = pd.DataFrame.from_dict(paper_dict)
-                with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
-                          '_manually_filtered_by_full_text_papers.csv', 'a+', newline='', encoding=fr) as f:
+                with open(file_name, 'a+', newline='', encoding=fr) as f:
                     paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
             update_filtered_papers_by_abstract(filtered_by_abstract, papers_file, paper_id, t)
-    file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
-                '_manually_filtered_by_full_text_papers.csv'
-    remove_repeated(file_name)
 
 
-def print_paper_info_full_paper(to_check_paper):
+def print_paper_info_full_paper(to_check_paper, file_name):
+    print(' :: Results can be found at: ' + file_name + ' ::')
     print('*** New paper ***')
     print(' :: DOI :: ' + str(list(to_check_paper['doi'])[0]) + ' ::')
     print(' :: Publisher :: ' + str(list(to_check_paper['publisher'])[0]) + ' ::')
@@ -256,16 +135,12 @@ def ask_manual_input_full_paper():
     title = ''
     while t not in ['architecture', 'experiments', 'excluded']:
         print('(0) excluded')
-        print('(1) architecture')
-        print('(2) experiments')
+        print('(1) included')
         choice = input("Select: ")
         if choice == '0':
             t = 'excluded'
         if choice == '1':
-            t = 'architecture'
-        if choice == '2':
-            t = 'experiments'
-        if t != 'excluded':
+            t = 'included'
             print('Change title?')
             choice = input("y/n")
             if choice == "y":
@@ -280,18 +155,3 @@ def update_filtered_papers_by_abstract(filtered_papers, papers_file, paper_id, i
             filtered_papers.loc[index] = row
     with open(papers_file, 'w', newline='', encoding=fr) as f:
         filtered_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
-
-
-def remove_repeated(file_name):
-    papers = pd.read_csv(file_name)
-    papers['title_norm'] = papers['title'].str.lower()
-    papers['title_norm'] = papers['title_norm'].str.replace(' ', '')
-    papers = papers.drop_duplicates('title_norm')
-    papers = papers.drop(columns=['title_norm'])
-
-    papers['abstract_norm'] = papers['abstract'].str.lower()
-    papers['abstract_norm'] = papers['abstract_norm'].str.replace(' ', '')
-    papers = papers.drop_duplicates('abstract_norm')
-    papers = papers.drop(columns=['abstract_norm'])
-    with open(file_name, 'w', newline='', encoding=fr) as f:
-        papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
