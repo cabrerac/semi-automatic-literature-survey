@@ -35,18 +35,24 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
         file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
                     + query_name.lower().replace(' ', '_') + '_' + database + '_metadata.csv'
         if not exists(file_name):
-            doc_srch = ElsSearch(req[0], req[1])
-            doc_srch.execute(client, get_all=True)
-            total = retrieved = len(doc_srch.results)
-            if total > 0:
-                print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
-                      str(int((retrieved / total) * 100)) + '%')
-            else:
-                print("Papers not found!")
-            results = doc_srch.results_df
-            if dates is True:
-                results = results[(results['prism:coverDate'] >= str(since)) & (results['prism:coverDate'] <= str(to))]
-            util.save(file_name, results, format)
+            try:
+                doc_srch = ElsSearch(req[0], req[1])
+                doc_srch.execute(client, get_all=True)
+                total = retrieved = len(doc_srch.results)
+                if total > 0:
+                    if dates is True:
+                        print("Applying dates filters...")
+                        results = results[(results['prism:coverDate'] >= str(since)) & (results['prism:coverDate'] <= str(to))]
+                    retrieved = len(results)
+                    print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
+                          str(int((retrieved / total) * 100)) + '%')
+                results = doc_srch.results_df
+                util.save(file_name, results, format)
+                print("Total papers found: " + str(total))
+                print("Retrieved papers: " + str(retrieved))
+            except:
+                print("Total papers found: 0")
+                print("Retrieved papers: 0")
 
 
 def create_request(database, parameters):

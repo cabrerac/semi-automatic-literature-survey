@@ -37,37 +37,42 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
                 c_types.append(client_types[t])
         parameters = {'query': query_value, 'synonyms': synonyms, 'fields': c_fields, 'types': types}
         reqs = create_request(parameters)
-        print("Total number of IEEE Xplore requests = " + str(len(reqs)) + "...")
+        total_requests = str(len(reqs) * len(c_fields) * len(c_types))
+        total_papers = 0
+        total_retrieved = 0
+        print("Total number of IEEE Xplore requests = " + str(total_requests) + "...")
         current_request = 0
         for req in reqs:
-            current_request = current_request + 1
             for c_field in c_fields:
                 for c_type in c_types:
-                    print("Requesting IEEE Xplore request " + str(current_request) + "/" + str(len(reqs)) +
-                          " for field = " + c_field + " and type " + c_type + "...")
-                    raw_papers = request(req, c_field, c_type, start, dates, str(since.year))
+                    current_request = current_request + 1
+                    raw_papers = request(req, c_field, c_type, start, dates)
                     retry = 0
                     total = 0
                     retrieved = 0
                     while isinstance(raw_papers, dict) and retry < max_retries:
                         time.sleep(waiting_time)
                         retry = retry + 1
-                        print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
-                              str(int((retrieved / total) * 100)) + '% ::: Exception from API: ' +
-                              raw_papers['exception'] + " ::: Retry " + str(retry) + "/" + str(max_retries) + "...",
-                              end="\r")
-                        raw_papers = request(req, c_field, c_type, start, dates, str(since.year))
+                        if total > 0:
+                            print("Request " + str(current_request) + "/" + str(total_requests) +
+                                  ". Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
+                                  str(int((retrieved / total) * 100)) + '% ::: Exception from API: '
+                                  + raw_papers['exception'] + " ::: Retry " + str(retry) + "/"
+                                  + str(max_retries) + "...", end="\r")
+                        raw_papers = request(req, c_field, c_type, start, dates)
                     if not isinstance(raw_papers, dict):
-                        total, papers = process_raw_papers(query, raw_papers)
+                        total, papers = process_raw_papers(query, raw_papers, dates, since, to)
+                        total_papers = total_papers + total
                         retrieved = len(papers)
-                    print('Total papers found: ' + str(total))
+                        total_retrieved = total_retrieved + retrieved
+                    print("Request " + str(current_request) + "/" + str(total_requests) + ". Total papers found: " +
+                          str(total_papers), end="\r")
                     if retrieved > 0:
                         util.save(file_name, papers, f)
                     if total > 0:
-                        print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
-                              str(int((retrieved / total) * 100)) + '% ...', end="\r")
-                    else:
-                        print("Papers not found!")
+                        print("Request " + str(current_request) + "/" + str(total_requests) + ". Retrieved papers: " +
+                              str(retrieved) + "/" + str(total) + ' ::: ' + str(int((retrieved / total) * 100)) +
+                              '% ...', end="\r")
                     if total > max_papers:
                         times = int(total / max_papers) - 1
                         mod = int(total) % max_papers
@@ -76,37 +81,38 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
                         for t in range(1, times + 1):
                             time.sleep(waiting_time)
                             start = (max_papers * t)
-                            raw_papers = request(req, c_field, c_type, start, dates, str(since.year))
+                            raw_papers = request(req, c_field, c_type, start, dates)
                             retry = 0
                             while isinstance(raw_papers, dict) and retry < max_retries:
                                 time.sleep(waiting_time)
                                 retry = retry + 1
-                                print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
-                                      str(int((retrieved / total) * 100)) + '% ::: Exception from API: ' +
-                                      raw_papers['exception'] + " ::: Retry " + str(retry) + "/" + str(
-                                    max_retries) + "...",
-                                      end="\r")
-                                raw_papers = request(req, c_field, c_type, start, dates, str(since.year))
+                                if total > 0:
+                                    print("Request " + str(current_request) + "/" + str(total_requests) +
+                                          ". Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
+                                          str(int((retrieved / total) * 100)) + '% ::: Exception from API: ' +
+                                          raw_papers['exception'] + " ::: Retry " + str(retry) + "/" +
+                                          str(max_retries) + "...", end="\r")
+                                raw_papers = request(req, c_field, c_type, start, dates)
                             if not isinstance(raw_papers, dict):
-                                total, papers = process_raw_papers(query, raw_papers)
+                                total, papers = process_raw_papers(query, raw_papers, dates, since, to)
+                                total_papers = total_papers + total
                                 retrieved = retrieved + len(papers)
+                                total_retrieved = total_retrieved + retrieved
                                 if retrieved > 0:
                                     util.save(file_name, papers, f)
-                                    print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
+                                    print("Request " + str(current_request) + "/" + str(total_requests) +
+                                          ". Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
                                           str(int((retrieved / total) * 100)) + '% ...', end="\r")
                             else:
-                                print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' + str(
-                                    int((retrieved / total) * 100)) + '% ::: Exception from API: ' + raw_papers[
-                                          'exception'] +
-                                    " ::: Skipping to next batch...", end="\r")
-
-                    if total > 0:
-                        print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' + str(
-                            int((retrieved / total) * 100))
-                            + '%')
+                                if total > 0:
+                                    print("Request " + str(current_request) + "/" + str(total_requests) +
+                                          ". Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
+                                          str(int((retrieved / total) * 100)) + '% ::: Exception from API: ' +
+                                          raw_papers['exception'] + " ::: Skipping to next batch...", end="\r")
         if exists(file_name):
-            total = util.remove_repeated_ieee(file_name)
-            print("Total retrieved from IEEE: " + str(total))
+            util.remove_repeated_ieee(file_name)
+        print("Total papers found: " + str(total_papers))
+        print("Retrieved papers: " + str(total_retrieved))
 
 
 def create_request(parameters):
@@ -114,10 +120,8 @@ def create_request(parameters):
     return reqs
 
 
-def request(query, field, t, start_record, dates, year):
+def request(query, field, t, start_record, dates):
     client_ieee = XPLORE(api_access)
-    if dates is True:
-        client_ieee.publicationYear(year)
     client_ieee.searchField(field, query)
     client_ieee.resultsFilter("content_type", t)
     client_ieee.startingResult(start_record)
@@ -126,7 +130,7 @@ def request(query, field, t, start_record, dates, year):
     return raw_papers
 
 
-def process_raw_papers(query, raw_papers):
+def process_raw_papers(query, raw_papers, dates, since, to):
     query_name = list(query.keys())[0]
     query_value = query[query_name]
     raw_json = json.loads(raw_papers)
@@ -135,8 +139,11 @@ def process_raw_papers(query, raw_papers):
         return 0, []
     temp_papers = pd.json_normalize(raw_json['articles'])
     papers = temp_papers[['doi', 'title', 'publisher', 'content_type', 'abstract', 'html_url', 'publication_title',
-                              'publication_date']]
+                          'publication_date']]
     papers = papers.drop_duplicates(subset=['doi'])
+    if dates is True:
+        print('Applying dates filters...')
+        papers = papers[(papers['publication_date'] >= str(since)) & (papers['publication_date'] <= str(to))]
     papers['database'] = database
     papers['query_name'] = query_name
     papers['query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')

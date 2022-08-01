@@ -48,8 +48,6 @@ def get_papers(query, types, dates, since, to, folder_name, search_date):
             if total > 0:
                 print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
                       str(int((retrieved / total) * 100)) + '% ...', end="\r")
-            else:
-                print("Papers not found!")
             while next_papers != -1:
                 time.sleep(waiting_time)
                 req = api_url.replace('<query>', request).replace('<offset>', str(next_papers))
@@ -75,8 +73,10 @@ def get_papers(query, types, dates, since, to, folder_name, search_date):
                     print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' + str(
                         int((retrieved / total) * 100)) + '% ::: Exception from API: ' + raw_papers['exception'] +
                           " ::: Skipping to next batch...", end="\r")
-        print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' + str(int((retrieved / total) * 100))
-              + '%')
+        if total > 0:
+            print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' + str(int((retrieved / total) * 100)) + '%')
+        else:
+            print("Retrieved papers: " + str(retrieved))
 
 
 def get_citations(folder_name, search_date, step):
@@ -150,6 +150,7 @@ def process_raw_papers(query, raw_papers, dates, since, to):
     papers['query_name'] = query_name
     papers['query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
     if dates is True:
+        print('Applying dates filters...')
         papers = papers[(papers['year'] >= since.year)]
     nan_value = float("NaN")
     papers.replace('', nan_value, inplace=True)

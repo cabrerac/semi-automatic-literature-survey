@@ -1,11 +1,10 @@
 import yaml
-import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd
 import numpy as np
 import os
 from spacy_langdetect import LanguageDetector
 from spacy.language import Language
+from datetime import datetime
 import spacy
 
 
@@ -23,31 +22,73 @@ fr = 'utf-8'
 def read_parameters(parameters_file_name):
     with open(parameters_file_name) as file:
         parameters = yaml.load(file, Loader=yaml.FullLoader)
-    queries = parameters['queries']
-    optionals = parameters['optionals']
+
+    if 'queries' in parameters:
+        queries = parameters['queries']
+    else:
+        queries = []
+
+    if 'optionals' in parameters:
+        optionals = parameters['optionals']
+    else:
+        optionals = []
+
     if 'syntactic_filters' in parameters:
         syntactic_filters = parameters['syntactic_filters']
     else:
         syntactic_filters = []
+
     if 'semantic_filters' in parameters:
         semantic_filters = parameters['semantic_filters']
     else:
         semantic_filters = []
-    fields = parameters['fields']
-    types = parameters['types']
+
+    fields = ['title', 'abstract']
+    types = ['conferences', 'journals']
+
     synonyms = {}
     for query in queries:
         query_name = list(query.keys())[0]
         words = query[query_name].replace("'", '*').split('*')
         for word in words:
-            if word in parameters and word not in synonyms:
+            if word in parameters and word not in synonyms.keys():
                 synonyms[word] = parameters[word]
-    databases = parameters['databases']
-    dates = parameters['dates']
-    since = parameters['since']
-    to = parameters['to']
-    search_date = parameters['search_date']
-    folder_name = parameters['folder_name']
+    for syntactic_filter in syntactic_filters:
+        if syntactic_filter in parameters and syntactic_filter not in synonyms.keys():
+            synonyms[syntactic_filter] = parameters[syntactic_filter]
+
+    if 'databases' in parameters:
+        databases = parameters['databases']
+    else:
+        print('Databases missing in parameters file. Using default values: arxiv, springer, ieeexplore, '
+              'sciencedirect, core, semantic_scholar')
+        databases = ['arxiv', 'springer', 'ieeexplore', 'sciencedirect', 'core', 'semantic_scholar']
+
+    dates = False
+    if 'since' in parameters:
+        since = parameters['since']
+        dates = True
+    else:
+        since = '1950-01-01'
+    if 'to' in parameters:
+        to = parameters['to']
+        dates = True
+    else:
+        to = datetime.today().strftime('%Y-%m-%d')
+
+    if not dates:
+        print('Search dates missing in parameters file. Searching without considering dates...')
+
+    if 'search_date' in parameters:
+        search_date = parameters['search_date']
+    else:
+        print('Search date missing in parameters file. Using current date: ' + datetime.today().strftime('%Y-%m-%d'))
+        search_date = datetime.today().strftime('%Y-%m-%d')
+
+    if 'folder_name' in parameters:
+        folder_name = parameters['folder_name']
+    else:
+        folder_name = parameters_file_name.replace('.yaml', '')
 
     return queries, optionals, syntactic_filters, semantic_filters, fields, types, synonyms, databases, dates, since, \
         to, search_date, folder_name
@@ -57,144 +98,6 @@ def save(file_name, papers, fmt):
     os.makedirs(os.path.dirname(file_name), exist_ok=True)
     with open(file_name, 'a', newline='', encoding=fmt) as f:
         papers.to_csv(f, encoding=fmt, index=False, header=f.tell() == 0)
-
-
-def plot():
-    preprocessed_papers = pd.read_csv('./papers/preprocessed_papers.csv')
-    series = preprocessed_papers.groupby(by=['domain']).count()['id']
-    df = series.to_frame()
-    df = df.rename(columns={'id': 'papers'})
-    df = df.reset_index()
-    fig, ax = plt.subplots()
-    g = sns.barplot(x='domain', y='papers', data=df, ci=0, ax=ax)
-    for p in ax.patches:
-        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
-                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
-    g.set_xticklabels(['vehicles', 'health', 'industry', 'media', 'robotics', 'science', 'smart cities'])
-    plt.title('1. Papers from databases')
-    plt.xticks(rotation=0)
-    plt.ylim((0, 4200))
-    plt.savefig('preprocessed.png', bbox_inches="tight")
-    print("1. Preprocessed done!")
-
-    filtered_papers = pd.read_csv('./papers/filtered_papers.csv')
-    series = filtered_papers.groupby(by=['domain']).count()['id']
-    df = series.to_frame()
-    df = df.rename(columns={'id': 'papers'})
-    df = df.reset_index()
-    fig, ax = plt.subplots()
-    g = sns.barplot(x='domain', y='papers', data=df, ci=0, ax=ax)
-    for p in ax.patches:
-        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
-                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
-    g.set_xticklabels(['vehicles', 'health', 'industry', 'media', 'robotics', 'science', 'smart cities'])
-    plt.title('2. Syntactic filter')
-    plt.xticks(rotation=0)
-    plt.ylim((0, 1400))
-    plt.savefig('filtered.png', bbox_inches="tight")
-    print("2. Filtered done!")
-
-    to_check_papers = pd.read_csv('./papers/to_check_papers.csv')
-    series = to_check_papers.groupby(by=['domain']).count()['id']
-    df = series.to_frame()
-    df = df.rename(columns={'id': 'papers'})
-    df = df.reset_index()
-    fig, ax = plt.subplots()
-    g = sns.barplot(x='domain', y='papers', data=df, ci=0, ax=ax)
-    for p in ax.patches:
-        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
-                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
-    g.set_xticklabels(['vehicles', 'health', 'industry', 'media', 'robotics', 'science', 'smart cities'])
-    plt.title('3. Semantic filter')
-    plt.xticks(rotation=0)
-    plt.ylim((0, 300))
-    plt.savefig('to_check.png', bbox_inches="tight")
-    print("3. To check done!")
-
-    filtered_by_abstract = pd.read_csv('./papers/filtered_by_abstract.csv')
-    series = filtered_by_abstract.groupby(by=['domain']).count()['id']
-    df = series.to_frame()
-    df = df.rename(columns={'id': 'papers'})
-    df = df.reset_index()
-    fig, ax = plt.subplots()
-    g = sns.barplot(x='domain', y='papers', data=df, ci=0, ax=ax)
-    for p in ax.patches:
-        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
-                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
-    g.set_xticklabels(['vehicles', 'health', 'industry', 'media', 'robotics', 'science', 'smart cities'])
-    plt.title('4. Manual filter - Abstract')
-    plt.xticks(rotation=0)
-    plt.ylim((0, 60))
-    plt.savefig('filtered_by_abstract.png', bbox_inches="tight")
-    print("4. Filtered by abstract done!")
-
-    final_papers = pd.read_csv('./papers/final_papers.csv')
-    series = final_papers.groupby(by=['domain', 'type']).count()['id']
-    df = series.to_frame()
-    df = df.rename(columns={'id': 'papers'})
-    df = df.reset_index()
-    fig, ax = plt.subplots()
-    g = sns.barplot(x='domain', y='papers', hue='type', data=df, ci=0, ax=ax)
-    for p in ax.patches:
-        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
-                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
-    g.set_xticklabels(['vehicles', 'health', 'industry', 'media', 'robotics', 'science', 'smart cities'])
-    plt.title('5. Manual filter - Full text')
-    plt.ylim((0, 35))
-    plt.savefig('final_papers.png', bbox_inches="tight")
-    print("5. Final papers done!")
-
-    final_papers = pd.read_csv('./papers/final_papers.csv')
-    final_papers['publication_date'] = pd.to_datetime(final_papers['publication_date'])
-    series = final_papers.groupby(by=[final_papers['publication_date'].dt.year, 'type']).count()['id']
-    df = series.to_frame()
-    df = df.rename(columns={'id': 'papers'})
-    df = df.reset_index()
-    fig, ax = plt.subplots()
-    g = sns.barplot(x='publication_date', y='papers', hue='type', data=df, ci=0, ax=ax)
-    for p in ax.patches:
-        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
-                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
-    plt.title('Papers per year')
-    plt.xticks(rotation=90)
-    plt.legend(loc='upper left')
-    plt.ylim((0, 20))
-    plt.savefig('papers_year.png', bbox_inches="tight")
-    print("6. Papers year done!")
-
-    final_papers = pd.read_csv('./papers/final_papers_merged.csv')
-    series = final_papers.groupby(by=['domain', 'type']).count()['id']
-    df = series.to_frame()
-    df = df.rename(columns={'id': 'papers'})
-    df = df.reset_index()
-    fig, ax = plt.subplots()
-    g = sns.barplot(x='domain', y='papers', hue='type', data=df, ci=0, ax=ax)
-    for p in ax.patches:
-        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
-                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
-    g.set_xticklabels(['vehicles', 'health', 'industry', 'media', 'robotics', 'science', 'smart cities'])
-    plt.title('6. Selected papers')
-    plt.ylim((0, 35))
-    plt.savefig('final_papers_merged.png', bbox_inches="tight")
-    print("7. Final papers merged done!")
-
-    final_papers = pd.read_csv('./papers/final_papers_merged.csv')
-    final_papers['publication_date'] = pd.to_datetime(final_papers['publication_date'])
-    series = final_papers.groupby(by=[final_papers['publication_date'].dt.year, 'type']).count()['id']
-    df = series.to_frame()
-    df = df.rename(columns={'id': 'papers'})
-    df = df.reset_index()
-    fig, ax = plt.subplots()
-    g = sns.barplot(x='publication_date', y='papers', hue='type', data=df, ci=0, ax=ax)
-    for p in ax.patches:
-        ax.annotate(format(p.get_height(), '.0f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha='center',
-                    va='center', size=10, xytext=(0, 9), textcoords='offset points')
-    plt.title('Papers per year')
-    plt.xticks(rotation=90)
-    plt.legend(loc='upper left')
-    plt.ylim((0, 25))
-    plt.savefig('papers_year.png', bbox_inches="tight")
-    print("8. Final papers year done!")
 
 
 def merge_papers(merge_step_1, merge_step_2, folder_name, search_date):
@@ -278,7 +181,6 @@ def remove_repeated(file):
 
 def remove_repeated_ieee(file):
     df = pd.read_csv(file)
-    df = pd.read_csv(file)
     df = df.drop_duplicates('doi')
     df.dropna(subset=['abstract'], inplace=True)
     df['title_lower'] = df['title'].str.lower()
@@ -310,19 +212,32 @@ def clean_papers(file):
     pattern = '(?<!\w)thesis(?!\w)'
     df = df.loc[~df['abstract'].str.contains(pattern, case=False)]
     not_included = 0
+    df['language'] = 'english'
     for index, row in df.iterrows():
         doc = nlp(row['abstract'])
         detect_language = doc._.language
         if detect_language['language'] != 'en':
-            row['status'] = 'not included'
-            print("Abstract: " + row['abstract'])
+            row['language'] = 'not english'
             not_included = not_included + 1
         else:
             if detect_language['score'] < 0.99:
-                row['status'] = 'not included'
-                print("Abstract Score: " + row['abstract'])
+                row['language'] = 'not english'
                 not_included = not_included + 1
         df.loc[index] = row
-    print(str(not_included))
+    df = df[df['language'] != 'not english']
+    df = df.drop(columns=['language'])
     with open(file, 'w', newline='', encoding=fr) as f:
         df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+
+
+def pass_papers_semantic(file1, file2):
+    df1 = pd.read_csv(file1)
+    df2 = pd.read_csv(file2)
+    for index1, row1 in df1.iterrows():
+        if row1['status'] != 'unknown':
+            for index2, row2 in df2.iterrows():
+                if row1['title'] == row2['title']:
+                    row2['status'] = row1['status']
+                    df2.loc[index2] = row2
+                    with open(file2, 'w', newline='', encoding=fr) as f:
+                        df2.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)

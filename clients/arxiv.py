@@ -42,8 +42,6 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
         if total > 0:
             print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' + str(int((retrieved / total) * 100))
                   + '% ...', end="\r")
-        else:
-            print("Papers not found!")
         global start
         start = 0
         if total > max_papers:
@@ -80,8 +78,11 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
                         int((retrieved / total) * 100)) + '% ::: Exception from API: ' + raw_papers['exception'] +
                           " ::: Skipping to next batch...", end="\r")
 
-        print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' + str(int((retrieved / total) * 100))
-              + '%')
+        if total > 0:
+            print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' + str(int((retrieved / total) * 100))
+                  + '%')
+        else:
+            print("Retrieved papers: " + str(retrieved))
 
 
 def create_request(parameters):
@@ -98,13 +99,16 @@ def process_raw_papers(query, raw_papers, dates, since, to):
     query_value = query[query_name]
     total_text = raw_papers.split('opensearch:totalResults')[1]
     total = int(total_text.split('>')[1].replace('</', ''))
-    papers = pd.read_xml(raw_papers, xpath='//feed:entry', namespaces={"feed": "http://www.w3.org/2005/Atom"})
-    papers['database'] = database
-    papers['query_name'] = query_name
-    papers['query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
-    if dates is True:
-        papers = papers[(papers['published'] >= str(since)) & (papers['published'] <= str(to))]
-    nan_value = float("NaN")
-    papers.replace('', nan_value, inplace=True)
-    papers.dropna(how='all', axis=1, inplace=True)
+    papers = {}
+    if total > 0:
+        papers = pd.read_xml(raw_papers, xpath='//feed:entry', namespaces={"feed": "http://www.w3.org/2005/Atom"})
+        papers['database'] = database
+        papers['query_name'] = query_name
+        papers['query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
+        if dates is True:
+            print('Applying dates filters...')
+            papers = papers[(papers['published'] >= str(since)) & (papers['published'] <= str(to))]
+        nan_value = float("NaN")
+        papers.replace('', nan_value, inplace=True)
+        papers.dropna(how='all', axis=1, inplace=True)
     return total, papers

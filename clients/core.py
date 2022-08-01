@@ -48,10 +48,8 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
         if retrieved > 0:
             util.save(file_name, papers, f)
         if total_first > 0:
-            print("Retrieved papers: " + str(retrieved) + "/" + str(total_first) + ' ::: ' + str(int((retrieved / total) * 100))
-                  + '% ...', end="\r")
-        else:
-            print("Papers not found!")
+            print("Retrieved papers: " + str(retrieved) + "/" + str(total_first) + ' ::: ' +
+                  str(int((retrieved / total) * 100)) + '% ...', end="\r")
         if total > max_papers:
             times = int(total / max_papers) - 1
             mod = int(total) % max_papers
@@ -82,12 +80,14 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
                                   str(int((retrieved / total_first) * 100)) + '% ...', end="\r")
                     else:
                         print("Retrieved papers: " + str(retrieved) + "/" + str(total_first) + ' ::: ' + str(
-                            int((retrieved / total_first) * 100)) + '% ::: Exception from API: ' + raw_papers['exception'] +
-                              " ::: Skipping to next batch...", end="\r")
+                            int((retrieved / total_first) * 100)) + '% ::: Exception from API: ' +
+                              raw_papers['exception'] + " ::: Skipping to next batch...", end="\r")
         if total_first > 0:
             print("Retrieved papers: " + str(retrieved) + "/" + str(total_first) + ' ::: '
-                + str(int((retrieved / total_first) * 100)) + '%')
+                  + str(int((retrieved / total_first) * 100)) + '%')
             print("Final numbers can vary as non-english papers are removed...")
+        else:
+            print("Retrieved papers: " + str(retrieved))
 
 
 def create_request(parameters):
@@ -106,25 +106,30 @@ def process_raw_papers(query, raw_papers, dates, since, to):
     query_value = query[query_name]
     raw_json = json.loads(raw_papers.content)
     total = raw_json[0]['totalHits']
-    try:
-        papers = pd.json_normalize(raw_json[0]['data'])
-        papers = papers[(papers['language.code'] == 'en') | (papers['language.code'].isna())]
-        papers = papers.drop(columns=['authors', 'contributors', 'identifiers', 'relations', 'repositories', 'subjects',
-                                  'topics', 'types', 'year', 'oai', 'repositoryDocument.pdfStatus',
-                                  'repositoryDocument.metadataAdded', 'repositoryDocument.metadataUpdated',
-                                  'repositoryDocument.depositedDate', 'fulltextIdentifier', 'language.code',
-                                  'language.id', 'language.name'], errors='ignore')
-        papers['database'] = database
-        papers['query_name'] = query_name
-        papers['query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
-        if 'datePublished' in papers.columns:
-            if dates is True:
-                papers = papers[(papers['datePublished'] >= str(since)) & (papers['datePublished'] <= str(to))]
-            nan_value = float("NaN")
-            papers.replace('', nan_value, inplace=True)
-            papers.dropna(how='all', axis=1, inplace=True)
-        else:
+    if total != None:
+        try:
+            papers = pd.json_normalize(raw_json[0]['data'])
+            papers = papers[(papers['language.code'] == 'en') | (papers['language.code'].isna())]
+            papers = papers.drop(columns=['authors', 'contributors', 'identifiers', 'relations', 'repositories', 'subjects',
+                                      'topics', 'types', 'year', 'oai', 'repositoryDocument.pdfStatus',
+                                      'repositoryDocument.metadataAdded', 'repositoryDocument.metadataUpdated',
+                                      'repositoryDocument.depositedDate', 'fulltextIdentifier', 'language.code',
+                                      'language.id', 'language.name'], errors='ignore')
+            papers['database'] = database
+            papers['query_name'] = query_name
+            papers['query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
+            if 'datePublished' in papers.columns:
+                if dates is True:
+                    print('Applying dates filters...')
+                    papers = papers[(papers['datePublished'] >= str(since)) & (papers['datePublished'] <= str(to))]
+                nan_value = float("NaN")
+                papers.replace('', nan_value, inplace=True)
+                papers.dropna(how='all', axis=1, inplace=True)
+            else:
+                papers = pd.DataFrame()
+        except:
             papers = pd.DataFrame()
-    except:
+    else:
+        total = 0
         papers = pd.DataFrame()
     return total, papers

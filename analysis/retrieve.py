@@ -300,6 +300,7 @@ def filter_papers(keywords, synonyms, folder_name, search_date, step):
         preprocessed_papers.dropna(subset=["abstract"], inplace=True)
         filtered_papers = filter_by_keywords(preprocessed_papers, keywords, synonyms)
         filtered_papers['type'] = 'filtered'
+        filtered_papers['status'] = 'unknown'
         with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
                   '_syntactic_filtered_papers.csv', 'a+', newline='', encoding=fr) as f:
             filtered_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)

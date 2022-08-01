@@ -4,10 +4,12 @@ import os
 
 fr = 'utf-8'
 
+
 # Manual filter by abstract
-def manual_filter_by_abstract(folder_name, search_date, step):
-    papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + '_semantic_filtered_papers.csv'
-    file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + '_manually_filtered_by_abstract_papers.csv'
+def manual_filter_by_abstract(folder_name, next_file, search_date, step):
+    papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + next_file
+    file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
+                '_manually_filtered_by_abstract_papers.csv'
     unknown_papers = 1
     while unknown_papers > 0:
         to_check_papers = pd.read_csv(papers_file)

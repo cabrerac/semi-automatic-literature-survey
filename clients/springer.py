@@ -52,8 +52,6 @@ def get_papers(query, optionals, synonyms, fields, types, dates, since, to, fold
         if total > 0:
             print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' + str(int((retrieved / total) * 100))
                   + '% ...', end="\r")
-        else:
-            print("Papers not found!")
         if total > max_papers:
             times = int(total/max_papers) - 1
             mod = int(total) % max_papers
@@ -84,16 +82,18 @@ def get_papers(query, optionals, synonyms, fields, types, dates, since, to, fold
                     print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' + str(
                         int((retrieved / total) * 100)) + '% ::: Exception from API: ' + raw_papers['exception'] +
                           " ::: Skipping to next batch...", end="\r")
-
-        print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' + str(int((retrieved / total) * 100))
-              + '%')
-        print("Final numbers can vary as papers without abstract are removed...")
+        if total > 0:
+            print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' + str(int((retrieved / total) * 100))
+                  + '%')
+            print("Final numbers can vary as papers without abstract are removed...")
+        else:
+            print("Retrieved papers: " + str(retrieved))
 
 
 def create_request(parameters, dates, since, to):
     req = api_url
     if dates is True:
-        req = req.replace('<dates>', '(onlinedatefrom:'+ str(since) +'%20onlinedateto:' + str(to) + ')')
+        req = req.replace('<dates>', '(onlinedatefrom:' + str(since) +'%20onlinedateto:' + str(to) + ')')
     else:
         req = req.replace('<dates>', '')
     req = req + client.default_query(parameters)
@@ -109,39 +109,38 @@ def process_raw_papers(query, raw_papers):
         papers = []
         json_results = json.loads(raw_papers)
         total = int(json_results['result'][0]['total'])
-        if 'records' in json_results:
-            df = pd.json_normalize(json_results['records'])
-            if len(papers) == 0:
-                papers = df
+        if total > 0:
+            if 'records' in json_results:
+                df = pd.json_normalize(json_results['records'])
+                if len(papers) == 0:
+                    papers = df
+                else:
+                    papers = papers.append(df)
+            if 'language' in papers:
+                papers = papers[papers['language'].str.contains('en')]
+            urls = []
+            if 'url' in papers:
+                for record in papers['url']:
+                    url = record[0]['value']
+                    if "[{'snippet-format':" in url:
+                        print('here')
+                    urls.append(url)
+            papers = papers.drop(columns=['url', 'creators', 'bookEditors', 'openaccess', 'printIsbn', 'electronicIsbn',
+                            'isbn', 'genre', 'copyright', 'conferenceInfo', 'issn', 'eIssn', 'volume', 'publicationType',
+                            'number', 'issueType', 'topicalCollection', 'startingPage', 'endingPage', 'language',
+                            'journalId', 'printDate', 'response', 'onlineDate', 'coverDate', 'keyword'], errors='ignore')
+            if len(urls) > 0:
+                papers['url'] = urls
             else:
-                papers = papers.append(df)
-        if 'language' in papers:
-            papers = papers[papers['language'].str.contains('en')]
-        urls = []
-        if 'url' in papers:
-            for record in papers['url']:
-                url = record[0]['value']
-                if "[{'snippet-format':" in url:
-                    print('here')
-                urls.append(url)
-        papers = papers.drop(columns=['url', 'creators', 'bookEditors', 'openaccess', 'printIsbn', 'electronicIsbn',
-                        'isbn', 'genre', 'copyright', 'conferenceInfo', 'issn', 'eIssn', 'volume', 'publicationType',
-                        'number', 'issueType', 'topicalCollection', 'startingPage', 'endingPage', 'language',
-                        'journalId', 'printDate', 'response', 'onlineDate', 'coverDate', 'keyword'], errors='ignore')
-        if len(urls) > 0:
-            papers['url'] = urls
-        else:
-            papers['url'] = ''
-        papers['database'] = database
-        papers['query_name'] = query_name
-        papers['query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
-        nan_value = float("NaN")
-        papers.replace("", nan_value, inplace=True)
-        papers.dropna(how='all', axis=1, inplace=True)
-        if len(papers) > 0:
-            # if 'abstract' in papers:
-            #    papers.drop(papers.index[papers['abstract'] == ''], inplace=True)
-            return total, papers
-        else:
-            return 0, {}
+                papers['url'] = ''
+            papers['database'] = database
+            papers['query_name'] = query_name
+            papers['query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
+            nan_value = float("NaN")
+            papers.replace("", nan_value, inplace=True)
+            papers.dropna(how='all', axis=1, inplace=True)
+            if len(papers) > 0:
+                return total, papers
+            else:
+                return 0, {}
     return 0, {}
