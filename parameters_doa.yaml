@@ -76,14 +76,6 @@ semantic_filters:
       - simulate
   - excluded_classes:
       - simulation
-# Search fields for the APIs. Options: title and abstract.
-fields:
-  - title
-  - abstract
-# Publication types
-types:
-  - conferences
-  - journals
 # Synonyms of the keywords
 health:
   - healthcare
@@ -185,10 +177,9 @@ databases:
   - sciencedirect
   - core
   - semantic_scholar
-# If considering search set dates to True and specify the time interval
-dates: False
-since: 2022-01-01
-to: 2022-02-22
+# Search time interval YYYY-mm-dd. If you do not want to include search dates comment since and to parameters.
+#since: 2022-01-01
+#to: 2022-02-22
 # Date of the search and folder name where the output will be stored
 #search_date: 2021-12-03
 search_date: 2022-07-04
