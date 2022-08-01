@@ -29,8 +29,6 @@ $ git clone https://github.com/cabrerac/semi-automatic-literature-survey.git
 
 ```
 $ python3 -m venv venv
-```
-```
 $ source venv/bin/activate
 ```
 
