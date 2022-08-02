@@ -22,40 +22,44 @@ The following instructions were tested on the Windows Subsystem for Linux (WSL2)
 1. Clone this repository
 
 ```
-$ git clone https://github.com/cabrerac/semi-automatic-literature-survey.git
-$ cd semi-automatic-literature-survey/
+git clone https://github.com/cabrerac/semi-automatic-literature-survey.git
+cd semi-automatic-literature-survey/
 ```
 
 2. Create and activate virtual environment 
 
 ```
-$ python3 -m venv venv
-$ source venv/bin/activate
+python3 -m venv venv
+```
+```
+source venv/bin/activate
 ```
 
 3. Install requirements
 
 ```
-$ pip install  -r requirements.txt
+pip install  -r requirements.txt
 ```
 
 4. Install language package for spacy
 
 ```
-$ python3 -m spacy download en_core_web_sm
+python3 -m spacy download en_core_web_sm
 ```
 
 5. Download nltk resources
 
 ```
-$ python3 -c "import nltk; nltk.download('wordnet')"
-$ python3 -c "import nltk; nltk.download('omw-1.4')"
+python3 -c "import nltk; nltk.download('wordnet')"
+```
+```
+python3 -c "import nltk; nltk.download('omw-1.4')"
 ```
 
 6. Run the main passing the search parameters file. For example:
 
 ```
-$ python3 main.py parameters_ar.yaml
+python3 main.py parameters_ar.yaml
 ```
 
 A simple self-explanatory example of a search parameters file can be found in `./parameters_ar.yaml`. Alternatively, a more complex one including semantic filters can be found in `./parameters_doa.yaml`
