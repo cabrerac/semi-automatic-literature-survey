@@ -23,6 +23,7 @@ The following instructions were tested on the Windows Subsystem for Linux (WSL2)
 
 ```
 $ git clone https://github.com/cabrerac/semi-automatic-literature-survey.git
+$ cd semi-automatic-literature-survey/
 ```
 
 2. Create and activate virtual environment 
