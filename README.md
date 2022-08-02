@@ -17,7 +17,7 @@ SaLS merges papers information from different repositories, and then applies cus
 
 # How to run it?
 
-The following instructions were tested on the Windows Subsystem for Linux <a href="[https://example.com](https://docs.microsoft.com/en-us/windows/wsl/install)" target="_blank" rel="noopener"><span>WSL</span> </a> and an Ubuntu machine with Python 3.8.
+The following instructions were tested on the Windows Subsystem for Linux <a href="https://docs.microsoft.com/en-us/windows/wsl/install" target="_blank" rel="noopener"><span>WSL</span> </a> and an Ubuntu machine with Python 3.8.
 
 1. Clone this repository
 
