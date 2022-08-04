@@ -27,3 +27,67 @@ the resource coupling relationships."
 2,unknown,10.1007/978-3-030-69893-5_21,Springer,springer,augmented reality,'augmented reality' AND 'edge' AND 'orchestration' AND 'placement',http://dx.doi.org/10.1007/978-3-030-69893-5_21,2021-01-01,application design and service provisioning for multi-access edge cloud (mec),"The edge cloud is attractive to provide low latency services to mobile users. It overcomes computation, storage, and energy limitations of mobile devices through computation offloading. It also avoids long delays in migration of big data from the point of their generation by IoT devices to the centralized data centers. Context-aware edge cloud design provides mobile users with more personalized and customized services that improve their over-all experience. It manages the cloud infrastructure for resource provisioning, scheduling, and load balancing. The latency constraints of MEC applications need light-weight container service in the edge cloud. Kubernetes container orchestration is popular in the industry that is supported by all major edge cloud platforms. Container migration is important for ensuring low latency to new mobile applications of connected vehicles and drones. In this chapter we present the current state of research and development in the application design and service provisioning for edge cloud."
 3,unknown,10.1109/vtc2021-fall52928.2021.9625307,IEEE,ieeexplore,augmented reality,'augmented reality' AND 'edge' AND 'orchestration' AND 'placement',https://ieeexplore.ieee.org/document/9625307/,2021-09-30,machine learning based mmwave orchestration for edge gaming qoe enhancement,"Millimeter wave (mmWave) is a crucial component in 5G and beyond 5G communications. However, the dense deployment of mmWave transceivers imposes a heavy burden on the management of radio access network (RAN). This challenge increases the need for autonomous network management methods leveraging machine learning (ML) techniques. In particular, mmWave beam selection is a critical issue for the management of RAN due to the large training overhead on mmWave transceivers. To this end, a new beam tracking method based on sequence-to-sequence (Seq2Seq) learning is proposed. Besides, thanks to edge computing technologies, network management algorithms and delay-sensitive user applications can be hosted on edge servers in close proximity. Due to limited resources on the edge server, the resource allocation problem for beam tracking and edge gaming is investigated with the aim of maximizing game quality of experience (QoE). Simulation results verify the effectiveness of the proposed orchestration scheme."
 4,unknown,10.1007/s13369-022-06563-5,Springer,springer,augmented reality,'augmented reality' AND 'edge' AND 'orchestration' AND 'placement',http://dx.doi.org/10.1007/s13369-022-06563-5,2022-01-29,optimized resource allocation for fog network using neuro-fuzzy offloading approach,"Fog computing has emerged as one of the most important Internet infrastructures for improving service quality, particularly in real-time applications. Due to the convergence in technologies, the scope of the Internet of things (IoT) has evolved to a new dimension, it expands from data collection to device interconnections, and to pre-processing. This acceleration involves cloud and fog computing layers into the system which plays an integral role in IoT data storage and computing. Due to the diversity present in IoT devices, selection of computation devices and allocation of resources are major challenges to be addressed for efficient utilization of resources. In this paper, we presented the offloading and resource allocation model to address the solution to the above challenge. Firstly, a 5-layered neuro-fuzzy model is introduced to retrieve the fuzzy sets and rules which further passes to the fuzzy inference system to model an orchestration decision system. Additionally, to improve the system performance, we have presented the modified least loaded resource allocation algorithm which is adaptively required to reduce the failure rate of the applications. To showcase the efficacy of the model, 4 healthcare applications (augmented reality, patient pre-monitoring, record analysis, and billing systems) are evaluated with their heterogeneous parameters. The simulation findings show that our suggested model improves system performance by lowering network latency by 2.23–9.68 %, computation delay by 3.40–13.66 %, and system performance by 1.03–11.55%. The simulation results demonstrated the suggested model’s resilience in terms of network latency, computation time, and failure rate."
+5,unknown,http://arxiv.org/abs/2104.14392v3,arxiv,arxiv,augmented reality,'augmented reality' AND 'edge' AND 'orchestration' AND 'placement',http://arxiv.org/abs/2104.14392v3,2021-04-29,"cosco: container orchestration using co-simulation and gradient based
+  optimization for fog computing environments","Intelligent task placement and management of tasks in large-scale fog
+platforms is challenging due to the highly volatile nature of modern workload
+applications and sensitive user requirements of low energy consumption and
+response time. Container orchestration platforms have emerged to alleviate this
+problem with prior art either using heuristics to quickly reach scheduling
+decisions or AI driven methods like reinforcement learning and evolutionary
+approaches to adapt to dynamic scenarios. The former often fail to quickly
+adapt in highly dynamic environments, whereas the latter have run-times that
+are slow enough to negatively impact response time. Therefore, there is a need
+for scheduling policies that are both reactive to work efficiently in volatile
+environments and have low scheduling overheads. To achieve this, we propose a
+Gradient Based Optimization Strategy using Back-propagation of gradients with
+respect to Input (GOBI). Further, we leverage the accuracy of predictive
+digital-twin models and simulation capabilities by developing a Coupled
+Simulation and Container Orchestration Framework (COSCO). Using this, we create
+a hybrid simulation driven decision approach, GOBI*, to optimize Quality of
+Service (QoS) parameters. Co-simulation and the back-propagation approaches
+allow these methods to adapt quickly in volatile environments. Experiments
+conducted using real-world data on fog applications using the GOBI and GOBI*
+methods, show a significant improvement in terms of energy consumption,
+response time, Service Level Objective and scheduling time by up to 15, 40, 4,
+and 82 percent respectively when compared to the state-of-the-art algorithms."
+6,unknown,http://arxiv.org/abs/2201.00994v1,arxiv,arxiv,augmented reality,'augmented reality' AND 'edge' AND 'orchestration' AND 'placement',http://arxiv.org/abs/2201.00994v1,2022-01-04,toward a utm-based service orchestration for uavs in mec-nfv environment,"The increased use of Unmanned Aerial Vehicles (UAVs) in numerous domains will
+result in high traffic densities in the low-altitude airspace. Consequently,
+UAVs Traffic Management (UTM) systems that allow the integration of UAVs in the
+low-altitude airspace are gaining a lot of momentum. Furthermore, the 5th
+generation of mobile networks (5G) will most likely provide the underlying
+support for UTM systems by providing connectivity to UAVs, enabling the
+control, tracking and communication with remote applications and services.
+However, UAVs may need to communicate with services with different
+communication Quality of Service (QoS) requirements, ranging form best-effort
+services to Ultra-Reliable Low-Latency Communications (URLLC) services. Indeed,
+5G can ensure efficient Quality of Service (QoS) enhancements using new
+technologies, such as network slicing and Multi-access Edge Computing (MEC). In
+this context, Network Functions Virtualization (NFV) is considered as one of
+the pillars of 5G systems, by providing a QoS-aware Management and
+Orchestration (MANO) of softwarized services across cloud and MEC platforms.
+The MANO process of UAV's services can be enhanced further using the
+information provided by the UTM system, such as the UAVs'flight plans. In this
+paper,we propose an extended framework for the management and orchestration of
+UAVs'services in MECNFV environment by combining the functionalities provided
+by the MEC-NFV management and orchestration framework with the functionalities
+of a UTM system. Moreover, we propose an Integer Linear Programming (ILP) model
+of the placement scheme of our framework and we evaluate its performances."
+7,unknown,10.1109/access.2021.3085370,IEEE,ieeexplore,augmented reality,'augmented reality' AND 'edge' AND 'orchestration' AND 'placement',https://ieeexplore.ieee.org/document/9445114/,2021-01-01,service placement for latency reduction in the fog using application profiles,"The Cloud-Fog-Internet of Things continuum combines different paradigms to provide connectivity and ubiquity for end-users, while also granting low latency and low jitter to cope with different challenges, including the requirements of latency-sensitive applications, such as virtual/augmented reality and online gaming. This constitutes a complex and dynamic environment with heterogeneous resources that need to be managed or orchestrated, in order to accomplish application requirements for low latency. Common orchestration solutions make placement decisions based only on the resources of the underlying network and the application resource requests; however, using the profiles of applications to make placement decisions has the potential to enhance the final performance perceived by the end-users. This paper proposes the use of application profiles according to their popularity to guide their placement. To corroborate the effectiveness of the use of the profiles, two placement mechanisms are presented, one based on Genetic Algorithm and the other inspired on graph partitions. Simulation results show that it is possible to reduce the latency and jitter of applications via a service placement guided by the profiles. The mechanism based on graph partitions showed better results for all scenarios, followed closely by the Genetic Algorithm in the scenarios with lower load."
+8,unknown,http://arxiv.org/abs/2002.05531v1,arxiv,arxiv,augmented reality,'augmented reality' AND 'edge' AND 'orchestration' AND 'placement',http://arxiv.org/abs/2002.05531v1,2020-02-12,modelling fog offloading performance,"Fog computing has emerged as a computing paradigm aimed at addressing the
+issues of latency, bandwidth and privacy when mobile devices are communicating
+with remote cloud services. The concept is to offload compute services closer
+to the data. However many challenges exist in the realisation of this approach.
+During offloading, (part of) the application underpinned by the services may be
+unavailable, which the user will experience as down time. This paper describes
+work aimed at building models to allow prediction of such down time based on
+metrics (operational data) of the underlying and surrounding infrastructure.
+Such prediction would be invaluable in the context of automated Fog offloading
+and adaptive decision making in Fog orchestration. Models that cater for four
+container-based stateless and stateful offload techniques, namely Save and
+Load, Export and Import, Push and Pull and Live Migration, are built using four
+(linear and non-linear) regression techniques. Experimental results comprising
+over 42 million data points from multiple lab-based Fog infrastructure are
+presented. The results highlight that reasonably accurate predictions (measured
+by the coefficient of determination for regression models, mean absolute
+percentage error, and mean absolute error) may be obtained when considering 25
+metrics relevant to the infrastructure."
