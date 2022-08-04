@@ -40,14 +40,14 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
                 doc_srch.execute(client, get_all=True)
                 total = retrieved = len(doc_srch.results)
                 if total > 0:
+                    results = doc_srch.results_df
                     if dates is True:
                         print("Applying dates filters...")
                         results = results[(results['prism:coverDate'] >= str(since)) & (results['prism:coverDate'] <= str(to))]
                     retrieved = len(results)
                     print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
                           str(int((retrieved / total) * 100)) + '%')
-                results = doc_srch.results_df
-                util.save(file_name, results, format)
+                    util.save(file_name, results, format)
                 print("Total papers found: " + str(total))
                 print("Retrieved papers: " + str(retrieved))
             except:
