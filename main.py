@@ -4,10 +4,11 @@ from analysis import semantic_analyser
 from analysis import manual
 import sys
 
+
 def main(parameters_file):
 
     # Reading search parameters and getting papers from databases
-    queries, optionals, syntactic_filters, semantic_filters, fields, types, synonyms, databases, dates, since, to, \
+    queries, syntactic_filters, semantic_filters, fields, types, synonyms, databases, dates, since, to, \
         search_date, folder_name = util.read_parameters(parameters_file)
 
     if len(queries) > 0:
@@ -15,7 +16,7 @@ def main(parameters_file):
         # Getting papers from databases
         step = 0
         print(str(step) + '. Getting all papers...')
-        retrieve.get_papers(queries, optionals, synonyms, databases, fields, types, folder_name, dates, since, to,
+        retrieve.get_papers(queries, synonyms, databases, fields, types, folder_name, dates, since, to,
                             search_date)
 
         # Preprocessing papers

@@ -9,29 +9,6 @@ queries:
   - robotics: "'robotics' & 'machine learning' & ('real-world' & 'deploy')"
   - finance: "'finance' & 'machine learning' & ('real-world' & 'deploy')"
   - e-commerce: "'e-commerce' & 'machine learning' & ('real-world' & 'deploy')"
-# There are some databases (e.g., springer) that do not allow search by abstract. Some keywords in the queries might
-# be too restrictive in such a case. So, we should specify which segments can be optional in the queries
-# when searching just in title and keywords.
-# List of optional segments in the format <query_name>: "[optional_segments]".
-optionals:
-  - autonomous vehicle:
-    - " & ('real-world' & 'deploy')"
-  - health:
-    - " & ('real-world' & 'deploy')"
-  - industry:
-    - " & ('real-world' & 'deploy')"
-  - smart cities:
-    - " & ('real-world' & 'deploy')"
-  - multimedia:
-    - " & ('real-world' & 'deploy')"
-  - science:
-    - " & ('real-world' & 'deploy')"
-  - robotics:
-    - " & ('real-world' & 'deploy')"
-  - finance:
-    - " & ('real-world' & 'deploy')"
-  - e-commerce:
-    - " & ('real-world' & 'deploy')"
 # Some APIs do not provide the functionality to filter by more specific keywords in the abstract. The syntactic filters
 # are keywords that must appear in the abstract of the papers to review. One filter can be composed by multiple
 # keywords in conjunction. Synonyms are also used for each keyword in disjunction. If you do not want to use syntactic
@@ -181,6 +158,5 @@ databases:
 #since: 2022-01-01
 #to: 2022-02-22
 # Date of the search and folder name where the output will be stored
-#search_date: 2021-12-03
-search_date: 2022-07-04
+search_date: 2022-08-04
 folder_name: doas_search

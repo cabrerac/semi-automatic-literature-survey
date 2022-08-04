@@ -28,11 +28,6 @@ def read_parameters(parameters_file_name):
     else:
         queries = []
 
-    if 'optionals' in parameters:
-        optionals = parameters['optionals']
-    else:
-        optionals = []
-
     if 'syntactic_filters' in parameters:
         syntactic_filters = parameters['syntactic_filters']
     else:
@@ -90,7 +85,7 @@ def read_parameters(parameters_file_name):
     else:
         folder_name = parameters_file_name.replace('.yaml', '')
 
-    return queries, optionals, syntactic_filters, semantic_filters, fields, types, synonyms, databases, dates, since, \
+    return queries, syntactic_filters, semantic_filters, fields, types, synonyms, databases, dates, since, \
         to, search_date, folder_name
 
 
