@@ -13,21 +13,18 @@ from os.path import exists
 fr = 'utf-8'
 
 
-def get_papers(queries, optionals, synonyms, databases, fields, types, folder_name, dates, since, to, search_date):
+def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, since, to, search_date):
     for query in queries:
         key = list(query.keys())[0]
-        opts = []
-        for optional in optionals:
-            if key in optional.keys():
-                opts = optional[key]
 
         if 'arxiv' in databases:
             print("Requesting ArXiv for query: " + list(query.keys())[0] + "...")
             arxiv.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
 
         if 'springer' in databases:
+            # Springer searches over all the paper metadata. Synonyms are not needed in this case.
             print("Requesting Springer for query: " + list(query.keys())[0] + "...")
-            springer.get_papers(query, opts, synonyms, fields, types, dates, since, to, folder_name, search_date)
+            springer.get_papers(query, fields, types, dates, since, to, folder_name, search_date)
 
         if 'ieeexplore' in databases:
             print("Requesting IEEE Xplore for query: " + list(query.keys())[0] + "...")

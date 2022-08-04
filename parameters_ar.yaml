@@ -1,13 +1,6 @@
 # List of queries in the format <query_name>: "<query_value>". & (and operator) ¦ (or operator).
 queries:
   - augmented reality: "'augmented reality' & 'edge' & 'orchestration' & 'placement'"
-# There are some databases (e.g., springer) that do not allow search by abstract. Some keywords in the queries might
-# be too restrictive in such a case. So, we should specify which segments can be optional in the queries
-# when searching just in title and keywords.
-# List of optional segments in the format <query_name>: "[optional_segments]".
-# If you do not want to use optionals comment the whole block.
-optionals:
-  - augmented reality: " & 'edge' & 'orchestration' & 'placement'"
 # Some APIs do not provide the functionality to filter by more specific keywords in the abstract. The syntactic filters
 # are keywords that must appear in the abstract of the papers to review. One filter can be composed by multiple
 # keywords in conjunction. Synonyms are also used for each keyword in disjunction. If you do not want to use syntactic
@@ -17,19 +10,12 @@ syntactic_filters:
   - orchestration
   - placement
   - edge
-# Semantic filters are used to classify the papers and decide which ones to exclude according to their abstract content
-# The papers that belong to the excluded classes are removed. The semantic filter uses the lbl2vec algorithm described
-# here: https://towardsdatascience.com/unsupervised-text-classification-with-lbl2vec-6c5e040354de.
-# If you do not want to use semantic filters please comment the whole block.
-#semantic_filters:
-#  - classes:
-#  - excluded_classes:
-# Synonyms of the keywords
+#Synonyms of the keywords
 augmented reality:
   - ar
   - virtual reality
   - vr
-  - games
+  - game
 orchestration:
   - service orchestration
   - service composition
@@ -40,6 +26,7 @@ placement:
   - service placement
   - service offloading
   - offloading
+  - resource allocation
 edge:
   - edge computing
   - fog computing
@@ -49,14 +36,14 @@ edge:
 databases:
   - arxiv
   - springer
-  #- ieeexplore
+  - ieeexplore
   - sciencedirect
   - core
   - semantic_scholar
 # Search time interval YYYY-mm-dd. If you do not want to include search dates comment since and to parameters.
-since: 2010-01-01
-to: 2022-08-01
+# since: 2010-01-01
+# to: 2022-08-01
 # Date of the search and folder name where the output will be stored
 #search_date: 2021-12-03
-search_date: 2022-07-29
+search_date: 2022-08-04
 folder_name: ar_search
