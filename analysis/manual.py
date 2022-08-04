@@ -135,7 +135,7 @@ def ask_manual_input_full_paper():
     print('*** Manual input ***')
     t = 'f'
     title = ''
-    while t not in ['architecture', 'experiments', 'excluded']:
+    while t not in ['included', 'excluded']:
         print('(0) excluded')
         print('(1) included')
         choice = input("Select: ")
