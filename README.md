@@ -2,7 +2,7 @@
 
 This project implements SaLS: a semi-automatic program to survey research papers based on the systematic methodology proposed by Kitchenham et al.[1, 2]. The goal of this project is to semi-automate the research papers survey process while providing a framework to enable surveys reproducibility and evolution. 
 
-SaLS automatically retrives papers metadata based on queries that users provide according to these interests. These queries are used to consume the search APIs exposed by the most popular research papers repositories in the domain of computer science, engineering and information systems. Currently, SaLS retrieves papers information from the following repositories:
+SaLS automatically retrives papers metadata based on queries that users provide according. These queries are used to consume the search APIs exposed by the most popular research papers repositories in different domains. Currently, SaLS retrieves papers information from the following repositories:
 
 - [IEEE Xplore](https://developer.ieee.org/)
 - [Springer Nature](https://dev.springernature.com/)
