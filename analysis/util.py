@@ -6,6 +6,7 @@ from spacy_langdetect import LanguageDetector
 from spacy.language import Language
 from datetime import datetime
 import spacy
+from os.path import exists
 
 
 @Language.factory('language_detector')
@@ -99,20 +100,28 @@ def merge_papers(merge_step_1, merge_step_2, folder_name, search_date):
     file1 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(merge_step_1) + '_manually_filtered_by_full_text_papers.csv'
     file2 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(merge_step_2) + '_manually_filtered_by_full_text_papers.csv'
     result = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/11_final_list_papers.csv'
-    df1 = pd.read_csv(file1)
-    df2 = pd.read_csv(file2)
-    df_result = pd.concat([df1, df2])
-    df_result['title'] = df_result['title'].str.lower()
-    df_result = df_result.drop_duplicates('title')
-    df_result['doi'] = df_result['doi'].str.lower()
-    df_result['doi'].replace(r'\s+', 'nan', regex=True)
-    nan_doi = df_result.loc[df_result['doi'] == 'nan']
-    df_result = df_result.drop_duplicates('doi')
-    df_result = df_result.append(nan_doi)
-    df_result['id'] = list(range(1, len(df_result) + 1))
-    with open(result, 'a+', newline='', encoding=fr) as f:
-        df_result.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
-    remove_repeated(result)
+    if not exists(result):
+        if exists(file1) and exists(file2):
+            df1 = pd.read_csv(file1)
+            df2 = pd.read_csv(file2)
+            df_result = pd.concat([df1, df2])
+            df_result['title'] = df_result['title'].str.lower()
+            df_result = df_result.drop_duplicates('title')
+            df_result['doi'] = df_result['doi'].str.lower()
+            df_result['doi'].replace(r'\s+', 'nan', regex=True)
+            nan_doi = df_result.loc[df_result['doi'] == 'nan']
+            df_result = df_result.drop_duplicates('doi')
+            df_result = df_result.append(nan_doi)
+            df_result['id'] = list(range(1, len(df_result) + 1))
+            with open(result, 'a+', newline='', encoding=fr) as f:
+                df_result.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+            remove_repeated(result)
+        elif exists(file1):
+            df_result = pd.read_csv(file1)
+            with open(result, 'a+', newline='', encoding=fr) as f:
+                 df_result.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+            remove_repeated(result)
+    return result
 
 
 def pass_papers(file1, file2, file3, result):
