@@ -245,3 +245,45 @@ def pass_papers_semantic(file1, file2):
                     df2.loc[index2] = row2
                     with open(file2, 'w', newline='', encoding=fr) as f:
                         df2.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+
+
+def pass_papers_semantic_manual(file1, file2, file3, file4):
+    df1 = pd.read_csv(file1) # semantic
+    included_papers = 0
+    for index1, row1 in df1.iterrows():
+        if row1['status'] == 'included':
+            included_papers = included_papers + 1
+            paper_dict = [
+                {
+                    'id': included_papers, 'status': 'unknown', 'doi': row1['doi'], 'publisher': row1['publisher'],
+                    'database': row1['database'], 'query_name': row1['query_name'], 'query_value': row1['query_value'],
+                    'url': row1['url'], 'publication_date': row1['publication_date'], 'title': row1['title'],
+                    'abstract': row1['abstract']
+                }
+            ]
+            paper_df = pd.DataFrame.from_dict(paper_dict)
+            with open(file3, 'a+', newline='', encoding=fr) as f:
+                paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+    df2 = pd.read_csv(file2)  # manually by abstract
+    df3 = pd.read_csv(file3)  # passed manually by full text
+    included_papers = 0
+    for index2, row2 in df2.iterrows():
+        for index3, row3 in df3.iterrows():
+            if row2['title'] == row3['title']:
+                row2['status'] = 'included'
+                df2.loc[index2] = row2
+                with open(file2, 'w', newline='', encoding=fr) as f:
+                    df2.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+                included_papers = included_papers + 1
+                paper_dict = [
+                    {
+                        'id': included_papers, 'status': 'unknown', 'doi': row2['doi'],
+                        'publisher': row2['publisher'], 'database': row2['database'],
+                        'query_name': row2['query_name'], 'query_value': row2['query_value'],
+                        'url': row2['url'], 'publication_date': row2['publication_date'],
+                        'title': row2['title'], 'abstract': row2['abstract']
+                    }
+                ]
+                paper_df = pd.DataFrame.from_dict(paper_dict)
+                with open(file4, 'a+', newline='', encoding=fr) as f:
+                    paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
