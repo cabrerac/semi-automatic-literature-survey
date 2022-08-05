@@ -15,6 +15,12 @@ The retrieved metadata includes paper identifier (e.g., doi), publisher, publica
 
 SaLS merges papers information from different repositories, and then applies customised syntactic and semantic filters (i.e., Lbl2Vec)[3] to reduce the search space of papers according to users' interests.
 
+Once automatic filters are applied, the tool prompts the title and abstract of the paper in a centralised interface where users can decide if the paper should be included or not in the review (i.e., papers filtered by abstract). The URL of the papers that passed the filter by abstract is then prompted in the last filter, which requires the user to skim the full paper and decide if it is included or no.
+
+Then, the tool applies the snowballing step by retriving the metadata of the works that cited the selected papers in the last step (i.e., papers filtered by skimming the full text), and applies the automatic and semi-automatic filters on the citing papers. 
+
+The final list of papers is composed by the cited papers that passed the first round of filters, and the citing papers that passed the second round of filters (i.e., snowballing).
+
 # How to run it?
 
 The following instructions were tested on the Windows Subsystem for Linux ([WSL](https://docs.microsoft.com/en-us/windows/wsl/install)) and an Ubuntu machine with Python 3.8.
