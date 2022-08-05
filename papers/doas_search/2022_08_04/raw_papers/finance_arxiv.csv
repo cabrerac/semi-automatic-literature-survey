@@ -1,0 +1,862 @@
+id,updated,published,title,summary,database,query_name,query_value
+http://arxiv.org/abs/2207.11173v1,2022-07-22T16:18:04Z,2022-07-22T16:18:04Z,Verifying Fairness in Quantum Machine Learning,"Due to the beyond-classical capability of quantum computing, quantum machine
+learning is applied independently or embedded in classical models for decision
+making, especially in the field of finance. Fairness and other ethical issues
+are often one of the main concerns in decision making. In this work, we define
+a formal framework for the fairness verification and analysis of quantum
+machine learning decision models, where we adopt one of the most popular
+notions of fairness in the literature based on the intuition -- any two similar
+individuals must be treated similarly and are thus unbiased. We show that
+quantum noise can improve fairness and develop an algorithm to check whether a
+(noisy) quantum machine learning model is fair. In particular, this algorithm
+can find bias kernels of quantum data (encoding individuals) during checking.
+These bias kernels generate infinitely many bias pairs for investigating the
+unfairness of the model. Our algorithm is designed based on a highly efficient
+data structure -- Tensor Networks -- and implemented on Google's TensorFlow
+Quantum. The utility and effectiveness of our algorithm are confirmed by the
+experimental results, including income prediction and credit scoring on
+real-world data, for a class of random (noisy) quantum decision models with 27
+qubits ($2^{27}$-dimensional state space) tripling ($2^{18}$ times more than)
+that of the state-of-the-art algorithms for verifying quantum machine learning
+models.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2208.00765v1,2022-07-21T22:52:05Z,2022-07-21T22:52:05Z,"Solving the optimal stopping problem with reinforcement learning: an
+  application in financial option exercise","The optimal stopping problem is a category of decision problems with a
+specific constrained configuration. It is relevant to various real-world
+applications such as finance and management. To solve the optimal stopping
+problem, state-of-the-art algorithms in dynamic programming, such as the
+least-squares Monte Carlo (LSMC), are employed. This type of algorithm relies
+on path simulations using only the last price of the underlying asset as a
+state representation. Also, the LSMC was thinking for option valuation where
+risk-neutral probabilities can be employed to account for uncertainty. However,
+the general optimal stopping problem goals may not fit the requirements of the
+LSMC showing auto-correlated prices. We employ a data-driven method that uses
+Monte Carlo simulation to train and test artificial neural networks (ANN) to
+solve the optimal stopping problem. Using ANN to solve decision problems is not
+entirely new. We propose a different architecture that uses convolutional
+neural networks (CNN) to deal with the dimensionality problem that arises when
+we transform the whole history of prices into a Markovian state. We present
+experiments that indicate that our proposed architecture improves results over
+the previous implementations under specific simulated time series function
+sets. Lastly, we employ our proposed method to compare the optimal exercise of
+the financial options problem with the LSMC algorithm. Our experiments show
+that our method can capture more accurate exercise opportunities when compared
+to the LSMC. We have outstandingly higher (above 974\% improvement) expected
+payoff from these exercise policies under the many Monte Carlo simulations that
+used the real-world return database on the out-of-sample (test) data.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2206.13034v1,2022-06-27T03:55:23Z,2022-06-27T03:55:23Z,Monitoring Shortcut Learning using Mutual Information,"The failure of deep neural networks to generalize to out-of-distribution data
+is a well-known problem and raises concerns about the deployment of trained
+networks in safety-critical domains such as healthcare, finance and autonomous
+vehicles. We study a particular kind of distribution shift $\unicode{x2013}$
+shortcuts or spurious correlations in the training data. Shortcut learning is
+often only exposed when models are evaluated on real-world data that does not
+contain the same spurious correlations, posing a serious dilemma for AI
+practitioners to properly assess the effectiveness of a trained model for
+real-world applications. In this work, we propose to use the mutual information
+(MI) between the learned representation and the input as a metric to find where
+in training, the network latches onto shortcuts. Experiments demonstrate that
+MI can be used as a domain-agnostic metric for monitoring shortcut learning.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2206.05910v1,2022-06-13T05:40:03Z,2022-06-13T05:40:03Z,"Safe-FinRL: A Low Bias and Variance Deep Reinforcement Learning
+  Implementation for High-Freq Stock Trading","In recent years, many practitioners in quantitative finance have attempted to
+use Deep Reinforcement Learning (DRL) to build better quantitative trading (QT)
+strategies. Nevertheless, many existing studies fail to address several serious
+challenges, such as the non-stationary financial environment and the bias and
+variance trade-off when applying DRL in the real financial market. In this
+work, we proposed Safe-FinRL, a novel DRL-based high-freq stock trading
+strategy enhanced by the near-stationary financial environment and low bias and
+variance estimation. Our main contributions are twofold: firstly, we separate
+the long financial time series into the near-stationary short environment;
+secondly, we implement Trace-SAC in the near-stationary financial environment
+by incorporating the general retrace operator into the Soft Actor-Critic.
+Extensive experiments on the cryptocurrency market have demonstrated that
+Safe-FinRL has provided a stable value estimation and a steady policy
+improvement and reduced bias and variance significantly in the near-stationary
+financial environment.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2206.02868v1,2022-06-06T19:47:29Z,2022-06-06T19:47:29Z,A Human-Centric Take on Model Monitoring,"Predictive models are increasingly used to make various consequential
+decisions in high-stakes domains such as healthcare, finance, and policy. It
+becomes critical to ensure that these models make accurate predictions, are
+robust to shifts in the data, do not rely on spurious features, and do not
+unduly discriminate against minority groups. To this end, several approaches
+spanning various areas such as explainability, fairness, and robustness have
+been proposed in recent literature. Such approaches need to be human-centered
+as they cater to the understanding of the models to their users. However, there
+is a research gap in understanding the human-centric needs and challenges of
+monitoring machine learning (ML) models once they are deployed. To fill this
+gap, we conducted an interview study with 13 practitioners who have experience
+at the intersection of deploying ML models and engaging with customers spanning
+domains such as financial services, healthcare, hiring, online retail,
+computational advertising, and conversational assistants. We identified various
+human-centric challenges and requirements for model monitoring in real-world
+applications. Specifically, we found the need and the challenge for the model
+monitoring systems to clarify the impact of the monitoring observations on
+outcomes. Further, such insights must be actionable, robust, customizable for
+domain-specific use cases, and cognitively considerate to avoid information
+overload.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2205.09526v1,2022-05-19T12:49:37Z,2022-05-19T12:49:37Z,Simple Regularisation for Uncertainty-Aware Knowledge Distillation,"Considering uncertainty estimation of modern neural networks (NNs) is one of
+the most important steps towards deploying machine learning systems to
+meaningful real-world applications such as in medicine, finance or autonomous
+systems. At the moment, ensembles of different NNs constitute the
+state-of-the-art in both accuracy and uncertainty estimation in different
+tasks. However, ensembles of NNs are unpractical under real-world constraints,
+since their computation and memory consumption scale linearly with the size of
+the ensemble, which increase their latency and deployment cost. In this work,
+we examine a simple regularisation approach for distribution-free knowledge
+distillation of ensemble of machine learning models into a single NN. The aim
+of the regularisation is to preserve the diversity, accuracy and uncertainty
+estimation characteristics of the original ensemble without any intricacies,
+such as fine-tuning. We demonstrate the generality of the approach on
+combinations of toy data, SVHN/CIFAR-10, simple to complex NN architectures and
+different tasks.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2203.17081v1,2022-03-31T14:54:35Z,2022-03-31T14:54:35Z,Interpretation of Black Box NLP Models: A Survey,"An increasing number of machine learning models have been deployed in domains
+with high stakes such as finance and healthcare. Despite their superior
+performances, many models are black boxes in nature which are hard to explain.
+There are growing efforts for researchers to develop methods to interpret these
+black-box models. Post hoc explanations based on perturbations, such as LIME,
+are widely used approaches to interpret a machine learning model after it has
+been built. This class of methods has been shown to exhibit large instability,
+posing serious challenges to the effectiveness of the method itself and harming
+user trust. In this paper, we propose S-LIME, which utilizes a hypothesis
+testing framework based on central limit theorem for determining the number of
+perturbation points needed to guarantee stability of the resulting explanation.
+Experiments on both simulated and real world data sets are provided to
+demonstrate the effectiveness of our method.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2202.07787v1,2022-02-15T23:25:37Z,2022-02-15T23:25:37Z,Trustworthy Anomaly Detection: A Survey,"Anomaly detection has a wide range of real-world applications, such as bank
+fraud detection and cyber intrusion detection. In the past decade, a variety of
+anomaly detection models have been developed, which lead to big progress
+towards accurately detecting various anomalies. Despite the successes, anomaly
+detection models still face many limitations. The most significant one is
+whether we can trust the detection results from the models. In recent years,
+the research community has spent a great effort to design trustworthy machine
+learning models, such as developing trustworthy classification models. However,
+the attention to anomaly detection tasks is far from sufficient. Considering
+that many anomaly detection tasks are life-changing tasks involving human
+beings, labeling someone as anomalies or fraudsters should be extremely
+cautious. Hence, ensuring the anomaly detection models conducted in a
+trustworthy fashion is an essential requirement to deploy the models to conduct
+automatic decisions in the real world. In this brief survey, we summarize the
+existing efforts and discuss open problems towards trustworthy anomaly
+detection from the perspectives of interpretability, fairness, robustness, and
+privacy-preservation.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2202.02751v1,2022-02-06T10:33:13Z,2022-02-06T10:33:13Z,Pipe Overflow: Smashing Voice Authentication for Fun and Profit,"Recent years have seen a surge of popularity of acoustics-enabled personal
+devices powered by machine learning. Yet, machine learning has proven to be
+vulnerable to adversarial examples. Large number of modern systems protect
+themselves against such attacks by targeting the artificiality, i.e., they
+deploy mechanisms to detect the lack of human involvement in generating the
+adversarial examples. However, these defenses implicitly assume that humans are
+incapable of producing meaningful and targeted adversarial examples. In this
+paper, we show that this base assumption is wrong. In particular, we
+demonstrate that for tasks like speaker identification, a human is capable of
+producing analog adversarial examples directly with little cost and
+supervision: by simply speaking through a tube, an adversary reliably
+impersonates other speakers in eyes of ML models for speaker identification.
+Our findings extend to a range of other acoustic-biometric tasks such as
+liveness, bringing into question their use in security-critical settings in
+real life, such as phone banking.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2112.13338v1,2021-12-26T09:25:32Z,2021-12-26T09:25:32Z,MPCLeague: Robust MPC Platform for Privacy-Preserving Machine Learning,"In the modern era of computing, machine learning tools have demonstrated
+their potential in vital sectors, such as healthcare and finance, to derive
+proper inferences. The sensitive and confidential nature of the data in such
+sectors raises genuine concerns for data privacy. This motivated the area of
+Privacy-preserving Machine Learning (PPML), where privacy of data is
+guaranteed. In this thesis, we design an efficient platform, MPCLeague, for
+PPML in the Secure Outsourced Computation (SOC) setting using Secure
+Multi-party Computation (MPC) techniques.
+  MPC, the holy-grail problem of secure distributed computing, enables a set of
+n mutually distrusting parties to perform joint computation on their private
+inputs in a way that no coalition of t parties can learn more information than
+the output (privacy) or affect the true output of the computation
+(correctness). While MPC, in general, has been a subject of extensive research,
+the area of MPC with a small number of parties has drawn popularity of late
+mainly due to its application to real-time scenarios, efficiency and
+simplicity. This thesis focuses on designing efficient MPC frameworks for 2, 3
+and 4 parties, with at most one corruption and supports ring structures.
+  At the heart of this thesis are four frameworks - ASTRA, SWIFT, Tetrad,
+ABY2.0 - catered to different settings. The practicality of our framework is
+argued through improvements in the benchmarking of widely used ML algorithms --
+Linear Regression, Logistic Regression, Neural Networks, and Support Vector
+Machines. We propose two variants for each of our frameworks, with one variant
+aiming to minimise the execution time while the other focuses on the monetary
+cost. The concrete efficiency gains of our frameworks coupled with the stronger
+security guarantee of robustness make our platform an ideal choice for a
+real-time deployment of PPML techniques.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2112.07575v1,2021-12-14T17:33:32Z,2021-12-14T17:33:32Z,Robust Graph Neural Networks via Probabilistic Lipschitz Constraints,"Graph neural networks (GNNs) have recently been demonstrated to perform well
+on a variety of network-based tasks such as decentralized control and resource
+allocation, and provide computationally efficient methods for these tasks which
+have traditionally been challenging in that regard. However, like many
+neural-network based systems, GNNs are susceptible to shifts and perturbations
+on their inputs, which can include both node attributes and graph structure. In
+order to make them more useful for real-world applications, it is important to
+ensure their robustness post-deployment. Motivated by controlling the Lipschitz
+constant of GNN filters with respect to the node attributes, we propose to
+constrain the frequency response of the GNN's filter banks. We extend this
+formulation to the dynamic graph setting using a continuous frequency response
+constraint, and solve a relaxed variant of the problem via the scenario
+approach. This allows for the use of the same computationally efficient
+algorithm on sampled constraints, which provides PAC-style guarantees on the
+stability of the GNN using results in scenario optimization. We also highlight
+an important connection between this setup and GNN stability to graph
+perturbations, and provide experimental results which demonstrate the efficacy
+and broadness of our approach.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2112.07508v3,2022-06-17T09:00:26Z,2021-12-14T16:12:30Z,"Anti-Money Laundering Alert Optimization Using Machine Learning with
+  Graphs","Money laundering is a global problem that concerns legitimizing proceeds from
+serious felonies (1.7-4 trillion euros annually) such as drug dealing, human
+trafficking, or corruption. The anti-money laundering systems deployed by
+financial institutions typically comprise rules aligned with regulatory
+frameworks. Human investigators review the alerts and report suspicious cases.
+Such systems suffer from high false-positive rates, undermining their
+effectiveness and resulting in high operational costs. We propose a machine
+learning triage model, which complements the rule-based system and learns to
+predict the risk of an alert accurately. Our model uses both entity-centric
+engineered features and attributes characterizing inter-entity relations in the
+form of graph-based features. We leverage time windows to construct the dynamic
+graph, optimizing for time and space efficiency. We validate our model on a
+real-world banking dataset and show how the triage model can reduce the number
+of false positives by 80% while detecting over 90% of true positives. In this
+way, our model can significantly improve anti-money laundering operations.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2112.06247v1,2021-12-12T14:28:06Z,2021-12-12T14:28:06Z,DeepFIB: Self-Imputation for Time Series Anomaly Detection,"Time series (TS) anomaly detection (AD) plays an essential role in various
+applications, e.g., fraud detection in finance and healthcare monitoring. Due
+to the inherently unpredictable and highly varied nature of anomalies and the
+lack of anomaly labels in historical data, the AD problem is typically
+formulated as an unsupervised learning problem. The performance of existing
+solutions is often not satisfactory, especially in data-scarce scenarios. To
+tackle this problem, we propose a novel self-supervised learning technique for
+AD in time series, namely \emph{DeepFIB}. We model the problem as a \emph{Fill
+In the Blank} game by masking some elements in the TS and imputing them with
+the rest. Considering the two common anomaly shapes (point- or
+sequence-outliers) in TS data, we implement two masking strategies with many
+self-generated training samples. The corresponding self-imputation networks can
+extract more robust temporal relations than existing AD solutions and
+effectively facilitate identifying the two types of anomalies. For continuous
+outliers, we also propose an anomaly localization algorithm that dramatically
+reduces AD errors. Experiments on various real-world TS datasets demonstrate
+that DeepFIB outperforms state-of-the-art methods by a large margin, achieving
+up to $65.2\%$ relative improvement in F1-score.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2112.05660v1,2021-12-10T16:44:47Z,2021-12-10T16:44:47Z,"DPU: DAG Processing Unit for Irregular Graphs with Precision-Scalable
+  Posit Arithmetic in 28nm","Computation in several real-world applications like probabilistic machine
+learning, sparse linear algebra, and robotic navigation, can be modeled as
+irregular directed acyclic graphs (DAGs). The irregular data dependencies in
+DAGs pose challenges to parallel execution on general-purpose CPUs and GPUs,
+resulting in severe under-utilization of the hardware. This paper proposes DPU,
+a specialized processor designed for the efficient execution of irregular DAGs.
+The DPU is equipped with parallel compute units that execute different
+subgraphs of a DAG independently. The compute units can synchronize within a
+cycle using a hardware-supported synchronization primitive, and communicate via
+an efficient interconnect to a global banked scratchpad. Furthermore, a
+precision-scalable posit arithmetic unit is developed to enable
+application-dependent precision. The DPU is taped-out in 28nm CMOS, achieving a
+speedup of 5.1$\times$ and 20.6$\times$ over state-of-the-art CPU and GPU
+implementations on DAGs of sparse linear algebra and probabilistic machine
+learning workloads. This performance is achieved while operating at a power
+budget of 0.23W, as opposed to 55W and 98W of the CPU and GPU, resulting in a
+peak efficiency of 538 GOPS/W with DPU, which is 1350$\times$ and 9000$\times$
+higher than the CPU and GPU, respectively. Thus, with specialized architecture,
+DPU enables low-power execution of irregular DAG workloads.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2110.00086v1,2021-09-30T20:56:37Z,2021-09-30T20:56:37Z,On the Trustworthiness of Tree Ensemble Explainability Methods,"The recent increase in the deployment of machine learning models in critical
+domains such as healthcare, criminal justice, and finance has highlighted the
+need for trustworthy methods that can explain these models to stakeholders.
+Feature importance methods (e.g. gain and SHAP) are among the most popular
+explainability methods used to address this need. For any explainability
+technique to be trustworthy and meaningful, it has to provide an explanation
+that is accurate and stable. Although the stability of local feature importance
+methods (explaining individual predictions) has been studied before, there is
+yet a knowledge gap about the stability of global features importance methods
+(explanations for the whole model). Additionally, there is no study that
+evaluates and compares the accuracy of global feature importance methods with
+respect to feature ordering. In this paper, we evaluate the accuracy and
+stability of global feature importance methods through comprehensive
+experiments done on simulations as well as four real-world datasets. We focus
+on tree-based ensemble methods as they are used widely in industry and measure
+the accuracy and stability of explanations under two scenarios: 1) when inputs
+are perturbed 2) when models are perturbed. Our findings provide a comparison
+of these methods under a variety of settings and shed light on the limitations
+of global feature importance methods by indicating their lack of accuracy with
+and without noisy inputs, as well as their lack of stability with respect to:
+1) increase in input dimension or noise in the data; 2) perturbations in models
+initialized by different random seeds or hyperparameter settings.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2107.07502v2,2021-11-10T07:31:56Z,2021-07-15T17:54:36Z,MultiBench: Multiscale Benchmarks for Multimodal Representation Learning,"Learning multimodal representations involves integrating information from
+multiple heterogeneous sources of data. It is a challenging yet crucial area
+with numerous real-world applications in multimedia, affective computing,
+robotics, finance, human-computer interaction, and healthcare. Unfortunately,
+multimodal research has seen limited resources to study (1) generalization
+across domains and modalities, (2) complexity during training and inference,
+and (3) robustness to noisy and missing modalities. In order to accelerate
+progress towards understudied modalities and tasks while ensuring real-world
+robustness, we release MultiBench, a systematic and unified large-scale
+benchmark spanning 15 datasets, 10 modalities, 20 prediction tasks, and 6
+research areas. MultiBench provides an automated end-to-end machine learning
+pipeline that simplifies and standardizes data loading, experimental setup, and
+model evaluation. To enable holistic evaluation, MultiBench offers a
+comprehensive methodology to assess (1) generalization, (2) time and space
+complexity, and (3) modality robustness. MultiBench introduces impactful
+challenges for future research, including scalability to large-scale multimodal
+datasets and robustness to realistic imperfections. To accompany this
+benchmark, we also provide a standardized implementation of 20 core approaches
+in multimodal learning. Simply applying methods proposed in different research
+areas can improve the state-of-the-art performance on 9/15 datasets. Therefore,
+MultiBench presents a milestone in unifying disjoint efforts in multimodal
+research and paves the way towards a better understanding of the capabilities
+and limitations of multimodal models, all the while ensuring ease of use,
+accessibility, and reproducibility. MultiBench, our standardized code, and
+leaderboards are publicly available, will be regularly updated, and welcomes
+inputs from the community.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2106.12563v2,2021-06-25T18:08:39Z,2021-06-23T17:43:31Z,Feature Attributions and Counterfactual Explanations Can Be Manipulated,"As machine learning models are increasingly used in critical decision-making
+settings (e.g., healthcare, finance), there has been a growing emphasis on
+developing methods to explain model predictions. Such \textit{explanations} are
+used to understand and establish trust in models and are vital components in
+machine learning pipelines. Though explanations are a critical piece in these
+systems, there is little understanding about how they are vulnerable to
+manipulation by adversaries. In this paper, we discuss how two broad classes of
+explanations are vulnerable to manipulation. We demonstrate how adversaries can
+design biased models that manipulate model agnostic feature attribution methods
+(e.g., LIME \& SHAP) and counterfactual explanations that hill-climb during the
+counterfactual search (e.g., Wachter's Algorithm \& DiCE) into
+\textit{concealing} the model's biases. These vulnerabilities allow an
+adversary to deploy a biased model, yet explanations will not reveal this bias,
+thereby deceiving stakeholders into trusting the model. We evaluate the
+manipulations on real world data sets, including COMPAS and Communities \&
+Crime, and find explanations can be manipulated in practice.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2106.07875v1,2021-06-15T04:24:59Z,2021-06-15T04:24:59Z,S-LIME: Stabilized-LIME for Model Explanation,"An increasing number of machine learning models have been deployed in domains
+with high stakes such as finance and healthcare. Despite their superior
+performances, many models are black boxes in nature which are hard to explain.
+There are growing efforts for researchers to develop methods to interpret these
+black-box models. Post hoc explanations based on perturbations, such as LIME,
+are widely used approaches to interpret a machine learning model after it has
+been built. This class of methods has been shown to exhibit large instability,
+posing serious challenges to the effectiveness of the method itself and harming
+user trust. In this paper, we propose S-LIME, which utilizes a hypothesis
+testing framework based on central limit theorem for determining the number of
+perturbation points needed to guarantee stability of the resulting explanation.
+Experiments on both simulated and real world data sets are provided to
+demonstrate the effectiveness of our method.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2105.03289v1,2021-05-07T14:29:25Z,2021-05-07T14:29:25Z,"A Survey of Applied Machine Learning Techniques for Optical OFDM based
+  Networks","In this survey, we analyze the newest machine learning (ML) techniques for
+optical orthogonal frequency division multiplexing (O-OFDM)-based optical
+communications. ML has been proposed to mitigate channel and transceiver
+imperfections. For instance, ML can improve the signal quality under low
+modulation extinction ratio or can tackle both determinist and
+stochastic-induced nonlinearities such as parametric noise amplification in
+long-haul transmission. The proposed ML algorithms for O-OFDM can in
+particularly tackle inter-subcarrier nonlinear effects such as four-wave mixing
+and cross-phase modulation. In essence, these ML techniques could be beneficial
+for any multi-carrier approach (e.g. filter bank modulation). Supervised and
+unsupervised ML techniques are analyzed in terms of both O-OFDM transmission
+performance and computational complexity for potential real-time
+implementation. We indicate the strict conditions under which a ML algorithm
+should perform classification, regression or clustering. The survey also
+discusses open research issues and future directions towards the ML
+implementation.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2103.12715v2,2021-10-11T14:08:24Z,2021-03-23T17:36:22Z,Promoting Fairness through Hyperparameter Optimization,"Considerable research effort has been guided towards algorithmic fairness but
+real-world adoption of bias reduction techniques is still scarce. Existing
+methods are either metric- or model-specific, require access to sensitive
+attributes at inference time, or carry high development or deployment costs.
+This work explores the unfairness that emerges when optimizing ML models solely
+for predictive performance, and how to mitigate it with a simple and easily
+deployed intervention: fairness-aware hyperparameter optimization (HO). We
+propose and evaluate fairness-aware variants of three popular HO algorithms:
+Fair Random Search, Fair TPE, and Fairband. We validate our approach on a
+real-world bank account opening fraud case-study, as well as on three datasets
+from the fairness literature. Results show that, without extra training cost,
+it is feasible to find models with 111% mean fairness increase and just 6%
+decrease in performance when compared with fairness-blind HO.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2103.00949v1,2021-03-01T12:23:20Z,2021-03-01T12:23:20Z,Explainable AI in Credit Risk Management,"Artificial Intelligence (AI) has created the single biggest technology
+revolution the world has ever seen. For the finance sector, it provides great
+opportunities to enhance customer experience, democratize financial services,
+ensure consumer protection and significantly improve risk management. While it
+is easier than ever to run state-of-the-art machine learning models, designing
+and implementing systems that support real-world finance applications have been
+challenging. In large part because they lack transparency and explainability
+which are important factors in establishing reliable technology and the
+research on this topic with a specific focus on applications in credit risk
+management. In this paper, we implement two advanced post-hoc model agnostic
+explainability techniques called Local Interpretable Model Agnostic
+Explanations (LIME) and SHapley Additive exPlanations (SHAP) to machine
+learning (ML)-based credit scoring models applied to the open-access data set
+offered by the US-based P2P Lending Platform, Lending Club. Specifically, we
+use LIME to explain instances locally and SHAP to get both local and global
+explanations. We discuss the results in detail and present multiple comparison
+scenarios by using various kernels available for explaining graphs generated
+using SHAP values. We also discuss the practical challenges associated with the
+implementation of these state-of-art eXplainabale AI (XAI) methods and document
+them for future reference. We have made an effort to document every technical
+aspect of this research, while at the same time providing a general summary of
+the conclusions.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2101.12015v3,2021-07-25T23:26:02Z,2021-01-28T14:29:03Z,BERTaú: Itaú BERT for digital customer service,"In the last few years, three major topics received increased interest: deep
+learning, NLP and conversational agents. Bringing these three topics together
+to create an amazing digital customer experience and indeed deploy in
+production and solve real-world problems is something innovative and
+disruptive. We introduce a new Portuguese financial domain language
+representation model called BERTa\'u. BERTa\'u is an uncased BERT-base trained
+from scratch with data from the Ita\'u virtual assistant chatbot solution. Our
+novel contribution is that BERTa\'u pretrained language model requires less
+data, reached state-of-the-art performance in three NLP tasks, and generates a
+smaller and lighter model that makes the deployment feasible. We developed
+three tasks to validate our model: information retrieval with Frequently Asked
+Questions (FAQ) from Ita\'u bank, sentiment analysis from our virtual assistant
+data, and a NER solution. All proposed tasks are real-world solutions in
+production on our environment and the usage of a specialist model proved to be
+effective when compared to Google BERT multilingual and the DPRQuestionEncoder
+from Facebook, available at Hugging Face. The BERTa\'u improves the performance
+in 22% of FAQ Retrieval MRR metric, 2.1% in Sentiment Analysis F1 score, 4.4%
+in NER F1 score and can also represent the same sequence in up to 66% fewer
+tokens when compared to ""shelf models"".",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2012.01356v1,2020-12-02T17:56:44Z,2020-12-02T17:56:44Z,"Coinbot: Intelligent Robotic Coin Bag Manipulation Using Deep
+  Reinforcement Learning And Machine Teaching","Given the laborious difficulty of moving heavy bags of physical currency in
+the cash center of the bank, there is a large demand for training and deploying
+safe autonomous systems capable of conducting such tasks in a collaborative
+workspace. However, the deformable properties of the bag along with the large
+quantity of rigid-body coins contained within it, significantly increases the
+challenges of bag detection, grasping and manipulation by a robotic gripper and
+arm. In this paper, we apply deep reinforcement learning and machine learning
+techniques to the task of controlling a collaborative robot to automate the
+unloading of coin bags from a trolley. To accomplish the task-specific process
+of gripping flexible materials like coin bags where the center of the mass
+changes during manipulation, a special gripper was implemented in simulation
+and designed in physical hardware. Leveraging a depth camera and object
+detection using deep learning, a bag detection and pose estimation has been
+done for choosing the optimal point of grasping. An intelligent approach based
+on deep reinforcement learning has been introduced to propose the best
+configuration of the robot end-effector to maximize successful grasping. A
+boosted motion planning is utilized to increase the speed of motion planning
+during robot operation. Real-world trials with the proposed pipeline have
+demonstrated success rates over 96\% in a real-world setting.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2010.01659v1,2020-10-04T19:07:19Z,2020-10-04T19:07:19Z,"Data-efficient Online Classification with Siamese Networks and Active
+  Learning","An ever increasing volume of data is nowadays becoming available in a
+streaming manner in many application areas, such as, in critical infrastructure
+systems, finance and banking, security and crime and web analytics. To meet
+this new demand, predictive models need to be built online where learning
+occurs on-the-fly. Online learning poses important challenges that affect the
+deployment of online classification systems to real-life problems. In this
+paper we investigate learning from limited labelled, nonstationary and
+imbalanced data in online classification. We propose a learning method that
+synergistically combines siamese neural networks and active learning. The
+proposed method uses a multi-sliding window approach to store data, and
+maintains separate and balanced queues for each class. Our study shows that the
+proposed method is robust to data nonstationarity and imbalance, and
+significantly outperforms baselines and state-of-the-art algorithms in terms of
+both learning speed and performance. Importantly, it is effective even when
+only 1% of the labels of the arriving instances are available.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2010.02716v2,2021-06-02T12:55:40Z,2020-10-03T19:25:01Z,AI Lifecycle Models Need To Be Revised. An Exploratory Study in Fintech,"Tech-leading organizations are embracing the forthcoming artificial
+intelligence revolution. Intelligent systems are replacing and cooperating with
+traditional software components. Thus, the same development processes and
+standards in software engineering ought to be complied in artificial
+intelligence systems. This study aims to understand the processes by which
+artificial intelligence-based systems are developed and how state-of-the-art
+lifecycle models fit the current needs of the industry. We conducted an
+exploratory case study at ING, a global bank with a strong European base. We
+interviewed 17 people with different roles and from different departments
+within the organization. We have found that the following stages have been
+overlooked by previous lifecycle models: data collection, feasibility study,
+documentation, model monitoring, and model risk assessment. Our work shows that
+the real challenges of applying Machine Learning go much beyond sophisticated
+learning algorithms - more focus is needed on the entire lifecycle. In
+particular, regardless of the existing development tools for Machine Learning,
+we observe that they are still not meeting the particularities of this field.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2006.08162v1,2020-06-15T06:46:08Z,2020-06-15T06:46:08Z,"Filter design for small target detection on infrared imagery using
+  normalized-cross-correlation layer","In this paper, we introduce a machine learning approach to the problem of
+infrared small target detection filter design. For this purpose, similarly to a
+convolutional layer of a neural network, the normalized-cross-correlational
+(NCC) layer, which we utilize for designing a target detection/recognition
+filter bank, is proposed. By employing the NCC layer in a neural network
+structure, we introduce a framework, in which supervised training is used to
+calculate the optimal filter shape and the optimum number of filters required
+for a specific target detection/recognition task on infrared images. We also
+propose the mean-absolute-deviation NCC (MAD-NCC) layer, an efficient
+implementation of the proposed NCC layer, designed especially for FPGA systems,
+in which square root operations are avoided for real-time computation. As a
+case study we work on dim-target detection on mid-wave infrared imagery and
+obtain the filters that can discriminate a dim target from various types of
+background clutter, specific to our operational concept.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2005.12379v2,2020-09-22T17:27:44Z,2020-05-21T23:35:53Z,"Do the Machine Learning Models on a Crowd Sourced Platform Exhibit Bias?
+  An Empirical Study on Model Fairness","Machine learning models are increasingly being used in important
+decision-making software such as approving bank loans, recommending criminal
+sentencing, hiring employees, and so on. It is important to ensure the fairness
+of these models so that no discrimination is made based on protected attribute
+(e.g., race, sex, age) while decision making. Algorithms have been developed to
+measure unfairness and mitigate them to a certain extent. In this paper, we
+have focused on the empirical evaluation of fairness and mitigations on
+real-world machine learning models. We have created a benchmark of 40 top-rated
+models from Kaggle used for 5 different tasks, and then using a comprehensive
+set of fairness metrics, evaluated their fairness. Then, we have applied 7
+mitigation techniques on these models and analyzed the fairness, mitigation
+results, and impacts on performance. We have found that some model optimization
+techniques result in inducing unfairness in the models. On the other hand,
+although there are some fairness control mechanisms in machine learning
+libraries, they are not documented. The mitigation algorithm also exhibit
+common patterns such as mitigation in the post-processing is often costly (in
+terms of performance) and mitigation in the pre-processing stage is preferred
+in most cases. We have also presented different trade-off choices of fairness
+mitigation decisions. Our study suggests future research directions to reduce
+the gap between theoretical fairness aware algorithms and the software
+engineering methods to leverage them in practice.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2005.02347v4,2020-09-30T00:31:30Z,2020-05-05T17:32:37Z,Differential Machine Learning,"Differential machine learning combines automatic adjoint differentiation
+(AAD) with modern machine learning (ML) in the context of risk management of
+financial Derivatives. We introduce novel algorithms for training fast,
+accurate pricing and risk approximations, online, in real-time, with
+convergence guarantees. Our machinery is applicable to arbitrary Derivatives
+instruments or trading books, under arbitrary stochastic models of the
+underlying market variables. It effectively resolves computational bottlenecks
+of Derivatives risk reports and capital calculations.
+  Differential ML is a general extension of supervised learning, where ML
+models are trained on examples of not only inputs and labels but also
+differentials of labels wrt inputs. It is also applicable in many situations
+outside finance, where high quality first-order derivatives wrt training inputs
+are available. Applications in Physics, for example, may leverage differentials
+known from first principles to learn function approximations more effectively.
+  In finance, AAD computes pathwise differentials with remarkable efficacy so
+differential ML algorithms provide extremely effective pricing and risk
+approximations. We can produce fast analytics in models too complex for closed
+form solutions, extract the risk factors of complex transactions and trading
+books, and effectively compute risk management metrics like reports across a
+large number of scenarios, backtesting and simulation of hedge strategies, or
+regulations like XVA, CCR, FRTB or SIMM-MVA.
+  TensorFlow implementation is available on
+https://github.com/differential-machine-learning",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/2002.05988v2,2020-06-17T16:59:41Z,2020-02-14T12:04:11Z,Interleaved Sequence RNNs for Fraud Detection,"Payment card fraud causes multibillion dollar losses for banks and merchants
+worldwide, often fueling complex criminal activities. To address this, many
+real-time fraud detection systems use tree-based models, demanding complex
+feature engineering systems to efficiently enrich transactions with historical
+data while complying with millisecond-level latencies.
+  In this work, we do not require those expensive features by using recurrent
+neural networks and treating payments as an interleaved sequence, where the
+history of each card is an unbounded, irregular sub-sequence. We present a
+complete RNN framework to detect fraud in real-time, proposing an efficient ML
+pipeline from preprocessing to deployment.
+  We show that these feature-free, multi-sequence RNNs outperform
+state-of-the-art models saving millions of dollars in fraud detection and using
+fewer computational resources.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1909.13343v2,2019-10-01T16:06:39Z,2019-09-29T19:15:08Z,"ISTHMUS: Secure, Scalable, Real-time and Robust Machine Learning
+  Platform for Healthcare","In recent times, machine learning (ML) and artificial intelligence (AI) based
+systems have evolved and scaled across different industries such as finance,
+retail, insurance, energy utilities, etc. Among other things, they have been
+used to predict patterns of customer behavior, to generate pricing models, and
+to predict the return on investments. But the successes in deploying machine
+learning models at scale in those industries have not translated into the
+healthcare setting. There are multiple reasons why integrating ML models into
+healthcare has not been widely successful, but from a technical perspective,
+general-purpose commercial machine learning platforms are not a good fit for
+healthcare due to complexities in handling data quality issues, mandates to
+demonstrate clinical relevance, and a lack of ability to monitor performance in
+a highly regulated environment with stringent security and privacy needs. In
+this paper, we describe Isthmus, a turnkey, cloud-based platform which
+addresses the challenges above and reduces time to market for operationalizing
+ML/AI in healthcare. Towards the end, we describe three case studies which shed
+light on Isthmus capabilities. These include (1) supporting an end-to-end
+lifecycle of a model which predicts trauma survivability at hospital trauma
+centers, (2) bringing in and harmonizing data from disparate sources to create
+a community data platform for inferring population as well as patient level
+insights for Social Determinants of Health (SDoH), and (3) ingesting
+live-streaming data from various IoT sensors to build models, which can
+leverage real-time and longitudinal information to make advanced time-sensitive
+predictions.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1908.10778v2,2020-01-08T02:15:21Z,2019-08-28T15:27:45Z,"Classical versus Quantum Models in Machine Learning: Insights from a
+  Finance Application","Although several models have been proposed towards assisting machine learning
+(ML) tasks with quantum computers, a direct comparison of the expressive power
+and efficiency of classical versus quantum models for datasets originating from
+real-world applications is one of the key milestones towards a quantum ready
+era. Here, we take a first step towards addressing this challenge by performing
+a comparison of the widely used classical ML models known as restricted
+Boltzmann machines (RBMs), against a recently proposed quantum model, now known
+as quantum circuit Born machines (QCBMs). Both models address the same hard
+tasks in unsupervised generative modeling, with QCBMs exploiting the
+probabilistic nature of quantum mechanics and a candidate for near-term quantum
+computers, as experimentally demonstrated in three different quantum hardware
+architectures to date. To address the question of the performance of the
+quantum model on real-world classical data sets, we construct scenarios from a
+probabilistic version out of the well-known portfolio optimization problem in
+finance, by using time-series pricing data from asset subsets of the S\&P500
+stock market index. It is remarkable to find that, under the same number of
+resources in terms of parameters for both classical and quantum models, the
+quantum models seem to have superior performance on typical instances when
+compared with the canonical training of the RBMs. Our simulations are grounded
+on a hardware efficient realization of the QCBMs on ion-trap quantum computers,
+by using their native gate sets, and therefore readily implementable in
+near-term quantum devices.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1907.07296v4,2019-10-03T19:38:48Z,2019-07-17T00:50:37Z,"Explaining Vulnerabilities to Adversarial Machine Learning through
+  Visual Analytics","Machine learning models are currently being deployed in a variety of
+real-world applications where model predictions are used to make decisions
+about healthcare, bank loans, and numerous other critical tasks. As the
+deployment of artificial intelligence technologies becomes ubiquitous, it is
+unsurprising that adversaries have begun developing methods to manipulate
+machine learning models to their advantage. While the visual analytics
+community has developed methods for opening the black box of machine learning
+models, little work has focused on helping the user understand their model
+vulnerabilities in the context of adversarial attacks. In this paper, we
+present a visual analytics framework for explaining and exploring model
+vulnerabilities to adversarial attacks. Our framework employs a multi-faceted
+visualization scheme designed to support the analysis of data poisoning attacks
+from the perspective of models, data instances, features, and local structures.
+We demonstrate our framework through two case studies on binary classifiers and
+illustrate model vulnerabilities with respect to varying attack strategies.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1907.02526v1,2019-07-03T21:25:21Z,2019-07-03T21:25:21Z,"Convolutional Neural Network-based Speech Enhancement for Cochlear
+  Implant Recipients","Attempts to develop speech enhancement algorithms with improved speech
+intelligibility for cochlear implant (CI) users have met with limited success.
+To improve speech enhancement methods for CI users, we propose to perform
+speech enhancement in a cochlear filter-bank feature space, a feature-set
+specifically designed for CI users based on CI auditory stimuli. We leverage a
+convolutional neural network (CNN) to extract both stationary and
+non-stationary components of environmental acoustics and speech. We propose
+three CNN architectures: (1) vanilla CNN that directly generates the enhanced
+signal; (2) spectral-subtraction-style CNN (SS-CNN) that first predicts noise
+and then generates the enhanced signal by subtracting noise from the noisy
+signal; (3) Wiener-style CNN (Wiener-CNN) that generates an optimal mask for
+suppressing noise. An important problem of the proposed networks is that they
+introduce considerable delays, which limits their real-time application for CI
+users. To address this, this study also considers causal variations of these
+networks. Our experiments show that the proposed networks (both causal and
+non-causal forms) achieve significant improvement over existing baseline
+systems. We also found that causal Wiener-CNN outperforms other networks, and
+leads to the best overall envelope coefficient measure (ECM). The proposed
+algorithms represent a viable option for implementation on the CCi-MOBILE
+research platform as a pre-processor for CI users in naturalistic environments.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1906.07391v3,2020-12-29T21:20:09Z,2019-06-18T05:51:57Z,"The Breakthrough Listen Search for Intelligent Life: Public Data,
+  Formats, Reduction and Archiving","Breakthrough Listen is the most comprehensive and sensitive search for
+extraterrestrial intelligence (SETI) to date, employing a collection of
+international observational facilities including both radio and optical
+telescopes. During the first three years of the Listen program, thousands of
+targets have been observed with the Green Bank Telescope (GBT), Parkes
+Telescope and Automated Planet Finder. At GBT and Parkes, observations have
+been performed ranging from 700 MHz to 26 GHz, with raw data volumes averaging
+over 1PB / day. A pseudo-real time software spectroscopy suite is used to
+produce multi-resolution spectrograms amounting to approximately 400 GB hr^-1
+GHz^-1 beam^-1. For certain targets, raw baseband voltage data is also
+preserved. Observations with the Automated Planet Finder produce both
+2-dimensional and 1-dimensional high resolution (R~10^5) echelle spectral data.
+  Although the primary purpose of Listen data acquisition is for SETI, a range
+of secondary science has also been performed with these data, including studies
+of fast radio bursts. Other current and potential research topics include
+spectral line studies, searches for certain kinds of dark matter, probes of
+interstellar scattering, pulsar searches, radio transient searches and
+investigations of stellar activity. Listen data are also being used in the
+development of algorithms, including machine learning approaches to modulation
+scheme classification and outlier detection, that have wide applicability not
+just for astronomical research but for a broad range of science and
+engineering.
+  In this paper, we describe the hardware and software pipeline used for
+collection, reduction, archival, and public dissemination of Listen data. We
+describe the data formats and tools, and present Breakthrough Listen Data
+Release 1.0 (BLDR 1.0), a defined set of publicly-available raw and reduced
+data totalling 1 PB.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1905.04815v1,2019-05-13T00:20:31Z,2019-05-13T00:20:31Z,"Programmable Spectrometry -- Per-pixel Classification of Materials using
+  Learned Spectral Filters","Many materials have distinct spectral profiles. This facilitates estimation
+of the material composition of a scene at each pixel by first acquiring its
+hyperspectral image, and subsequently filtering it using a bank of spectral
+profiles. This process is inherently wasteful since only a set of linear
+projections of the acquired measurements contribute to the classification task.
+We propose a novel programmable camera that is capable of producing images of a
+scene with an arbitrary spectral filter. We use this camera to optically
+implement the spectral filtering of the scene's hyperspectral image with the
+bank of spectral profiles needed to perform per-pixel material classification.
+This provides gains both in terms of acquisition speed --- since only the
+relevant measurements are acquired --- and in signal-to-noise ratio --- since
+we invariably avoid narrowband filters that are light inefficient. Given
+training data, we use a range of classical and modern techniques including SVMs
+and neural networks to identify the bank of spectral profiles that facilitate
+material classification. We verify the method in simulations on standard
+datasets as well as real data using a lab prototype of the camera.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1902.06343v2,2020-06-25T15:15:49Z,2019-02-17T22:52:52Z,"FETCH: A deep-learning based classifier for fast transient
+  classification","With the upcoming commensal surveys for Fast Radio Bursts (FRBs), and their
+high candidate rate, usage of machine learning algorithms for candidate
+classification is a necessity. Such algorithms will also play a pivotal role in
+sending real-time triggers for prompt follow-ups with other instruments. In
+this paper, we have used the technique of Transfer Learning to train the
+state-of-the-art deep neural networks for classification of FRB and Radio
+Frequency Interference (RFI) candidates. These are convolutional neural
+networks which work on radio frequency-time and dispersion measure-time images
+as the inputs. We trained these networks using simulated FRBs and real RFI
+candidates from telescopes at the Green Bank Observatory. We present 11 deep
+learning models, each with an accuracy and recall above 99.5% on our test
+dataset comprising of real RFI and pulsar candidates. As we demonstrate, these
+algorithms are telescope and frequency agnostic and are able to detect all FRBs
+with signal-to-noise ratios above 10 in ASKAP and Parkes data. We also provide
+an open-source python package FETCH (Fast Extragalactic Transient Candidate
+Hunter) for classification of candidates, using our models. Using FETCH, these
+models can be deployed along with any commensal search pipeline for real-time
+candidate classification.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1903.03202v2,2019-06-27T14:53:06Z,2019-02-17T15:04:35Z,Nowcasting Recessions using the SVM Machine Learning Algorithm,"We introduce a novel application of Support Vector Machines (SVM), an
+important Machine Learning algorithm, to determine the beginning and end of
+recessions in real time. Nowcasting, ""forecasting"" a condition about the
+present time because the full information about it is not available until
+later, is key for recessions, which are only determined months after the fact.
+We show that SVM has excellent predictive performance for this task, and we
+provide implementation details to facilitate its use in similar problems in
+economics and finance.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1811.08933v2,2019-01-26T23:24:48Z,2018-11-18T07:52:34Z,Analyzing Machine Learning Workloads Using a Detailed GPU Simulator,"Most deep neural networks deployed today are trained using GPUs via
+high-level frameworks such as TensorFlow and PyTorch. This paper describes
+changes we made to the GPGPU-Sim simulator to enable it to run PyTorch by
+running PTX kernels included in NVIDIA's cuDNN library. We use the resulting
+modified simulator, which has been made available publicly with this paper, to
+study some simple deep learning workloads. With our changes to GPGPU-Sim's
+functional simulation model, we find GPGPU-Sim performance model running a
+cuDNN enabled implementation of LeNet for MNIST reports results within 30% of
+real hardware. Using GPGPU-Sim's AerialVision performance analysis tool we
+observe that cuDNN API calls contain many varying phases and appear to include
+potentially inefficient microarchitecture behaviour such as DRAM partition bank
+camping, at least when executed on GPGPU-Sim's current performance model.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1810.07583v1,2018-10-17T14:36:32Z,2018-10-17T14:36:32Z,"Mode Division Multiplexing (MDM) Weight Bank Design for Use in Photonic
+  Neural Networks","Neural networks provide a powerful tool for applications from classification
+and regression to general purpose alternative computing. Photonics have the
+potential to provide enormous speed benefits over electronic and software
+networks, allowing such networks to be used in real-time applications at radio
+frequencies. Mode division multiplexing (MDM) is one method to increase the
+total information capacity of a single on-chip waveguide and, by extension, the
+information density of the photonic neural network (PNN). This Independent Work
+consists of three experimental designs ready for fabrication, each of which
+investigates the process of expanding current PNN technology to include MDM.
+Experiment 1 determines the optimal waveguide geometry to couple optical power
+into different spacial modes within a single waveguide. Experiment 2 combines
+MDM and previous wavelength division multiplexing (WDM) technology into a
+single weight bank for use as the dendrite of a photonic neuron. Finally,
+Experiment 3 puts two full neurons in a folded bus, or ""hairpin,"" network
+topology to provide a platform for training calibration schemes that can be
+applied to larger networks.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1809.07763v4,2020-05-26T15:15:19Z,2018-09-19T19:14:46Z,"auditor: an R Package for Model-Agnostic Visual Validation and
+  Diagnostics","Machine learning models have spread to almost every area of life. They are
+successfully applied in biology, medicine, finance, physics, and other fields.
+With modern software it is easy to train even a~complex model that fits the
+training data and results in high accuracy on the test set. The problem arises
+when models fail confronted with real-world data.
+  This paper describes methodology and tools for model-agnostic audit.
+Introduced techniques facilitate assessing and comparing the goodness of fit
+and performance of models. In~addition, they may be used for the analysis of
+the similarity of residuals and for identification of~outliers and influential
+observations. The examination is carried out by diagnostic scores and visual
+verification.
+  Presented methods were implemented in the auditor package for R. Due to
+flexible and~consistent grammar, it is simple to validate models of any
+classes.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1808.00151v1,2018-07-23T18:20:27Z,2018-07-23T18:20:27Z,Identifying Financial Institutions by Transaction Signatures,"Financial data aggregators and Personal Financial Management (PFM) services
+are software products that help individuals manage personal finances by
+collecting information from multiple accounts at various Financial Institutes
+(FIs), presenting data in a coherent and concentrated way, and highlighting
+insights and suggestions. Money transfers consist of two sides and a direction.
+From the perspective of a financial data aggregator, an incoming transaction
+consists of a date, an amount, and a description string, but not the explicit
+identity of the sending FI. In this paper we investigate supervised learning
+based methods to infer the identity of the sending FI from the description
+string of a money transfer transaction, using a blend of traditional and RNN
+based NLP methods. Our approach is based on the observation that the textual
+description field associated with a transactions is subjected to various types
+of normalizations and standardizations, resulting in unique patterns that
+identify the issuer. We compare multiple methods using a large real-word
+dataset of over $10$ million transactions.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1802.06259v2,2019-09-12T17:21:14Z,2018-02-17T16:47:32Z,"Exact and Consistent Interpretation for Piecewise Linear Neural
+  Networks: A Closed Form Solution","Strong intelligent machines powered by deep neural networks are increasingly
+deployed as black boxes to make decisions in risk-sensitive domains, such as
+finance and medical. To reduce potential risk and build trust with users, it is
+critical to interpret how such machines make their decisions. Existing works
+interpret a pre-trained neural network by analyzing hidden neurons, mimicking
+pre-trained models or approximating local predictions. However, these methods
+do not provide a guarantee on the exactness and consistency of their
+interpretation. In this paper, we propose an elegant closed form solution named
+$OpenBox$ to compute exact and consistent interpretations for the family of
+Piecewise Linear Neural Networks (PLNN). The major idea is to first transform a
+PLNN into a mathematically equivalent set of linear classifiers, then interpret
+each linear classifier by the features that dominate its prediction. We further
+apply $OpenBox$ to demonstrate the effectiveness of non-negative and sparse
+constraints on improving the interpretability of PLNNs. The extensive
+experiments on both synthetic and real world data sets clearly demonstrate the
+exactness and consistency of our interpretation.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1711.08013v4,2020-02-12T15:40:02Z,2017-11-21T19:58:57Z,OSQP: An Operator Splitting Solver for Quadratic Programs,"We present a general-purpose solver for convex quadratic programs based on
+the alternating direction method of multipliers, employing a novel operator
+splitting technique that requires the solution of a quasi-definite linear
+system with the same coefficient matrix at almost every iteration. Our
+algorithm is very robust, placing no requirements on the problem data such as
+positive definiteness of the objective function or linear independence of the
+constraint functions. It can be configured to be division-free once an initial
+matrix factorization is carried out, making it suitable for real-time
+applications in embedded systems. In addition, our technique is the first
+operator splitting method for quadratic programs able to reliably detect primal
+and dual infeasible problems from the algorithm iterates. The method also
+supports factorization caching and warm starting, making it particularly
+efficient when solving parametrized problems arising in finance, control, and
+machine learning. Our open-source C implementation OSQP has a small footprint,
+is library-free, and has been extensively tested on many problem instances from
+a wide variety of application areas. It is typically ten times faster than
+competing interior-point methods, and sometimes much more when factorization
+caching or warm start is used. OSQP has already shown a large impact with tens
+of thousands of users both in academia and in large corporations.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1710.07709v1,2017-10-20T21:34:49Z,2017-10-20T21:34:49Z,"Solving the ""false positives"" problem in fraud prediction","In this paper, we present an automated feature engineering based approach to
+dramatically reduce false positives in fraud prediction. False positives plague
+the fraud prediction industry. It is estimated that only 1 in 5 declared as
+fraud are actually fraud and roughly 1 in every 6 customers have had a valid
+transaction declined in the past year. To address this problem, we use the Deep
+Feature Synthesis algorithm to automatically derive behavioral features based
+on the historical data of the card associated with a transaction. We generate
+237 features (>100 behavioral patterns) for each transaction, and use a random
+forest to learn a classifier. We tested our machine learning model on data from
+a large multinational bank and compared it to their existing solution. On an
+unseen data of 1.852 million transactions, we were able to reduce the false
+positives by 54% and provide a savings of 190K euros. We also assess how to
+deploy this solution, and whether it necessitates streaming computation for
+real time scoring. We found that our solution can maintain similar benefits
+even when historical features are computed once every 7 days.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1609.02031v2,2017-03-28T21:30:08Z,2016-09-04T20:17:45Z,"An efficient Search Tool for an Anti-Money Laundering Application of an
+  Multi-national Bank's Dataset","Today, money laundering (ML) poses a serious threat not only to financial
+institutions but also to the nations. This criminal activity is becoming more
+and more sophisticated and seems to have moved from the clichy of drug
+trafficking to financing terrorism and surely not forgetting personal gain.
+Most of the financial institutions internationally have been implementing
+anti-money laundering solutions (AML) to fight investment fraud activities. In
+AML, the customer identification is an important task which helps AML experts
+to monitor customer habits: some being customer domicile, transactions that
+they are involved in etc. However, simple query tools provided by current DBMS
+as well as naive approaches in customer searching may produce incorrect and
+ambiguous results and their processing time is also very high due to the
+complexity of the database system architecture. In this paper, we present a new
+approach for identifying customers registered in an investment bank. This
+approach is developed as a tool that allows AML experts to quickly identify
+customers who are managed independently across separate databases. It is tested
+on real-world datasets, which are real and large financial datasets. Some
+preliminary experimental results show that this new approach is efficient and
+effective.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1601.02781v2,2017-05-19T11:23:33Z,2016-01-12T09:38:44Z,BAMCloud: A Cloud Based Mobile Biometric Authentication Framework,"With an exponential increase in number of users switching to mobile banking,
+various countries are adopting biometric solutions as security measures. The
+main reason for biometric technologies becoming more common in the everyday
+lives of consumers is because of the facility to easily capture biometric data
+in real time, using their mobile phones. Biometric technologies are providing
+the potential security framework to make banking more convenient and secure
+than it has ever been. At the same time, the exponential growth of enrollment
+in the biometric system produces massive amount of high dimensionality data
+that leads to degradation in the performance of the mobile banking systems.
+Therefore, in order to overcome the performance issues arising due to this data
+deluge, this paper aims to propose a distributed mobile biometric system based
+on a high performance cluster Cloud. High availability, better time efficiency
+and scalability are some of the added advantages of using the proposed system.
+In this paper a Cloud based mobile biometric authentication framework
+(BAMCloud) is proposed that uses dynamic signatures and performs
+authentication. It includes the steps involving data capture using any handheld
+mobile device, then storage, preprocessing and training the system in a
+distributed manner over Cloud. For this purpose we have implemented it using
+MapReduce on Hadoop platform and for training Levenberg-Marquardt
+backpropagation neural network has been used. Moreover, the methodology adopted
+is very novel as it achieves a speedup of 8.5x and a performance of 96.23%.
+Furthermore, the cost benefit analysis of the implemented system shows that the
+cost of implementation and execution of the system is lesser than the existing
+ones. The experiments demonstrate that the better performance is achieved by
+proposed framework as compared to the other methods used in the recent
+literature.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')
+http://arxiv.org/abs/1502.02537v1,2015-02-06T14:21:06Z,2015-02-06T14:21:06Z,"Mergers and acquisitions transactions strategies in diffusion - type
+  financial systems in highly volatile global capital markets with
+  nonlinearities","The M and A transactions represent a wide range of unique business
+optimization opportunities in the corporate transformation deals, which are
+usually characterized by the high level of total risk. The M and A transactions
+can be successfully implemented by taking to an account the size of
+investments, purchase price, direction of transaction, type of transaction, and
+using the modern comparable transactions analysis and the business valuation
+techniques in the diffusion type financial systems in the finances. We
+developed the MicroMA software program with the embedded optimized
+near-real-time artificial intelligence algorithm to create the winning virtuous
+M and A strategies, using the financial performance characteristics of the
+involved firms, and to estimate the probability of the M and A transaction
+completion success. We believe that the fluctuating dependence of M and A
+transactions number over the certain time period is quasi periodic. We think
+that there are many factors, which can generate the quasi periodic oscillations
+of the M and A transactions number in the time domain, for example: the stock
+market bubble effects. We performed the research of the nonlinearities in the M
+and A transactions number quasi-periodic oscillations in Matlab, including the
+ideal, linear, quadratic, and exponential dependences. We discovered that the
+average of a sum of random numbers in the M and A transactions time series
+represents a time series with the quasi periodic systematic oscillations, which
+can be finely approximated by the polynomial numbers. We think that, in the
+course of the M and A transaction implementation, the ability by the companies
+to absorb the newly acquired knowledge and to create the new innovative
+knowledge bases, is a key predeterminant of the M and A deal completion success
+as in Switzerland.",arxiv,finance,'finance' AND 'machine learning' AND ('real-world' AND 'deploy')

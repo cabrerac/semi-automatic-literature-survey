@@ -65,7 +65,7 @@ def main(parameters_file):
         if len(syntactic_filters) > 0:
             step = step + 1
             print(str(step) + '. Syntactic filter by abstract snowballing papers...')
-            file_name = retrieve.filter_papers(syntactic_filters, folder_name, search_date, step)
+            file_name = retrieve.filter_papers(syntactic_filters, synonyms, folder_name, search_date, step)
             print('Syntactic filtering results can be found at: ' + file_name)
             next_file = str(step) + '_syntactic_filtered_papers.csv'
 
@@ -73,7 +73,7 @@ def main(parameters_file):
         if len(semantic_filters) > 0:
             step = step + 1
             print(str(step) + '. Semantic filter snowballing papers...')
-            file_name = semantic_analyser.get_to_check_papers(semantic_filters, folder_name, search_date, step)
+            file_name = semantic_analyser.lbl2vec(semantic_filters, folder_name, search_date, step)
             print('Semantic filtering results can be found at: ' + file_name)
             next_file = str(step) + '_semantic_filtered_papers.csv'
 
@@ -89,6 +89,7 @@ def main(parameters_file):
         merge_step_2 = step
 
         # Merge papers
+        step = step + 1
         print(str(step) + '. Merging papers...')
         file_name = util.merge_papers(merge_step_1, merge_step_2, folder_name, search_date)
         print('Merged papers can be found at: ' + file_name)

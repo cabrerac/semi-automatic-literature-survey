@@ -122,6 +122,7 @@ def get_citations(folder_name, search_date, step):
                                   '_preprocessed_papers.csv', 'a+', newline='', encoding=fr) as f:
                             papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
                 time.sleep(5)
+    return preprocessed_file_name
 
 
 def create_request(parameters):

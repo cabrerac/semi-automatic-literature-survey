@@ -18,16 +18,16 @@ def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, 
         key = list(query.keys())[0]
 
         if 'arxiv' in databases:
-            print("Requesting ArXiv for query: " + list(query.keys())[0] + "...")
+            print("- Requesting ArXiv for query: " + list(query.keys())[0] + "...")
             arxiv.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
 
         if 'springer' in databases:
             # Springer searches over all the paper metadata. Synonyms are not needed in this case.
-            print("Requesting Springer for query: " + list(query.keys())[0] + "...")
+            print("- Requesting Springer for query: " + list(query.keys())[0] + "...")
             springer.get_papers(query, fields, types, dates, since, to, folder_name, search_date)
 
         if 'ieeexplore' in databases:
-            print("Requesting IEEE Xplore for query: " + list(query.keys())[0] + "...")
+            print("- Requesting IEEE Xplore for query: " + list(query.keys())[0] + "...")
             ieeexplore.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
 
         # Scopus provides papers metadata then abstracts must be retrieved from the science direct database.
@@ -35,19 +35,19 @@ def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, 
         # So the number of returned papers from scopus is always greater than the number of final abstracts retrieved
         # from science direct.
         if 'sciencedirect' in databases:
-            print("Requesting Scopus for query: " + list(query.keys())[0] + "...")
+            print("- Requesting Scopus for query: " + list(query.keys())[0] + "...")
             elsevier.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
-            # 2.1 Getting abstracts from science direct
-            print('2.1 Getting abstracts from science direct...')
+            # Getting abstracts from science direct
+            print('-- Getting abstracts from science direct...')
             get_abstracts_elsevier(query, folder_name, to, search_date)
 
         if 'core' in databases:
-            print("Requesting CORE for query: " + list(query.keys())[0] + "...")
+            print("- Requesting CORE for query: " + list(query.keys())[0] + "...")
             core.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
 
         if 'semantic_scholar' in databases:
             # Semantic Scholar searches over its knowledge graph. Synonyms are not needed in this case.
-            print("Requesting Semantic Scholar query: " + list(query.keys())[0] + "...")
+            print("- Requesting Semantic Scholar query: " + list(query.keys())[0] + "...")
             semantic_scholar.get_papers(query, types, dates, since, to, folder_name, search_date)
 
 
@@ -58,7 +58,8 @@ def get_abstracts_elsevier(query, file_name, to, search_date):
 
 def get_citations(folder_name, search_date, step):
     print("Requesting Semantic Scholar for papers citations...")
-    semantic_scholar.get_citations(folder_name, search_date, step)
+    file_name = semantic_scholar.get_citations(folder_name, search_date, step)
+    return file_name
 
 
 def preprocess(queries, databases, folder_name, search_date, since, to, step):
@@ -296,11 +297,12 @@ def filter_papers(keywords, synonyms, folder_name, search_date, step):
         preprocessed_papers = pd.read_csv(to_filter)
         preprocessed_papers.dropna(subset=["abstract"], inplace=True)
         filtered_papers = filter_by_keywords(preprocessed_papers, keywords, synonyms)
-        filtered_papers['type'] = 'filtered'
-        filtered_papers['status'] = 'unknown'
-        with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
-                  '_syntactic_filtered_papers.csv', 'a+', newline='', encoding=fr) as f:
-            filtered_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+        if len(filtered_papers) > 0:
+            filtered_papers['type'] = 'filtered'
+            filtered_papers['status'] = 'unknown'
+            with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
+                      '_syntactic_filtered_papers.csv', 'a+', newline='', encoding=fr) as f:
+                filtered_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
     return syntactic_filtered_file_name
 
 

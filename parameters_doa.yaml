@@ -150,7 +150,7 @@ real-world:
 databases:
   - arxiv
   - springer
-  #- ieeexplore
+  - ieeexplore
   - sciencedirect
   - core
   - semantic_scholar
