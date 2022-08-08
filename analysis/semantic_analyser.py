@@ -7,7 +7,6 @@ from nltk.stem.wordnet import WordNetLemmatizer
 from os.path import exists
 from . import util
 
-
 fr = 'utf-8'
 lemma = WordNetLemmatizer()
 
