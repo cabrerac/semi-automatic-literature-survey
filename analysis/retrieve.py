@@ -11,9 +11,12 @@ from clients import semantic_scholar
 from os.path import exists
 from gensim.utils import simple_preprocess
 from gensim.parsing.preprocessing import strip_tags
-from gensim.models.doc2vec import TaggedDocument
+from nltk.stem.wordnet import WordNetLemmatizer
+from nltk.tokenize import WhitespaceTokenizer
 
 fr = 'utf-8'
+lemma = WordNetLemmatizer()
+w_tokenizer = WhitespaceTokenizer()
 
 
 def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, since, to, search_date):
@@ -314,7 +317,9 @@ def filter_by_keywords(papers, keywords, synonyms):
     filtered_papers = papers
     filtered_papers['abstract_lower'] = filtered_papers['abstract'].str.replace('-', ' ')
     filtered_papers['abstract_lower'] = filtered_papers['abstract_lower'].str.lower()
-    filtered_papers['abstract_lower'] = filtered_papers['abstract_lower'].str.replace('\n', '')
+    filtered_papers['abstract_lower'] = filtered_papers['abstract_lower'].str.replace('\n', ' ')
+    filtered_papers['abstract_lower'] = filtered_papers['abstract_lower'].apply(lemmatize_text)
+
     for keyword in keywords:
         terms = [r'\b' + keyword.lower() + r'\b']
         if keyword in synonyms:
@@ -330,3 +335,7 @@ def filter_by_keywords(papers, keywords, synonyms):
 
 def tokenize(doc):
     return simple_preprocess(strip_tags(doc), deacc=True, min_len=2, max_len=15)
+
+
+def lemmatize_text(text):
+    return ' '.join([lemma.lemmatize(word) for word in w_tokenizer.tokenize(text)])
