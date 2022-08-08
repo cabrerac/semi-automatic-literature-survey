@@ -9,6 +9,9 @@ from clients import elsevier
 from clients import core
 from clients import semantic_scholar
 from os.path import exists
+from gensim.utils import simple_preprocess
+from gensim.parsing.preprocessing import strip_tags
+from gensim.models.doc2vec import TaggedDocument
 
 fr = 'utf-8'
 
@@ -309,27 +312,21 @@ def filter_papers(keywords, synonyms, folder_name, search_date, step):
 def filter_by_keywords(papers, keywords, synonyms):
     papers = papers.dropna(subset=['abstract'])
     filtered_papers = papers
-    filtered_papers['abstract_lower'] = filtered_papers['abstract'].str.lower()
-    filtered_papers['abstract_lower'] = filtered_papers['abstract_lower'].str.replace('-', ' ')
+    filtered_papers['abstract_lower'] = filtered_papers['abstract'].str.replace('-', ' ')
+    filtered_papers['abstract_lower'] = filtered_papers['abstract_lower'].str.lower()
     filtered_papers['abstract_lower'] = filtered_papers['abstract_lower'].str.replace('\n', '')
-    filtered_papers['abstract_lower'] = filtered_papers['abstract_lower'].str.replace(' ', '')
     for keyword in keywords:
-        terms = [keyword]
+        terms = [r'\b' + keyword.lower() + r'\b']
         if keyword in synonyms:
             synonym_list = synonyms[keyword]
             for synonym in synonym_list:
-                terms.append(synonym)
-        temp_papers = []
-        for term in terms:
-            if len(temp_papers) == 0:
-                temp_papers = filtered_papers.loc[filtered_papers['abstract_lower'].
-                    str.contains(term.replace('-', '').replace(' ', '').lower())]
-            else:
-                temp_papers = temp_papers.append(filtered_papers.loc[papers['abstract_lower'].
-                                                 str.contains(term.replace('-', '').replace(' ', '').lower())])
-        filtered_papers = temp_papers
-        temp_papers = []
+                terms.append(r'\b' + synonym.lower() + r'\b')
+        filtered_papers = filtered_papers[filtered_papers['abstract_lower'].str.contains('|'.join(terms), na=False)]
     filtered_papers = filtered_papers.drop(['abstract_lower'], axis=1)
     filtered_papers = filtered_papers.drop_duplicates('title')
     filtered_papers['id'] = list(range(1, len(filtered_papers) + 1))
     return filtered_papers
+
+
+def tokenize(doc):
+    return simple_preprocess(strip_tags(doc), deacc=True, min_len=2, max_len=15)
