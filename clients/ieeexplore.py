@@ -53,12 +53,9 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
                     while isinstance(raw_papers, dict) and retry < max_retries:
                         time.sleep(waiting_time)
                         retry = retry + 1
-                        if total > 0:
-                            print("Request " + str(current_request) + "/" + str(total_requests) +
-                                  ". Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
-                                  str(int((retrieved / total) * 100)) + '% ::: Exception from API: '
-                                  + raw_papers['exception'] + " ::: Retry " + str(retry) + "/"
-                                  + str(max_retries) + "...", end="\r")
+                        print('Request ' + str(current_request) + '/' + str(total_requests) +
+                              ' ::: Exception from API: ' + raw_papers['exception'] + " ::: Retry " + str(retry) + "/"
+                              + str(max_retries) + "...", end="\r")
                         raw_papers = request(req, c_field, c_type, start, dates)
                     if not isinstance(raw_papers, dict):
                         total, papers = process_raw_papers(query, raw_papers, dates, since, to)
@@ -86,12 +83,9 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
                             while isinstance(raw_papers, dict) and retry < max_retries:
                                 time.sleep(waiting_time)
                                 retry = retry + 1
-                                if total > 0:
-                                    print("Request " + str(current_request) + "/" + str(total_requests) +
-                                          ". Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
-                                          str(int((retrieved / total) * 100)) + '% ::: Exception from API: ' +
-                                          raw_papers['exception'] + " ::: Retry " + str(retry) + "/" +
-                                          str(max_retries) + "...", end="\r")
+                                print('Request ' + str(current_request) + '/' + str(total_requests) +
+                                      ' ::: Exception from API: ' + raw_papers['exception'] + " ::: Retry " +
+                                      str(retry) + "/" + str(max_retries) + "...", end="\r")
                                 raw_papers = request(req, c_field, c_type, start, dates)
                             if not isinstance(raw_papers, dict):
                                 total, papers = process_raw_papers(query, raw_papers, dates, since, to)
@@ -104,11 +98,9 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
                                           ". Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
                                           str(int((retrieved / total) * 100)) + '% ...', end="\r")
                             else:
-                                if total > 0:
-                                    print("Request " + str(current_request) + "/" + str(total_requests) +
-                                          ". Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
-                                          str(int((retrieved / total) * 100)) + '% ::: Exception from API: ' +
-                                          raw_papers['exception'] + " ::: Skipping to next batch...", end="\r")
+                                print('Request ' + str(current_request) + '/' + str(total_requests) +
+                                      ' ::: Exception from API: ' + raw_papers['exception'] + " ::: Retry " +
+                                      str(retry) + "/" + str(max_retries) + "...", end="\r")
         if exists(file_name):
             util.remove_repeated_ieee(file_name)
         print("Total papers found: " + str(total_papers))
