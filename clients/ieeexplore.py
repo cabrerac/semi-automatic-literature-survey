@@ -24,8 +24,6 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
     query_value = query[query_name]
     file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
                 + query_name.lower().replace(' ', '_') + '_' + database + '.csv'
-    global start
-    start = 0
     if not exists(file_name):
         c_fields = []
         for field in fields:
@@ -45,6 +43,8 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
         for req in reqs:
             for c_field in c_fields:
                 for c_type in c_types:
+                    global start
+                    start = 0
                     current_request = current_request + 1
                     raw_papers = request(req, c_field, c_type, start, dates)
                     retry = 0
