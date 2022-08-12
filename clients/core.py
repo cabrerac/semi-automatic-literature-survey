@@ -55,7 +55,13 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
             mod = int(total) % max_papers
             if mod > 0:
                 times = times + 1
-                for t in range(1, times + 1):
+                for t in range(0, times + 1):
+                    if total > total_first:
+                        times = int(total / max_papers) - 1
+                        mod = int(total) % max_papers
+                        if mod > 0:
+                            times = times + 1
+                        total_first = total
                     time.sleep(waiting_time)
                     start = start + 1
                     data = create_request(parameters)
