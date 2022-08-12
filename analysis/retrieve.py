@@ -186,7 +186,9 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
         papers.dropna(subset=['doi'], inplace=True)
         with open(preprocessed_file_name, 'a+', newline='', encoding=fr) as f:
             papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+        print('Removing repeated papers...')
         util.remove_repeated(preprocessed_file_name)
+        print('Cleaning papers list...')
         util.clean_papers(preprocessed_file_name)
     return preprocessed_file_name
 
@@ -273,7 +275,10 @@ def parse_dates(dates):
             r = re.sub('[0-9]+', '', sub)
             date = date.split(' ')[0] + '/' + r + '/' + date.split(' ')[2]
         if 'Firstquarter' in date:
-            date = '01/Mar/' + date.split(' ')[1]
+            if ' ' in date:
+                date = '01/Mar/' + date.split(' ')[1]
+            else:
+                date = date.replace('Firstquarter', 'Mar')
         if 'Secondquarter' in date:
             if '/Secondquarter/' in date:
                 date = date.replace('Secondquarter', 'Jun')

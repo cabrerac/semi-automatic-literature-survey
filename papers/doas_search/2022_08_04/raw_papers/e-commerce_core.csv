@@ -40,5 +40,105 @@ prepare the data, and to check the models against the real world. The „best“
 after building models of several different types, or by trying different technologies or algorithms",Technická univerzita v Liberci,Data mining with clustering,,,,core,e-commerce,'e-commerce' AND 'machine learning' AND ('real-world' AND 'deploy')
 523156082,2017-01-01T00:00:00,"The Bonseyes EU H2020 collaborative project aims to develop a platform consisting of a Data Marketplace, a Deep Learning Toolbox, and Developer Reference Platforms for organizations wanting to adopt Artificial Intelligence. The project will be focused on using artificial intelligence in low power Internet of Things (IoT) devices (""edge computing""), embedded computing systems, and data center servers (""cloud computing""). It will bring about orders of magnitude improvements in efficiency, performance, reliability, security, and productivity in the design and programming of systems of artificial intelligence that incorporate Smart Cyber-Physical Systems (CPS). In addition, it will solve a causality problem for organizations who lack access to Data and Models. Its open software architecture will facilitate adoption of the whole concept on a wider scale. To evaluate the effectiveness, technical feasibility, and to quantify the real-world improvements in efficiency, security, performance, effort and cost of adding AI to products and services using the Bonseyes platform, four complementary demonstrators will be built. Bonseyes platform capabilities are aimed at being aligned with the European FI-PPP activities and take advantage of its flagship project FIWARE. This paper provides a description of the project motivation, goals and preliminary work",'Association for Computing Machinery (ACM)',BONSEYES: Platform for Open Development of Systems of Artificial Intelligence: Invited paper,10.1145/3075564.3076259,https://core.ac.uk/download/523156082.pdf,,core,e-commerce,'e-commerce' AND 'machine learning' AND ('real-world' AND 'deploy')
 491346803,2021-01-01T00:00:00,"Credit card fraud jeopardizes the trust of customers in e-commerce transactions. This led in recent years to major advances in the design of automatic Fraud Detection Systems (FDS) able to detect fraudulent transactions with short reaction time and high precision. Nevertheless, the heterogeneous nature of the fraud behavior makes it difficult to tailor existing systems to different contexts (e.g. new payment systems, different countries and/or population segments). Given the high cost (research, prototype development, and implementation in production) of designing data-driven FDSs, it is crucial for transactional companies to define procedures able to adapt existing pipelines to new challenges. From an AI/machine learning perspective, this is known as the problem of transfer learning. This paper discusses the design and implementation of transfer learning approaches for e-commerce credit card fraud detection and their assessment in a real setting. The case study, based on a six-month dataset (more than 200 million e-commerce transactions) provided by the industrial partner, relates to the transfer of detection models developed for a European country to another country. In particular, we present and discuss 15 transfer learning  techniques (ranging from naive baselines to state-of-the-art and new approaches), making a critical and quantitative comparison in terms of precision for different transfer scenarios. Our contributions are twofold: (i) we show that the accuracy of many transfer methods is strongly dependent on the number of labeled samples in the target domain and (ii) we propose an ensemble solution to this problem based on self-supervised and semi-supervised domain adaptation classifiers. The thorough experimental assessment shows that this solution is both highly accurate and hardly sensitive to the number of labeled samples",,Transfer Learning Strategies for Credit Card Fraud Detection.,,https://core.ac.uk/download/491346803.pdf,,core,e-commerce,'e-commerce' AND 'machine learning' AND ('real-world' AND 'deploy')
+480151527,2021-06-01T00:00:00,"The article has dealt with the current trends of communication aspects of company’s relations
+
+with the customers. The emphasis is placed on the necessity to review the companies’ marketing
+
+strategies, in particular, due to communication constraints and the corresponding changes in the format
+
+of both direct and feedback with the customers. Restrictive measures have changed the format of
+
+competition, having created the conditions for its concentration in cyberspace. Changes in the nature
+
+of interpersonal communication predetermined by the limited personal activity and the introduction
+
+of remote forms of interaction, have generated demand for innovative ways of communication with
+
+customers. Other factors that require the adjustment of marketing strategies include the emergence
+
+of new behavioral capabilities of consumers associated with the intensive development of digital
+
+communication channels.
+
+It has been noted that in the digital communication environment, digital platforms provide the main
+
+format of communication with the existing customer base and potential customers. In addition, prompt
+
+acquisition and processing of data on purchasing behavior of customers allows companies to increase
+
+significantly the “sensitivity” of marketing research and optimize their own marketing decisions. Among
+
+the areas of increasing targeting and personalization of product offerings, the use of elements of artificial
+
+intelligence and voice search has been accentuated. Moreover, the use of artificial intelligence greatly
+
+facilitates and simplifies the work of marketers on the processing and initial analysis of the growing flow
+
+of digital marketing data, as well as provides greater efficiency. It has been concluded that widespread use
+
+of voice assistants in e-commerce requires companies to rethink radically their approaches to internal data
+
+processing, IT investment and customer engagement strategies.
+
+Active integration of chatbots into various communication platforms is able to make them
+
+universal tools for both business and consumers, which will allow them to become a familiar part of
+
+the user experience. Implementation of virtual reality and augmented reality elements in the interface
+
+of company websites can significantly diversify the process of collecting information by users and push
+
+them to unplanned purchases.
+
+It has been indicated that the growing standards of personalization and new rules of customer
+
+confidentiality will continue to require companies to be flexible and introduce new technologies in
+
+order to adapt permanently their business to new conditions. Focusing on building trust with customers\ud
+based on digital communications will enable companies to create a long-term integrated marketing
+
+strategy and concentrate on the multi-channel nature of customer experienc",'Alfred Nobel University',MODERN DIGITAL MARKETING TRENDS AND THEIR INFLUENCE ON THE MARKETING STRATEGY FORMATION,10.32342/2074-5354-2021-1-54-5,,"[{'title': 'Academic Review', 'identifiers': ['2074-5354', 'issn:2074-5354']}]",core,e-commerce,'e-commerce' AND 'machine learning' AND ('real-world' AND 'deploy')
+491342150,2017-01-01T00:00:00,"The Bonseyes EU H2020 collaborative project aims to develop a platform consisting of a Data Marketplace, a Deep Learning Toolbox, and Developer Reference Platforms for organizations wanting to adopt Artificial Intelligence. The project will be focused on using artificial intelligence in low power Internet of Things (IoT) devices (""edge computing""), embedded computing systems, and data center servers (""cloud computing""). It will bring about orders of magnitude improvements in efficiency, performance, reliability, security, and productivity in the design and programming of systems of artificial intelligence that incorporate Smart Cyber-Physical Systems (CPS). In addition, it will solve a causality problem for organizations who lack access to Data and Models. Its open software architecture will facilitate adoption of the whole concept on a wider scale. To evaluate the effectiveness, technical feasibility, and to quantify the real-world improvements in efficiency, security, performance, effort and cost of adding AI to products and services using the Bonseyes platform, four complementary demonstrators will be built. Bonseyes platform capabilities are aimed at being aligned with the European FI-PPP activities and take advantage of its flagship project FIWARE. This paper provides a description of the project motivation, goals and preliminary work",'Association for Computing Machinery (ACM)',BONSEYES: Platform for Open Development of Systems of Artificial Intelligence: Invited paper,10.1145/3075564.3076259,,,core,e-commerce,'e-commerce' AND 'machine learning' AND ('real-world' AND 'deploy')
+226055646,2017,"Purpose: Healthy and safety food issues are more and more the purchasing process core of
+
+conscious consumer. “Type 1” wheat flour means higher protein and ash content. This paper aims at
+
+investigating the attributes usually referred to the characteristics of wheat flour known to consumers
+
+and at implementing a predictive model of purchasing that allows to make correct decisions without
+
+the necessary experience of a real human expert.
+
+Design methodology: In order to investigate the research aims of the paper, an on-line survey was
+
+carried out and conducted by means of the Google Forms in the detection time January-April 2016.
+
+The on line survey collected responses from 467 Italian respondents asked to give feedback about
+
+their buying habits of various types of flour. Responses were analyzed through a data mining
+
+approach. This paper implements predictive analytics to create a statistical model of future behavior
+
+by means of a machine learning algorithms.
+
+Findings: In line with recent healthy and dynamic trends in the food industry, conscious consumer
+
+seems to be willing to pay a price for “type 1” wheat flour that is four times higher than the price
+
+related to the basic types of wheat flour.
+
+Social Implications: Consumer seems not to know well the “type 1” wheat flour and its healthy
+
+characteristics; then, it should be crucial to implement promotional strategies and marketing hand in
+
+hand. Promotion can be a key element in putting across the health benefits of special kinds of wheat
+
+flour.
+
+Originality/value: Highlighting health issues about the “type 1” wheat flour gives insights and
+
+sheds some light on the crucial need of changing eating and purchasing behavior. Then, originality
+
+of this paper can be find in the used predictive algorithm of the artificial intelligence",,Predicting consumer healthy choices regarding Type1 wheat flour,,,,core,e-commerce,'e-commerce' AND 'machine learning' AND ('real-world' AND 'deploy')
 382462970,2021-01-01T00:00:00,"Recommendation system can predict the ratings of users to items by leveraging machine learning algorithms. The use of recommendation systems is common in e-commerce websites now-a-days. Since enormous amounts of data including users’ click streams, purchase history, demographics, social networking comments and user-item ratings are stored in e-commerce systems databases, the volume of the data is getting bigger at high speed, and the data is sparse. However, the recommendations and predictions must be made in real time, enabling to bring enormous benefits to human beings. Apache spark is well suited for applications which require high speed query of data, transformation and analytics results. Therefore, the recommendation system developed in this research is implemented on Apache Spark. Also, the matrix factorization using Alternating Least Squares (ALS) algorithm which is a type of collaborative filtering is used to solve overfitting issues in sparse data and increases prediction accuracy. The overfitting problem arises in the data as the user-item rating matrix is sparse. In this research a recommendation system for e-commerce using alternating least squares (ALS) matrix factorization method on Apache Spark MLlib is developed. The research shows that the RMSE value is significantly reduced using ALS matrix factorization method and the RMSE is 0.870. Consequently, it is shown that the ALS algorithm is suitable for training explicit feedback data set where users provide ratings for items.ISBN för värdpublikation: 978-3-030-68153-1,  978-3-030-68154-8</p",'Springer Science and Business Media LLC',Recommendation System for E-commerce Using Alternating Least Squares (ALS) on Apache Spark,10.1007/978-3-030-68154-8_75,,,core,e-commerce,'e-commerce' AND 'machine learning' AND ('real-world' AND 'deploy')
 86818469,2017-01-01T00:00:00,"The expansion of the electronic commerce, together with an increasing confidence of customers in electronic payments, makes of fraud detection a critical factor. Detecting frauds in (nearly) real time setting demands the design and the implementation of scalable learning techniques able to ingest and analyse massive amounts of streaming data. Recent advances in analytics and the availability of open source solutions for Big Data storage and processing open new perspectives to the fraud detection field. In this paper we present a SCAlable Real-time Fraud Finder (SCARFF) which integrates Big Data tools (Kafka, Spark and Cassandra) with a machine learning approach which deals with imbalance, nonstationarity and feedback latency. Experimental results on a massive dataset of real credit card transactions show that this framework is scalable, efficient and accurate over a big stream of transactions.SCOPUS: ar.jinfo:eu-repo/semantics/publishe",'Elsevier BV',SCARFF: a Scalable Framework for Streaming Credit Card Fraud Detection with Spark,10.1016/j.inffus.2017.09.005,,,core,e-commerce,'e-commerce' AND 'machine learning' AND ('real-world' AND 'deploy')

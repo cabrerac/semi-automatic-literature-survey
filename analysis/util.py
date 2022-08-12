@@ -124,44 +124,6 @@ def merge_papers(merge_step_1, merge_step_2, folder_name, search_date):
     return result
 
 
-def pass_papers(file1, file2, file3, result):
-    df1 = pd.read_csv(file1)
-    df2 = pd.read_csv(file2)
-    included_papers = 0
-    for index1, row1 in df1.iterrows():
-        found1 = False
-        for index2, row2 in df2.iterrows():
-            if row1['title'] == row2['title']:
-                found1 = True
-                row2['status'] = row1['status']
-                df2.loc[index2] = row2
-                with open(file2, 'w', newline='', encoding=fr) as f:
-                    df2.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
-                if row1['status'] == 'included':
-                    found2 = False
-                    df3 = pd.read_csv(file3)
-                    for index3, row3 in df3.iterrows():
-                        if row3['title'] == row2['title']:
-                            found2 = True
-                            included_papers = included_papers + 1
-                            paper_dict = [{'id': str(included_papers), 'doi': row3['doi'],
-                                           'publisher': row3['publisher'], 'database': row3['database'],
-                                           'query_name': row2['query_name'], 'query_value': row2['query_value'],
-                                           'url': row3['url'], 'publication_date': row3['publication_date'],
-                                           'title': row3['title'], 'abstract': row3['abstract'],
-                                           'status': row3['status']}]
-                            paper_df = pd.DataFrame(paper_dict)
-                            with open(result, 'a+', newline='', encoding=fr) as f:
-                                paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
-                    if not found2:
-                        print(row1['title'])
-        if not found1 and row1['status'] == 'included':
-            df3 = pd.read_csv(file3)
-            for index3, row3 in df3.iterrows():
-                if row3['title'] == row1['title'] and row3['status'] == 'architecture':
-                    print(row1['title'])
-
-
 def remove_repeated(file):
     df = pd.read_csv(file)
     df['title_lower'] = df['title'].str.lower()
@@ -217,7 +179,12 @@ def clean_papers(file):
     df = df.loc[~df['abstract'].str.contains(pattern, case=False)]
     not_included = 0
     df['language'] = 'english'
+    total_papers = len(df.index)
+    current_paper = 0
     for index, row in df.iterrows():
+        current_paper = current_paper + 1
+        print('Paper ' + str(current_paper) + '/' + str(total_papers) + ' ::: ' +
+              str(int((current_paper / total_papers) * 100)) + '% ...', end="\r")
         doc = nlp(row['abstract'])
         detect_language = doc._.language
         if detect_language['language'] != 'en':
@@ -232,6 +199,45 @@ def clean_papers(file):
     df = df.drop(columns=['language'])
     with open(file, 'w', newline='', encoding=fr) as f:
         df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+
+
+# Util functions to play with csv files
+def pass_papers(file1, file2, file3, result):
+    df1 = pd.read_csv(file1)
+    df2 = pd.read_csv(file2)
+    included_papers = 0
+    for index1, row1 in df1.iterrows():
+        found1 = False
+        for index2, row2 in df2.iterrows():
+            if row1['title'] == row2['title']:
+                found1 = True
+                row2['status'] = row1['status']
+                df2.loc[index2] = row2
+                with open(file2, 'w', newline='', encoding=fr) as f:
+                    df2.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+                if row1['status'] == 'included':
+                    found2 = False
+                    df3 = pd.read_csv(file3)
+                    for index3, row3 in df3.iterrows():
+                        if row3['title'] == row2['title']:
+                            found2 = True
+                            included_papers = included_papers + 1
+                            paper_dict = [{'id': str(included_papers), 'doi': row3['doi'],
+                                           'publisher': row3['publisher'], 'database': row3['database'],
+                                           'query_name': row2['query_name'], 'query_value': row2['query_value'],
+                                           'url': row3['url'], 'publication_date': row3['publication_date'],
+                                           'title': row3['title'], 'abstract': row3['abstract'],
+                                           'status': row3['status']}]
+                            paper_df = pd.DataFrame(paper_dict)
+                            with open(result, 'a+', newline='', encoding=fr) as f:
+                                paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+                    if not found2:
+                        print(row1['title'])
+        if not found1 and row1['status'] == 'included':
+            df3 = pd.read_csv(file3)
+            for index3, row3 in df3.iterrows():
+                if row3['title'] == row1['title'] and row3['status'] == 'architecture':
+                    print(row1['title'])
 
 
 def pass_papers_semantic(file1, file2, file3):
@@ -265,7 +271,7 @@ def pass_papers_semantic(file1, file2, file3):
 
 
 def pass_papers_semantic_manual(file1, file2, file3, file4):
-    """df1 = pd.read_csv(file1) # semantic
+    df1 = pd.read_csv(file1) # semantic
     included_papers = 0
     for index1, row1 in df1.iterrows():
         if row1['status'] == 'included':
@@ -279,8 +285,8 @@ def pass_papers_semantic_manual(file1, file2, file3, file4):
                 }
             ]
             paper_df = pd.DataFrame.from_dict(paper_dict)
-            with open(file3, 'a+', newline='', encoding=fr) as f:
-                paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)"""
+            with open(file2, 'a+', newline='', encoding=fr) as f:
+                paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
     df2 = pd.read_csv(file2)  # manually by abstract
     df3 = pd.read_csv(file3)  # passed manually by full text
     included_papers = 0
@@ -384,3 +390,84 @@ def check(file1, file2, file3, file4, file5, file6):
             with open(file1, 'w', newline='', encoding=fr) as f:
                 df1.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
+
+def pass_papers_previous_included(file1, file2, file3, file4, file5):
+    df1 = pd.read_csv(file1)
+    df2 = pd.read_csv(file2)
+    df3 = pd.read_csv(file3)
+    df4 = pd.read_csv(file4)
+    df5 = pd.read_csv(file5)
+    for index1, row1 in df1.iterrows():
+        for index3, row3 in df3.iterrows():
+            if row1['title'].lower() == row3['title'].lower() and row3['status'] == 'included':
+                row3['status'] = 'included'
+                df3.loc[index3] = row3
+                with open(file3, 'w', newline='', encoding=fr) as f:
+                    df3.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+                paper_dict = [
+                    {
+                        'id': len(df4.index) + 1, 'status': 'included', 'doi': row3['doi'],
+                        'publisher': row3['publisher'], 'database': row3['database'],
+                        'query_name': row3['query_name'], 'query_value': row3['query_value'],
+                        'url': row3['url'], 'publication_date': row3['publication_date'],
+                        'title': row3['title'], 'abstract': row3['abstract']
+                    }
+                ]
+                paper_df = pd.DataFrame.from_dict(paper_dict)
+                with open(file4, 'a+', newline='', encoding=fr) as f:
+                    paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+                paper_dict = [
+                    {
+                        'id': len(df5.index) + 1, 'status': 'included', 'doi': row3['doi'],
+                        'publisher': row3['publisher'], 'database': row3['database'],
+                        'query_name': row3['query_name'], 'query_value': row3['query_value'],
+                        'url': row3['url'], 'publication_date': row3['publication_date'],
+                        'title': row3['title'], 'abstract': row3['abstract']
+                    }
+                ]
+                paper_df = pd.DataFrame.from_dict(paper_dict)
+                with open(file5, 'a+', newline='', encoding=fr) as f:
+                    paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+    for index2, row2 in df2.iterrows():
+        for index3, row3 in df3.iterrows():
+            if row2['title'].lower() == row3['title'].lower() and row3['status'] == 'included':
+                row3['status'] = 'included'
+                df3.loc[index3] = row3
+                with open(file3, 'w', newline='', encoding=fr) as f:
+                    df3.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+                paper_dict = [
+                    {
+                        'id': len(df4.index) + 1, 'status': 'included', 'doi': row3['doi'],
+                        'publisher': row3['publisher'], 'database': row3['database'],
+                        'query_name': row3['query_name'], 'query_value': row3['query_value'],
+                        'url': row3['url'], 'publication_date': row3['publication_date'],
+                        'title': row3['title'], 'abstract': row3['abstract']
+                    }
+                ]
+                paper_df = pd.DataFrame.from_dict(paper_dict)
+                with open(file4, 'a+', newline='', encoding=fr) as f:
+                    paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+                paper_dict = [
+                    {
+                        'id': len(df5.index) + 1, 'status': 'included', 'doi': row3['doi'],
+                        'publisher': row3['publisher'], 'database': row3['database'],
+                        'query_name': row3['query_name'], 'query_value': row3['query_value'],
+                        'url': row3['url'], 'publication_date': row3['publication_date'],
+                        'title': row3['title'], 'abstract': row3['abstract']
+                    }
+                ]
+                paper_df = pd.DataFrame.from_dict(paper_dict)
+                with open(file5, 'a+', newline='', encoding=fr) as f:
+                    paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+
+
+def check_manually_filtered_by_abstract(file1, file2):
+    df1 = pd.read_csv(file1)
+    df2 = pd.read_csv(file2)
+    for index2, row2 in df2.iterrows():
+        for index1, row1 in df1.iterrows():
+            if row1['title'].lower() == row2['title'].lower():
+                row1['status'] = 'included'
+                df1.loc[index1] = row1
+                with open(file1, 'w', newline='', encoding=fr) as f:
+                    df1.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
