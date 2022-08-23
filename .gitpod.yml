@@ -3,15 +3,15 @@
 # and commit this file to your remote git repository to share the goodness with others.
 
 tasks:
-  - init: requirements
+  - name: requirements
     command: pip install -r requirements.txt
-  - init: spacy download
+  - name: spacy download
     command: python -m spacy download en_core_web_sm
-  - init: import nltk wordnet
+  - name: import nltk wordnet
     command: python -c "import nltk; nltk.download('wordnet')"
-  - init: import nltk omw
+  - name: import nltk omw
     command: python -c "import nltk; nltk.download('omw-1.4')"
-  - init: run program
+  - name: run program
     command: python main.py parameters_doa.yaml
 
 
