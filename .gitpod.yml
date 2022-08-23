@@ -4,9 +4,9 @@
 
 tasks:
   - init: pip install -r requirements.txt
-    command: python -m spacy download en_core_web_sm
-    command: python -c "import nltk; nltk.download('wordnet')"
-    command: python -c "import nltk; nltk.download('omw-1.4')"
-    command: python main.py parameters_doa.yaml
+  - init: python -m spacy download en_core_web_sm
+  - init: python -c "import nltk; nltk.download('wordnet')"
+  - init: python -c "import nltk; nltk.download('omw-1.4')"
+  - command: python main.py parameters_doa.yaml
 
 
