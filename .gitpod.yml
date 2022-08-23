@@ -4,11 +4,12 @@
 
 tasks:
   - name: Run script...
-    command: |
+    before: |
       pip install -r requirements.txt
       python -m spacy download en_core_web_sm
       python -c "import nltk; nltk.download('wordnet')"
       python -c "import nltk; nltk.download('omw-1.4')"
+    command:
       python main.py parameters_doa.yaml
 
 
