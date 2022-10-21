@@ -1,6 +1,5 @@
 import pandas as pd
-from analysis import util
-import os
+from rich import print
 from os.path import exists
 
 fr = 'utf-8'
@@ -130,7 +129,7 @@ def print_paper_info_full_paper(to_check_paper, file_name):
     print('*** New paper ***')
     print(' :: DOI :: ' + str(list(to_check_paper['doi'])[0]) + ' ::')
     print(' :: Publisher :: ' + str(list(to_check_paper['publisher'])[0]) + ' ::')
-    print(' :: url :: ' + str(list(to_check_paper['url'])[0]) + ' ::')
+    print(' :: url :: [link=' + str(list(to_check_paper['url'])[0]) + ']'+str(list(to_check_paper['url'])[0])+'[/link] ::')
     print(' :: Title :: ' + str(list(to_check_paper['title'])[0].replace('\n', '')).title() + ' :: \n')
 
 

@@ -7,5 +7,5 @@ gensim==4.2.0
 lbl2vec==1.0.1
 nltk==3.7
 lxml==4.9.1
-
+rich==12.6.0
 

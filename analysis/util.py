@@ -15,6 +15,7 @@ def language_detector(nlp, name):
 
 
 nlp = spacy.load('en_core_web_sm')
+
 nlp.add_pipe('language_detector', last=True)
 
 fr = 'utf-8'
