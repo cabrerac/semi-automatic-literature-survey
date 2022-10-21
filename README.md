@@ -37,7 +37,7 @@ cd semi-automatic-literature-survey/
 2. Create and activate virtual environment 
 
 ```
-python3 -m venv venv
+python -m venv venv
 ```
 ```
 source venv/bin/activate
@@ -52,22 +52,22 @@ pip install  -r requirements.txt
 4. Install language package for spacy
 
 ```
-python3 -m spacy download en_core_web_sm
+python -m spacy download en_core_web_sm
 ```
 
 5. Download nltk resources
 
 ```
-python3 -c "import nltk; nltk.download('wordnet')"
+python -c "import nltk; nltk.download('wordnet')"
 ```
 ```
-python3 -c "import nltk; nltk.download('omw-1.4')"
+python -c "import nltk; nltk.download('omw-1.4')"
 ```
 
 6. Run the main passing the search parameters file. For example:
 
 ```
-python3 main.py parameters_ar.yaml
+python main.py parameters_ar.yaml
 ```
 
 A simple self-explanatory example of a search parameters file can be found in `./parameters_ar.yaml`. Alternatively, a more complex one including semantic filters can be found in `./parameters_doa.yaml`
