@@ -328,3 +328,117 @@ latency, jitter, accuracy and execution time. HealthFog is configurable to
 various operation modes that provide the best Quality of Service or prediction
 accuracy, as required, in diverse fog computation scenarios and for different
 user requirements."
+86,included,10.1109/bibm47256.2019.8983322,IEEE,ieeexplore,health,'health' AND 'machine learning' AND ('real-world' AND 'deploy'),https://ieeexplore.ieee.org/document/8983322/,11/21/2019 0:00,openhi2 — open source histopathological image platform,"Transition from conventional to digital pathology requires a new category of biomedical informatic infrastructure which could facilitate delicate pathological routine. Pathological diagnoses are sensitive to many external factors and is known to be subjective. Only systems that can meet strict requirements in pathology would be able to run along pathological routines and eventually digitized the area, and the developed platform should comply with existing pathological routines and international standards. Currently, there are a number of available software tools which can perform histopathological tasks including virtual slide viewing, annotating, and basic image analysis, however, none of them can serve as a digital platform for pathology. Here we describe OpenHI2, an enhanced version Open Histopathological Image platform which is capable of supporting all basic pathological tasks and file formats; ready to be deployed in medical institutions on a standard server environment or cloud computing infrastructure. In this paper, we also describe the development decisions for the platform and propose solutions to overcome technical challenges including responsive region retrieval and viewing, virtual slide magnification, recording of diagnostic areas. These factors would promote OpenHI2 be used as a platform for histopathological images in real-world clinical settings. Furthermore, in research, OpenHI2 inherited the annotation functionality from the previous version, thus acquired annotations can be directly utilized by the newly added machine learning module which include popular machine learning models to perform tasks such as histology image classification and segmentation in the same environment. Addition can be made to the platform since each component is modularized and fully documented. OpenHI2 is free, open-source, and available at https://gitlab.com/BioAI/OpenHI."
+87,included,10.1109/aero50100.2021.9438171,IEEE,ieeexplore,science,'science' AND 'machine learning' AND ('real-world' AND 'deploy'),https://ieeexplore.ieee.org/document/9438171/,2021-03-13 00:00:00,considerations in the deployment of machine learning algorithms on spaceflight hardware,"Recent advances in artificial intelligence (AI) and machine learning (ML) have revolutionized many fields. ML has many potential applications in the space domain. Next generation space instruments are producing data at rates that exceed the capabilities of current spacecraft to store or transmit to ground stations. Deployment of ML algorithms onboard future spacecraft could perform processing of sensor data as it is gathered, reducing data volume and providing a dramatic increase in throughput of meaningful data. ML techniques may also be used to enhance the autonomy of space missions. However ML techniques have not yet been widely deployed in space environments, primarily due to limitations on the computational capabilities of spaceflight hardware. The need to verify that high-performance computational hardware can reliably operate in this environment delays the adoption of these technologies. Nevertheless, the availability of advanced processing capabilities onboard spacecraft is increasing. These platforms may not provide the processing power of terrestrial equivalents, but they do provide the resources necessary for deploying real-time execution of ML algorithms. In this paper, we present results exploring the implementation of ML techniques on computationally-constrained, high-reliability spacecraft hardware. We show two ML algorithms utilizing deep learning techniques which illustrate the utility of these approaches for space applications. We describe implementation considerations when tailoring these algorithms for execution on computationally-constrained hardware and present a workflow for performing these optimizations. We also present initial results on characterizing the trade space between algorithm accuracy, throughput, and reliability on a variety of hardware platforms with current and anticipated paths to spaceflight."
+88,included,http://arxiv.org/abs/2011.09463v3,arxiv,arxiv,industry,'industry' AND 'machine learning' AND ('real-world' AND 'deploy'),http://arxiv.org/abs/2011.09463v3,11/18/2020 0:00,"easytransfer -- a simple and scalable deep transfer learning platform
+  for nlp applications","The literature has witnessed the success of leveraging Pre-trained Language
+Models (PLMs) and Transfer Learning (TL) algorithms to a wide range of Natural
+Language Processing (NLP) applications, yet it is not easy to build an
+easy-to-use and scalable TL toolkit for this purpose. To bridge this gap, the
+EasyTransfer platform is designed to develop deep TL algorithms for NLP
+applications. EasyTransfer is backended with a high-performance and scalable
+engine for efficient training and inference, and also integrates comprehensive
+deep TL algorithms, to make the development of industrial-scale TL applications
+easier. In EasyTransfer, the built-in data and model parallelism strategies,
+combined with AI compiler optimization, show to be 4.0x faster than the
+community version of distributed training. EasyTransfer supports various NLP
+models in the ModelZoo, including mainstream PLMs and multi-modality models. It
+also features various in-house developed TL algorithms, together with the
+AppZoo for NLP applications. The toolkit is convenient for users to quickly
+start model training, evaluation, and online deployment. EasyTransfer is
+currently deployed at Alibaba to support a variety of business scenarios,
+including item recommendation, personalized search, conversational question
+answering, etc. Extensive experiments on real-world datasets and online
+applications show that EasyTransfer is suitable for online production with
+cutting-edge performance for various applications. The source code of
+EasyTransfer is released at Github (https://github.com/alibaba/EasyTransfer)."
+89,included,http://arxiv.org/abs/2003.02454v4,arxiv,arxiv,industry,'industry' AND 'machine learning' AND ('real-world' AND 'deploy'),http://arxiv.org/abs/2003.02454v4,3/5/2020 0:00,agl: a scalable system for industrial-purpose graph machine learning,"Machine learning over graphs have been emerging as powerful learning tools
+for graph data. However, it is challenging for industrial communities to
+leverage the techniques, such as graph neural networks (GNNs), and solve
+real-world problems at scale because of inherent data dependency in the graphs.
+As such, we cannot simply train a GNN with classic learning systems, for
+instance parameter server that assumes data parallel. Existing systems store
+the graph data in-memory for fast accesses either in a single machine or graph
+stores from remote. The major drawbacks are in three-fold. First, they cannot
+scale because of the limitations on the volume of the memory, or the bandwidth
+between graph stores and workers. Second, they require extra development of
+graph stores without well exploiting mature infrastructures such as MapReduce
+that guarantee good system properties. Third, they focus on training but ignore
+the optimization of inference over graphs, thus makes them an unintegrated
+system.
+  In this paper, we design AGL, a scalable, fault-tolerance and integrated
+system, with fully-functional training and inference for GNNs. Our system
+design follows the message passing scheme underlying the computations of GNNs.
+We design to generate the $k$-hop neighborhood, an information-complete
+subgraph for each node, as well as do the inference simply by merging values
+from in-edge neighbors and propagating values to out-edge neighbors via
+MapReduce. In addition, the $k$-hop neighborhood contains information-complete
+subgraphs for each node, thus we simply do the training on parameter servers
+due to data independency. Our system AGL, implemented on mature
+infrastructures, can finish the training of a 2-layer graph attention network
+on a graph with billions of nodes and hundred billions of edges in 14 hours,
+and complete the inference in 1.2 hour."
+90,included,10.1016/j.enbuild.2018.12.034,scopus,sciencedirect,industry,'industry' AND 'machine learning' AND ('real-world' AND 'deploy'),https://api.elsevier.com/content/abstract/scopus_id/85059816255,2019-02-15,"intellimav: a cloud computing measurement and verification 2.0 application for automated, near real-time energy savings quantification and performance deviation detection","Energy conservation measures (ECMs) are implemented in all sectors with the objective of improving the efficiency with which energy is consumed. Measurement and verification (M&V) is required to verify the performance of every ECM to ensure its successful implementation and operation. The methodologies implemented to achieve this are currently evolving to a more dynamic state, known as measurement and verification 2.0, through the use of automated and advanced analytics. The primary barrier to the adoption of M&V 2.0 practices are the tools available to practitioners. This paper aims to populate the knowledge gap in the industrial buildings sector by presenting a novel cloud computing-based application, IntelliMaV, that applies advanced machine learning techniques on large datasets to automatically verify the performance of ECMs in near real-time. Additionally, a performance deviation detection system is incorporated, ensuring persistence of savings beyond the typical period of analysis in M&V.
+                  IntelliMaV allows M&V practitioners to quantify energy savings with minimum levels of uncertainty by applying powerful analytics to data readily available in industrial facilities. The use of a cloud computing-based architecture reduces the resources required on-site and decreases the time required to train the baseline energy model through the use of parallel processing. The robust nature of the application ensures it is applicable across the broad spectrum of ECMs in the industrial buildings sector. A case study carried out in a large biomedical manufacturing facility demonstrates the ease of use of the application and the benefits realised through its adoption. The energy savings from an ECM were calculated to be 2,353,225 kWh/yr with 25.5% uncertainty at a 90% confidence interval."
+91,included,10.1109/avss.2018.8639168,IEEE,ieeexplore,smart cities,'smart cities' AND 'machine learning' AND ('real-world' AND 'deploy'),https://ieeexplore.ieee.org/document/8639168/,2018-11-30 00:00:00,a practical person monitoring system for city security,"Recent progress in Deep Learning(DL) has brought many breakthroughs with incredible performance, which have not been achieved with traditional machine learning algorithms. In computer vision, DL-based methods have started to outperform humans in certain tasks and are going to impact our daily lives. We present our case study of an implementation and evaluation of our prototype real-time person-monitoring system using cutting-edge DL computer vision techniques. We used a fast and lightweight stream-processing engine for its flexibility and portability, packaged all of DL software stacks as docker containers for portability and ease of deployment, and evaluated our prototype's performance using realistic scenarios in which one hundred camera streams are gathered at centered GPU servers. We confirmed that our prototype system can monitor one hundred video streams in real-time. We also report lessons learned through our prototype implementation and discuss the future direction of person monitoring."
+92,included,http://arxiv.org/abs/2107.13212v1,arxiv,arxiv,e-commerce,'e-commerce' AND 'machine learning' AND ('real-world' AND 'deploy'),http://arxiv.org/abs/2107.13212v1,2021-07-28 00:00:00,"the trip to the enterprise gourmet data product marketplace through a
+  self-service data platform","Data Analytics provides core business reporting needs in many software
+companies, acts as a source of truth for key information, and enables building
+advanced solutions, e.g., predictive models, machine learning, real-time
+recommendations, to grow the business.
+  A self-service, multi-tenant, API-first, and scalable data platform is the
+foundational requirement in creating an enterprise data marketplace, which
+enables the creation, publishing, and exchange of data products. Such a
+marketplace enables the exploration and discovery of data products, further
+providing high-level data governance and oversight on marketplace contents. In
+this paper, we describe our way to the gourmet data product marketplace. We
+cover the design principles, the implementation details, technology choices,
+and the journey to build an enterprise data platform that meets the above
+characteristics. The platform consists of ingestion, streaming, storage,
+transformation, schema generation, fail-safe, data sharing, access management,
+PII data automatic identification, self-service storage optimization
+recommendations, and CI/CD integration.
+  We then show how the platform enables and operates the data marketplace,
+facilitating the exchange of stable data products across users and tenants. We
+motivate and show how we run scalable decentralized data governance. All of
+this is built and run for Cimpress Technology (CT), which operates the Mass
+Customization Platform for Cimpress and its businesses. The CT data platform
+serves 1000s of users from different platform participants, with data sourced
+from heterogeneous sources. Data is ingested at a rate of well over 1000
+individual messages per second and serves more than 100k analytical queries
+daily."
+93,included,http://arxiv.org/abs/1606.03966v2,arxiv,arxiv,science,'science' AND 'machine learning' AND ('real-world' AND 'deploy'),http://arxiv.org/abs/1606.03966v2,2016-06-13 00:00:00,making contextual decisions with low technical debt,"Applications and systems are constantly faced with decisions that require
+picking from a set of actions based on contextual information.
+Reinforcement-based learning algorithms such as contextual bandits can be very
+effective in these settings, but applying them in practice is fraught with
+technical debt, and no general system exists that supports them completely. We
+address this and create the first general system for contextual learning,
+called the Decision Service.
+  Existing systems often suffer from technical debt that arises from issues
+like incorrect data collection and weak debuggability, issues we systematically
+address through our ML methodology and system abstractions. The Decision
+Service enables all aspects of contextual bandit learning using four system
+abstractions which connect together in a loop: explore (the decision space),
+log, learn, and deploy. Notably, our new explore and log abstractions ensure
+the system produces correct, unbiased data, which our learner uses for online
+learning and to enable real-time safeguards, all in a fully reproducible
+manner.
+  The Decision Service has a simple user interface and works with a variety of
+applications: we present two live production deployments for content
+recommendation that achieved click-through improvements of 25-30%, another with
+18% revenue lift in the landing page, and ongoing applications in tech support
+and machine failure handling. The service makes real-time decisions and learns
+continuously and scalably, while significantly lowering technical debt."
+94,included,http://arxiv.org/abs/1804.05839v4,arxiv,arxiv,industry,'industry' AND 'machine learning' AND ('real-world' AND 'deploy'),http://arxiv.org/abs/1804.05839v4,2018-04-16 00:00:00,bigdl: a distributed deep learning framework for big data,"This paper presents BigDL (a distributed deep learning framework for Apache
+Spark), which has been used by a variety of users in the industry for building
+deep learning applications on production big data platforms. It allows deep
+learning applications to run on the Apache Hadoop/Spark cluster so as to
+directly process the production data, and as a part of the end-to-end data
+analysis pipeline for deployment and management. Unlike existing deep learning
+frameworks, BigDL implements distributed, data parallel training directly on
+top of the functional compute model (with copy-on-write and coarse-grained
+operations) of Spark. We also share real-world experience and ""war stories"" of
+users that have adopted BigDL to address their challenges(i.e., how to easily
+build end-to-end data analysis and deep learning pipelines for their production
+data)."
+95,included,10.1109/tsc.2017.2777478,IEEE,ieeexplore,science,'science' AND 'machine learning' AND ('real-world' AND 'deploy'),https://ieeexplore.ieee.org/document/8119814/,2021-02-01 00:00:00,solar: services-oriented deep learning architectures-deep learning as a service,"Deep learning has been an emerging field of machine learning during past decades. However, the diversity and large scale data size have posed significant challenge to construct a flexible and high performance implementations of deep learning neural networks. In order to improve the performance as well to maintain the scalability, in this paper we present SOLAR, a services-oriented deep learning architecture using various accelerators like GPU and FPGA. SOLAR provides a uniform programming model to users so that the hardware implementation and the scheduling is invisible to the programmers. At runtime, the services can be executed either on the software processors or the hardware accelerators. To leverage the trade-offs between the metrics among performance, power, energy, and efficiency, we present a multitarget design space exploration. Experimental results on the real state-of-the-art FPGA board demonstrate that the SOLAR is able to provide a ubiquitous framework for diverse applications without increasing the burden of the programmers. Moreover, the speedup of the GPU and FPGA hardware accelerator in SOLAR can achieve significant speedup comparing to the conventional Intel i5 processors with great scalability."
