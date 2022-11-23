@@ -19,16 +19,34 @@ class Generic:
                 request_result = requests.post(query, data=data, headers=headers)
             except urllib.error.HTTPError as ex:
                 request_result = {'exception': str(ex)}
+            except UnicodeEncodeError as ex:
+                request_result = {'exception': str(ex)}
+            except urllib.error.URLError as ex:
+                request_result = {'exception': str(ex)}
+            except Exception as ex:
+                request_result = {'exception': str(ex)}
         if method == 'get':
             try:
-                request_result = urllib.request.urlopen(query).read().decode('utf-8')
+                request_result = urllib.request.urlopen(query).read().decode('utf-8', errors='ignore')
             except urllib.error.HTTPError as ex:
+                request_result = {'exception': str(ex)}
+            except UnicodeEncodeError as ex:
+                request_result = {'exception': str(ex)}
+            except urllib.error.URLError as ex:
+                request_result = {'exception': str(ex)}
+            except Exception as ex:
                 request_result = {'exception': str(ex)}
         if method == 'retrieve':
             try:
                 req = urllib.request.Request(query, headers={'User-Agent': 'Mozilla/5.0'})
                 request_result = urllib.request.urlopen(req).read()
             except urllib.error.HTTPError as ex:
+                request_result = {'exception': str(ex)}
+            except UnicodeEncodeError as ex:
+                request_result = {'exception': str(ex)}
+            except urllib.error.URLError as ex:
+                request_result = {'exception': str(ex)}
+            except Exception as ex:
                 request_result = {'exception': str(ex)}
         return request_result
 
