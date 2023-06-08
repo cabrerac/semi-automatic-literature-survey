@@ -69,9 +69,15 @@ python -c "import nltk; nltk.download('omw-1.4')"
 ```
 python main.py parameters_ar.yaml
 ```
-
 A simple self-explanatory example of a search parameters file can be found in `./parameters_ar.yaml`. Alternatively, a more complex one including semantic filters can be found in `./parameters_doa.yaml`
 
+7. Running the Streamlit App
+```
+streamlit run app.py
+
+```
+This streamlit app takes in parameters  from users. These parameters are saved in `./user_inputs.yaml` file. Using this input, we should be able to search through the databases and give the user their desired content in the interface. Although, these parameters are not ordered as should when they are being saved in the .yaml file. They are sorted in alphabetic order i.e. The queries should be the first parameter but are replaced by another parameter. 
+    
 # References
 
 [1] Barbara Kitchenham and Pearl Brereton. 2013. A systematic review of systematic review process research in software engineering. Information and Software Technology 55, 12 (2013), 2049–2075. https://doi.org/10.1016/j.infsof.2013.07.010

@@ -1,0 +1,26 @@
+artificial intelligence:
+- artificial intelligence
+- supervised learning
+- unsupervised learning
+- AI
+- ML
+- machine learning
+- reinforced learning
+databases:
+- arxiv
+- springer
+- ieeexplore
+- sciencedirect
+- core
+- semantic_scholar
+folder_name: ai_search
+queries:
+- 'artificial intelligence: "artificial intelligence"'
+search_date: 2019-12-19
+syntactic_filters:
+- supervised learning
+- unsupervised learning
+- AI
+- ML
+- machine learning
+- reinforced learning
