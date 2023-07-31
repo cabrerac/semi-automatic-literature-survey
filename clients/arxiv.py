@@ -106,7 +106,7 @@ def process_raw_papers(query, raw_papers, dates, since, to):
         papers['query_name'] = query_name
         papers['query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
         if dates is True:
-            print('Applying dates filters...')
+            print('Applying dates filters...', end="\r")
             papers = papers[(papers['published'] >= str(since)) & (papers['published'] <= str(to))]
         nan_value = float("NaN")
         papers.replace('', nan_value, inplace=True)

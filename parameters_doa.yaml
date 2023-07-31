@@ -157,8 +157,8 @@ databases:
   - core
   - semantic_scholar
 # Search time interval YYYY-mm-dd. If you do not want to include search dates comment since and to parameters.
-#since: 2022-01-01
-#to: 2022-02-22
+since: 2022-06-01
+to: 2023-07-01
 # Date of the search and folder name where the output will be stored
-search_date: 2022-08-04
+search_date: 2023-07-31
 folder_name: doas_search

@@ -65,7 +65,7 @@ def get_papers(query, types, dates, since, to, folder_name, search_date):
                 if not isinstance(raw_papers, dict):
                     total, papers, next_papers = process_raw_papers(query, raw_papers, dates, since, to)
                     retrieved = retrieved + len(papers)
-                    if retrieved > 0:
+                    if len(papers) > 0 :
                         util.save(file_name, papers, fr)
                         print("Retrieved papers: " + str(retrieved) + "/" + str(total) + ' ::: ' +
                               str(int((retrieved / total) * 100)) + '% ...', end="\r")
@@ -151,7 +151,7 @@ def process_raw_papers(query, raw_papers, dates, since, to):
     papers['query_name'] = query_name
     papers['query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
     if dates is True:
-        print('Applying dates filters...')
+        print('Applying dates filters...', end="\r")
         papers = papers[(papers['year'] >= since.year)]
     nan_value = float("NaN")
     papers.replace('', nan_value, inplace=True)
