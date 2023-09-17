@@ -146,6 +146,16 @@ def remove_repeated(file):
         df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
 
 
+def remove_repeated_df(df):
+    df['title_lower'] = df['title'].str.lower()
+    df['title_lower'] = df['title_lower'].str.replace('-', ' ')
+    df['title_lower'] = df['title_lower'].str.replace('\n', '')
+    df['title_lower'] = df['title_lower'].str.replace(' ', '')
+    df = df.drop_duplicates('title_lower')
+    df = df.drop(columns=['title_lower'], errors='ignore')
+    return df
+
+
 def remove_repeated_ieee(file):
     df = pd.read_csv(file)
     df = df.drop_duplicates('doi')
