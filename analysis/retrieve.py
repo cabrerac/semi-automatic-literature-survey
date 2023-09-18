@@ -171,6 +171,8 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
         papers = papers.drop_duplicates('doi')
         papers = papers.append(nan_doi)
         papers['type'] = 'preprocessed'
+        papers['status'] = 'unknown'
+        papers['id'] = list(range(1, len(papers) + 1))
         papers['abstract'].replace('', np.nan, inplace=True)
         papers.dropna(subset=['abstract'], inplace=True)
         papers['title'].replace('', np.nan, inplace=True)

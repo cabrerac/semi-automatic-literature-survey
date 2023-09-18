@@ -32,7 +32,7 @@ def get_papers(query, types, dates, start_date, end_date, folder_name, search_da
         papers = filter_papers(papers, dates, start_date, end_date)
         papers = clean_papers(papers)
         if len(papers) > 0:
-            util.save(file_name, papers, f)
+            util.save(file_name, papers, fr)
         print("Retrieved papers after filters and cleaning: " + str(len(papers)))
     else:
         print("File already exists.")
@@ -102,19 +102,20 @@ def process_raw_papers(query, raw_papers):
 
 
 def filter_papers(papers, dates, start_date, end_date):
-    if dates is True:
+    if dates is True and len(papers) > 0:
         print('Applying dates filters...', end="\r")
-        papers = papers[(papers['year'] >= start_date.year & papers['year'] >= end_date.year)]
+        papers = papers[(papers['year'] >= start_date.year) & (papers['year'] >= end_date.year)]
     return papers
 
 
 def clean_papers(papers):
-    papers = papers.drop(columns=['externalIds.MAG', 'externalIds.DBLP', 'externalIds.PubMedCentral',
-                                  'externalIds.PubMed', 'externalIds.ArXiv', 'externalIds.CorpusId',
-                                  'externalIds.ACL'], errors='ignore')
-    nan_value = float("NaN")
-    papers.replace('', nan_value, inplace=True)
-    papers.dropna(how='all', axis=1, inplace=True)
+    if len(papers) > 0:
+        papers = papers.drop(columns=['externalIds.MAG', 'externalIds.DBLP', 'externalIds.PubMedCentral',
+                                      'externalIds.PubMed', 'externalIds.ArXiv', 'externalIds.CorpusId',
+                                      'externalIds.ACL'], errors='ignore')
+        nan_value = float("NaN")
+        papers.replace('', nan_value, inplace=True)
+        papers.dropna(how='all', axis=1, inplace=True)
     return papers
 
 
@@ -133,33 +134,33 @@ def get_citations(folder_name, search_date, step):
                 req = citations_url.replace('{paper_id}', str(paper_id))
                 req = req.replace('<offset>', '0').replace('<max_papers>', str(max_papers))
                 raw_citations = client.request(req, 'retrieve', {})
-                papers, nxt = process_raw_citations(raw_citations)
-                if len(papers) != 0:
-                    papers = papers.rename(columns={"citingPaper.paperId" : "doi", "citingPaper.url" : "url",
+                papers_citation, nxt = process_raw_citations(raw_citations)
+                if len(papers_citation) != 0:
+                    papers_citation = papers_citation.rename(columns={"citingPaper.paperId" : "doi", "citingPaper.url" : "url",
                                            "citingPaper.title" : "title", "citingPaper.abstract" : "abstract",
                                            "citingPaper.venue" : "publisher", "citingPaper.year" : "publication_date"})
-                    papers['database'] = database
-                    papers['query_name'] = 'citation'
-                    papers['query_value'] = 'citation'
+                    papers_citation['database'] = database
+                    papers_citation['query_name'] = 'citation'
+                    papers_citation['query_value'] = 'citation'
                     with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
                               '_preprocessed_papers.csv', 'a+', newline='', encoding=fr) as f:
-                        papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+                        papers_citation.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
                 while nxt != -1:
                     time.sleep(5)
                     req = citations_url.replace('{paper_id}', str(paper_id)).replace('<offset>', str(nxt))
                     req = req.replace('<max_papers>', str(max_papers))
                     raw_citations = client.request(req, 'retrieve', {})
-                    papers, nxt = process_raw_citations(raw_citations)
-                    if len(papers) != 0:
-                        papers = papers.rename(columns={"citingPaper.paperId": "doi", "citingPaper.url": "url",
+                    papers_citation, nxt = process_raw_citations(raw_citations)
+                    if len(papers_citation) != 0:
+                        papers_citation = papers_citation.rename(columns={"citingPaper.paperId": "doi", "citingPaper.url": "url",
                                                "citingPaper.title": "title", "citingPaper.abstract": "abstract",
                                                "citingPaper.venue": "publisher", "citingPaper.year": "publication_date"})
-                        papers['database'] = database
-                        papers['query_name'] = 'citation'
-                        papers['query_value'] = 'citation'
+                        papers_citation['database'] = database
+                        papers_citation['query_name'] = 'citation'
+                        papers_citation['query_value'] = 'citation'
                         with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
-                                  '_preprocessed_papers.csv', 'a+', newline='', encoding=fr) as f:
-                            papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+                                    '_preprocessed_papers.csv', 'a+', newline='', encoding=fr) as f:
+                            papers_citation.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
                 time.sleep(5)
     return preprocessed_file_name
 

@@ -118,7 +118,7 @@ def process_raw_papers(query, raw_papers):
 
 
 def filter_papers(papers, dates, start_date, end_date):
-    if dates is True:
+    if dates is True and len(papers) > 0:
         print('Applying date filters...')
         papers['published'] = pd.to_datetime(papers['published']).dt.date
         papers = papers[(papers['published'] >= start_date) & (papers['published'] <= end_date)]
@@ -126,9 +126,10 @@ def filter_papers(papers, dates, start_date, end_date):
 
 
 def clean_papers(papers):
-    papers = papers.drop(columns=['author', 'comment', 'link', 'primary_category', 'category', 'doi',
+    if len(papers) > 0:
+        papers = papers.drop(columns=['author', 'comment', 'link', 'primary_category', 'category', 'doi',
                                   'journal_ref'], errors='ignore')
-    nan_value = float("NaN")
-    papers.replace('', nan_value, inplace=True)
-    papers.dropna(how='all', axis=1, inplace=True)  # Remove columns with all NaN values.
+        nan_value = float("NaN")
+        papers.replace('', nan_value, inplace=True)
+        papers.dropna(how='all', axis=1, inplace=True)  # Remove columns with all NaN values.
     return papers
