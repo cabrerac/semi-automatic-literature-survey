@@ -16,7 +16,7 @@ waiting_time = 10
 max_retries = 3
 
 
-def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date):
+def get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date):
     query_name = list(query.keys())[0]
     query_value = query[query_name]
     file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
@@ -28,22 +28,13 @@ def get_papers(query, synonyms, fields, types, dates, since, to, folder_name, se
                 c_fields.append(client_fields[field])
         parameters = {'query': query_value, 'synonyms': synonyms, 'fields': c_fields, 'types': types}
         papers = request_papers(query, parameters)
-        papers = filter_papers(papers, dates, since, to)
+        papers = filter_papers(papers, dates, start_date, end_date)
         papers = clean_papers(papers)
         if len(papers) > 0:
             util.save(file_name, papers, f)
-            print("Retrieved papers after filters: " + str(len(papers)))
+        print("Retrieved papers after filters and cleaning: " + str(len(papers)))
     else:
         print("File already exists.")
-
-
-def create_request(parameters):
-    req = api_url
-    req = req + client.default_query(parameters)
-    req = req + '&start=' + str(start)
-    req = req + '&max_results='+str(max_papers)
-    req = req + '&sortBy=submittedDate&sortOrder=descending'
-    return req
 
 
 def request_papers(query, parameters):
@@ -57,6 +48,7 @@ def request_papers(query, parameters):
     if mod > 0:
         times = times + 1
     for t in range(0, times + 1):
+        print("Retrieving papers from arxiv. It might take a while...", end="\r")
         time.sleep(waiting_time)
         global start
         start = t * max_papers
@@ -67,10 +59,6 @@ def request_papers(query, parameters):
         while isinstance(raw_papers, dict) and retry < max_retries:
             time.sleep(waiting_time)
             retry = retry + 1
-            print("Retrieved papers: " + str(retrieved) + "/" + str(expected_papers) + ' ::: ' +
-                  str(int((retrieved / expected_papers) * 100)) + '% ::: Exception from API: ' +
-                  raw_papers['exception'] + " ::: Retry " + str(retry) + "/" + str(max_retries) + "...",
-                  end="\r")
             raw_papers = client.request(request, 'get', {})
         if not isinstance(raw_papers, dict):
             papers_request = process_raw_papers(query, raw_papers)
@@ -90,53 +78,57 @@ def request_papers(query, parameters):
                 papers = papers_request
             else:
                 papers = papers.append(papers_request)
-                papers = util.remove_repeated_df(papers)
-            if retrieved > expected_papers:
-                retrieved = expected_papers
-            print("Retrieved papers: " + str(retrieved) + "/" + str(expected_papers) + ' ::: ' + str(
-                int((retrieved / expected_papers) * 100))
-                  + '% ...', end="\r")
-        else:
-            print("Retrieved papers: " + str(retrieved) + "/" + str(expected_papers) + ' ::: ' + str(
-                int((retrieved / expected_papers) * 100)) + '% ::: Exception from API: ' + raw_papers['exception'] +
-                  " ::: Skipping to next batch...", end="\r")
     return papers
 
 
+def create_request(parameters):
+    req = api_url
+    req = req + client.default_query(parameters)
+    req = req + '&start=' + str(start)
+    req = req + '&max_results='+str(max_papers)
+    req = req + '&sortBy=submittedDate&sortOrder=descending'
+    return req
+
+
 def get_expected_papers(raw_papers):
-    total_text = raw_papers.split('opensearch:totalResults')[1]
-    total = int(total_text.split('>')[1].replace('</', ''))
-    print('Total papers found in arxiv: ' + str(total))
+    total = 0
+    try:
+        total_text = raw_papers.split('opensearch:totalResults')[1]
+        total = int(total_text.split('>')[1].replace('</', ''))
+    except:
+        print('Papers found in arxiv: ' + str(total))
     return total
 
 
 def process_raw_papers(query, raw_papers):
     query_name = list(query.keys())[0]
     query_value = query[query_name]
+    papers_request = pd.DataFrame()
     total_text = raw_papers.split('opensearch:totalResults')[1]
     total = int(total_text.split('>')[1].replace('</', ''))
     if total > 0:
         try:
             papers_request = pd.read_xml(raw_papers, xpath='//feed:entry', namespaces={"feed": "http://www.w3.org/2005/Atom"})
-            papers_request['database'] = database
-            papers_request['query_name'] = query_name
-            papers_request['query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
+            papers_request.loc[:, 'database'] = database
+            papers_request.loc[:, 'query_name'] = query_name
+            papers_request.loc[:, 'query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
         except:
             papers_request = pd.DataFrame()
     return papers_request
 
 
-def filter_papers(papers, dates, since, to):
+def filter_papers(papers, dates, start_date, end_date):
     if dates is True:
-        print('Applying dates filters...')
-        papers = papers[(papers['published'] >= str(since)) & (papers['published'] <= str(to))]
-    nan_value = float("NaN")
-    papers.replace('', nan_value, inplace=True)
-    papers.dropna(how='all', axis=1, inplace=True)
+        print('Applying date filters...')
+        papers['published'] = pd.to_datetime(papers['published']).dt.date
+        papers = papers[(papers['published'] >= start_date) & (papers['published'] <= end_date)]
     return papers
 
 
 def clean_papers(papers):
     papers = papers.drop(columns=['author', 'comment', 'link', 'primary_category', 'category', 'doi',
                                   'journal_ref'], errors='ignore')
+    nan_value = float("NaN")
+    papers.replace('', nan_value, inplace=True)
+    papers.dropna(how='all', axis=1, inplace=True)  # Remove columns with all NaN values.
     return papers

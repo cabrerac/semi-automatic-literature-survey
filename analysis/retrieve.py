@@ -43,9 +43,6 @@ def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, 
         if 'sciencedirect' in databases:
             print("- Requesting Scopus for query: " + list(query.keys())[0] + "...")
             elsevier.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
-            # Getting abstracts from science direct
-            print('-- Getting abstracts from science direct...')
-            get_abstracts_elsevier(query, folder_name, to, search_date)
 
         if 'core' in databases:
             print("- Requesting CORE for query: " + list(query.keys())[0] + "...")
@@ -55,11 +52,6 @@ def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, 
             # Semantic Scholar searches over its knowledge graph. Synonyms are not needed in this case.
             print("- Requesting Semantic Scholar query: " + list(query.keys())[0] + "...")
             semantic_scholar.get_papers(query, types, dates, since, to, folder_name, search_date)
-
-
-def get_abstracts_elsevier(query, file_name, to, search_date):
-    query_name = list(query.keys())[0]
-    elsevier.process_raw_papers(query, file_name, to, search_date)
 
 
 def get_citations(folder_name, search_date, step):

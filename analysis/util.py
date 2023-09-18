@@ -62,16 +62,16 @@ def read_parameters(parameters_file_name):
         databases = ['arxiv', 'springer', 'ieeexplore', 'sciencedirect', 'core', 'semantic_scholar']
 
     dates = False
-    if 'since' in parameters:
-        since = parameters['since']
+    if 'start_date' in parameters:
+        start_date = parameters['start_date']
         dates = True
     else:
-        since = '1950-01-01'
-    if 'to' in parameters:
-        to = parameters['to']
+        start_date = datetime.strptime('1950-01-01', '%Y-%m-%d')
+    if 'end_date' in parameters:
+        end_date = parameters['end_date']
         dates = True
     else:
-        to = datetime.today().strftime('%Y-%m-%d')
+        end_date = datetime.today()
 
     if not dates:
         print('Search dates missing in parameters file. Searching without considering dates...')
@@ -87,8 +87,8 @@ def read_parameters(parameters_file_name):
     else:
         folder_name = parameters_file_name.replace('.yaml', '')
 
-    return queries, syntactic_filters, semantic_filters, fields, types, synonyms, databases, dates, since, \
-        to, search_date, folder_name
+    return queries, syntactic_filters, semantic_filters, fields, types, synonyms, databases, dates, start_date, \
+        end_date, search_date, folder_name
 
 
 def save(file_name, papers, fmt):

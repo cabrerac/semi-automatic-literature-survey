@@ -8,7 +8,7 @@ import sys
 def main(parameters_file):
 
     # Reading search parameters and getting papers from databases
-    queries, syntactic_filters, semantic_filters, fields, types, synonyms, databases, dates, since, to, \
+    queries, syntactic_filters, semantic_filters, fields, types, synonyms, databases, dates, start_date, end_date, \
         search_date, folder_name = util.read_parameters(parameters_file)
 
     if len(queries) > 0:
@@ -16,13 +16,13 @@ def main(parameters_file):
         # Getting papers from databases
         step = 0
         print(str(step) + '. Getting all papers...')
-        retrieve.get_papers(queries, synonyms, databases, fields, types, folder_name, dates, since, to,
+        retrieve.get_papers(queries, synonyms, databases, fields, types, folder_name, dates, start_date, end_date,
                             search_date)
 
         # Preprocessing papers
         step = step + 1
         print(str(step) + '. Preprocessing papers...')
-        file_name = retrieve.preprocess(queries, databases, folder_name, search_date, since, to, step)
+        file_name = retrieve.preprocess(queries, databases, folder_name, search_date, start_date, end_date, step)
         print('Preprocessing results can be found at: ' + file_name)
         next_file = str(step) + '_preprocessed_papers.csv'
 
