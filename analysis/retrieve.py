@@ -13,27 +13,31 @@ from gensim.utils import simple_preprocess
 from gensim.parsing.preprocessing import strip_tags
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.tokenize import WhitespaceTokenizer
+import logging
 
 fr = 'utf-8'
 lemma = WordNetLemmatizer()
 w_tokenizer = WhitespaceTokenizer()
+logger = logging.getLogger('logger')
 
 
 def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, since, to, search_date):
+    global logger
+    logger = logging.getLogger('logger')
     for query in queries:
         key = list(query.keys())[0]
 
         if 'arxiv' in databases:
-            print("- Requesting ArXiv for query: " + list(query.keys())[0] + "...")
+            logger.info("# Requesting ArXiv for query: " + list(query.keys())[0] + "...")
             arxiv.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
 
         if 'springer' in databases:
             # Springer searches over all the paper metadata. Synonyms are not needed in this case.
-            print("- Requesting Springer for query: " + list(query.keys())[0] + "...")
+            logger.info("# Requesting Springer for query: " + list(query.keys())[0] + "...")
             springer.get_papers(query, fields, types, dates, since, to, folder_name, search_date)
 
         if 'ieeexplore' in databases:
-            print("- Requesting IEEE Xplore for query: " + list(query.keys())[0] + "...")
+            logger.info("# Requesting IEEE Xplore for query: " + list(query.keys())[0] + "...")
             ieeexplore.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
 
         # Scopus provides papers metadata then abstracts must be retrieved from the science direct database.
@@ -41,26 +45,30 @@ def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, 
         # So the number of returned papers from scopus is always greater than the number of final abstracts retrieved
         # from science direct.
         if 'sciencedirect' in databases:
-            print("- Requesting Scopus for query: " + list(query.keys())[0] + "...")
+            logger.info("# Requesting Scopus for query: " + list(query.keys())[0] + "...")
             elsevier.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
 
         if 'core' in databases:
-            print("- Requesting CORE for query: " + list(query.keys())[0] + "...")
+            logger.info("# Requesting CORE for query: " + list(query.keys())[0] + "...")
             core.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
 
         if 'semantic_scholar' in databases:
             # Semantic Scholar searches over its knowledge graph. Synonyms are not needed in this case.
-            print("- Requesting Semantic Scholar query: " + list(query.keys())[0] + "...")
+            logger.info("# Requesting Semantic Scholar query: " + list(query.keys())[0] + "...")
             semantic_scholar.get_papers(query, types, dates, since, to, folder_name, search_date)
 
 
 def get_citations(folder_name, search_date, step):
-    print("Requesting Semantic Scholar for papers citations...")
+    global logger
+    logger = logging.getLogger('logger')
+    logger.info("Requesting Semantic Scholar for papers citations...")
     file_name = semantic_scholar.get_citations(folder_name, search_date, step)
     return file_name
 
 
 def preprocess(queries, databases, folder_name, search_date, since, to, step):
+    global logger
+    logger = logging.getLogger('logger')
     preprocessed_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
                              '_preprocessed_papers.csv'
     if not exists(preprocessed_file_name):
@@ -71,7 +79,8 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
                 file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' + \
                             query_name.lower().replace(' ', '_') + '_' + database + '.csv'
                 if exists(file_name):
-                    print('Processing file: ' + file_name)
+                    logger.info('Processing file: ' + file_name)
+                    logger.debug('Processing file: ' + file_name)
                     df = pd.read_csv(file_name)
                     if database == 'ieeexplore':
                         df = df.drop_duplicates('doi')
@@ -180,9 +189,9 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
         papers.dropna(subset=['doi'], inplace=True)
         with open(preprocessed_file_name, 'a+', newline='', encoding=fr) as f:
             papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
-        print('Removing repeated papers...')
+        logger.info('Removing repeated papers...')
         util.remove_repeated(preprocessed_file_name)
-        print('Cleaning papers list...')
+        logger.info('Cleaning papers list...')
         util.clean_papers(preprocessed_file_name)
     return preprocessed_file_name
 
@@ -210,7 +219,6 @@ def parse_dates(dates):
     new_dates = []
     for date in dates:
         date = str(date)
-        # print(date)
         date = date.replace('[', '').replace(']', '').replace('Issued on: ', '').replace('[[issued]]', '').replace(
             'issued', '')
         date = date.replace('First Quarter ', '')

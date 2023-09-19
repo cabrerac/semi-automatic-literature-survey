@@ -7,6 +7,9 @@ from spacy.language import Language
 from datetime import datetime
 import spacy
 from os.path import exists
+import logging
+
+logger = logging.getLogger('logger')
 
 
 @Language.factory('language_detector')
@@ -57,8 +60,10 @@ def read_parameters(parameters_file_name):
     if 'databases' in parameters:
         databases = parameters['databases']
     else:
-        print('Databases missing in parameters file. Using default values: arxiv, springer, ieeexplore, '
-              'sciencedirect, core, semantic_scholar')
+        logger.info('Databases missing in parameters file. Using default values: arxiv, springer, ieeexplore, '
+                    'sciencedirect, core, semantic_scholar')
+        logger.debug('Databases missing in parameters file. Using default values: arxiv, springer, ieeexplore, '
+                    'sciencedirect, core, semantic_scholar')
         databases = ['arxiv', 'springer', 'ieeexplore', 'sciencedirect', 'core', 'semantic_scholar']
 
     dates = False
@@ -74,12 +79,13 @@ def read_parameters(parameters_file_name):
         end_date = datetime.today()
 
     if not dates:
-        print('Search dates missing in parameters file. Searching without considering dates...')
+        logger.info('Search dates missing in parameters file. Searching without considering dates...')
 
     if 'search_date' in parameters:
         search_date = parameters['search_date']
     else:
-        print('Search date missing in parameters file. Using current date: ' + datetime.today().strftime('%Y-%m-%d'))
+        logger.info('Search date missing in parameters file. Using current date: '
+                    + datetime.today().strftime('%Y-%m-%d'))
         search_date = datetime.today().strftime('%Y-%m-%d')
 
     if 'folder_name' in parameters:

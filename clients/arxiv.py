@@ -3,7 +3,7 @@ import pandas as pd
 from .apis.generic import Generic
 from os.path import exists
 from analysis import util
-
+import logging
 
 api_url = 'http://export.arxiv.org/api/query?search_query='
 start = 0
@@ -14,9 +14,16 @@ f = 'utf-8'
 client = Generic()
 waiting_time = 10
 max_retries = 3
+file_handler = ''
+logger = logging.getLogger()
 
 
 def get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date):
+    global logger
+    logger = logging.getLogger('logger')
+    print(logger.handlers)
+    global file_handler
+    file_handler = logger.handlers[1].baseFilename
     query_name = list(query.keys())[0]
     query_value = query[query_name]
     file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
@@ -32,23 +39,23 @@ def get_papers(query, synonyms, fields, types, dates, start_date, end_date, fold
         papers = clean_papers(papers)
         if len(papers) > 0:
             util.save(file_name, papers, f)
-        print("Retrieved papers after filters and cleaning: " + str(len(papers)))
+        logger.info("Retrieved papers after filters and cleaning: " + str(len(papers)))
     else:
-        print("File already exists.")
+        logger.info("File already exists.")
 
 
 def request_papers(query, parameters):
+    logger.info("Retrieving papers. It might take a while...")
     retrieved = 0
     papers = pd.DataFrame()
     request = create_request(parameters)
     raw_papers = client.request(request, 'get', {})
-    expected_papers = get_expected_papers(raw_papers)
+    expected_papers = get_expected_papers(raw_papers, request)
     times = int(expected_papers / max_papers) - 1
     mod = int(expected_papers) % max_papers
     if mod > 0:
         times = times + 1
     for t in range(0, times + 1):
-        print("Retrieving papers from arxiv. It might take a while...", end="\r")
         time.sleep(waiting_time)
         global start
         start = t * max_papers
@@ -78,6 +85,10 @@ def request_papers(query, parameters):
                 papers = papers_request
             else:
                 papers = papers.append(papers_request)
+        else:
+            logger.info("Error when requesting the API. Skipping to next request. Please see the log file for details: " + file_handler)
+            logger.debug("Error when requesting the API: " + raw_papers['exception'])
+            logger.debug("Request: " + request)
     return papers
 
 
@@ -90,13 +101,15 @@ def create_request(parameters):
     return req
 
 
-def get_expected_papers(raw_papers):
+def get_expected_papers(raw_papers, request):
     total = 0
     try:
         total_text = raw_papers.split('opensearch:totalResults')[1]
         total = int(total_text.split('>')[1].replace('</', ''))
     except:
-        print('Papers found in arxiv: ' + str(total))
+        logger.info("Error when requesting the API. Skipping to next request. Please see the log file for details: " + file_handler)
+        logger.debug("Error when requesting the API: " + raw_papers['exception'])
+        logger.debug("Request: " + request)
     return total
 
 
@@ -119,7 +132,7 @@ def process_raw_papers(query, raw_papers):
 
 def filter_papers(papers, dates, start_date, end_date):
     if dates is True and len(papers) > 0:
-        print('Applying date filters...')
+        logger.info('Applying date filters...')
         papers['published'] = pd.to_datetime(papers['published']).dt.date
         papers = papers[(papers['published'] >= start_date) & (papers['published'] <= end_date)]
     return papers
@@ -129,7 +142,6 @@ def clean_papers(papers):
     if len(papers) > 0:
         papers = papers.drop(columns=['author', 'comment', 'link', 'primary_category', 'category', 'doi',
                                   'journal_ref'], errors='ignore')
-        nan_value = float("NaN")
-        papers.replace('', nan_value, inplace=True)
-        papers.dropna(how='all', axis=1, inplace=True)  # Remove columns with all NaN values.
+        papers.replace('', float("NaN"), inplace=True)
+        papers.dropna(how='all', axis=1, inplace=True)
     return papers

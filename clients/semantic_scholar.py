@@ -1,9 +1,11 @@
-from .apis.generic import Generic
-from os.path import exists
+import time
 import pandas as pd
 import json
+from .apis.generic import Generic
+from os.path import exists
 from analysis import util
-import time
+import logging
+
 
 client = Generic()
 database = 'semantic_scholar'
@@ -19,9 +21,16 @@ fr = 'utf-8'
 client = Generic()
 waiting_time = 5
 max_retries = 3
+offset_limit = 9900
+file_handler = ''
+logger = logging.getLogger('logger')
 
 
 def get_papers(query, types, dates, start_date, end_date, folder_name, search_date):
+    global logger
+    logger = logging.getLogger('logger')
+    global file_handler
+    file_handler = logger.handlers[1].baseFilename
     query_name = list(query.keys())[0]
     query_value = query[query_name]
     file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
@@ -33,12 +42,13 @@ def get_papers(query, types, dates, start_date, end_date, folder_name, search_da
         papers = clean_papers(papers)
         if len(papers) > 0:
             util.save(file_name, papers, fr)
-        print("Retrieved papers after filters and cleaning: " + str(len(papers)))
+        logger.info("Retrieved papers after filters and cleaning: " + str(len(papers)))
     else:
-        print("File already exists.")
+        logger.info("File already exists.")
 
 
 def request_papers(query, parameters):
+    logger.info("Retrieving papers. It might take a while...")
     papers = pd.DataFrame()
     requests = create_request(parameters)
     for request in requests:
@@ -56,7 +66,12 @@ def request_papers(query, parameters):
                 papers = papers_request
             else:
                 papers = papers.append(papers_request)
-        while next_papers != -1:
+        else:
+            logger.info("Error when requesting the API. Skipping to next request. Please see the log file for details: "
+                        + file_handler)
+            logger.debug("Error when requesting the API: " + raw_papers['exception'])
+            logger.debug("Request: " + request)
+        while next_papers != -1 and next_papers < offset_limit:
             time.sleep(waiting_time)
             req = api_url.replace('<query>', request).replace('<offset>', str(next_papers))
             req = req.replace('<max_papers>', str(max_papers))
@@ -72,6 +87,12 @@ def request_papers(query, parameters):
                     papers = papers_request
                 else:
                     papers = papers.append(papers_request)
+            else:
+                logger.info("Error when requesting the API. Skipping to next request. Please see the log file for "
+                            "details: " + file_handler)
+                logger.debug("Error when requesting the API: " + raw_papers['exception'])
+                logger.debug("Request: " + request)
+                next_papers = -1
     return papers
 
 
@@ -88,22 +109,29 @@ def create_request(parameters):
 def process_raw_papers(query, raw_papers):
     query_name = list(query.keys())[0]
     query_value = query[query_name]
-    raw_json = json.loads(raw_papers)
-    next_papers = -1
-    if 'next' in raw_json:
-        next_papers = raw_json['next']
-    papers_request = pd.json_normalize(raw_json['data'])
-    papers_request.loc[:, 'database'] = database
-    papers_request.loc[:, 'query_name'] = query_name
-    papers_request.loc[:, 'query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
-    if 'abstract' not in papers_request:
+    try:
+        raw_json = json.loads(raw_papers)
+        next_papers = -1
+        if 'next' in raw_json:
+            next_papers = raw_json['next']
+        papers_request = pd.json_normalize(raw_json['data'])
+        papers_request.loc[:, 'database'] = database
+        papers_request.loc[:, 'query_name'] = query_name
+        papers_request.loc[:, 'query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
+        if 'abstract' not in papers_request:
+            papers_request = pd.DataFrame()
+    except Exception as ex:
+        logger.info("Error when requesting the API. Skipping to next request. Please see the log file for details: " +
+                    file_handler)
+        logger.debug("Error when processing raw papers: " + ex)
+        next_papers = -1
         papers_request = pd.DataFrame()
     return papers_request, next_papers
 
 
 def filter_papers(papers, dates, start_date, end_date):
     if dates is True and len(papers) > 0:
-        print('Applying dates filters...', end="\r")
+        logger.info('Applying dates filters...')
         papers = papers[(papers['year'] >= start_date.year) & (papers['year'] >= end_date.year)]
     return papers
 
@@ -113,8 +141,7 @@ def clean_papers(papers):
         papers = papers.drop(columns=['externalIds.MAG', 'externalIds.DBLP', 'externalIds.PubMedCentral',
                                       'externalIds.PubMed', 'externalIds.ArXiv', 'externalIds.CorpusId',
                                       'externalIds.ACL'], errors='ignore')
-        nan_value = float("NaN")
-        papers.replace('', nan_value, inplace=True)
+        papers.replace('', float("NaN"), inplace=True)
         papers.dropna(how='all', axis=1, inplace=True)
     return papers
 

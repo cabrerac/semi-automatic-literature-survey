@@ -162,3 +162,62 @@ class Generic:
                 '*conference* OR *CONFERENCE*)) AND (description:(NOT *thes* AND NOT *Thes* ' \
                 'AND NOT *tesis* AND NOT *Tesis* AND NOT *Master* AND NOT *master*)) AND (' + query + ')'
         return query
+
+    def transform_query(self, parameters, api):
+        queries = []
+        query = parameters['query']
+        # Define API-specific transformations
+        if api == 'arxiv' or api == 'springer' or api == 'sciencedirect':
+            # Replace single quotes with double quotes
+            query = re.sub(r"'", '"', query)
+            # Add field specifications and URL encoding for AND and OR operators
+            query = re.sub(r'(\w+)', r'<field>:"\1"', query)
+            query = re.sub(r'&', '+AND+', query)
+            query = re.sub(r'Â¦', '+OR+', query)
+
+            # Wrap the whole expression in parentheses
+            query = f'({query})'
+
+            # URL-encode the resulting string
+            query = query.replace('(', '%28').replace(')', '%29')
+
+            if 'fields' in parameters:
+                qf = ''
+                fields = parameters['fields']
+                for field in fields:
+                    qf = qf + query.replace('<field>', field) + '+OR+'
+                query = qf[:-4]
+            queries.append(query)
+
+        elif api == 'core':
+            # Replace single quotes with double quotes
+            query = re.sub(r"'", '"', query)
+            # Add parentheses for grouping
+            query = re.sub(r'&', ' AND ', query)
+            query = re.sub(r'\|', ' OR ', query)
+            if 'fields' in parameters:
+                qf = ''
+                fields = parameters['fields']
+                for field in fields:
+                    qf = qf + query.replace('<field>', field) + ' OR '
+                query = qf[:-4]
+            query = '(subjects:(*article* OR *Article* OR *journal* OR *Journal* OR *ART* OR ' \
+                    '*conference* OR *CONFERENCE*)) AND (description:(NOT *thes* AND NOT *Thes* ' \
+                    'AND NOT *tesis* AND NOT *Tesis* AND NOT *Master* AND NOT *master*)) AND (' + query + ')'
+            queries.append(query)
+
+        elif api == 'ieeexplore' or api == 'semantic_scholar':
+            # Remove whitespace and add no spaces between terms
+            query = re.sub(r'\s*', '', query)
+            # Replace single quotes with double quotes
+            query = re.sub(r"'", '"', query)
+            # Add parentheses for grouping
+            query = re.sub(r'&', 'AND', query)
+            query = re.sub(r'\|', 'OR', query)
+            first_term = query.split('AND')[0]
+            first_term = first_term.replace('(', '').replace(')', '')
+            words_first_term = first_term.split('OR')
+            for word in words_first_term:
+                q = query.replace('(' + first_term + ')', word)
+                queries.append(q)
+        return queries
