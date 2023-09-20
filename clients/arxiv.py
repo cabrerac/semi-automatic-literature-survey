@@ -49,7 +49,7 @@ def request_papers(query, parameters):
     retrieved = 0
     papers = pd.DataFrame()
     request = create_request(parameters)
-    raw_papers = client.request(request, 'get', {})
+    raw_papers = client.request(request, 'get', {}, '')
     expected_papers = get_expected_papers(raw_papers, request)
     times = int(expected_papers / max_papers) - 1
     mod = int(expected_papers) % max_papers
@@ -60,13 +60,13 @@ def request_papers(query, parameters):
         global start
         start = t * max_papers
         request = create_request(parameters)
-        raw_papers = client.request(request, 'get', {})
+        raw_papers = client.request(request, 'get', {}, '')
         # if there is an exception from the API, retry request
         retry = 0
         while isinstance(raw_papers, dict) and retry < max_retries:
             time.sleep(waiting_time)
             retry = retry + 1
-            raw_papers = client.request(request, 'get', {})
+            raw_papers = client.request(request, 'get', {}, '')
         if not isinstance(raw_papers, dict):
             papers_request = process_raw_papers(query, raw_papers)
             # sometimes the arxiv API does not respond with all the papers, so we request again
@@ -77,7 +77,7 @@ def request_papers(query, parameters):
                 expected_per_request = mod
             while len(papers_request) < expected_per_request:
                 time.sleep(waiting_time)
-                raw_papers = client.request(request, 'get', {})
+                raw_papers = client.request(request, 'get', {}, '')
                 if not isinstance(raw_papers, dict):
                     papers_request = process_raw_papers(query, raw_papers)
             retrieved = retrieved + len(papers_request)
@@ -132,7 +132,6 @@ def process_raw_papers(query, raw_papers):
 
 def filter_papers(papers, dates, start_date, end_date):
     if dates is True and len(papers) > 0:
-        logger.info('Applying date filters...')
         papers['published'] = pd.to_datetime(papers['published']).dt.date
         papers = papers[(papers['published'] >= start_date) & (papers['published'] <= end_date)]
     return papers

@@ -8,6 +8,7 @@ from datetime import datetime
 import spacy
 from os.path import exists
 import logging
+import shutil
 
 logger = logging.getLogger('logger')
 
@@ -488,3 +489,14 @@ def check_manually_filtered_by_abstract(file1, file2):
                 df1.loc[index1] = row1
                 with open(file1, 'w', newline='', encoding=fr) as f:
                     df1.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+
+
+def remove_elsevier_log():
+    try:
+        files_to_remove = [f for f in os.listdir('./logs/') if f.startswith('elsapy-')]
+        for file_name in files_to_remove:
+            file_path = os.path.join('./logs/', file_name)
+            os.remove(file_path)
+        shutil.rmtree('./data/')
+    except Exception as ex:
+        logger.debug("Exception removing elsevier log files: " + str(ex))

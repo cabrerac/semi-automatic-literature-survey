@@ -56,6 +56,7 @@ def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, 
             # Semantic Scholar searches over its knowledge graph. Synonyms are not needed in this case.
             logger.info("# Requesting Semantic Scholar query: " + list(query.keys())[0] + "...")
             semantic_scholar.get_papers(query, types, dates, since, to, folder_name, search_date)
+    util.remove_elsevier_log()
 
 
 def get_citations(folder_name, search_date, step):
@@ -145,9 +146,9 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
                             {
                                 'doi': df['id'], 'type': df['database'], 'query_name': df['query_name'],
                                 'query_value': df['query_value'], 'publication': df['journals'],
-                                'publisher': df['publisher'], 'publication_date': df['publication_date'],
+                                'publisher': df['publisher'], 'publication_date': df['publishedDate'],
                                 'database': df['database'], 'title': df['title'], 'url': df['downloadUrl'],
-                                'abstract': df['description']
+                                'abstract': df['abstract']
                             }
                         )
                         papers_core['database'] = database

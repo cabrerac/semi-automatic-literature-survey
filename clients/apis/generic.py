@@ -9,12 +9,14 @@ import re
 
 
 class Generic:
-    def request(self, query, method, data):
+    def request(self, query, method, data, api_key):
         request_result = None
         time.sleep(1)
         if method == 'post':
             try:
                 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+                if len(api_key) > 0:
+                    headers['Authorization'] = 'Bearer ' + api_key
                 data = json.dumps(data)
                 request_result = requests.post(query, data=data, headers=headers)
             except urllib.error.HTTPError as ex:
@@ -141,16 +143,17 @@ class Generic:
             query_parameter = ''
             if word in synonyms.keys():
                 word_synonyms = synonyms[word]
-                query_parameter = query_parameter + '"' + word + '"'
+                query_parameter = query_parameter + ' ' + word + ' '
                 for synonym in word_synonyms:
-                    query_parameter = query_parameter + ' OR "' + synonym + '"'
-                query_parameter = '<field>:(' + query_parameter + ')'
+                    query_parameter = query_parameter + ' OR ' + synonym + ' '
+                query_parameter = '(' + query_parameter + ')'
                 query = query.replace(word, query_parameter)
             else:
-                query_parameter = query_parameter + '"' + word + '"'
+                query_parameter = query_parameter + ' ' + word + ' '
+                query_parameter = '(' + query_parameter + ')'
                 query = query.replace(word, query_parameter)
         query = query.replace(' & ', ' AND ').replace(' Â¦ ', ' OR ')
-        query = '(' + query + ')'
+        query = '<field>:(' + query + ')'
 
         if 'fields' in parameters:
             qf = ''
@@ -158,9 +161,8 @@ class Generic:
             for field in fields:
                 qf = qf + query.replace('<field>', field) + ' OR '
             query = qf[:-4]
-        query = '(subjects:(*article* OR *Article* OR *journal* OR *Journal* OR *ART* OR ' \
-                '*conference* OR *CONFERENCE*)) AND (description:(NOT *thes* AND NOT *Thes* ' \
-                'AND NOT *tesis* AND NOT *Tesis* AND NOT *Master* AND NOT *master*)) AND (' + query + ')'
+        query = 'language.code:en AND abstract:(NOT thesis AND NOT tesis) AND title:(NOT survey AND NOT review)  ' \
+                'AND (' + query + ')'
         return query
 
     def transform_query(self, parameters, api):

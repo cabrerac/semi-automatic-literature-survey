@@ -136,3 +136,6 @@ dump.json
 logs/
 data/
 .vscode/
+
+# API Access
+config.py

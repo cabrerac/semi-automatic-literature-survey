@@ -27,8 +27,6 @@ def main(parameters_file):
     logger.addHandler(console_handler)
     logger.addHandler(file_handler)
 
-
-
     # Reading search parameters and getting papers from databases
     queries, syntactic_filters, semantic_filters, fields, types, synonyms, databases, dates, start_date, end_date, \
         search_date, folder_name = util.read_parameters(parameters_file)

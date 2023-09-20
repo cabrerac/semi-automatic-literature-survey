@@ -53,13 +53,13 @@ def request_papers(query, parameters):
     requests = create_request(parameters)
     for request in requests:
         req = api_url.replace('<query>', request).replace('<offset>', str(start)).replace('<max_papers>', str(max_papers))
-        raw_papers = client.request(req, 'retrieve', {})
+        raw_papers = client.request(req, 'retrieve', {}, '')
         # if there is an exception from the API, retry request
         retry = 0
         while isinstance(raw_papers, dict) and retry < max_retries:
             time.sleep(waiting_time)
             retry = retry + 1
-            raw_papers = client.request(request, 'get', {})
+            raw_papers = client.request(request, 'get', {}, '')
         if not isinstance(raw_papers, dict):
             papers_request, next_papers = process_raw_papers(query, raw_papers)
             if len(papers) == 0:
@@ -75,12 +75,12 @@ def request_papers(query, parameters):
             time.sleep(waiting_time)
             req = api_url.replace('<query>', request).replace('<offset>', str(next_papers))
             req = req.replace('<max_papers>', str(max_papers))
-            raw_papers = client.request(req, 'retrieve', {})
+            raw_papers = client.request(req, 'retrieve', {}, '')
             retry = 0
             while isinstance(raw_papers, dict) and retry < max_retries:
                 time.sleep(waiting_time)
                 retry = retry + 1
-                raw_papers = client.request(req, 'retrieve', {})
+                raw_papers = client.request(req, 'retrieve', {}, '')
             if not isinstance(raw_papers, dict):
                 papers_request, next_papers = process_raw_papers(query, raw_papers)
                 if len(papers) == 0:
@@ -123,7 +123,7 @@ def process_raw_papers(query, raw_papers):
     except Exception as ex:
         logger.info("Error when requesting the API. Skipping to next request. Please see the log file for details: " +
                     file_handler)
-        logger.debug("Error when processing raw papers: " + ex)
+        logger.debug("Error when processing raw papers: " + str(ex))
         next_papers = -1
         papers_request = pd.DataFrame()
     return papers_request, next_papers
@@ -131,7 +131,6 @@ def process_raw_papers(query, raw_papers):
 
 def filter_papers(papers, dates, start_date, end_date):
     if dates is True and len(papers) > 0:
-        logger.info('Applying dates filters...')
         papers = papers[(papers['year'] >= start_date.year) & (papers['year'] >= end_date.year)]
     return papers
 
@@ -160,7 +159,7 @@ def get_citations(folder_name, search_date, step):
             if paper_id != '':
                 req = citations_url.replace('{paper_id}', str(paper_id))
                 req = req.replace('<offset>', '0').replace('<max_papers>', str(max_papers))
-                raw_citations = client.request(req, 'retrieve', {})
+                raw_citations = client.request(req, 'retrieve', {}, '')
                 papers_citation, nxt = process_raw_citations(raw_citations)
                 if len(papers_citation) != 0:
                     papers_citation = papers_citation.rename(columns={"citingPaper.paperId" : "doi", "citingPaper.url" : "url",
