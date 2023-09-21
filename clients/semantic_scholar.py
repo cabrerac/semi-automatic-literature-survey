@@ -38,8 +38,10 @@ def get_papers(query, types, dates, start_date, end_date, folder_name, search_da
     if not exists(file_name):
         parameters = {'query': query_value, 'synonyms': {}, 'types': types}
         papers = request_papers(query, parameters)
-        papers = filter_papers(papers, dates, start_date, end_date)
-        papers = clean_papers(papers)
+        if len(papers) > 0:
+            papers = filter_papers(papers, dates, start_date, end_date)
+        if len(papers) > 0:
+            papers = clean_papers(papers)
         if len(papers) > 0:
             util.save(file_name, papers, fr)
         logger.info("Retrieved papers after filters and cleaning: " + str(len(papers)))
@@ -52,47 +54,35 @@ def request_papers(query, parameters):
     papers = pd.DataFrame()
     requests = create_request(parameters)
     for request in requests:
-        req = api_url.replace('<query>', request).replace('<offset>', str(start)).replace('<max_papers>', str(max_papers))
-        raw_papers = client.request(req, 'retrieve', {}, '')
+        req = api_url.replace('<query>', request).replace('<offset>', str(start)).replace('<max_papers>',
+                                                                                          str(max_papers))
+        raw_papers = client.request(req, 'get', {}, '')
         # if there is an exception from the API, retry request
         retry = 0
-        while isinstance(raw_papers, dict) and retry < max_retries:
+        while raw_papers.status_code != 200 and retry < max_retries:
             time.sleep(waiting_time)
             retry = retry + 1
             raw_papers = client.request(request, 'get', {}, '')
-        if not isinstance(raw_papers, dict):
-            papers_request, next_papers = process_raw_papers(query, raw_papers)
+        papers_request, next_paper = process_raw_papers(query, raw_papers)
+        if len(papers) == 0:
+            papers = papers_request
+        else:
+            papers = papers.append(papers_request)
+        while next_paper != -1 and next_paper < offset_limit:
+            time.sleep(waiting_time)
+            req = api_url.replace('<query>', request).replace('<offset>', str(next_paper))
+            req = req.replace('<max_papers>', str(max_papers))
+            raw_papers = client.request(req, 'get', {}, '')
+            retry = 0
+            while raw_papers.status_code != 200 and retry < max_retries:
+                time.sleep(waiting_time)
+                retry = retry + 1
+                raw_papers = client.request(req, 'get', {}, '')
+            papers_request, next_paper = process_raw_papers(query, raw_papers)
             if len(papers) == 0:
                 papers = papers_request
             else:
                 papers = papers.append(papers_request)
-        else:
-            logger.info("Error when requesting the API. Skipping to next request. Please see the log file for details: "
-                        + file_handler)
-            logger.debug("Error when requesting the API: " + raw_papers['exception'])
-            logger.debug("Request: " + request)
-        while next_papers != -1 and next_papers < offset_limit:
-            time.sleep(waiting_time)
-            req = api_url.replace('<query>', request).replace('<offset>', str(next_papers))
-            req = req.replace('<max_papers>', str(max_papers))
-            raw_papers = client.request(req, 'retrieve', {}, '')
-            retry = 0
-            while isinstance(raw_papers, dict) and retry < max_retries:
-                time.sleep(waiting_time)
-                retry = retry + 1
-                raw_papers = client.request(req, 'retrieve', {}, '')
-            if not isinstance(raw_papers, dict):
-                papers_request, next_papers = process_raw_papers(query, raw_papers)
-                if len(papers) == 0:
-                    papers = papers_request
-                else:
-                    papers = papers.append(papers_request)
-            else:
-                logger.info("Error when requesting the API. Skipping to next request. Please see the log file for "
-                            "details: " + file_handler)
-                logger.debug("Error when requesting the API: " + raw_papers['exception'])
-                logger.debug("Request: " + request)
-                next_papers = -1
     return papers
 
 
@@ -109,43 +99,65 @@ def create_request(parameters):
 def process_raw_papers(query, raw_papers):
     query_name = list(query.keys())[0]
     query_value = query[query_name]
-    try:
-        raw_json = json.loads(raw_papers)
-        next_papers = -1
-        if 'next' in raw_json:
-            next_papers = raw_json['next']
-        papers_request = pd.json_normalize(raw_json['data'])
-        papers_request.loc[:, 'database'] = database
-        papers_request.loc[:, 'query_name'] = query_name
-        papers_request.loc[:, 'query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
-        if 'abstract' not in papers_request:
-            papers_request = pd.DataFrame()
-    except Exception as ex:
-        logger.info("Error when requesting the API. Skipping to next request. Please see the log file for details: " +
-                    file_handler)
-        logger.debug("Error when processing raw papers: " + str(ex))
-        next_papers = -1
-        papers_request = pd.DataFrame()
-    return papers_request, next_papers
+    papers_request = pd.DataFrame()
+    next_paper = -1
+    if raw_papers.status_code == 200:
+        try:
+            raw_json = json.loads(raw_papers.text)
+            next_paper = raw_json['next']
+            papers_request = pd.json_normalize(raw_json['data'])
+            papers_request.loc[:, 'database'] = database
+            papers_request.loc[:, 'query_name'] = query_name
+            papers_request.loc[:, 'query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
+            if 'abstract' not in papers_request:
+                papers_request = pd.DataFrame()
+        except Exception as ex:
+            logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
+                        "details: " + file_handler)
+            logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
+    else:
+        logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
+                    + file_handler)
+        logger.debug("API response: " + raw_papers.text)
+        logger.debug("Request: " + raw_papers.request.url)
+    return papers_request, next_paper
 
 
 def filter_papers(papers, dates, start_date, end_date):
-    if dates is True and len(papers) > 0:
-        papers = papers[(papers['year'] >= start_date.year) & (papers['year'] >= end_date.year)]
+    logger.info("Filtering papers...")
+    try:
+        papers['title'].replace('', float("NaN"), inplace=True)
+        papers.dropna(subset=['title'], inplace=True)
+        papers['title'] = papers['title'].str.lower()
+        papers = papers.drop_duplicates('title')
+        papers['abstract'].replace('', float("NaN"), inplace=True)
+        papers.dropna(subset=['abstract'], inplace=True)
+        if dates:
+            papers = papers[(papers['year'] >= start_date.year) & (papers['year'] >= end_date.year)]
+    except Exception as ex:
+        logger.info("Error filtering papers. Skipping to next request. Please see the log file for details: "
+                    + file_handler)
+        logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
     return papers
 
 
 def clean_papers(papers):
-    if len(papers) > 0:
+    logger.info("Cleaning papers...")
+    try:
         papers = papers.drop(columns=['externalIds.MAG', 'externalIds.DBLP', 'externalIds.PubMedCentral',
                                       'externalIds.PubMed', 'externalIds.ArXiv', 'externalIds.CorpusId',
                                       'externalIds.ACL'], errors='ignore')
         papers.replace('', float("NaN"), inplace=True)
         papers.dropna(how='all', axis=1, inplace=True)
+    except Exception as ex:
+        logger.info("Error cleaning papers. Skipping to next request. Please see the log file for details: "
+                    + file_handler)
+        logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
     return papers
 
 
-def get_citations(folder_name, search_date, step):
+def get_citations(folder_name, search_date, step, start_date, end_date):
+    logger.info("Retrieving citation papers. It might take a while...")
     preprocessed_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
                              '_preprocessed_papers.csv'
     if not exists(preprocessed_file_name):
@@ -157,46 +169,58 @@ def get_citations(folder_name, search_date, step):
             if paper_id == '':
                 paper_id = row['url']
             if paper_id != '':
-                req = citations_url.replace('{paper_id}', str(paper_id))
-                req = req.replace('<offset>', '0').replace('<max_papers>', str(max_papers))
-                raw_citations = client.request(req, 'retrieve', {}, '')
-                papers_citation, nxt = process_raw_citations(raw_citations)
-                if len(papers_citation) != 0:
-                    papers_citation = papers_citation.rename(columns={"citingPaper.paperId" : "doi", "citingPaper.url" : "url",
-                                           "citingPaper.title" : "title", "citingPaper.abstract" : "abstract",
-                                           "citingPaper.venue" : "publisher", "citingPaper.year" : "publication_date"})
-                    papers_citation['database'] = database
-                    papers_citation['query_name'] = 'citation'
-                    papers_citation['query_value'] = 'citation'
-                    with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
-                              '_preprocessed_papers.csv', 'a+', newline='', encoding=fr) as f:
-                        papers_citation.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
-                while nxt != -1:
-                    time.sleep(5)
-                    req = citations_url.replace('{paper_id}', str(paper_id)).replace('<offset>', str(nxt))
-                    req = req.replace('<max_papers>', str(max_papers))
-                    raw_citations = client.request(req, 'retrieve', {})
-                    papers_citation, nxt = process_raw_citations(raw_citations)
-                    if len(papers_citation) != 0:
-                        papers_citation = papers_citation.rename(columns={"citingPaper.paperId": "doi", "citingPaper.url": "url",
-                                               "citingPaper.title": "title", "citingPaper.abstract": "abstract",
-                                               "citingPaper.venue": "publisher", "citingPaper.year": "publication_date"})
-                        papers_citation['database'] = database
-                        papers_citation['query_name'] = 'citation'
-                        papers_citation['query_value'] = 'citation'
-                        with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
-                                    '_preprocessed_papers.csv', 'a+', newline='', encoding=fr) as f:
-                            papers_citation.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
-                time.sleep(5)
+                papers_request = request_citations(paper_id)
+                if len(papers) == 0:
+                    papers = papers_request
+                else:
+                    papers.append(papers_request)
+        if len(papers) > 0:
+            papers = filter_papers(papers, False, start_date, end_date)
+        if len(papers) > 0:
+            papers = clean_papers(papers)
+        if len(papers) > 0:
+            util.save(preprocessed_file_name, papers, fr, 'a+')
+        logger.info("Retrieved papers after filters and cleaning: " + str(len(papers)))
     return preprocessed_file_name
 
 
+def request_citations(paper_id):
+    papers = pd.DataFrame()
+    next_paper = 0
+    while next_paper != -1 and next_paper < offset_limit:
+        time.sleep(waiting_time)
+        request = citations_url.replace('{paper_id}', str(paper_id))
+        request = request.replace('<offset>', str(next_paper)).replace('<max_papers>', str(max_papers))
+        raw_citations = client.request(request, 'get', {}, '')
+        papers_request, next_paper = process_raw_citations(raw_citations)
+        if len(papers) == 0:
+            papers = papers_request
+        else:
+            papers.append(papers_request)
+    return papers
+
+
 def process_raw_citations(raw_citations):
-    nxt = -1
-    papers = {}
-    if type(raw_citations) is not dict:
-        raw_json = json.loads(raw_citations)
-        if 'next' in raw_json:
-            nxt = raw_json['next']
-        papers = pd.json_normalize(raw_json['data'])
-    return papers, nxt
+    next_paper = -1
+    papers = pd.DataFrame
+    if raw_citations.status_code == 200:
+        try:
+            raw_json = json.loads(raw_citations.text)
+            next_paper = raw_json['next']
+            papers = pd.json_normalize(raw_json['data'])
+            papers = papers.rename(columns={"citingPaper.paperId": "doi", "citingPaper.url": "url",
+                                            "citingPaper.title": "title", "citingPaper.abstract": "abstract",
+                                            "citingPaper.venue": "publisher", "citingPaper.year": "publication_date"})
+            papers.loc[:, 'database'] = database
+            papers.loc[:, 'query_name'] = 'citation'
+            papers.loc[:, 'query_value'] = 'citation'
+        except Exception as ex:
+            logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
+                        "details: " + file_handler)
+            logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
+    else:
+        logger.info("Error requesting the API for citations. Skipping to next request. Please see the log file for "
+                    "details: " + file_handler)
+        logger.debug("API response: " + raw_citations.text)
+        logger.debug("Request: " + raw_citations.request.url)
+    return papers, next_paper
