@@ -3,6 +3,7 @@ import urllib
 from urllib.request import urlopen
 import xml.etree.ElementTree as ET
 import json
+import requests
 
 
 class XPLORE:
@@ -369,9 +370,10 @@ class XPLORE:
             data = {}
             try:
                 data = self.queryAPI(str1)
-                data = self.formatData(data)
             except urllib.error.HTTPError as ex:
-                data = {'exception': str(ex)}
+                return data
+            except Exception as ex:
+                return data
             return data
 
 
@@ -437,9 +439,17 @@ class XPLORE:
     # string url  Full URL to pass to API
     # return string: Results from API
     def queryAPI(self, url):
-
-        content = urlopen(url).read()
-        #print(content)
+        try:
+            headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+            content = requests.get(url, headers=headers)
+        except urllib.error.HTTPError as ex:
+            return content
+        except UnicodeEncodeError as ex:
+            return content
+        except urllib.error.URLError as ex:
+            return content
+        except Exception as ex:
+            return content
         return content
 
 

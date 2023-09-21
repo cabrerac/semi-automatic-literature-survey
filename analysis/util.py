@@ -61,11 +61,9 @@ def read_parameters(parameters_file_name):
     if 'databases' in parameters:
         databases = parameters['databases']
     else:
-        logger.info('Databases missing in parameters file. Using default values: arxiv, springer, ieeexplore, '
-                    'sciencedirect, core, semantic_scholar')
         logger.debug('Databases missing in parameters file. Using default values: arxiv, springer, ieeexplore, '
-                    'sciencedirect, core, semantic_scholar')
-        databases = ['arxiv', 'springer', 'ieeexplore', 'sciencedirect', 'core', 'semantic_scholar']
+                    'scopus, core, semantic_scholar')
+        databases = ['arxiv', 'springer', 'ieeexplore', 'scopus', 'core', 'semantic_scholar']
 
     dates = False
     if 'start_date' in parameters:
@@ -80,12 +78,12 @@ def read_parameters(parameters_file_name):
         end_date = datetime.today()
 
     if not dates:
-        logger.info('Search dates missing in parameters file. Searching without considering dates...')
+        logger.debug('Search dates missing in parameters file. Searching without considering dates...')
 
     if 'search_date' in parameters:
         search_date = parameters['search_date']
     else:
-        logger.info('Search date missing in parameters file. Using current date: '
+        logger.debug('Search date missing in parameters file. Using current date: '
                     + datetime.today().strftime('%Y-%m-%d'))
         search_date = datetime.today().strftime('%Y-%m-%d')
 
@@ -98,15 +96,17 @@ def read_parameters(parameters_file_name):
         end_date, search_date, folder_name
 
 
-def save(file_name, papers, fmt):
+def save(file_name, papers, fmt, option):
     os.makedirs(os.path.dirname(file_name), exist_ok=True)
-    with open(file_name, 'a', newline='', encoding=fmt) as f:
+    with open(file_name, option, newline='', encoding=fmt) as f:
         papers.to_csv(f, encoding=fmt, index=False, header=f.tell() == 0)
 
 
 def merge_papers(merge_step_1, merge_step_2, folder_name, search_date):
-    file1 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(merge_step_1) + '_manually_filtered_by_full_text_papers.csv'
-    file2 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(merge_step_2) + '_manually_filtered_by_full_text_papers.csv'
+    file1 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(merge_step_1) + \
+            '_manually_filtered_by_full_text_papers.csv'
+    file2 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(merge_step_2) + \
+            '_manually_filtered_by_full_text_papers.csv'
     result = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/11_final_list_papers.csv'
     if not exists(result):
         if exists(file1) and exists(file2):
@@ -127,7 +127,7 @@ def merge_papers(merge_step_1, merge_step_2, folder_name, search_date):
         elif exists(file1):
             df_result = pd.read_csv(file1)
             with open(result, 'a+', newline='', encoding=fr) as f:
-                 df_result.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+                df_result.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
             remove_repeated(result)
     return result
 

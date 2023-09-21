@@ -77,7 +77,7 @@ def main(parameters_file):
         # Snowballing
         step = step + 1
         logger.info(str(step) + '. Snowballing...')
-        file_name = retrieve.get_citations(folder_name, search_date, step)
+        file_name = retrieve.get_citations(folder_name, search_date, step, start_date, end_date)
         logger.info('Snowballing results can be found at: ' + file_name)
         next_file = str(step) + '_preprocessed_papers.csv'
 

@@ -14,42 +14,46 @@ class Generic:
         time.sleep(1)
         if method == 'post':
             try:
-                headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+                headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
                 if len(api_key) > 0:
                     headers['Authorization'] = 'Bearer ' + api_key
                 data = json.dumps(data)
                 request_result = requests.post(query, data=data, headers=headers)
             except urllib.error.HTTPError as ex:
-                request_result = {'exception': str(ex)}
+                return request_result
             except UnicodeEncodeError as ex:
-                request_result = {'exception': str(ex)}
+                return request_result
             except urllib.error.URLError as ex:
-                request_result = {'exception': str(ex)}
+                return request_result
             except Exception as ex:
-                request_result = {'exception': str(ex)}
+                return request_result
         if method == 'get':
             try:
-                request_result = urllib.request.urlopen(query).read().decode('utf-8', errors='ignore')
+                headers = {'Content-type': 'application/json', 'Accept': 'application/json',
+                           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+                                         '(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+                           }
+                request_result = requests.get(query, headers=headers)
             except urllib.error.HTTPError as ex:
-                request_result = {'exception': str(ex)}
+                return request_result
             except UnicodeEncodeError as ex:
-                request_result = {'exception': str(ex)}
+                return request_result
             except urllib.error.URLError as ex:
-                request_result = {'exception': str(ex)}
+                return request_result
             except Exception as ex:
-                request_result = {'exception': str(ex)}
+                return request_result
         if method == 'retrieve':
             try:
                 req = urllib.request.Request(query, headers={'User-Agent': 'Mozilla/5.0'})
                 request_result = urllib.request.urlopen(req).read()
             except urllib.error.HTTPError as ex:
-                request_result = {'exception': str(ex)}
+                return request_result
             except UnicodeEncodeError as ex:
-                request_result = {'exception': str(ex)}
+                return request_result
             except urllib.error.URLError as ex:
-                request_result = {'exception': str(ex)}
+                return request_result
             except Exception as ex:
-                request_result = {'exception': str(ex)}
+                return request_result
         return request_result
 
     def default_query(self, parameters):
@@ -107,7 +111,7 @@ class Generic:
             queries.append(q)
         return queries
 
-    def sciencedirect_query(self, parameters):
+    def elsevier_query(self, parameters):
         domains = []
         for domain in parameters['domains']:
             domains.append(domain)
@@ -169,7 +173,7 @@ class Generic:
         queries = []
         query = parameters['query']
         # Define API-specific transformations
-        if api == 'arxiv' or api == 'springer' or api == 'sciencedirect':
+        if api == 'arxiv' or api == 'springer' or api == 'scopus':
             # Replace single quotes with double quotes
             query = re.sub(r"'", '"', query)
             # Add field specifications and URL encoding for AND and OR operators

@@ -21,7 +21,7 @@ w_tokenizer = WhitespaceTokenizer()
 logger = logging.getLogger('logger')
 
 
-def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, since, to, search_date):
+def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, start_date, end_date, search_date):
     global logger
     logger = logging.getLogger('logger')
     for query in queries:
@@ -29,33 +29,33 @@ def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, 
 
         if 'arxiv' in databases:
             logger.info("# Requesting ArXiv for query: " + list(query.keys())[0] + "...")
-            arxiv.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
+            arxiv.get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'springer' in databases:
             # Springer searches over all the paper metadata. Synonyms are not needed in this case.
             logger.info("# Requesting Springer for query: " + list(query.keys())[0] + "...")
-            springer.get_papers(query, fields, types, dates, since, to, folder_name, search_date)
+            springer.get_papers(query, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'ieeexplore' in databases:
             logger.info("# Requesting IEEE Xplore for query: " + list(query.keys())[0] + "...")
-            ieeexplore.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
+            ieeexplore.get_papers(query, synonyms, fields, types, folder_name, search_date)
 
         # Scopus provides papers metadata then abstracts must be retrieved from the science direct database.
         # Scopus indexes different databases which are queried separately (e.g., ieeeXplore).
         # So the number of returned papers from scopus is always greater than the number of final abstracts retrieved
         # from science direct.
-        if 'sciencedirect' in databases:
+        if 'scopus' in databases:
             logger.info("# Requesting Scopus for query: " + list(query.keys())[0] + "...")
-            elsevier.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
+            elsevier.get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'core' in databases:
             logger.info("# Requesting CORE for query: " + list(query.keys())[0] + "...")
-            core.get_papers(query, synonyms, fields, types, dates, since, to, folder_name, search_date)
+            core.get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'semantic_scholar' in databases:
             # Semantic Scholar searches over its knowledge graph. Synonyms are not needed in this case.
             logger.info("# Requesting Semantic Scholar query: " + list(query.keys())[0] + "...")
-            semantic_scholar.get_papers(query, types, dates, since, to, folder_name, search_date)
+            semantic_scholar.get_papers(query, types, dates, start_date, end_date, folder_name, search_date)
     util.remove_elsevier_log()
 
 
@@ -125,9 +125,9 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
                             }
                         )
                         papers = papers.append(papers_arxiv)
-                    if database == 'sciencedirect':
+                    if database == 'scopus':
                         df = df.drop_duplicates('id')
-                        papers_sciencedirect = pd.DataFrame(
+                        papers_scopus = pd.DataFrame(
                             {
                                 'doi': df['id'], 'type': df['type'], 'query_name': df['query_name'],
                                 'query_value': df['query_value'], 'publication': df['publication'],
@@ -136,7 +136,7 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
                                 'abstract': df['abstract']
                             }
                         )
-                        papers = papers.append(papers_sciencedirect)
+                        papers = papers.append(papers_scopus)
                     if database == 'core':
                         df = df.drop_duplicates('id')
                         dates = df['datePublished']
