@@ -78,7 +78,7 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
                 file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' + \
                             query_name.lower().replace(' ', '_') + '_' + database + '.csv'
                 if exists(file_name):
-                    logger.info('Processing file: ' + file_name)
+                    logger.info(' # Processing file: ' + file_name)
                     df = pd.read_csv(file_name)
                     if database == 'ieeexplore':
                         df = df.drop_duplicates('doi')
@@ -185,10 +185,11 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
         papers['title'].replace('', np.nan, inplace=True)
         papers.dropna(subset=['title'], inplace=True)
         papers.dropna(subset=['doi'], inplace=True)
+        logger.info('Number of papers: ' + str(len(papers)))
         util.save(preprocessed_file_name, papers, fr, 'a+')
-        logger.info('Removing repeated papers...')
+        logger.info('# Removing repeated papers...')
         util.remove_repeated(preprocessed_file_name)
-        logger.info('Cleaning papers list...')
+        logger.info('# Cleaning papers list...')
         util.clean_papers(preprocessed_file_name)
     return preprocessed_file_name
 

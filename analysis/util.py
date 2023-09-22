@@ -137,9 +137,9 @@ def remove_repeated(file):
     df['title_lower'] = df['title_lower'].str.replace('\n', '')
     df['title_lower'] = df['title_lower'].str.replace(' ', '')
     df = df.drop_duplicates('title_lower')
-    df['abstract'].replace('', np.nan, inplace=True)
+    df.loc[:, 'abstract'] = df['abstract'].replace('', float("NaN"))
     df.dropna(subset=['abstract'], inplace=True)
-    df['title'].replace('', np.nan, inplace=True)
+    df.loc[:, 'title'] = df['title'].replace('', float("NaN"))
     df.dropna(subset=['title'], inplace=True)
     df['abstract_lower'] = df['abstract'].str.lower()
     df['abstract_lower'] = df['abstract_lower'].str.replace('-', ' ')
@@ -147,6 +147,7 @@ def remove_repeated(file):
     df['abstract_lower'] = df['abstract_lower'].str.replace(' ', '')
     df = df.drop_duplicates('abstract_lower')
     df = df.drop(['abstract_lower', 'title_lower'], axis=1)
+    logger.info('Number of papers: ' + str(len(df)))
     save(file, df, fr, 'w')
 
 
@@ -179,12 +180,13 @@ def remove_repeated_ieee(file):
     df['abstract_lower'] = df['abstract_lower'].str.replace(' ', '')
     df = df.drop_duplicates('abstract_lower')
     df = df.drop(['abstract_lower', 'title_lower'], axis=1)
+    logger.info('Number of papers: ' + str(len(df)))
     save(file, df, fr, 'w')
     return len(df.index)
 
 
 def clean_papers(file):
-    remove_repeated(file)
+    logger.info('Removing surveys, reviews, reports, theses, and papers not written in English...')
     df = pd.read_csv(file)
     values_to_remove = ['survey', 'review', 'progress']
     pattern = '|'.join(values_to_remove)
@@ -192,13 +194,11 @@ def clean_papers(file):
     pattern = '(?<!\w)thesis(?!\w)'
     df = df.loc[~df['abstract'].str.contains(pattern, case=False)]
     not_included = 0
-    df['language'] = 'english'
+    df.loc[:, 'language'] = 'english'
     total_papers = len(df.index)
     current_paper = 0
     for index, row in df.iterrows():
         current_paper = current_paper + 1
-        print('Paper ' + str(current_paper) + '/' + str(total_papers) + ' ::: ' +
-              str(int((current_paper / total_papers) * 100)) + '% ...', end="\r")
         doc = nlp(row['abstract'])
         detect_language = doc._.language
         if detect_language['language'] != 'en':
@@ -209,8 +209,10 @@ def clean_papers(file):
                 row['language'] = 'not english'
                 not_included = not_included + 1
         df.loc[index] = row
+    print('', end="\r")
     df = df[df['language'] != 'not english']
     df = df.drop(columns=['language'])
+    logger.info('Number of papers: ' + str(len(df)))
     save(file, df, fr, 'w')
 
 

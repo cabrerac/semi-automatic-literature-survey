@@ -43,7 +43,7 @@ def main(parameters_file):
         step = step + 1
         logger.info(str(step) + '. Preprocessing papers...')
         file_name = retrieve.preprocess(queries, databases, folder_name, search_date, start_date, end_date, step)
-        logger.info('\nPreprocessing results can be found at: ' + file_name)
+        logger.info('# Preprocessing results can be found at: ' + file_name)
         next_file = str(step) + '_preprocessed_papers.csv'
 
         # Syntactic filter by abstract
@@ -51,7 +51,7 @@ def main(parameters_file):
             step = step + 1
             logger.info(str(step) + '. Syntactic filter by abstract...')
             file_name = retrieve.filter_papers(syntactic_filters, synonyms, folder_name, search_date, step)
-            logger.info('Syntactic filtering results can be found at: ' + file_name)
+            logger.info('# Syntactic filtering results can be found at: ' + file_name)
             next_file = str(step) + '_syntactic_filtered_papers.csv'
 
         # Semantic filter by abstract
