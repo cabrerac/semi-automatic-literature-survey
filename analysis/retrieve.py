@@ -170,26 +170,15 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
                             }
                         )
                         papers = papers.append(papers_semantic)
-        papers['title'] = papers['title'].str.lower()
-        papers = papers.drop_duplicates('title')
-        papers['doi'] = papers['doi'].str.lower()
-        papers['doi'].replace(r'\s+', np.nan, regex=True)
-        nan_doi = papers.loc[papers['doi'] == np.nan]
-        papers = papers.drop_duplicates('doi')
-        papers = papers.append(nan_doi)
         papers['type'] = 'preprocessed'
         papers['status'] = 'unknown'
         papers['id'] = list(range(1, len(papers) + 1))
-        papers['abstract'].replace('', np.nan, inplace=True)
-        papers.dropna(subset=['abstract'], inplace=True)
-        papers['title'].replace('', np.nan, inplace=True)
-        papers.dropna(subset=['title'], inplace=True)
-        papers.dropna(subset=['doi'], inplace=True)
         logger.info('Number of papers: ' + str(len(papers)))
         util.save(preprocessed_file_name, papers, fr, 'a+')
-        logger.info('# Removing repeated papers...')
+        logger.info('# Removing repeated papers by doi, title, and abstract...')
         util.remove_repeated(preprocessed_file_name)
-        logger.info('# Cleaning papers list...')
+        logger.info('# Removing papers not written in English, without title or abstract, surveys, reviews, reports, '
+                    'and theses...')
         util.clean_papers(preprocessed_file_name)
     return preprocessed_file_name
 

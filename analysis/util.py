@@ -132,6 +132,11 @@ def merge_papers(merge_step_1, merge_step_2, folder_name, search_date):
 
 def remove_repeated(file):
     df = pd.read_csv(file)
+    df['doi'] = df['doi'].str.lower()
+    df['doi'].replace(r'\s+', np.nan, regex=True)
+    nan_doi = df.loc[df['doi'] == np.nan]
+    df = df.drop_duplicates('doi')
+    df = df.append(nan_doi)
     df['title_lower'] = df['title'].str.lower()
     df['title_lower'] = df['title_lower'].str.replace('-', ' ')
     df['title_lower'] = df['title_lower'].str.replace('\n', '')
@@ -186,8 +191,11 @@ def remove_repeated_ieee(file):
 
 
 def clean_papers(file):
-    logger.info('Removing surveys, reviews, reports, theses, and papers not written in English...')
     df = pd.read_csv(file)
+    df['abstract'].replace('', np.nan, inplace=True)
+    df.dropna(subset=['abstract'], inplace=True)
+    df['title'].replace('', np.nan, inplace=True)
+    df.dropna(subset=['title'], inplace=True)
     values_to_remove = ['survey', 'review', 'progress']
     pattern = '|'.join(values_to_remove)
     df = df.loc[~df['title'].str.contains(pattern, case=False)]
