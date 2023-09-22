@@ -43,7 +43,7 @@ def get_papers(query, types, dates, start_date, end_date, folder_name, search_da
         if len(papers) > 0:
             papers = clean_papers(papers)
         if len(papers) > 0:
-            util.save(file_name, papers, fr)
+            util.save(file_name, papers, fr, 'a')
         logger.info("Retrieved papers after filters and cleaning: " + str(len(papers)))
     else:
         logger.info("File already exists.")

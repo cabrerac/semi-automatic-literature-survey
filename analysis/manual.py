@@ -1,6 +1,7 @@
 import pandas as pd
 from rich import print
 from os.path import exists
+from analysis import util
 
 fr = 'utf-8'
 
@@ -41,8 +42,7 @@ def manual_filter_by_abstract(folder_name, next_file, search_date, step):
                                   'title': to_check_paper['title'], 'abstract': to_check_paper['abstract']
                                   }
                     paper_df = pd.DataFrame.from_dict(paper_dict)
-                    with open(file_name, 'a+', newline='', encoding=fr) as f:
-                        paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+                    util.save(file_name, paper_df, fr, 'a+')
                 update_semantic_filtered_papers(to_check_papers, papers_file, paper_id, included)
 
 
@@ -86,8 +86,7 @@ def update_semantic_filtered_papers(to_check_papers, papers_file, paper_id, incl
         if row['id'] == paper_id:
             row['status'] = included
             to_check_papers.loc[index] = row
-    with open(papers_file, 'w', newline='', encoding=fr) as f:
-        to_check_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+    util.save(papers_file, to_check_papers, fr, 'w')
 
 
 def manual_filter_by_full_text(folder_name, search_date, step):
@@ -119,8 +118,7 @@ def manual_filter_by_full_text(folder_name, search_date, step):
                                   'url': to_check_paper['url'], 'publication_date': to_check_paper['publication_date'],
                                   'title': title, 'abstract': to_check_paper['abstract']}
                     paper_df = pd.DataFrame.from_dict(paper_dict)
-                    with open(file_name, 'a+', newline='', encoding=fr) as f:
-                        paper_df.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+                    util.save(file_name, paper_df, fr, 'a+')
                 update_filtered_papers_by_abstract(filtered_by_abstract, papers_file, paper_id, t)
 
 
@@ -157,5 +155,4 @@ def update_filtered_papers_by_abstract(filtered_papers, papers_file, paper_id, i
         if row['id'] == paper_id:
             row['status'] = included
             filtered_papers.loc[index] = row
-    with open(papers_file, 'w', newline='', encoding=fr) as f:
-        filtered_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+    util.save(papers_file, filtered_papers, fr, 'w')

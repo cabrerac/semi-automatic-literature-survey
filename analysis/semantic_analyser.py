@@ -41,9 +41,7 @@ def lbl2vec(keywords, folder_name, search_date, step):
             papers['id'] = papers.index.astype(str)
             papers['type'] = 'to_check'
             papers['status'] = 'unknown'
-            with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
-                      '_semantic_filtered_papers.csv', 'a+', newline='', encoding=fr) as f:
-                papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+            util.save(semantic_filtered_file_name, papers, fr, 'a+')
         else:
             min_num_docs = 500
             min_count = 50
@@ -71,9 +69,7 @@ def lbl2vec(keywords, folder_name, search_date, step):
             papers['id'] = papers.index.astype(str)
             papers['type'] = 'to_check'
             papers['status'] = 'unknown'
-            with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
-                      '_semantic_filtered_papers.csv', 'a+', newline='', encoding=fr) as f:
-                papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+            util.save(semantic_filtered_file_name, papers, fr, 'a+')
         util.clean_papers(semantic_filtered_file_name)
     return semantic_filtered_file_name
 

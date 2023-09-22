@@ -188,8 +188,7 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
         papers['title'].replace('', np.nan, inplace=True)
         papers.dropna(subset=['title'], inplace=True)
         papers.dropna(subset=['doi'], inplace=True)
-        with open(preprocessed_file_name, 'a+', newline='', encoding=fr) as f:
-            papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+        util.save(preprocessed_file_name, papers, fr, 'a+')
         logger.info('Removing repeated papers...')
         util.remove_repeated(preprocessed_file_name)
         logger.info('Cleaning papers list...')
@@ -314,9 +313,7 @@ def filter_papers(keywords, synonyms, folder_name, search_date, step):
         if len(filtered_papers) > 0:
             filtered_papers['type'] = 'filtered'
             filtered_papers['status'] = 'unknown'
-            with open('./papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) +
-                      '_syntactic_filtered_papers.csv', 'a+', newline='', encoding=fr) as f:
-                filtered_papers.to_csv(f, encoding=fr, index=False, header=f.tell() == 0)
+            util.save(syntactic_filtered_file_name, filtered_papers, fr, 'a+')
     return syntactic_filtered_file_name
 
 
