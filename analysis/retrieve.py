@@ -25,8 +25,6 @@ def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, 
     global logger
     logger = logging.getLogger('logger')
     for query in queries:
-        key = list(query.keys())[0]
-
         if 'arxiv' in databases:
             logger.info("# Requesting ArXiv for query: " + list(query.keys())[0] + "...")
             arxiv.get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
@@ -81,7 +79,6 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
                             query_name.lower().replace(' ', '_') + '_' + database + '.csv'
                 if exists(file_name):
                     logger.info('Processing file: ' + file_name)
-                    logger.debug('Processing file: ' + file_name)
                     df = pd.read_csv(file_name)
                     if database == 'ieeexplore':
                         df = df.drop_duplicates('doi')
@@ -139,7 +136,7 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
                         papers = papers.append(papers_scopus)
                     if database == 'core':
                         df = df.drop_duplicates('id')
-                        dates = df['datePublished']
+                        dates = df['publishedDate']
                         df['publication_date'] = parse_dates(dates)
                         df['id'] = get_ids(df, database)
                         papers_core = pd.DataFrame(

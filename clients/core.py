@@ -139,11 +139,11 @@ def process_raw_papers(query, raw_papers):
 def filter_papers(papers):
     logger.info("Filtering papers...")
     try:
-        papers['title'].replace('', float("NaN"), inplace=True)
+        papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
         papers.dropna(subset=['title'], inplace=True)
-        papers['title'] = papers['title'].str.lower()
+        papers.loc[:, 'title'] = papers['title'].str.lower()
         papers = papers.drop_duplicates('title')
-        papers['abstract'].replace('', float("NaN"), inplace=True)
+        papers.loc[:, 'abstract'] = papers['abstract'].replace('', float("NaN"))
         papers.dropna(subset=['abstract'], inplace=True)
     except Exception as ex:
         logger.info("Error filtering papers. Skipping to next request. Please see the log file for details: "

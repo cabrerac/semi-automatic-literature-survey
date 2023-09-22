@@ -468,8 +468,11 @@ def remove_elsevier_log():
     try:
         files_to_remove = [f for f in os.listdir('./logs/') if f.startswith('elsapy-')]
         for file_name in files_to_remove:
-            file_path = os.path.join('./logs/', file_name)
-            os.remove(file_path)
+            try:
+                file_path = os.path.join('./logs/', file_name)
+                os.remove(file_path)
+            except Exception as ex:
+                logger.debug("Exception removing elsevier log files: " + str(ex))
         shutil.rmtree('./data/')
     except Exception as ex:
         logger.debug("Exception removing elsevier log files: " + str(ex))

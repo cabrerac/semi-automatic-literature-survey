@@ -104,7 +104,8 @@ def process_raw_papers(query, raw_papers):
     if raw_papers.status_code == 200:
         try:
             raw_json = json.loads(raw_papers.text)
-            next_paper = raw_json['next']
+            if 'next' in raw_json:
+                next_paper = raw_json['next']
             papers_request = pd.json_normalize(raw_json['data'])
             papers_request.loc[:, 'database'] = database
             papers_request.loc[:, 'query_name'] = query_name
@@ -126,11 +127,11 @@ def process_raw_papers(query, raw_papers):
 def filter_papers(papers, dates, start_date, end_date):
     logger.info("Filtering papers...")
     try:
-        papers['title'].replace('', float("NaN"), inplace=True)
+        papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
         papers.dropna(subset=['title'], inplace=True)
-        papers['title'] = papers['title'].str.lower()
+        papers.loc[:, 'title'] = papers['title'].str.lower()
         papers = papers.drop_duplicates('title')
-        papers['abstract'].replace('', float("NaN"), inplace=True)
+        papers.loc[:, 'abstract'] = papers['abstract'].replace('', float("NaN"))
         papers.dropna(subset=['abstract'], inplace=True)
         if dates:
             papers = papers[(papers['year'] >= start_date.year) & (papers['year'] >= end_date.year)]

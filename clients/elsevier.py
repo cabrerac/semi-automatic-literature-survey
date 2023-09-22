@@ -159,14 +159,14 @@ def parse_abstract(result, option):
 def filter_papers(papers, dates, start_date, end_date):
     logger.info("Filtering papers...")
     try:
-        papers['title'].replace('', float("NaN"), inplace=True)
+        papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
         papers.dropna(subset=['title'], inplace=True)
-        papers['title'] = papers['title'].str.lower()
+        papers.loc[:, 'title'] = papers['title'].str.lower()
         papers = papers.drop_duplicates('title')
-        papers['abstract'].replace('', float("NaN"), inplace=True)
+        papers.loc[:, 'abstract'] = papers['abstract'].replace('', float("NaN"))
         papers.dropna(subset=['abstract'], inplace=True)
         if dates is True:
-            papers['publication_date'] = pd.to_datetime(papers['publication_date']).dt.date
+            papers.loc[:, 'publication_date'] = pd.to_datetime(papers['publication_date']).dt.date
             papers = papers[(papers['publication_date'] >= start_date) & (papers['publication_date'] <= end_date)]
     except Exception as ex:
         logger.info("Error filtering papers. Skipping to next request. Please see the log file for details: "

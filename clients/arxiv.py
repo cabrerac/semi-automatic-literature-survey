@@ -139,11 +139,11 @@ def process_raw_papers(query, raw_papers):
 def filter_papers(papers, dates, start_date, end_date):
     logger.info("Filtering papers...")
     try:
-        papers['title'].replace('', float("NaN"), inplace=True)
+        papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
         papers.dropna(subset=['title'], inplace=True)
-        papers['title'] = papers['title'].str.lower()
+        papers.loc[:, 'title'] = papers['title'].str.lower()
         papers = papers.drop_duplicates('title')
-        papers['summary'].replace('', float("NaN"), inplace=True)
+        papers.loc[:, 'summary'] = papers['summary'].replace('', float("NaN"))
         papers.dropna(subset=['summary'], inplace=True)
         if dates is True:
             papers['published'] = pd.to_datetime(papers['published']).dt.date
