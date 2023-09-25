@@ -86,7 +86,7 @@ python -c "import nltk; nltk.download('omw-1.4')"
 }
 ```
 
-8. Run the main passing the search parameters file. For example:
+7. Run the main passing the search parameters file. For example:
 
 ```
 python main.py parameters_ar.yaml
