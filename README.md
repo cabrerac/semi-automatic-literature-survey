@@ -25,7 +25,7 @@ The final list of papers is composed by the cited papers that passed the first r
 
 Some of the APIs provided by the repositories require an access key to be consumed. You should request a key to each repository you want to include in your search. Each respository has its own steps to apply for a key as follows:
 
-- [IEEE Xplore]([https://developer.ieee.org/](https://developer.ieee.org/getting_started))
+- [IEEE Xplore](https://developer.ieee.org/getting_started)
 - [Springer Nature](https://dev.springernature.com/docs)
 - [Scopus](https://dev.elsevier.com/)
 - [CORE](https://core.ac.uk/services/api)
@@ -75,7 +75,18 @@ python -c "import nltk; nltk.download('wordnet')"
 python -c "import nltk; nltk.download('omw-1.4')"
 ```
 
-6. Run the main passing the search parameters file. For example:
+6. Create a file `./config.json` that will store the API access keys for the repositories you want to use. The file should have the following format:
+
+```
+ {
+  "api_access_core": 'CORE_API_ACCESS_KEY',
+  "api_access_ieee": 'IEEE_API_ACCESS_KEY',
+  "api_access_springer": 'SPRINGER_API_ACCESS_KEY',
+  "api_access_elsevier": 'ELSEVIER_API_ACCESS_KEY'
+}
+```
+
+8. Run the main passing the search parameters file. For example:
 
 ```
 python main.py parameters_ar.yaml
