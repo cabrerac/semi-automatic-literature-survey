@@ -1,15 +1,15 @@
 # SaLS: Semi-automatic Literature Survey
 
-This project implements SaLS: a semi-automatic program to survey research papers based on the systematic methodology proposed by Kitchenham et al.[1, 2]. The goal of this project is to semi-automate the research papers survey process while providing a framework to enable surveys reproducibility and evolution. 
+This project implements SaLS: a semi-automatic tool to survey research papers based on the systematic methodology proposed by Kitchenham et al.[1, 2]. The goal of this project is to semi-automate the research papers survey process while providing a framework to enable surveys reproducibility and evolution. 
 
 SaLS automatically retrives papers metadata based on queries that users provide according. These queries are used to consume the search APIs exposed by the most popular research papers repositories in different domains. Currently, SaLS retrieves papers information from the following repositories:
 
-- [IEEE Xplore](https://developer.ieee.org/)
-- [Springer Nature](https://dev.springernature.com/)
-- [Science Direct](https://www.elsevier.com/solutions/sciencedirect/librarian-resource-center/api)
-- [Semantic Scholar](https://www.semanticscholar.org/product/api)
-- [CORE](https://core.ac.uk/services/api)
-- [arXiv](https://arxiv.org/help/api/)
+- [IEEE Xplore](https://ieeexplore.ieee.org/Xplore/home.jsp)
+- [Springer Nature](https://www.springernature.com/gp)
+- [Scopus](https://www.elsevier.com/en-gb/solutions/scopus)
+- [Semantic Scholar](https://www.semanticscholar.org)
+- [CORE](https://core.ac.uk)
+- [arXiv](https://arxiv.org)
 
 The retrieved metadata includes paper identifier (e.g., doi), publisher, publication date, title, url, and abstract.
 
@@ -20,6 +20,17 @@ Once automatic filters are applied, the tool prompts the title and abstract of t
 Then, the tool applies the snowballing step by retriving the metadata of the works that cited the selected papers in the last step (i.e., papers filtered by skimming the full text), and applies the automatic and semi-automatic filters on the citing papers. 
 
 The final list of papers is composed by the cited papers that passed the first round of filters, and the citing papers that passed the second round of filters (i.e., snowballing).
+
+# Requirements
+
+Some of the APIs provided by the repositories require an access key to be consumed. You should request a key to each repository you want to include in your search. Each respository has its own steps to apply for a key as follows:
+
+- [IEEE Xplore]([https://developer.ieee.org/](https://developer.ieee.org/getting_started))
+- [Springer Nature](https://dev.springernature.com/docs)
+- [Scopus](https://dev.elsevier.com/)
+- [CORE](https://core.ac.uk/services/api)
+
+Alternatively, you can use the tool for requesting papers from arXiv and Semantic Scholar which are open and do not need an access key.
 
 # How to run it?
 
