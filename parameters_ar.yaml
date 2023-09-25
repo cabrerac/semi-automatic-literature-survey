@@ -10,7 +10,7 @@ syntactic_filters:
   - orchestration
   - placement
   - edge
-#Synonyms of the keywords
+#Synonyms of the keywords to expand the queries.
 augmented reality:
   - ar
   - virtual reality
@@ -42,9 +42,9 @@ databases:
   #- ieeexplore
   #- sciencedirect
   #- core
-# Search time interval YYYY-mm-dd. If you do not want to include search dates comment since and to parameters.
-# since: 2010-01-01
-# to: 2022-08-01
+# Search time interval YYYY-mm-dd. If you do not want to include search dates comment start_date and end_date parameters.
+start_date: 2010-01-01
+end_date: 2022-08-01
 # Date of the search and folder name where the output will be stored
 search_date: 2022-08-04
 folder_name: ar_search
