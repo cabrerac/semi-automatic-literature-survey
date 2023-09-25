@@ -1,5 +1,4 @@
 import time
-import config as config
 import pandas as pd
 import json
 from .apis.generic import Generic
@@ -9,7 +8,11 @@ import logging
 
 
 api_url = 'http://api.springernature.com/metadata/json?q=language:en<dates>'
-api_access = config.api_access_springer
+api_access = ''
+if exists('./config.json'):
+    with open("./config.json", "r") as file:
+        config = json.load(file)
+    api_access = config['api_access_springer']
 start = 0
 max_papers = 50
 client_fields = {'title': 'title'}
@@ -53,7 +56,7 @@ def request_papers(query, parameters, dates, start_date, end_date):
     logger.info("Retrieving papers. It might take a while...")
     papers = pd.DataFrame()
     request = create_request(parameters, dates, start_date, end_date)
-    raw_papers = client.request(request, 'get', {}, '')
+    raw_papers = client.request(request, 'get', {}, {})
     expected_papers = get_expected_papers(raw_papers)
     times = int(expected_papers / max_papers) - 1
     mod = int(expected_papers) % max_papers
@@ -64,13 +67,13 @@ def request_papers(query, parameters, dates, start_date, end_date):
         global start
         start = t * max_papers
         request = create_request(parameters, dates, start_date, end_date)
-        raw_papers = client.request(request, 'get', {}, '')
+        raw_papers = client.request(request, 'get', {}, {})
         # if there is an exception from the API, retry request
         retry = 0
         while raw_papers.status_code != 200 and retry < max_retries:
             time.sleep(waiting_time)
             retry = retry + 1
-            raw_papers = client.request(request, 'get', {}, '')
+            raw_papers = client.request(request, 'get', {}, {})
         papers_request = process_raw_papers(query, raw_papers)
         if len(papers) == 0:
             papers = papers_request

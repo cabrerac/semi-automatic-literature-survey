@@ -1,5 +1,4 @@
 import time
-import config as config
 from .apis.xploreapi import XPLORE
 from .apis.generic import Generic
 import json
@@ -8,7 +7,11 @@ from os.path import exists
 from analysis import util
 import logging
 
-api_access = config.api_access_ieee
+api_access = ''
+if exists('./config.json'):
+    with open("./config.json", "r") as file:
+        config = json.load(file)
+    api_access = config['api_access_ieee']
 start = 0
 max_papers = 200
 client_fields = {'title': 'article_title', 'abstract': 'abstract'}

@@ -50,7 +50,7 @@ def request_papers(query, parameters):
     logger.info("Retrieving papers. It might take a while...")
     papers = pd.DataFrame()
     request = create_request(parameters)
-    raw_papers = client.request(request, 'get', {}, '')
+    raw_papers = client.request(request, 'get', {}, {})
     expected_papers = get_expected_papers(raw_papers)
     times = int(expected_papers / max_papers) - 1
     mod = int(expected_papers) % max_papers
@@ -61,13 +61,13 @@ def request_papers(query, parameters):
         global start
         start = t * max_papers
         request = create_request(parameters)
-        raw_papers = client.request(request, 'get', {}, '')
+        raw_papers = client.request(request, 'get', {}, {})
         # if there is an exception from the API, retry request
         retry = 0
         while raw_papers.status_code != 200 and retry < max_retries:
             time.sleep(waiting_time)
             retry = retry + 1
-            raw_papers = client.request(request, 'get', {}, '')
+            raw_papers = client.request(request, 'get', {}, {})
         papers_request = process_raw_papers(query, raw_papers)
         # sometimes the arxiv API does not respond with all the papers, so we request again
         expected_per_request = expected_papers
@@ -77,7 +77,7 @@ def request_papers(query, parameters):
             expected_per_request = mod
         while len(papers_request) < expected_per_request:
             time.sleep(waiting_time)
-            raw_papers = client.request(request, 'get', {}, '')
+            raw_papers = client.request(request, 'get', {}, {})
             papers_request = process_raw_papers(query, raw_papers)
         if len(papers) == 0:
             papers = papers_request

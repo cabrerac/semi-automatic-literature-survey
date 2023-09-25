@@ -1,5 +1,4 @@
 import time
-import config as config
 import pandas as pd
 import json
 from .apis.generic import Generic
@@ -8,8 +7,12 @@ from analysis import util
 import logging
 
 
-api_access = config.api_access_core
 api_url = 'https://api.core.ac.uk/v3/search/works'
+api_access = ''
+if exists('./config.json'):
+    with open("./config.json", "r") as file:
+        config = json.load(file)
+    api_access = config['api_access_core']
 start = 0
 max_papers = 1000
 client_fields = {'title': 'title', 'abstract': 'abstract'}
@@ -53,25 +56,28 @@ def request_papers(query, parameters, dates, start_date, end_date):
     logger.info("Retrieving papers. It might take a while...")
     papers = pd.DataFrame()
     request = create_request(parameters, dates, start_date, end_date)
-    raw_papers = client.request(api_url, 'post', request, api_access)
+    headers = {'Authorization': 'Bearer ' + api_access}
+    raw_papers = client.request(api_url, 'post', request, headers)
     expected_papers = get_expected_papers(raw_papers)
-    times = int(expected_papers / max_papers) - 1
-    mod = int(expected_papers) % max_papers
-    if mod > 0:
-        times = times + 1
-    for t in range(0, times + 1):
+    past_papers = -1
+    while len(papers) < expected_papers:
+        if past_papers == len(papers):
+            break
         time.sleep(waiting_time)
         global start
-        start = t * max_papers
+        start = len(papers)
         request = create_request(parameters, dates, start_date, end_date)
-        raw_papers = client.request(api_url, 'post', request, api_access)
+        headers = {'Authorization': 'Bearer ' + api_access}
+        raw_papers = client.request(api_url, 'post', request, headers)
         # if there is an exception from the API, retry request
         retry = 0
         while raw_papers.status_code != 200 and retry < max_retries:
             time.sleep(waiting_time)
             retry = retry + 1
-            raw_papers = client.request(api_url, 'post', request, api_access)
+            headers = {'Authorization': 'Bearer ' + api_access}
+            raw_papers = client.request(api_url, 'post', request, headers)
         papers_request = process_raw_papers(query, raw_papers)
+        past_papers = len(papers)
         if len(papers) == 0:
             papers = papers_request
         else:
@@ -87,7 +93,6 @@ def create_request(parameters, dates, start_date, end_date):
     if dates:
         query = '(yearPublished>=' + str(start_year) + ' AND yearPublished<=' + str(end_year) + ') AND ' + query
     req['q'] = query
-    req['scroll'] = "true"
     req['limit'] = max_papers
     req['offset'] = start
     return req
@@ -140,11 +145,10 @@ def filter_papers(papers):
     logger.info("Filtering papers...")
     try:
         papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
-        papers.dropna(subset=['title'], inplace=True)
+        papers = papers.dropna(subset=['title'])
         papers.loc[:, 'title'] = papers['title'].str.lower()
         papers = papers.drop_duplicates('title')
-        papers.loc[:, 'abstract'] = papers['abstract'].replace('', float("NaN"))
-        papers.dropna(subset=['abstract'], inplace=True)
+        papers = papers.dropna(subset=['abstract'])
     except Exception as ex:
         logger.info("Error filtering papers. Skipping to next request. Please see the log file for details: "
                     + file_handler)

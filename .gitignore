@@ -137,5 +137,5 @@ logs/
 data/
 .vscode/
 
-# API Access
-config.py
+# API Keys File
+config.json

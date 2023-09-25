@@ -9,14 +9,13 @@ import re
 
 
 class Generic:
-    def request(self, query, method, data, api_key):
+    def request(self, query, method, data, headers):
         request_result = None
         time.sleep(1)
+        headers['Content-type'] = 'application/json'
+        headers['Accept'] = 'application/json'
         if method == 'post':
             try:
-                headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
-                if len(api_key) > 0:
-                    headers['Authorization'] = 'Bearer ' + api_key
                 data = json.dumps(data)
                 request_result = requests.post(query, data=data, headers=headers)
             except urllib.error.HTTPError as ex:
@@ -29,10 +28,6 @@ class Generic:
                 return request_result
         if method == 'get':
             try:
-                headers = {'Content-type': 'application/json', 'Accept': 'application/json',
-                           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                                         '(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
-                           }
                 request_result = requests.get(query, headers=headers)
             except urllib.error.HTTPError as ex:
                 return request_result
