@@ -77,7 +77,7 @@ def main(parameters_file):
         # Snowballing
         step = step + 1
         logger.info(str(step) + '. Snowballing...')
-        file_name = retrieve.get_citations(folder_name, search_date, step, start_date, end_date)
+        file_name = retrieve.get_citations(folder_name, search_date, step, dates, start_date, end_date)
         logger.info('Snowballing results can be found at: ' + file_name)
         next_file = str(step) + '_preprocessed_papers.csv'
 
@@ -111,7 +111,7 @@ def main(parameters_file):
         # Merge papers
         step = step + 1
         logger.info(str(step) + '. Merging papers...')
-        file_name = util.merge_papers(merge_step_1, merge_step_2, folder_name, search_date)
+        file_name = util.merge_papers(step, merge_step_1, merge_step_2, folder_name, search_date)
         logger.info('Merged papers can be found at: ' + file_name)
     else:
         logger.info('Queries are missing in parameters file...')

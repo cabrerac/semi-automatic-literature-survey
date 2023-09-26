@@ -102,12 +102,13 @@ def save(file_name, papers, fmt, option):
         papers.to_csv(f, encoding=fmt, index=False, header=f.tell() == 0)
 
 
-def merge_papers(merge_step_1, merge_step_2, folder_name, search_date):
+def merge_papers(step, merge_step_1, merge_step_2, folder_name, search_date):
     file1 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(merge_step_1) + \
             '_manually_filtered_by_full_text_papers.csv'
     file2 = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(merge_step_2) + \
             '_manually_filtered_by_full_text_papers.csv'
-    result = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/11_final_list_papers.csv'
+    result = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
+             '_final_list_papers.csv'
     if not exists(result):
         if exists(file1) and exists(file2):
             df1 = pd.read_csv(file1)

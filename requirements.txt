@@ -3,7 +3,6 @@ pandas==1.4.3
 spacy-langdetect==0.1.2
 pydantic==1.7.4
 spacy==3.6
-elsapy==0.5.0
 gensim==4.2.0
 lbl2vec==1.0.1
 nltk==3.7

@@ -54,18 +54,17 @@ def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, 
             # Semantic Scholar searches over its knowledge graph. Synonyms are not needed in this case.
             logger.info("# Requesting Semantic Scholar query: " + list(query.keys())[0] + "...")
             semantic_scholar.get_papers(query, types, dates, start_date, end_date, folder_name, search_date)
-    util.remove_elsevier_log()
 
 
-def get_citations(folder_name, search_date, step):
+def get_citations(folder_name, search_date, step, dates, start_date, end_date):
     global logger
     logger = logging.getLogger('logger')
     logger.info("Requesting Semantic Scholar for papers citations...")
-    file_name = semantic_scholar.get_citations(folder_name, search_date, step)
+    file_name = semantic_scholar.get_citations(folder_name, search_date, step, dates, start_date, end_date)
     return file_name
 
 
-def preprocess(queries, databases, folder_name, search_date, since, to, step):
+def preprocess(queries, databases, folder_name, search_date, start_date, end_date, step):
     global logger
     logger = logging.getLogger('logger')
     preprocessed_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
@@ -143,7 +142,7 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
                             {
                                 'doi': df['id'], 'type': df['database'], 'query_name': df['query_name'],
                                 'query_value': df['query_value'], 'publication': df['journals'],
-                                'publisher': df['publisher'], 'publication_date': df['publishedDate'],
+                                'publisher': df['database'], 'publication_date': df['publishedDate'],
                                 'database': df['database'], 'title': df['title'], 'url': df['downloadUrl'],
                                 'abstract': df['abstract']
                             }
@@ -173,6 +172,9 @@ def preprocess(queries, databases, folder_name, search_date, since, to, step):
         papers['type'] = 'preprocessed'
         papers['status'] = 'unknown'
         papers['id'] = list(range(1, len(papers) + 1))
+        if dates:
+            logger.info('# Removing papers according to dates filter...')
+            filter_papers_by_dates(papers, start_date, end_date)
         logger.info('Number of papers: ' + str(len(papers)))
         util.save(preprocessed_file_name, papers, fr, 'a+')
         logger.info('# Removing repeated papers by doi, title, and abstract...')
@@ -331,3 +333,9 @@ def tokenize(doc):
 
 def lemmatize_text(text):
     return ' '.join([lemma.lemmatize(word) for word in w_tokenizer.tokenize(text)])
+
+
+def filter_papers_by_dates(papers, start_date, end_date):
+    papers['publication_date'] = pd.to_datetime(papers['publication_date']).dt.date
+    papers = papers[(papers['publication_date'] >= start_date) & (papers['publication_date'] <= end_date)]
+    return papers

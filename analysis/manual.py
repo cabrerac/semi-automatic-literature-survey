@@ -107,9 +107,8 @@ def manual_filter_by_full_text(folder_name, search_date, step):
             if len(filtered_by_abstract.loc[filtered_by_abstract['status'] == 'unknown']) > 0:
                 to_check_paper = filtered_by_abstract.loc[filtered_by_abstract['status'] == 'unknown'].sample()
                 print_paper_info_full_paper(to_check_paper, file_name)
-                t, title = ask_manual_input_full_paper()
-                if len(title) == 0:
-                    title = to_check_paper['title']
+                t = ask_manual_input_full_paper()
+                title = to_check_paper['title']
                 paper_id = to_check_paper['id'].values[0]
                 if t == 'included':
                     paper_dict = {'id': (included_papers + 1), 'status': t, 'doi': to_check_paper['doi'],
@@ -134,7 +133,6 @@ def print_paper_info_full_paper(to_check_paper, file_name):
 def ask_manual_input_full_paper():
     print('*** Manual input ***')
     t = 'f'
-    title = ''
     while t not in ['included', 'excluded']:
         print('(0) excluded')
         print('(1) included')
@@ -143,11 +141,7 @@ def ask_manual_input_full_paper():
             t = 'excluded'
         if choice == '1':
             t = 'included'
-            print('Change title?')
-            choice = input("y/n")
-            if choice == "y":
-                title = input("New title: ")
-    return t, title
+    return t
 
 
 def update_filtered_papers_by_abstract(filtered_papers, papers_file, paper_id, included):

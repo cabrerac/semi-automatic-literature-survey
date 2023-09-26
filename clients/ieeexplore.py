@@ -155,11 +155,11 @@ def filter_papers(papers):
     logger.info("Filtering papers...")
     try:
         papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
-        papers.dropna(subset=['title'], inplace=True)
+        papers = papers.dropna(subset=['title'])
         papers.loc[:, 'title'] = papers['title'].str.lower()
         papers = papers.drop_duplicates('title')
         papers.loc[:, 'abstract'] = papers['abstract'].replace('', float("NaN"))
-        papers.dropna(subset=['abstract'], inplace=True)
+        papers = papers.dropna(subset=['abstract'])
         papers = papers.drop_duplicates(subset=['doi'])
     except Exception as ex:
         logger.info("Error filtering papers. Skipping to next request. Please see the log file for details: "

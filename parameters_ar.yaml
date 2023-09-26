@@ -1,15 +1,6 @@
 # List of queries in the format <query_name>: "<query_value>". & (and operator) ¦ (or operator).
 queries:
   - augmented reality: "'augmented reality' & 'edge' & 'orchestration' & 'placement'"
-# Some APIs do not provide the functionality to filter by more specific keywords in the abstract. The syntactic filters
-# are keywords that must appear in the abstract of the papers to review. One filter can be composed by multiple
-# keywords in conjunction. Synonyms are also used for each keyword in disjunction. If you do not want to use syntactic
-# filters comment the whole block.
-syntactic_filters:
-  - augmented reality
-  - orchestration
-  - placement
-  - edge
 #Synonyms of the keywords to expand the queries.
 augmented reality:
   - ar
@@ -32,19 +23,20 @@ edge:
   - fog computing
   - fog
   - iot
-# Databases where to search for papers. arXiv and Semantic Scholar by default as they are open. You can use other 
+# Databases where to search for papers. arXiv and Semantic Scholar by default as they are open. You can use other
 # repositories by uncommenting the respective lines. You should add the API access keys to the ./config.json file
 # in order to use them. (See step 7 in the How to run it? instructions)
 databases:
   - arxiv
   - semantic_scholar
-  #- springer
-  #- ieeexplore
-  #- sciencedirect
-  #- core
-# Search time interval YYYY-mm-dd. If you do not want to include search dates comment start_date and end_date parameters.
-start_date: 2010-01-01
-end_date: 2022-08-01
-# Date of the search and folder name where the output will be stored
+  - springer
+  - ieeexplore
+  - scopus
+  - core
+# Search time interval YYYY-mm-dd. If you do not want to include search dates comment start_date and
+# end_date parameters.
+#start_date: 2010-01-01
+#end_date: 2022-08-01
+# Date of the search and folder name where the outputs will be stored
 search_date: 2022-08-04
 folder_name: ar_search

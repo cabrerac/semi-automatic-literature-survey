@@ -56,7 +56,7 @@ def request_papers(query, parameters):
     for request in requests:
         req = api_url.replace('<query>', request).replace('<offset>', str(start)).replace('<max_papers>',
                                                                                           str(max_papers))
-        raw_papers = client.request(req, 'get', {}, '')
+        raw_papers = client.request(req, 'get', {}, {})
         # if there is an exception from the API, retry request
         retry = 0
         while raw_papers.status_code != 200 and retry < max_retries:
@@ -72,12 +72,12 @@ def request_papers(query, parameters):
             time.sleep(waiting_time)
             req = api_url.replace('<query>', request).replace('<offset>', str(next_paper))
             req = req.replace('<max_papers>', str(max_papers))
-            raw_papers = client.request(req, 'get', {}, '')
+            raw_papers = client.request(req, 'get', {}, {})
             retry = 0
             while raw_papers.status_code != 200 and retry < max_retries:
                 time.sleep(waiting_time)
                 retry = retry + 1
-                raw_papers = client.request(req, 'get', {}, '')
+                raw_papers = client.request(req, 'get', {}, {})
             papers_request, next_paper = process_raw_papers(query, raw_papers)
             if len(papers) == 0:
                 papers = papers_request
@@ -128,11 +128,11 @@ def filter_papers(papers, dates, start_date, end_date):
     logger.info("Filtering papers...")
     try:
         papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
-        papers.dropna(subset=['title'], inplace=True)
+        papers = papers.dropna(subset=['title'])
         papers.loc[:, 'title'] = papers['title'].str.lower()
         papers = papers.drop_duplicates('title')
         papers.loc[:, 'abstract'] = papers['abstract'].replace('', float("NaN"))
-        papers.dropna(subset=['abstract'], inplace=True)
+        papers = papers.dropna(subset=['abstract'])
         if dates:
             papers = papers[(papers['year'] >= start_date.year) & (papers['year'] >= end_date.year)]
     except Exception as ex:
@@ -157,7 +157,7 @@ def clean_papers(papers):
     return papers
 
 
-def get_citations(folder_name, search_date, step, start_date, end_date):
+def get_citations(folder_name, search_date, step, dates, start_date, end_date):
     logger.info("Retrieving citation papers. It might take a while...")
     preprocessed_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
                              '_preprocessed_papers.csv'
@@ -165,22 +165,26 @@ def get_citations(folder_name, search_date, step, start_date, end_date):
         papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + \
                       '_manually_filtered_by_full_text_papers.csv'
         papers = pd.read_csv(papers_file)
+        citations = pd.DataFrame()
         for index, row in papers.iterrows():
-            paper_id = row['doi']
-            if paper_id == '':
-                paper_id = row['url']
+            paper_id = 'DOI:' + row['doi']
+            if 'http' in paper_id or paper_id == '':
+                paper_id = 'URL:' + row['doi']
             if paper_id != '':
                 papers_request = request_citations(paper_id)
-                if len(papers) == 0:
-                    papers = papers_request
+                if len(citations) == 0:
+                    citations = papers_request
                 else:
-                    papers.append(papers_request)
-        if len(papers) > 0:
-            papers = filter_papers(papers, False, start_date, end_date)
-        if len(papers) > 0:
-            papers = clean_papers(papers)
-        if len(papers) > 0:
-            util.save(preprocessed_file_name, papers, fr, 'a+')
+                    citations = citations.append(papers_request)
+        if len(citations) > 0:
+            citations = filter_papers(citations, dates, start_date, end_date)
+        if len(citations) > 0:
+            citations = clean_papers(citations)
+        if len(citations) > 0:
+            citations.loc[:, 'type'] = 'preprocessed'
+            citations.loc[:, 'status'] = 'unknown'
+            citations.loc[:, 'id'] = list(range(1, len(citations) + 1))
+            util.save(preprocessed_file_name, citations, fr, 'a+')
         logger.info("Retrieved papers after filters and cleaning: " + str(len(papers)))
     return preprocessed_file_name
 
@@ -197,24 +201,27 @@ def request_citations(paper_id):
         if len(papers) == 0:
             papers = papers_request
         else:
-            papers.append(papers_request)
+            papers = papers.append(papers_request)
     return papers
 
 
 def process_raw_citations(raw_citations):
     next_paper = -1
-    papers = pd.DataFrame
+    papers = pd.DataFrame()
     if raw_citations.status_code == 200:
         try:
             raw_json = json.loads(raw_citations.text)
-            next_paper = raw_json['next']
+            if 'next' in raw_json:
+                next_paper = raw_json['next']
             papers = pd.json_normalize(raw_json['data'])
-            papers = papers.rename(columns={"citingPaper.paperId": "doi", "citingPaper.url": "url",
-                                            "citingPaper.title": "title", "citingPaper.abstract": "abstract",
-                                            "citingPaper.venue": "publisher", "citingPaper.year": "publication_date"})
-            papers.loc[:, 'database'] = database
-            papers.loc[:, 'query_name'] = 'citation'
-            papers.loc[:, 'query_value'] = 'citation'
+            if len(papers) > 0:
+                papers = papers.rename(columns={"citingPaper.paperId": "doi", "citingPaper.url": "url",
+                                                "citingPaper.title": "title", "citingPaper.abstract": "abstract",
+                                                "citingPaper.venue": "publisher",
+                                                "citingPaper.year": "publication_date"})
+                papers.loc[:, 'database'] = database
+                papers.loc[:, 'query_name'] = 'citation'
+                papers.loc[:, 'query_value'] = 'citation'
         except Exception as ex:
             logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
                         "details: " + file_handler)

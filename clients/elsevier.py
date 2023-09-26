@@ -76,12 +76,13 @@ def request_papers(query, parameters, dates, start_date, end_date):
             raw_papers = client.request(request, 'get', {}, headers)
             expected_papers_request = get_expected_papers(raw_papers)
             if expected_papers_request > 0:
-                list_years.append({'start_year': start_year, 'end_year': end_year, 'expected_papers': expected_papers_request})
+                list_years.append({'start_year': start_year, 'end_year': end_year,
+                                   'expected_papers': expected_papers_request})
             end_year = start_year - 1
             start_year = end_year - 1
             total_papers = total_papers + expected_papers_request
     else:
-        list_years.append({'start_date': start_date, 'end_date': end_date,
+        list_years.append({'start_year': start_date.year, 'end_year': end_date.year,
                            'expected_papers': expected_papers})
 
     for years in list_years:
