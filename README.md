@@ -57,6 +57,7 @@ source venv/bin/activate
 3. Install requirements
 
 ```
+pip install wheel
 pip install  -r requirements.txt
 ```
 
