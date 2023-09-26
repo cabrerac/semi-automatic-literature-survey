@@ -77,7 +77,7 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                 file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' + \
                             query_name.lower().replace(' ', '_') + '_' + database + '.csv'
                 if exists(file_name):
-                    logger.info(' # Processing file: ' + file_name)
+                    logger.info('# Processing file: ' + file_name)
                     df = pd.read_csv(file_name)
                     if database == 'ieeexplore':
                         df = df.drop_duplicates('doi')
