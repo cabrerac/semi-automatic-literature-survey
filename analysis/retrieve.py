@@ -336,6 +336,6 @@ def lemmatize_text(text):
 
 
 def filter_papers_by_dates(papers, start_date, end_date):
-    papers['publication_date'] = pd.to_datetime(papers['publication_date']).dt.date
+    papers['publication_date'] = pd.to_datetime(papers['publication_date'])
     papers = papers[(papers['publication_date'] >= start_date) & (papers['publication_date'] <= end_date)]
     return papers
