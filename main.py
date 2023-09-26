@@ -5,6 +5,7 @@ from analysis import manual
 import sys
 import logging
 from datetime import datetime
+import os
 
 
 def main(parameters_file):
@@ -18,6 +19,8 @@ def main(parameters_file):
     console_formatter = logging.Formatter('%(levelname)s: %(message)s')
     console_handler.setFormatter(console_formatter)
     # File log
+    if not os.path.exists('./logs/'):
+        os.makedirs('./logs/')
     log_file = './logs/' + parameters_file.replace('.yaml', '_' + datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p") + '.log')
     file_handler = logging.FileHandler(log_file)
     file_handler.setLevel(logging.DEBUG)  # Set the level for file output
