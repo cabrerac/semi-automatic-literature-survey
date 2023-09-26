@@ -64,7 +64,7 @@ def get_citations(folder_name, search_date, step, dates, start_date, end_date):
     return file_name
 
 
-def preprocess(queries, databases, folder_name, search_date, start_date, end_date, step):
+def preprocess(queries, databases, folder_name, search_date, date_filter, start_date, end_date, step):
     global logger
     logger = logging.getLogger('logger')
     preprocessed_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
@@ -172,7 +172,7 @@ def preprocess(queries, databases, folder_name, search_date, start_date, end_dat
         papers['type'] = 'preprocessed'
         papers['status'] = 'unknown'
         papers['id'] = list(range(1, len(papers) + 1))
-        if dates:
+        if date_filter:
             logger.info('# Removing papers according to dates filter...')
             filter_papers_by_dates(papers, start_date, end_date)
         logger.info('Number of papers: ' + str(len(papers)))

@@ -45,7 +45,7 @@ def main(parameters_file):
         # Preprocessing papers
         step = step + 1
         logger.info(str(step) + '. Preprocessing papers...')
-        file_name = retrieve.preprocess(queries, databases, folder_name, search_date, start_date, end_date, step)
+        file_name = retrieve.preprocess(queries, databases, folder_name, search_date, dates, start_date, end_date, step)
         logger.info('# Preprocessing results can be found at: ' + file_name)
         next_file = str(step) + '_preprocessed_papers.csv'
 
