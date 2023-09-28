@@ -99,20 +99,25 @@ def create_request(parameters):
 
 def get_expected_papers(raw_papers, req):
     total = 0
-    if raw_papers.status_code == 200:
-        try:
-            raw_json = json.loads(raw_papers.text)
-            if 'articles' in raw_json:
-                total = raw_json['total_records']
-        except Exception as ex:
-            logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
-                        "details: " + file_handler)
-            logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-    else:
+    try:
+        if raw_papers.status_code == 200:
+            try:
+                raw_json = json.loads(raw_papers.text)
+                if 'articles' in raw_json:
+                    total = raw_json['total_records']
+            except Exception as ex:
+                logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
+                            "details: " + file_handler)
+                logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
+        else:
+            logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
+                        + file_handler)
+            logger.debug("API response: " + str(raw_papers.text))
+            logger.debug("Request: " + raw_papers.request.url)
+    except Exception as ex:
         logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
                     + file_handler)
-        logger.debug("API response: " + str(raw_papers.text))
-        logger.debug("Request: " + raw_papers.request.url)
+        logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
     return total
 
 
@@ -130,24 +135,29 @@ def process_raw_papers(query, raw_papers):
     query_name = list(query.keys())[0]
     query_value = query[query_name]
     papers_request = pd.DataFrame()
-    if raw_papers.status_code == 200:
-        try:
-            raw_json = json.loads(raw_papers.text)
-            temp_papers = pd.json_normalize(raw_json['articles']).copy()
-            papers_request = temp_papers[['doi', 'title', 'publisher', 'content_type', 'abstract', 'html_url',
-                                    'publication_title', 'publication_date']].copy()
-            papers_request.loc[:, 'database'] = database
-            papers_request.loc[:, 'query_name'] = query_name
-            papers_request.loc[:, 'query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
-        except Exception as ex:
-            logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
-                        "details: " + file_handler)
-            logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-    else:
+    try:
+        if raw_papers.status_code == 200:
+            try:
+                raw_json = json.loads(raw_papers.text)
+                temp_papers = pd.json_normalize(raw_json['articles']).copy()
+                papers_request = temp_papers[['doi', 'title', 'publisher', 'content_type', 'abstract', 'html_url',
+                                        'publication_title', 'publication_date']].copy()
+                papers_request.loc[:, 'database'] = database
+                papers_request.loc[:, 'query_name'] = query_name
+                papers_request.loc[:, 'query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
+            except Exception as ex:
+                logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
+                            "details: " + file_handler)
+                logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
+        else:
+            logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
+                        + file_handler)
+            logger.debug("API response: " + raw_papers.text)
+            logger.debug("Request: " + raw_papers.request.url)
+    except Exception as ex:
         logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
                     + file_handler)
-        logger.debug("API response: " + raw_papers.text)
-        logger.debug("Request: " + raw_papers.request.url)
+        logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
     return papers_request
 
 
