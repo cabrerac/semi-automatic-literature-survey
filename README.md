@@ -80,10 +80,10 @@ python -c "import nltk; nltk.download('omw-1.4')"
 
 ```
  {
-  "api_access_core": 'CORE_API_ACCESS_KEY',
-  "api_access_ieee": 'IEEE_API_ACCESS_KEY',
-  "api_access_springer": 'SPRINGER_API_ACCESS_KEY',
-  "api_access_elsevier": 'ELSEVIER_API_ACCESS_KEY'
+  "api_access_core": "CORE_API_ACCESS_KEY",
+  "api_access_ieee": "IEEE_API_ACCESS_KEY",
+  "api_access_springer": "SPRINGER_API_ACCESS_KEY",
+  "api_access_elsevier": "ELSEVIER_API_ACCESS_KEY"
 }
 ```
 
