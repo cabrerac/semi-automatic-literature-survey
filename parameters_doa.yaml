@@ -161,7 +161,7 @@ databases:
 # Search time interval YYYY-mm-dd. If you do not want to include search dates comment start_date and
 # end_date parameters.
 #start_date: 2022-06-01
-#end_date: 2023-09-19
+#end_date: 2022-08-04
 # Date of the search and folder name where the output will be stored
-search_date: 2023-09-20
+search_date: 2022-08-04
 folder_name: doas_search
