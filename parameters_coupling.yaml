@@ -1,0 +1,26 @@
+# List of queries in the format <query_name>: "<query_value>". & (and operator) ¦ (or operator).
+queries:
+  - data coupling: "'data coupling' & 'software'"
+# Some APIs do not provide the functionality to filter by more specific keywords in the abstract. The syntactic filters
+# are keywords that must appear in the abstract of the papers to review. One filter can be composed by multiple
+# keywords in conjunction. Synonyms are also used for each keyword in disjunction. If you do not want to use syntactic
+# filters comment the whole block.
+syntactic_filters:
+  - software
+  - system
+#Synonyms of the keywords
+# Databases where to search for papers
+databases:
+  - arxiv
+  - springer
+  - ieeexplore
+  - sciencedirect
+  - core
+  #- semantic_scholar
+# Search time interval YYYY-mm-dd. If you do not want to include search dates comment since and to parameters.
+# since: 2010-01-01
+# to: 2022-08-01
+# Date of the search and folder name where the output will be stored
+#search_date: 2021-12-03
+search_date: 2022-11-24
+folder_name: coupling_search
