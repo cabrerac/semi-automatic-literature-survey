@@ -148,17 +148,20 @@ real-world:
   - reality
   - real
   - physical world
-# Databases where to search for papers
+# Databases where to search for papers. arXiv and Semantic Scholar by default as they are open. You can use other
+# repositories by uncommenting the respective lines. You should add the API access keys to the ./config.json file
+# in order to use them. (See step 7 in the How to run it? instructions)
 databases:
   - arxiv
   - springer
-  - ieeexplore
-  - sciencedirect
+  - scopus
   - core
   - semantic_scholar
-# Search time interval YYYY-mm-dd. If you do not want to include search dates comment since and to parameters.
-since: 2022-06-01
-to: 2023-07-01
+  - ieeexplore
+# Search time interval YYYY-mm-dd. If you do not want to include search dates comment start_date and
+# end_date parameters.
+#start_date: 2022-06-01
+#end_date: 2023-09-19
 # Date of the search and folder name where the output will be stored
-search_date: 2023-07-31
+search_date: 2023-09-20
 folder_name: doas_search
