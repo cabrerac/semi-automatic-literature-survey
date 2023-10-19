@@ -31,7 +31,7 @@ logger = logging.getLogger('logger')
 def get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date):
     global logger
     logger = logging.getLogger('logger')
-    global  file_handler
+    global file_handler
     file_handler = logger.handlers[1].baseFilename
     query_name = list(query.keys())[0]
     query_value = query[query_name]
@@ -59,6 +59,7 @@ def get_papers(query, synonyms, fields, types, dates, start_date, end_date, fold
 
 def request_papers(query, parameters, dates, start_date, end_date):
     dates = True
+    end_date = end_date.replace(year=end_date.year + 1)
     logger.info("Retrieving papers. It might take a while...")
     papers = pd.DataFrame()
     request = create_request(parameters, dates, start_date.year, end_date.year)

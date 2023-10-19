@@ -30,9 +30,8 @@ def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, 
             arxiv.get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'springer' in databases:
-            # Springer searches over all the paper metadata. Synonyms are not needed in this case.
             logger.info("# Requesting Springer for query: " + list(query.keys())[0] + "...")
-            springer.get_papers(query, fields, types, dates, start_date, end_date, folder_name, search_date)
+            springer.get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'ieeexplore' in databases:
             logger.info("# Requesting IEEE Xplore for query: " + list(query.keys())[0] + "...")
@@ -315,11 +314,37 @@ def filter_by_keywords(papers, keywords, synonyms):
     filtered_papers['abstract_lower'] = filtered_papers['abstract_lower'].apply(lemmatize_text)
 
     for keyword in keywords:
-        terms = [r'\b' + keyword.lower() + r'\b']
+        terms = [r'\b' + lemma.lemmatize(keyword.lower()) + r'\b']
         if keyword in synonyms:
             synonym_list = synonyms[keyword]
             for synonym in synonym_list:
-                terms.append(r'\b' + synonym.lower() + r'\b')
+                terms.append(r'\b' + lemma.lemmatize(synonym.lower()) + r'\b')
+        filtered_papers = filtered_papers[filtered_papers['abstract_lower'].str.contains('|'.join(terms), na=False)]
+    filtered_papers = filtered_papers.drop(['abstract_lower'], axis=1)
+    filtered_papers = filtered_papers.drop_duplicates('title')
+    filtered_papers['id'] = list(range(1, len(filtered_papers) + 1))
+    return filtered_papers
+
+
+def filter_by_keywords_springer(papers, keywords, synonyms):
+    papers = papers.dropna(subset=['abstract'])
+    filtered_papers = papers
+    filtered_papers['abstract_lower'] = filtered_papers['abstract'].str.replace('-', ' ')
+    filtered_papers['abstract_lower'] = filtered_papers['abstract_lower'].str.lower()
+    filtered_papers['abstract_lower'] = filtered_papers['abstract_lower'].str.replace('\n', ' ')
+    filtered_papers['abstract_lower'] = filtered_papers['abstract_lower'].apply(lemmatize_text)
+
+    for keyword in keywords:
+        temp_terms = keyword.lower().split(' ')
+        if keyword in synonyms:
+            synonym_list = synonyms[keyword]
+            for synonym in synonym_list:
+                terms = synonym.lower().split(' ')
+                for term in terms:
+                    temp_terms.append(term)
+        terms = []
+        for term in temp_terms:
+            terms.append(r'\b' + lemma.lemmatize(term) + r'\b')
         filtered_papers = filtered_papers[filtered_papers['abstract_lower'].str.contains('|'.join(terms), na=False)]
     filtered_papers = filtered_papers.drop(['abstract_lower'], axis=1)
     filtered_papers = filtered_papers.drop_duplicates('title')

@@ -4,7 +4,9 @@ import json
 from .apis.generic import Generic
 from os.path import exists
 from analysis import util
+from analysis import retrieve
 import logging
+import re
 
 
 api_url = 'http://api.springernature.com/metadata/json?q=language:en<dates>'
@@ -25,7 +27,7 @@ file_handler = ''
 logger = logging.getLogger('logger')
 
 
-def get_papers(query, fields, types, dates, start_date, end_date, folder_name, search_date):
+def get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date):
     global logger
     logger = logging.getLogger('logger')
     global file_handler
@@ -39,12 +41,18 @@ def get_papers(query, fields, types, dates, start_date, end_date, folder_name, s
         for field in fields:
             if field in client_fields:
                 c_fields.append(client_fields[field])
-        parameters = {'query': query_value, 'synonyms': {}, 'fields': c_fields, 'types': types}
+        parameters = {'query': query_value, 'synonyms': synonyms, 'fields': c_fields, 'types': types}
         papers = request_papers(query, parameters, dates, start_date, end_date)
         if len(papers) > 0:
             papers = filter_papers(papers)
         if len(papers) > 0:
             papers = clean_papers(papers)
+        if len(papers) > 0:
+            keywords = []
+            words = re.split(' & | Â¦ ', query_value)
+            for word in words:
+                keywords.append(word.replace('%29', '').replace('%28', '').replace("'", ''))
+            papers = retrieve.filter_by_keywords_springer(papers, keywords, synonyms)
         if len(papers) > 0:
             util.save(file_name, papers, f, 'a')
         logger.info("Retrieved papers after filters and cleaning: " + str(len(papers)))
