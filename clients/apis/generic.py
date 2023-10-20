@@ -5,6 +5,7 @@ import urllib
 import time
 import json
 import requests
+from requests.models import Response
 import re
 import logging
 
@@ -30,25 +31,21 @@ class Generic:
                             "details: " + file_handler)
                 logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
                 logger.debug("Request: " + str(data))
-                return request_result
             except UnicodeEncodeError as ex:
                 logger.info("Error parsing the API response in generic client. Please see the log file for "
                             "details: " + file_handler)
                 logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
                 logger.debug("Request: " + str(data))
-                return request_result
             except urllib.error.URLError as ex:
                 logger.info("Error parsing the API response in generic client. Please see the log file for "
                             "details: " + file_handler)
                 logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
                 logger.debug("Request: " + str(data))
-                return request_result
             except Exception as ex:
                 logger.info("Error parsing the API response in generic client. Please see the log file for "
                             "details: " + file_handler)
                 logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
                 logger.debug("Request: " + str(data))
-                return request_result
         if method == 'get':
             try:
                 request_result = requests.get(query, headers=headers)
@@ -56,26 +53,22 @@ class Generic:
                 logger.info("Error parsing the API response in generic client. Please see the log file for "
                             "details: " + file_handler)
                 logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-                logger.debug("Request: " + str(query))
-                return request_result
+                logger.debug("Request: " + query)
             except UnicodeEncodeError as ex:
                 logger.info("Error parsing the API response in generic client. Please see the log file for "
                             "details: " + file_handler)
                 logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-                logger.debug("Request: " + str(query))
-                return request_result
+                logger.debug("Request: " + query)
             except urllib.error.URLError as ex:
                 logger.info("Error parsing the API response in generic client. Please see the log file for "
                             "details: " + file_handler)
                 logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-                logger.debug("Request: " + str(query))
-                return request_result
+                logger.debug("Request: " + query)
             except Exception as ex:
                 logger.info("Error parsing the API response in generic client. Please see the log file for "
                             "details: " + file_handler)
                 logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-                logger.debug("Request: " + str(query))
-                return request_result
+                logger.debug("Request: " + query)
         if method == 'retrieve':
             try:
                 req = urllib.request.Request(query, headers={'User-Agent': 'Mozilla/5.0'})
@@ -84,30 +77,30 @@ class Generic:
                 logger.info("Error parsing the API response in generic client. Please see the log file for "
                             "details: " + file_handler)
                 logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-                logger.debug("Request: " + str(query))
-                return request_result
+                logger.debug("Request: " + query)
             except UnicodeEncodeError as ex:
                 logger.info("Error parsing the API response in generic client. Please see the log file for "
                             "details: " + file_handler)
                 logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-                logger.debug("Request: " + str(query))
-                return request_result
+                logger.debug("Request: " + query)
             except urllib.error.URLError as ex:
                 logger.info("Error parsing the API response in generic client. Please see the log file for "
                             "details: " + file_handler)
                 logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-                logger.debug("Request: " + str(query))
-                return request_result
+                logger.debug("Request: " + query)
             except Exception as ex:
                 logger.info("Error parsing the API response in generic client. Please see the log file for "
                             "details: " + file_handler)
                 logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-                logger.debug("Request: " + str(query))
-                return request_result
+                logger.debug("Request: " + query)
         if request_result is None:
             logger.info("The API response is None. Please see the log file for "
                         "details: " + file_handler)
-            logger.debug("Request: " + str(query))
+            logger.debug("Request: " + query)
+            request_result = Response()
+            request_result.status_code = 404
+            request_result._content = b"The API response is None for query: " + query
+            request_result.headers = {'Content-Type': 'text/plain'}
         return request_result
 
     def default_query(self, parameters):

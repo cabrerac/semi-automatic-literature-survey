@@ -62,7 +62,7 @@ def request_papers(query, parameters):
         while raw_papers.status_code != 200 and retry < max_retries:
             time.sleep(waiting_time)
             retry = retry + 1
-            raw_papers = client.request(request, 'get', {}, {})
+            raw_papers = client.request(req, 'get', {}, {})
         papers_request, next_paper = process_raw_papers(query, raw_papers)
         if len(papers) == 0:
             papers = papers_request
