@@ -173,7 +173,7 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
         papers['id'] = list(range(1, len(papers) + 1))
         if date_filter:
             logger.info('# Removing papers according to dates filter...')
-            filter_papers_by_dates(papers, start_date, end_date)
+            papers = filter_papers_by_dates(papers, start_date, end_date)
         logger.info('Number of papers: ' + str(len(papers)))
         util.save(preprocessed_file_name, papers, fr, 'a+')
         logger.info('# Removing repeated papers by doi, title, and abstract...')
