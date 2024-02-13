@@ -53,6 +53,7 @@ def print_paper_info(to_check_paper, file_name):
         print(' :: Query Name :: ' + str(list(to_check_paper['query_name'])[0]) + ' ::')
         print(' :: Query Value :: ' + str(list(to_check_paper['query_value'])[0]) + ' ::')
     print(' :: Title :: ' + str(list(to_check_paper['title'])[0].replace('\n', '')).title() + ' :: \n')
+    print(' :: Publisher :: ' + str(list(to_check_paper['publisher'])[0].replace('\n', '')).title() + ' :: \n')
     abstract = list(to_check_paper['abstract'])[0].replace('\n', ' ').replace('</p', '').split(' ')
     i = 0
     for word in abstract:
