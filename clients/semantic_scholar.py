@@ -21,7 +21,7 @@ fr = 'utf-8'
 client = Generic()
 waiting_time = 10
 max_retries = 3
-offset_limit = 9900
+offset_limit = 1000
 file_handler = ''
 logger = logging.getLogger('logger')
 
@@ -37,7 +37,7 @@ def get_papers(query, types, dates, start_date, end_date, folder_name, search_da
                 + query_name.lower().replace(' ', '_') + '_' + database + '.csv'
     if not exists(file_name):
         parameters = {'query': query_value, 'synonyms': {}, 'types': types}
-        papers = request_papers(query, parameters)
+        papers = request_papers(query, parameters, dates, start_date, end_date)
         if len(papers) > 0:
             papers = filter_papers(papers, dates, start_date, end_date)
         if len(papers) > 0:
@@ -49,13 +49,12 @@ def get_papers(query, types, dates, start_date, end_date, folder_name, search_da
         logger.info("File already exists.")
 
 
-def request_papers(query, parameters):
+def request_papers(query, parameters, dates, start_date, end_date):
     logger.info("Retrieving papers. It might take a while...")
     papers = pd.DataFrame()
-    requests = create_request(parameters)
+    requests = create_request(parameters, dates, start_date, end_date)
     for request in requests:
-        req = api_url.replace('<query>', request).replace('<offset>', str(start)).replace('<max_papers>',
-                                                                                          str(max_papers))
+        req = api_url.replace('<query>', request).replace('<offset>', str(start)).replace('<max_papers>', str(max_papers))
         raw_papers = client.request(req, 'get', {}, {})
         # if there is an exception from the API, retry request
         retry = 0
@@ -86,13 +85,24 @@ def request_papers(query, parameters):
     return papers
 
 
-def create_request(parameters):
+def create_request(parameters, dates, start_date, end_date):
     queries = []
     queries_temp = client.ieeexplore_query(parameters)
-    for query in queries_temp:
-        query = query.replace('(', '').replace('OR', '+').replace('AND', '+').replace('"', '').replace(')', '') \
+    for query_temp in queries_temp:
+        query_temp = query_temp.replace('(', '').replace('OR', '+').replace('AND', '+').replace('"', '').replace(')', '') \
             .replace(' ', '+')
-        queries.append(query)
+        query = query_temp + '<dates>'
+        if dates:
+            initial_year = start_date.year
+            final_year = end_date.year
+            while initial_year < final_year:
+                query = query.replace('<dates>', '&year=' + str(initial_year) + '-' + str(initial_year+1))
+                queries.append(query)
+                query = query_temp + '<dates>'
+                initial_year = initial_year + 1
+        else:
+            query = query.replace('<dates>', '')
+            queries.append(query)
     return queries
 
 
@@ -134,7 +144,7 @@ def filter_papers(papers, dates, start_date, end_date):
         papers.loc[:, 'abstract'] = papers['abstract'].replace('', float("NaN"))
         papers = papers.dropna(subset=['abstract'])
         if dates:
-            papers = papers[(papers['year'] >= start_date.year) & (papers['year'] >= end_date.year)]
+            papers = papers[(papers['year'] >= start_date.year) & (papers['year'] <= end_date.year)]
     except Exception as ex:
         logger.info("Error filtering papers. Skipping to next request. Please see the log file for details: "
                     + file_handler)
