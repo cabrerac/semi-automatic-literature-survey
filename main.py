@@ -61,7 +61,7 @@ def main(parameters_file):
         if len(semantic_filters) > 0:
             step = step + 1
             logger.info(str(step) + '. Semantic filter by abstract...')
-            file_name = semantic_analyser.lbl2vec(semantic_filters, folder_name, search_date, step)
+            file_name = semantic_analyser.search(semantic_filters, folder_name, search_date, step)
             logger.info('Semantic filtering results can be found at: ' + file_name)
             next_file = str(step) + '_semantic_filtered_papers.csv'
 

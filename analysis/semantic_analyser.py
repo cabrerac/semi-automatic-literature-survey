@@ -4,11 +4,25 @@ from gensim.parsing.preprocessing import strip_tags
 from gensim.models.doc2vec import TaggedDocument
 from lbl2vec import Lbl2Vec
 from nltk.stem.wordnet import WordNetLemmatizer
+from sentence_transformers import SentenceTransformer
+from sentence_transformers import util as sentence_util
 from os.path import exists
 from . import util
 
 fr = 'utf-8'
 lemma = WordNetLemmatizer()
+
+
+def search(semantic_filters, folder_name, search_date, step):
+    search_algorithm = ''
+    for keyword in semantic_filters:
+        if 'type' in keyword:
+            search_algorithm = keyword['type']
+
+    if search_algorithm == 'lbl2vec':
+        lbl2vec(semantic_filters, folder_name, search_date, step)
+    if search_algorithm == 'bert':
+        semantic_search(semantic_filters, folder_name, search_date, step)
 
 
 def lbl2vec(keywords, folder_name, search_date, step):
@@ -76,3 +90,26 @@ def lbl2vec(keywords, folder_name, search_date, step):
 
 def tokenize(doc):
     return simple_preprocess(strip_tags(doc), deacc=True, min_len=2, max_len=15)
+
+
+def semantic_search(semantic_filters, folder_name, search_date, step):
+    semantic_filtered_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' \
+                                  + str(step) + '_semantic_filtered_papers.csv'
+    if not exists(semantic_filtered_file_name):
+        papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step - 1) + \
+                      '_syntactic_filtered_papers.csv'
+        papers = pd.read_csv(papers_file)
+        model = SentenceTransformer('all-MiniLM-L6-v2')
+        papers['concatenated'] = (papers['title'] + ' ' + papers['abstract']).str.lower()
+        papers_array = papers['concatenated'].values
+        encoded_papers = model.encode(papers_array, batch_size=32, convert_to_tensor=True, show_progress_bar=True)
+        encoded_papers.shape
+        queries = []
+        for keyword in semantic_filters:
+            if 'queries' in keyword:
+                queries = keyword['queries']
+        for query in queries:
+            query_embedding = model.encode(query, convert_to_tensor=True)
+            hits = sentence_util.semantic_search(query_embedding, encoded_papers, top_k=5)
+        found_papers = papers
+    return semantic_filtered_file_name
