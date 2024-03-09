@@ -99,17 +99,28 @@ def semantic_search(semantic_filters, folder_name, search_date, step):
         papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step - 1) + \
                       '_syntactic_filtered_papers.csv'
         papers = pd.read_csv(papers_file)
-        model = SentenceTransformer('all-MiniLM-L6-v2')
-        papers['concatenated'] = (papers['title'] + ' ' + papers['abstract']).str.lower()
+        found_papers = pd.DataFrame()
+        model = SentenceTransformer('nq-distilbert-base-v1')
+        papers['concatenated'] = (papers['title'] + ' ' + papers['abstract'])
         papers_array = papers['concatenated'].values
         encoded_papers = model.encode(papers_array, batch_size=32, convert_to_tensor=True, show_progress_bar=True)
         encoded_papers.shape
         queries = []
+        score = 0.0
         for keyword in semantic_filters:
             if 'queries' in keyword:
                 queries = keyword['queries']
+            if 'score' in keyword:
+                score = keyword['score']
         for query in queries:
             query_embedding = model.encode(query, convert_to_tensor=True)
-            hits = sentence_util.semantic_search(query_embedding, encoded_papers, top_k=5)
-        found_papers = papers
+            hits = sentence_util.semantic_search(query_embedding, encoded_papers, top_k=len(papers_array))
+            for hit in hits[0]:
+                if hit['score'] > score:
+                    paper_array = papers_array[hit['corpus_id']]
+                    if len(found_papers) == 0:
+                        found_papers = papers[papers['concatenated'] == paper_array]
+                    else:
+                        found_papers = found_papers.append(papers[papers['concatenated'] == paper_array])
+        len(found_papers)
     return semantic_filtered_file_name
