@@ -289,12 +289,11 @@ def parse_dates(dates):
     return new_dates
 
 
-def filter_papers(keywords, synonyms, folder_name, search_date, step):
+def filter_papers(keywords, synonyms, folder_name, next_file, search_date, step):
     syntactic_filtered_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' \
                                    + str(step) + '_syntactic_filtered_papers.csv'
     if not exists(syntactic_filtered_file_name):
-        to_filter = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step - 1) + \
-                    '_preprocessed_papers.csv';
+        to_filter = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + next_file;
         preprocessed_papers = pd.read_csv(to_filter)
         preprocessed_papers.dropna(subset=["abstract"], inplace=True)
         filtered_papers = filter_by_keywords(preprocessed_papers, keywords, synonyms)

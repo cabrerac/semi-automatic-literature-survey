@@ -13,19 +13,21 @@ fr = 'utf-8'
 lemma = WordNetLemmatizer()
 
 
-def search(semantic_filters, folder_name, search_date, step):
+def search(semantic_filters, folder_name, next_file, search_date, step):
     search_algorithm = ''
+    file_name = ''
     for keyword in semantic_filters:
         if 'type' in keyword:
             search_algorithm = keyword['type']
 
     if search_algorithm == 'lbl2vec':
-        lbl2vec(semantic_filters, folder_name, search_date, step)
+        file_name = lbl2vec(semantic_filters, folder_name, next_file, search_date, step)
     if search_algorithm == 'bert':
-        semantic_search(semantic_filters, folder_name, search_date, step)
+        file_name = semantic_search(semantic_filters, folder_name, next_file, search_date, step)
+    return file_name
 
 
-def lbl2vec(keywords, folder_name, search_date, step):
+def lbl2vec(keywords, folder_name, next_file, search_date, step):
     semantic_filtered_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' \
                                    + str(step) + '_semantic_filtered_papers.csv'
     if not exists(semantic_filtered_file_name):
@@ -34,8 +36,7 @@ def lbl2vec(keywords, folder_name, search_date, step):
                 classes = keyword['classes']
             if 'excluded_classes' in keyword:
                 excluded_classes = keyword['excluded_classes']
-        papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + \
-                      '_syntactic_filtered_papers.csv'
+        papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + next_file
         papers = pd.read_csv(papers_file)
         labels = []
         index = 0
@@ -92,12 +93,11 @@ def tokenize(doc):
     return simple_preprocess(strip_tags(doc), deacc=True, min_len=2, max_len=15)
 
 
-def semantic_search(semantic_filters, folder_name, search_date, step):
+def semantic_search(semantic_filters, folder_name, next_file, search_date, step):
     semantic_filtered_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' \
                                   + str(step) + '_semantic_filtered_papers.csv'
     if not exists(semantic_filtered_file_name):
-        papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step - 1) + \
-                      '_syntactic_filtered_papers.csv'
+        papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + next_file
         papers = pd.read_csv(papers_file)
         found_papers = pd.DataFrame()
         model = SentenceTransformer('nq-distilbert-base-v1')
@@ -122,5 +122,12 @@ def semantic_search(semantic_filters, folder_name, search_date, step):
                         found_papers = papers[papers['concatenated'] == paper_array]
                     else:
                         found_papers = found_papers.append(papers[papers['concatenated'] == paper_array])
-        len(found_papers)
+        columns_to_drop = ['concatenated']
+        found_papers = found_papers.drop(columns_to_drop, axis=1)
+        found_papers['id'] = list(range(1, len(found_papers) + 1))
+        found_papers['id'] = found_papers.index.astype(str)
+        found_papers['type'] = 'to_check'
+        found_papers['status'] = 'unknown'
+        util.save(semantic_filtered_file_name, found_papers, fr, 'a+')
+        util.clean_papers(semantic_filtered_file_name)
     return semantic_filtered_file_name

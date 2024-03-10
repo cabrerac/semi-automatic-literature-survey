@@ -90,8 +90,8 @@ def update_semantic_filtered_papers(to_check_papers, papers_file, paper_id, incl
     util.save(papers_file, to_check_papers, fr, 'w')
 
 
-def manual_filter_by_full_text(folder_name, search_date, step):
-    papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + '_manually_filtered_by_abstract_papers.csv'
+def manual_filter_by_full_text(folder_name, next_file, search_date, step):
+    papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + next_file
     file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + '_manually_filtered_by_full_text_papers.csv'
     if exists(papers_file):
         filtered_by_abstract = pd.read_csv(papers_file)
