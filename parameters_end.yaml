@@ -1,0 +1,66 @@
+# List of queries in the format <query_name>: "<query_value>". & (and operator) ¦ (or operator).
+queries:
+  - end user software engineering: "'end user software engineering' & 'llms'"
+# List of terms that must be included in the title and abstract of the papers.
+syntactic_filters:
+  - end user software engineering
+  - llms
+# List of queries in natural language that describe the papers to include in the survey.
+# The type parameter corresponds to the embedding the semantic search uses. Bert is the open option it currently uses.
+# The score parameter is the similarity degree between the queries and the included papers. Papers with greater or equal score are included.
+semantic_filters:
+  - type: "bert"
+  - queries:
+    - "end user engineering platforms based on large language models"
+    - "end user engineering platforms based on machine learning"
+  - score: 0.4
+#Synonyms of the keywords to expand the queries.
+end user software engineering:
+  - end-user software engineering
+  - end user programming
+  - end-user programming
+  - low-code development platform
+  - lcdp
+  - natural language programming
+  - code generation
+  - prompt programming
+  - visual programming
+  - end-user website generation
+  - end user website generation
+  - end-user code cutomization
+  - end user code customization
+  - end-user development
+  - end user development
+  - end-user developer
+  - end user developer
+  - end-user programmer
+  - end user programmer
+  - low-code/no-code
+  - low-code software development
+  - low-code software developer
+  - no-code softwre development
+  - no-code softwre developer
+  - low-code development platforms
+  - text-to-code generation
+llms:
+  - llm
+  - large language models
+  - large language model
+  - generative ai
+  - machine learning
+  - foundation model
+# Databases where to search for papers. arXiv and Semantic Scholar by default as they are open. You can use other
+# repositories by uncommenting the respective lines. You should add the API access keys to the ./config.json file
+# in order to use them. (See step 7 in the How to run it? instructions)
+databases:
+  - arxiv
+  - semantic_scholar
+  - springer
+  - ieeexplore
+# Search time interval YYYY-mm-dd. If you do not want to include search dates comment start_date and
+# end_date parameters.
+start_date: 2017-01-01
+end_date: 2024-02-16
+# Date of the search and folder name where the outputs will be stored
+search_date: 2024-02-16
+folder_name: end_search

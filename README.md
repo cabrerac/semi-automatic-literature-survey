@@ -2,7 +2,7 @@
 
 This project implements SaLS: a semi-automatic tool to survey research papers based on the systematic methodology proposed by Kitchenham et al.[1, 2]. The goal of this project is to semi-automate the research papers survey process while providing a framework to enable surveys reproducibility and evolution. 
 
-SaLS automatically retrives papers metadata based on queries that users provide according. These queries are used to consume the search APIs exposed by the most popular research papers repositories in different domains. Currently, SaLS retrieves papers information from the following repositories:
+SaLS automatically retrives papers metadata based on queries that users provide. These queries are used to consume the search APIs exposed by the most popular research papers repositories in different domains. Currently, SaLS retrieves papers information from the following repositories:
 
 - [IEEE Xplore](https://ieeexplore.ieee.org/Xplore/home.jsp)
 - [Springer Nature](https://www.springernature.com/gp)
@@ -13,7 +13,7 @@ SaLS automatically retrives papers metadata based on queries that users provide 
 
 The retrieved metadata includes paper identifier (e.g., doi), publisher, publication date, title, url, and abstract.
 
-SaLS merges papers information from different repositories, and then applies customised syntactic and semantic filters (i.e., Lbl2Vec)[3] to reduce the search space of papers according to users' interests.
+SaLS merges papers information from different repositories, and then applies customised syntactic and semantic filters (i.e., semantic search)[3] to reduce the search space of papers according to users' interests.
 
 Once automatic filters are applied, the tool prompts the title and abstract of the paper in a centralised interface where users can decide if the paper should be included or not in the review (i.e., papers filtered by abstract). The URL of the papers that passed the filter by abstract is then prompted in the last filter, which requires the user to skim the full paper and decide if it is included or no.
 
@@ -93,7 +93,7 @@ python -c "import nltk; nltk.download('omw-1.4')"
 python main.py parameters_ar.yaml
 ```
 
-A simple self-explanatory example of a search parameters file can be found in `./parameters_ar.yaml`. Alternatively, a more complex one including semantic filters can be found in `./parameters_doa.yaml`
+A simple self-explanatory example of a search parameters file can be found in `./parameters_ar.yaml`. Alternatively, a parameters file including semantic filters can be found in `./parameters_end.yaml`
 
 # References
 
@@ -101,4 +101,4 @@ A simple self-explanatory example of a search parameters file can be found in `.
 
 [2] Barbara Kitchenham and Stuart Charters. 2007. Guidelines for performing Systematic Literature Reviews in Software Engineering. Technical Report EBSE 2007-001. Keele University and Durham University Joint Report. https://www.elsevier.com/__data/promis_misc/525444systematicreviewsguide.pdf
 
-[3] Tim Schopf, Daniel Braun, and Florian Matthes. 2021. Lbl2Vec: An Embedding-based Approach for Unsupervised Document Retrieval on Predefined Topics. In Proceedings of the 17th International Conference on Web Information Systems and Technologies - WEBIST,. 124–132. https://doi.org/10.5220/0010710300003058
+[3] SBERT.net Sentence Transformers. 2024. Semantic Search [Available online](https://www.sbert.net/examples/applications/semantic-search/README.html)
