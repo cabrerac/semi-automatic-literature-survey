@@ -91,7 +91,7 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                                 'abstract': df['abstract']
                             }
                         )
-                        papers = papers.append(papers_ieee)
+                        papers = pd.concat([papers, papers_ieee])
                     if database == 'springer':
                         df = df.drop_duplicates('doi')
                         dates = df['publicationDate']
@@ -105,7 +105,7 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                                 'abstract': df['abstract']
                             }
                         )
-                        papers = papers.append(papers_springer)
+                        papers = pd.concat([papers, papers_springer])
                     if database == 'arxiv':
                         df = df.drop_duplicates('id')
                         dates = df['published']
@@ -148,7 +148,7 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                         )
                         papers_core['database'] = database
                         papers_core['publication'] = database
-                        papers = papers.append(papers_core)
+                        papers = pd.concat([papers, papers_core])
                     if database == 'semantic_scholar':
                         df = df.drop_duplicates('paperId')
                         df_dates = df['year']
@@ -167,7 +167,7 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                                 'abstract': df['abstract']
                             }
                         )
-                        papers = papers.append(papers_semantic)
+                        papers = pd.concat([papers, papers_semantic])
         papers['type'] = 'preprocessed'
         papers['status'] = 'unknown'
         papers['id'] = list(range(1, len(papers) + 1))

@@ -136,7 +136,7 @@ def remove_repeated(file):
     df['doi'].replace(r'\s+', np.nan, regex=True)
     nan_doi = df.loc[df['doi'] == np.nan]
     df = df.drop_duplicates('doi')
-    df = df.append(nan_doi)
+    df = pd.concat([df. nan_doi])
     df['title_lower'] = df['title'].str.lower()
     df['title_lower'] = df['title_lower'].str.replace('-', ' ')
     df['title_lower'] = df['title_lower'].str.replace('\n', '')
