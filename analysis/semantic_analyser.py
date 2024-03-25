@@ -4,6 +4,8 @@ from sentence_transformers import util as sentence_util
 from os.path import exists
 from . import util
 
+fr = 'utf-8'
+
 
 def search(semantic_filters, folder_name, next_file, search_date, step):
     search_algorithm = ''
@@ -15,7 +17,7 @@ def search(semantic_filters, folder_name, next_file, search_date, step):
     if search_algorithm == 'bert':
         file_name = bert_search(semantic_filters, folder_name, next_file, search_date, step)
     else:
-        file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + next_file
+        file_name = next_file
     return file_name
 
 

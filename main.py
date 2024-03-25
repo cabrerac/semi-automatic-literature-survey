@@ -63,7 +63,11 @@ def main(parameters_file):
             logger.info(str(step) + '. Semantic filter by abstract...')
             file_name = semantic_analyser.search(semantic_filters, folder_name, next_file, search_date, step)
             logger.info('Semantic filtering results can be found at: ' + file_name)
-            next_file = str(step) + '_semantic_filtered_papers.csv'
+            if file_name == str(step-1) + '_syntactic_filtered_papers.csv':
+                step = step - 1
+                next_file = str(step) + '_syntactic_filtered_papers.csv'
+            else:
+                next_file = str(step) + '_semantic_filtered_papers.csv'
 
         # Manual filtering by abstract
         step = step + 1
