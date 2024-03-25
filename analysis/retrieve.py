@@ -119,7 +119,7 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                                 'abstract': df['summary']
                             }
                         )
-                        papers = papers.append(papers_arxiv)
+                        papers = pd.concat([papers, papers_arxiv])
                     if database == 'scopus':
                         df = df.drop_duplicates('id')
                         papers_scopus = pd.DataFrame(

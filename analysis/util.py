@@ -8,7 +8,6 @@ from datetime import datetime
 import spacy
 from os.path import exists
 import logging
-import shutil
 
 logger = logging.getLogger('logger')
 
