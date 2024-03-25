@@ -49,7 +49,7 @@ def bert_search(semantic_filters, folder_name, next_file, search_date, step):
                     if len(found_papers) == 0:
                         found_papers = papers[papers['concatenated'] == paper_array]
                     else:
-                        found_papers = found_papers.concat(papers[papers['concatenated'] == paper_array])
+                        found_papers = pd.concat([found_papers, papers[papers['concatenated'] == paper_array]])
         columns_to_drop = ['concatenated']
         found_papers = found_papers.drop(columns_to_drop, axis=1)
         found_papers['id'] = list(range(1, len(found_papers) + 1))
