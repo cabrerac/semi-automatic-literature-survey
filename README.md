@@ -48,7 +48,7 @@ cd semi-automatic-literature-survey/
 
 2. Create and activate virtual environment 
 
-2.1 For Linux distributions
+For Linux distributions
 ```
 python -m venv venv
 ```
@@ -56,7 +56,7 @@ python -m venv venv
 source venv/bin/activate
 ```
 
-2.1 For Windows
+For Windows
 ```
 python -m venv ./venv
 ```
