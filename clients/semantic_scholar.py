@@ -9,7 +9,7 @@ import logging
 
 client = Generic()
 database = 'semantic_scholar'
-api_url = 'http://api.semanticscholar.org/graph/v1/paper/search?query=<query>&offset=<offset>&limit=<max_papers>&' \
+api_url = 'https://api.semanticscholar.org/graph/v1/paper/search?query=<query>&offset=<offset>&limit=<max_papers>&' \
           'fields=title,abstract,url,year,venue,externalIds'
 citations_url = 'https://api.semanticscholar.org/graph/v1/paper/{paper_id}/citations?fields=title,abstract,url,year,' \
                 'venue&offset=<offset>&limit=<max_papers>'
@@ -60,14 +60,16 @@ def request_papers(query, parameters, dates, start_date, end_date):
     requests = create_request(parameters, dates, start_date, end_date)
     for request in requests:
         req = api_url.replace('<query>', request).replace('<offset>', str(start)).replace('<max_papers>', str(max_papers))
-        headers = {'x-api-key': api_access}
+        headers = {}
+        if len(api_access) > 0:
+            headers = {'x-api-key': api_access}
         raw_papers = client.request(req, 'get', {}, headers=headers)
         # if there is an exception from the API, retry request
         retry = 0
         while raw_papers.status_code != 200 and retry < max_retries:
             time.sleep(waiting_time)
             retry = retry + 1
-            raw_papers = client.request(req, 'get', {}, {})
+            raw_papers = client.request(req, 'get', {}, headers=headers)
         papers_request, next_paper = process_raw_papers(query, raw_papers)
         if len(papers) == 0:
             papers = papers_request
@@ -82,7 +84,7 @@ def request_papers(query, parameters, dates, start_date, end_date):
             while raw_papers.status_code != 200 and retry < max_retries:
                 time.sleep(waiting_time)
                 retry = retry + 1
-                raw_papers = client.request(req, 'get', {}, {})
+                raw_papers = client.request(req, 'get', {}, headers=headers)
             papers_request, next_paper = process_raw_papers(query, raw_papers)
             if len(papers) == 0:
                 papers = papers_request
@@ -212,7 +214,10 @@ def request_citations(paper_id):
         time.sleep(waiting_time)
         request = citations_url.replace('{paper_id}', str(paper_id))
         request = request.replace('<offset>', str(next_paper)).replace('<max_papers>', str(max_papers))
-        raw_citations = client.request(request, 'get', {}, {})
+        headers = {}
+        if len(api_access) > 0:
+            headers = {'x-api-key': api_access}
+        raw_citations = client.request(request, 'get', {}, headers=headers)
         papers_request, next_paper = process_raw_citations(raw_citations)
         if len(papers) == 0:
             papers = papers_request
