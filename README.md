@@ -1,6 +1,6 @@
 # SaLS: Semi-automatic Literature Survey
 
-This project implements SaLS: a semi-automatic tool to survey research papers based on the systematic methodology proposed by Kitchenham et al.[1, 2]. The goal of this project is to semi-automate the research papers survey process while providing a framework to enable surveys reproducibility and evolution. 
+This project implements SaLS: a semi-automatic tool to survey research papers based on the systematic methodology proposed by Kitchenham et al.[1, 2]. The goal of this project is to semi-automate the research papers survey process while providing a framework to enable surveys reproducibility and evolution. An use case of SaLS following the mentioned methodology can be found [here](https://arxiv.org/abs/2302.04810) (under review).
 
 SaLS automatically retrives papers metadata based on queries that users provide. These queries are used to consume the search APIs exposed by the most popular research papers repositories in different domains. Currently, SaLS retrieves papers information from the following repositories:
 
@@ -29,12 +29,13 @@ Some of the APIs provided by the repositories require an access key to be consum
 - [Springer Nature](https://dev.springernature.com/docs)
 - [Scopus](https://dev.elsevier.com/)
 - [CORE](https://core.ac.uk/services/api)
+- [Semantic Scholar](https://www.semanticscholar.org/product/api/tutorial)
 
-Alternatively, you can use the tool for requesting papers from arXiv and Semantic Scholar which are open and do not need an access key.
+Alternatively, you can use the tool for requesting papers from arXiv which is open and do not need an access key. SaLS does not have control over the maintenance of the APIs. If an API produces an error, you can see the details in the log files. We recommend to stop using the API that produces errors for a while. 
 
 # How to run it?
 
-The following instructions were tested on the Windows Subsystem for Linux ([WSL](https://docs.microsoft.com/en-us/windows/wsl/install)) and an Ubuntu machine with Python 3.8.
+The following instructions were tested on the Windows PowerShell, Windows Subsystem for Linux ([WSL](https://docs.microsoft.com/en-us/windows/wsl/install)) and an Ubuntu machine with Python 3.8.
 
 1. Clone this repository
 
@@ -47,6 +48,7 @@ cd semi-automatic-literature-survey/
 
 2. Create and activate virtual environment 
 
+2.1 For Linux distributions
 ```
 python -m venv venv
 ```
@@ -54,11 +56,18 @@ python -m venv venv
 source venv/bin/activate
 ```
 
+2.1 For Windows
+```
+python -m venv ./venv
+```
+```
+./venv/Scripts/activate
+```
+
 3. Install requirements
 
 ```
-pip install wheel
-pip install  -r requirements.txt
+pip install -r requirements.txt
 ```
 
 4. Install language package for spacy
@@ -67,27 +76,20 @@ pip install  -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
 
-5. Download nltk resources
-
-```
-python -c "import nltk; nltk.download('wordnet')"
-```
-```
-python -c "import nltk; nltk.download('omw-1.4')"
-```
-
-6. Create a file `./config.json` that will store the API access keys for the repositories you want to use. The file should have the following format:
+5. Create a file `./config.json` that will store the API access keys for the repositories you want to use. The file should have the following format:
 
 ```
  {
   "api_access_core": "CORE_API_ACCESS_KEY",
   "api_access_ieee": "IEEE_API_ACCESS_KEY",
   "api_access_springer": "SPRINGER_API_ACCESS_KEY",
-  "api_access_elsevier": "ELSEVIER_API_ACCESS_KEY"
+  "api_access_elsevier": "ELSEVIER_API_ACCESS_KEY",
+  "api_access_semantic_scholar": "SEMANTIC_SCHOLAR_API_ACCESS_KEY"
 }
 ```
+Ignore this step if you are testing the tool with arXiv. Also, you should only add the access keys of the repositories you want to use.
 
-7. Run the main passing the search parameters file. For example:
+6. Run the main passing the search parameters file. For example:
 
 ```
 python main.py parameters_ar.yaml
