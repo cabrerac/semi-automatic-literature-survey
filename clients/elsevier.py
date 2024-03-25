@@ -112,7 +112,7 @@ def request_papers(query, parameters, dates, start_date, end_date):
             if len(papers) == 0:
                 papers = papers_request
             else:
-                papers = papers.append(papers_request)
+                papers = pd.concat([papers, papers_request])
     return papers
 
 

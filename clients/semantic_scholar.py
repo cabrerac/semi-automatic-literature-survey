@@ -13,6 +13,11 @@ api_url = 'http://api.semanticscholar.org/graph/v1/paper/search?query=<query>&of
           'fields=title,abstract,url,year,venue,externalIds'
 citations_url = 'https://api.semanticscholar.org/graph/v1/paper/{paper_id}/citations?fields=title,abstract,url,year,' \
                 'venue&offset=<offset>&limit=<max_papers>'
+api_access = ''
+if exists('./config.json'):
+    with open("./config.json", "r") as file:
+        config = json.load(file)
+    api_access = config['api_access_semantic_scholar']
 max_papers = 100
 start = 0
 client_fields = {'title': 'title', 'abstract': 'keyword'}
@@ -55,7 +60,8 @@ def request_papers(query, parameters, dates, start_date, end_date):
     requests = create_request(parameters, dates, start_date, end_date)
     for request in requests:
         req = api_url.replace('<query>', request).replace('<offset>', str(start)).replace('<max_papers>', str(max_papers))
-        raw_papers = client.request(req, 'get', {}, {})
+        headers = {'x-api-key': api_access}
+        raw_papers = client.request(req, 'get', {}, headers=headers)
         # if there is an exception from the API, retry request
         retry = 0
         while raw_papers.status_code != 200 and retry < max_retries:
@@ -66,7 +72,7 @@ def request_papers(query, parameters, dates, start_date, end_date):
         if len(papers) == 0:
             papers = papers_request
         else:
-            papers = papers.append(papers_request)
+            papers = pd.concat([papers, papers_request])
         while next_paper != -1 and next_paper < offset_limit:
             time.sleep(waiting_time)
             req = api_url.replace('<query>', request).replace('<offset>', str(next_paper))
@@ -81,7 +87,7 @@ def request_papers(query, parameters, dates, start_date, end_date):
             if len(papers) == 0:
                 papers = papers_request
             else:
-                papers = papers.append(papers_request)
+                papers = pd.concat([papers, papers_request])
     return papers
 
 
@@ -185,7 +191,7 @@ def get_citations(folder_name, search_date, step, dates, start_date, end_date):
                 if len(citations) == 0:
                     citations = papers_request
                 else:
-                    citations = citations.append(papers_request)
+                    citations = pd.concat([citations, papers_request])
         if len(citations) > 0:
             citations = filter_papers(citations, dates, start_date, end_date)
         if len(citations) > 0:
@@ -211,7 +217,7 @@ def request_citations(paper_id):
         if len(papers) == 0:
             papers = papers_request
         else:
-            papers = papers.append(papers_request)
+            papers = pd.concat([papers, papers_request])
     return papers
 
 

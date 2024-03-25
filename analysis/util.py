@@ -119,7 +119,7 @@ def merge_papers(step, merge_step_1, merge_step_2, folder_name, search_date):
             df_result['doi'].replace(r'\s+', 'nan', regex=True)
             nan_doi = df_result.loc[df_result['doi'] == 'nan']
             df_result = df_result.drop_duplicates('doi')
-            df_result = df_result.append(nan_doi)
+            df_result = pd.concat([df_result, nan_doi])
             df_result['id'] = list(range(1, len(df_result) + 1))
             save(result, df_result, fr, 'a+')
             remove_repeated(result)
@@ -136,7 +136,7 @@ def remove_repeated(file):
     df['doi'].replace(r'\s+', np.nan, regex=True)
     nan_doi = df.loc[df['doi'] == np.nan]
     df = df.drop_duplicates('doi')
-    df = pd.concat([df. nan_doi])
+    df = pd.concat([df, nan_doi])
     df['title_lower'] = df['title'].str.lower()
     df['title_lower'] = df['title_lower'].str.replace('-', ' ')
     df['title_lower'] = df['title_lower'].str.replace('\n', '')
