@@ -30,6 +30,7 @@ def bert_search(semantic_filters, folder_name, next_file, search_date, step):
         found_papers = pd.DataFrame()
         model = SentenceTransformer('nq-distilbert-base-v1')
         papers['concatenated'] = (papers['title'] + ' ' + papers['abstract'])
+        papers['semantic_score'] = 0.0
         papers_array = papers['concatenated'].values
         encoded_papers = model.encode(papers_array, batch_size=32, convert_to_tensor=True, show_progress_bar=True)
         encoded_papers.shape
@@ -47,8 +48,10 @@ def bert_search(semantic_filters, folder_name, next_file, search_date, step):
                 if hit['score'] > score:
                     paper_array = papers_array[hit['corpus_id']]
                     if len(found_papers) == 0:
+                        papers.loc[papers['concatenated'] == paper_array, 'semantic_score'] = hit['score']
                         found_papers = papers[papers['concatenated'] == paper_array]
                     else:
+                        papers.loc[papers['concatenated'] == paper_array, 'semantic_score'] = hit['score']
                         found_papers = pd.concat([found_papers, papers[papers['concatenated'] == paper_array]])
         columns_to_drop = ['concatenated']
         found_papers = found_papers.drop(columns_to_drop, axis=1)

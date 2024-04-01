@@ -131,7 +131,7 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                                 'abstract': df['abstract']
                             }
                         )
-                        papers = papers.append(papers_scopus)
+                        papers = pd.concat([papers, papers_scopus])
                     if database == 'core':
                         df = df.drop_duplicates('id')
                         dates = df['publishedDate']
