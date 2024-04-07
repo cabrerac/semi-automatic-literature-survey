@@ -3,9 +3,11 @@ from sentence_transformers import SentenceTransformer
 from sentence_transformers import util as sentence_util
 from os.path import exists
 from . import util
+from tqdm import tqdm
 import logging
 
 fr = 'utf-8'
+logger = logging.getLogger('logger')
 
 
 def search(semantic_filters, folder_name, next_file, search_date, step):
@@ -28,11 +30,12 @@ def bert_search(semantic_filters, folder_name, next_file, search_date, step):
         papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + next_file
         papers = pd.read_csv(papers_file)
         found_papers = pd.DataFrame()
-        model = SentenceTransformer('nq-distilbert-base-v1')
-        papers['concatenated'] = (papers['title'] + ' ' + papers['abstract'])
+        model = SentenceTransformer('allenai-specter')
+        papers['concatenated'] = (papers['title'] + '[SEP]' + papers['abstract'])
         papers['semantic_score'] = 0.0
         papers_array = papers['concatenated'].values
-        encoded_papers = model.encode(papers_array, batch_size=32, convert_to_tensor=True, show_progress_bar=True)
+        logger.info("# Creating the embeddings for the preprocessed papers...")
+        encoded_papers = model.encode(papers_array, convert_to_tensor=True, show_progress_bar=True)
         queries = []
         score = 0.0
         for keyword in semantic_filters:
@@ -40,6 +43,7 @@ def bert_search(semantic_filters, folder_name, next_file, search_date, step):
                 queries = keyword['queries']
             if 'score' in keyword:
                 score = keyword['score']
+        logger.info("# Queries semantic matching...")
         for query in queries:
             query_embedding = model.encode(query, convert_to_tensor=True)
             hits = sentence_util.semantic_search(query_embedding, encoded_papers, top_k=len(papers_array))
@@ -90,20 +94,25 @@ def get_relevant_papers(folder_name, search_date, step, semantic_filters, citati
 
 
 def bert_search_relevant_papers(semantic_filters, original_papers, citations_papers, selected_papers):
-    model = SentenceTransformer('nq-distilbert-base-v1')
-    selected_papers['concatenated'] = (selected_papers['title'] + ' ' + selected_papers['abstract'])
+    model = SentenceTransformer('allenai-specter')
+    selected_papers['concatenated'] = (selected_papers['title'] + '[SEP]' + selected_papers['abstract'])
     selected_papers_array = selected_papers['concatenated'].values
-    encoded_selected_papers = model.encode(selected_papers_array, batch_size=32, convert_to_tensor=True, show_progress_bar=True)
+    logger.info("# Creating the embeddings for the selected papers...")
+    encoded_selected_papers = model.encode(selected_papers_array, convert_to_tensor=True, show_progress_bar=True)
     score = 0.0
     for keyword in semantic_filters:
         if 'score' in keyword:
             score = keyword['score']
-    original_papers['concatenated'] = (original_papers['title'] + ' ' + original_papers['abstract'])
+    original_papers['concatenated'] = (original_papers['title'] + '[SEP]' + original_papers['abstract'])
     original_papers['semantic_score'] = 0.0
+    logger.info("# Comparing preprocessed papers...")
+    pbar = tqdm(total=len(original_papers))
     for index, original_paper in original_papers.iterrows():
         concatenated = original_paper['concatenated']
         concatenated_embedding = model.encode(concatenated, convert_to_tensor=True)
-        hits = sentence_util.semantic_search(concatenated_embedding, encoded_selected_papers, top_k=len(original_papers))
+        hits = sentence_util.semantic_search(encoded_selected_papers, concatenated_embedding)
         original_paper['score'] = hits[0]['score']
+        pbar.update(1)
+    pbar.close()
     found_papers = original_papers[original_papers['score'] >= score]
     return found_papers

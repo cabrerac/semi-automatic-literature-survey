@@ -1,6 +1,5 @@
 import pandas as pd
 import re
-from datetime import datetime
 from . import util
 from clients import arxiv
 from clients import ieeexplore
