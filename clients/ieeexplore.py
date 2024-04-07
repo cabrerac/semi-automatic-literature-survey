@@ -5,6 +5,7 @@ import json
 import pandas as pd
 from os.path import exists
 from analysis import util
+from tqdm import tqdm
 import logging
 
 api_access = ''
@@ -14,7 +15,8 @@ if exists('./config.json'):
     api_access = config['api_access_ieee']
 start = 0
 max_papers = 200
-client_fields = {'title': 'article_title', 'abstract': 'abstract'}
+quota = 200
+client_fields = {'abstract': 'abstract', 'title': 'article_title'}
 client_types = {'conferences': 'Conferences', 'early access': 'Early Access', 'journals': 'Journals', 'standards': 'Standards'}
 database = 'ieeexplore'
 f = 'utf-8'
@@ -25,7 +27,7 @@ file_handler = ''
 logger = logging.getLogger('logger')
 
 
-def get_papers(query, synonyms, fields, types, folder_name, search_date):
+def get_papers(query, syntactic_filters, synonyms, fields, types, folder_name, search_date):
     global logger
     logger = logging.getLogger('logger')
     global file_handler
@@ -43,8 +45,8 @@ def get_papers(query, synonyms, fields, types, folder_name, search_date):
         for t in types:
             if t in client_types:
                 c_types.append(client_types[t])
-        parameters = {'query': query_value, 'synonyms': synonyms, 'fields': c_fields, 'types': c_types}
-        papers = request_papers(query, parameters)
+        parameters = {'query': query_value, 'syntactic_filters': syntactic_filters, 'synonyms': synonyms, 'fields': c_fields, 'types': c_types}
+        papers = plan_requests(query, parameters)
         if len(papers) > 0:
             papers = filter_papers(papers)
         if len(papers) > 0:
@@ -56,39 +58,109 @@ def get_papers(query, synonyms, fields, types, folder_name, search_date):
         logger.info("File already exists.")
 
 
-def request_papers(query, parameters):
+def plan_requests(query, parameters):
     logger.info("Retrieving papers. It might take a while...")
+    total_requests = 0
+    planning_requests = 0
     papers = pd.DataFrame()
     reqs = create_request(parameters)
     fields = parameters['fields']
     types = parameters['types']
-    current_request = 0
     for req in reqs:
         for field in fields:
             for p_type in types:
-                current_request = current_request + 1
                 global start
                 raw_papers = request(req, field, p_type, start)
+                total_requests = total_requests + 1
+                planning_requests = planning_requests + 1
                 expected_papers = get_expected_papers(raw_papers, request)
                 times = int(expected_papers / max_papers) - 1
                 mod = int(expected_papers) % max_papers
                 if mod > 0:
                     times = times + 1
-                for t in range(0, times + 1):
-                    time.sleep(waiting_time)
-                    start = max_papers * t
-                    raw_papers = request(req, field, p_type, start)
-                    # if there is an exception from the API, retry request
-                    retry = 0
-                    while raw_papers.status_code != 200 and retry < max_retries:
+                total_requests = total_requests + times
+    if total_requests < quota:
+        papers = request_papers(query, parameters, planning_requests)
+    else:
+        logger.info("The number of expected papers requires " + str(total_requests) + " requests which exceeds the " + database + " quota of " + str(quota) + " requests per day.")
+        if len(parameters['syntactic_filters']) > 0:
+            logger.info("Trying to reduce the number of requests using syntactic filters.")
+            que = ''
+            syntactic_filters = parameters['syntactic_filters']
+            for word in syntactic_filters:
+                que = que.replace('&last', '& ')
+                que = que + "'" + word + "' &last"
+            que = que.replace(' &last', '')
+            parameters['query'] = que
+            reqs = create_request(parameters)
+            fields = parameters['fields']
+            types = parameters['types']
+            for req in reqs:
+                for field in fields:
+                    for p_type in types:
+                        raw_papers = request(req, field, p_type, 0)
+                        planning_requests = planning_requests + 1
+                        total_requests = total_requests + 1
+                        expected_papers = get_expected_papers(raw_papers, request)
+                        times = int(expected_papers / max_papers) - 1
+                        mod = int(expected_papers) % max_papers
+                        if mod > 0:
+                            times = times + 1
+                        total_requests = total_requests + times
+            if total_requests < quota:
+                papers = request_papers(query, parameters, planning_requests)
+            else:
+                logger.info("The number of expected papers requires " + str(total_requests) + " requests which exceeds the " + database + " quota of " + str(quota) + " requests per day.")
+                logger.info("Skipping to next repository. Try to redefine your search queries and syntactic filters.")
+        else:
+            logger.info("Skipping to next repository. Please use syntactic filters to avoid this problem.")
+    return papers
+
+
+def request_papers(query, parameters, planning_requests):
+    total_requests = planning_requests
+    papers = pd.DataFrame()
+    reqs = create_request(parameters)
+    fields = parameters['fields']
+    types = parameters['types']
+    current_request = 0
+    total_queries = len(reqs) * len(fields) * len (types)
+    logger.info("There will be " + str(total_queries) + " different queries to the " + database + " API...")
+    for req in reqs:
+        for field in fields:
+            for p_type in types:
+                current_request = current_request + 1
+                logger.info("Query " + str(current_request) + "...")
+                global start
+                raw_papers = request(req, field, p_type, start)
+                total_requests = total_requests + 1
+                expected_papers = get_expected_papers(raw_papers, request)
+                times = int(expected_papers / max_papers) - 1
+                mod = int(expected_papers) % max_papers
+                if mod > 0:
+                    times = times + 1
+                if (total_requests + times) < quota:
+                    for t in tqdm(range(0, times + 1)):
                         time.sleep(waiting_time)
-                        retry = retry + 1
+                        start = max_papers * t
                         raw_papers = request(req, field, p_type, start)
-                    papers_request = process_raw_papers(query, raw_papers)
-                    if len(papers) == 0:
-                        papers = papers_request
-                    else:
-                        papers = pd.concat([papers, papers_request])
+                        total_requests = total_requests + 1
+                        # if there is an exception from the API, retry request
+                        retry = 0
+                        while raw_papers.status_code != 200 and retry < max_retries:
+                            time.sleep(waiting_time)
+                            retry = retry + 1
+                            raw_papers = request(req, field, p_type, start)
+                            total_requests = total_requests + 1
+                        papers_request = process_raw_papers(query, raw_papers)
+                        if len(papers) == 0:
+                            papers = papers_request
+                        else:
+                            papers = pd.concat([papers, papers_request])
+                else:
+                    logger.info("The number of requests " + str(total_requests) + " exceeds the " + database + " quota of " + str(quota) + " requests per day.")
+                    logger.info("If you continue requesting the " + database + " API with the current key today, you will get errors from the API.")
+                    logger.info("Skipping to next repository.")
     return papers
 
 

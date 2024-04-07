@@ -4,9 +4,8 @@ import json
 from .apis.generic import Generic
 from os.path import exists
 from analysis import util
-from analysis import retrieve
+from tqdm import tqdm
 import logging
-import re
 
 
 api_url = 'http://api.springernature.com/metadata/json?q=language:en<dates>'
@@ -17,6 +16,7 @@ if exists('./config.json'):
     api_access = config['api_access_springer']
 start = 0
 max_papers = 50
+quota = 500
 client_fields = {'title': 'title'}
 database = 'springer'
 f = 'utf-8'
@@ -27,7 +27,7 @@ file_handler = ''
 logger = logging.getLogger('logger')
 
 
-def get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date):
+def get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date):
     global logger
     logger = logging.getLogger('logger')
     global file_handler
@@ -41,18 +41,12 @@ def get_papers(query, synonyms, fields, types, dates, start_date, end_date, fold
         for field in fields:
             if field in client_fields:
                 c_fields.append(client_fields[field])
-        parameters = {'query': query_value, 'synonyms': synonyms, 'fields': c_fields, 'types': types}
-        papers = request_papers(query, parameters, dates, start_date, end_date)
+        parameters = {'query': query_value, 'syntactic_filters': syntactic_filters, 'synonyms': synonyms, 'fields': c_fields, 'types': types}
+        papers = plan_requests(query, parameters, dates, start_date, end_date)
         if len(papers) > 0:
             papers = filter_papers(papers)
         if len(papers) > 0:
             papers = clean_papers(papers)
-        if len(papers) > 0:
-            keywords = []
-            words = re.split(' & | Â¦ ', query_value)
-            for word in words:
-                keywords.append(word.replace('%29', '').replace('%28', '').replace("'", ''))
-            papers = retrieve.filter_by_keywords_springer(papers, keywords, synonyms)
         if len(papers) > 0:
             util.save(file_name, papers, f, 'a')
         logger.info("Retrieved papers after filters and cleaning: " + str(len(papers)))
@@ -60,21 +54,51 @@ def get_papers(query, synonyms, fields, types, dates, start_date, end_date, fold
         logger.info("File already exists.")
 
 
-def request_papers(query, parameters, dates, start_date, end_date):
+def plan_requests(query, parameters, dates, start_date, end_date):
     logger.info("Retrieving papers. It might take a while...")
+    total_requests = 0
     papers = pd.DataFrame()
-    request = create_request(parameters, dates, start_date, end_date)
+    request = create_request(parameters, dates, start_date, end_date, False)
     raw_papers = client.request(request, 'get', {}, {})
+    total_requests = total_requests + 1
     expected_papers = get_expected_papers(raw_papers)
+    logger.info("Expected papers from springer: " + str(expected_papers) + "...")
     times = int(expected_papers / max_papers) - 1
     mod = int(expected_papers) % max_papers
     if mod > 0:
         times = times + 1
-    for t in range(0, times + 1):
+    if times < quota:
+        papers = request_papers(times, query, parameters, dates, start_date, end_date, False)
+    else:
+        logger.info("The number of expected papers requires " + str(times + total_requests) + " requests which exceeds the " + database + " quota of " + str(quota) + " requests per day.")
+        if len(parameters['syntactic_filters']) > 0:
+            logger.info("Trying to reduce the number of requests using syntactic filters.")
+            request = create_request(parameters, dates, start_date, end_date, True)
+            raw_papers = client.request(request, 'get', {}, {})
+            total_requests = total_requests + 1
+            expected_papers = get_expected_papers(raw_papers)
+            logger.info("Expected papers from " + database + " using syntactic filters: " + str(expected_papers) + "...")
+            times = int(expected_papers / max_papers) - 1
+            mod = int(expected_papers) % max_papers
+            if mod > 0:
+                times = times + 1
+            if (times + total_requests) < quota:
+                papers = request_papers(times, query, parameters, dates, start_date, end_date, True)
+            else:
+                logger.info("The number of expected papers requires " + str(times + total_requests) + " requests which exceeds the " + database + " quota of " + str(quota) + " requests per day.")
+                logger.info("Skipping to next repository. Try to redefine your search queries and syntactic filters.")
+        else:
+            logger.info("Skipping to next repository. Please use syntactic filters to avoid this problem.")
+    return papers
+
+
+def request_papers(times, query, parameters, dates, start_date, end_date, syntactic_filter):
+    papers = pd.DataFrame()
+    for t in tqdm(range(0, times + 1)):
         time.sleep(waiting_time)
         global start
         start = t * max_papers
-        request = create_request(parameters, dates, start_date, end_date)
+        request = create_request(parameters, dates, start_date, end_date, syntactic_filter)
         raw_papers = client.request(request, 'get', {}, {})
         # if there is an exception from the API, retry request
         retry = 0
@@ -90,16 +114,28 @@ def request_papers(query, parameters, dates, start_date, end_date):
     return papers
 
 
-def create_request(parameters, dates, start_date, end_date):
+def create_request(parameters, dates, start_date, end_date, syntactic_filter):
     req = api_url
     if dates is True:
         req = req.replace('<dates>', '%20onlinedatefrom:' + str(start_date) +'%20onlinedateto:' + str(end_date) + '%20')
     else:
         req = req.replace('<dates>', '')
-    req = req + client.default_query(parameters)
+    if not syntactic_filter:
+        req = req + client.default_query(parameters)
+        req = req.replace('%28', '(').replace('%29', ')').replace('+', '%20')
+        req = req.replace('title:', '')
+    else:
+        query = ''
+        syntactic_filters = parameters['syntactic_filters']
+        for word in syntactic_filters:
+            query = query.replace('&last', '& ')
+            query = query + "'" + word + "' &last"
+        query = query.replace(' &last', '')
+        parameters['query'] = query
+        req = req + client.default_query(parameters)
+        req = req.replace('%28', '(').replace('%29', ')').replace('+', '%20')
+        req = req.replace('title:', '')
     req = req + '&s='+str(start)+'&p='+str(max_papers)+'&api_key=' + api_access
-    req = req.replace('%28', '(').replace('%29', ')').replace('+', '%20')
-    req = req.replace('title:', '')
     return req
 
 

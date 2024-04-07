@@ -11,3 +11,4 @@ numpy~=1.23.1
 requests~=2.31.0
 beautifulsoup4==4.12.2
 sentence-transformers==2.5.1
+tqdm==4.66.2

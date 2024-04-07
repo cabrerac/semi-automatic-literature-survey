@@ -4,6 +4,7 @@ import json
 from .apis.generic import Generic
 from os.path import exists
 from analysis import util
+from tqdm import tqdm
 import logging
 
 
@@ -15,6 +16,7 @@ if exists('./config.json'):
     api_access = config['api_access_core']
 start = 0
 max_papers = 1000
+quota = 1000
 client_fields = {'title': 'title', 'abstract': 'abstract'}
 database = 'core'
 f = 'utf-8'
@@ -25,7 +27,7 @@ file_handler = ''
 logger = logging.getLogger('logger')
 
 
-def get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date):
+def get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date):
     global logger
     logger = logging.getLogger('logger')
     global file_handler
@@ -39,8 +41,8 @@ def get_papers(query, synonyms, fields, types, dates, start_date, end_date, fold
         for field in fields:
             if field in client_fields:
                 c_fields.append(client_fields[field])
-        parameters = {'query': query_value, 'synonyms': synonyms, 'fields': c_fields, 'types': types}
-        papers = request_papers(query, parameters, dates, start_date, end_date)
+        parameters = {'query': query_value, 'syntactic_filters': syntactic_filters, 'synonyms': synonyms, 'fields': c_fields, 'types': types}
+        papers = plan_requests(query, parameters, dates, start_date, end_date)
         if len(papers) > 0:
             papers = filter_papers(papers)
         if len(papers) > 0:
@@ -52,14 +54,58 @@ def get_papers(query, synonyms, fields, types, dates, start_date, end_date, fold
         logger.info("File already exists.")
 
 
-def request_papers(query, parameters, dates, start_date, end_date):
+def plan_requests(query, parameters, dates, start_date, end_date):
     logger.info("Retrieving papers. It might take a while...")
     papers = pd.DataFrame()
     request = create_request(parameters, dates, start_date, end_date)
     headers = {'Authorization': 'Bearer ' + api_access}
     raw_papers = client.request(api_url, 'post', request, headers)
     expected_papers = get_expected_papers(raw_papers)
+    logger.info("Expected papers from core: " + str(expected_papers) + "...")
+    times = int(expected_papers / max_papers) - 1
+    mod = int(expected_papers) % max_papers
+    if mod > 0:
+        times = times + 1
+    if times < quota:
+        papers = request_papers(query, parameters, dates, start_date, end_date)
+    else:
+        logger.info("The number of expected papers requires " + str(times) + " requests which exceeds the " + database + " quota of " + str(quota) + " requests per day.")
+        if len(parameters['syntactic_filters']) > 0:
+            logger.info("Trying to reduce the number of requests using syntactic filters.")
+            que = ''
+            syntactic_filters = parameters['syntactic_filters']
+            for word in syntactic_filters:
+                que = que.replace('&last', '& ')
+                que = que + "'" + word + "' &last"
+            que = que.replace(' &last', '')
+            parameters['query'] = que
+            request = create_request(parameters, dates, start_date, end_date)
+            headers = {'Authorization': 'Bearer ' + api_access}
+            raw_papers = client.request(api_url, 'post', request, headers)
+            expected_papers = get_expected_papers(raw_papers)
+            logger.info("Expected papers from core: " + str(expected_papers) + "...")
+            times = int(expected_papers / max_papers) - 1
+            mod = int(expected_papers) % max_papers
+            if mod > 0:
+                times = times + 1
+            if times < quota:
+                papers = request_papers(query, parameters, dates, start_date, end_date)
+            else:
+                logger.info("The number of expected papers requires " + str(times) + " requests which exceeds the " + database + " quota of " + str(quota) + " requests per day.")
+                logger.info("Skipping to next repository. Try to redefine your search queries and syntactic filters.")
+        else:
+            logger.info("Skipping to next repository. Please use syntactic filters to avoid this problem.")
+    return papers
+
+
+def request_papers(query, parameters, dates, start_date, end_date):
+    papers = pd.DataFrame()
+    request = create_request(parameters, dates, start_date, end_date)
+    headers = {'Authorization': 'Bearer ' + api_access}
+    raw_papers = client.request(api_url, 'post', request, headers)
+    expected_papers = get_expected_papers(raw_papers)
     past_papers = -1
+    pbar = tqdm(total=expected_papers)
     while len(papers) < expected_papers:
         if past_papers == len(papers):
             break
@@ -82,6 +128,8 @@ def request_papers(query, parameters, dates, start_date, end_date):
             papers = papers_request
         else:
             papers = pd.concat([papers, papers_request])
+        pbar.update(len(papers_request))
+    pbar.close()
     return papers
 
 
@@ -157,7 +205,7 @@ def filter_papers(papers):
 
 
 def clean_papers(papers):
-    logger.info("cleaning papers...")
+    logger.info("Cleaning papers...")
     try:
         papers = papers.drop(columns=['acceptedDate', 'createdDate', 'arxivId', 'authors', 'citationCount',
                                       'contributors', 'outputs', 'createDate', 'dataProviders', 'depositedDate',

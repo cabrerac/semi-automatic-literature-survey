@@ -6,6 +6,7 @@ from analysis import util
 from .apis.generic import Generic
 from bs4 import BeautifulSoup
 import logging
+from tqdm import tqdm
 
 
 database = 'scopus'
@@ -22,13 +23,14 @@ if exists('./config.json'):
 start = 0
 max_papers = 25
 limit = 5000
+quota = 2000
 waiting_time = 1
 max_retries = 3
 file_handler = ''
 logger = logging.getLogger('logger')
 
 
-def get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date):
+def get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date):
     global logger
     logger = logging.getLogger('logger')
     global file_handler
@@ -42,8 +44,8 @@ def get_papers(query, synonyms, fields, types, dates, start_date, end_date, fold
         for field in fields:
             if field in client_fields[database]:
                 c_fields.append(client_fields[database][field])
-        parameters = {'query': query_value, 'synonyms': synonyms, 'fields': c_fields, 'types': types}
-        papers = request_papers(query, parameters, dates, start_date, end_date)
+        parameters = {'query': query_value, 'syntactic_filters': syntactic_filters, 'synonyms': synonyms, 'fields': c_fields, 'types': types}
+        papers = plan_requests(query, parameters, dates, start_date, end_date)
         if len(papers) > 0:
             papers = filter_papers(papers, dates, start_date, end_date)
         if len(papers) > 0:
@@ -57,36 +59,83 @@ def get_papers(query, synonyms, fields, types, dates, start_date, end_date, fold
         logger.info("File already exists.")
 
 
-def request_papers(query, parameters, dates, start_date, end_date):
-    dates = True
+def plan_requests(query, parameters, dates, start_date, end_date):
     end_date = end_date.replace(year=end_date.year + 1)
     logger.info("Retrieving papers. It might take a while...")
     papers = pd.DataFrame()
-    request = create_request(parameters, dates, start_date.year, end_date.year)
-    headers = {'X-ELS-APIKey': api_access}
-    raw_papers = client.request(request, 'get', {}, headers)
-    expected_papers = get_expected_papers(raw_papers)
+    start_year = end_date.year - 1
+    end_year = end_date.year
+    expected_papers = 0
     list_years = []
-    if expected_papers > limit:
-        start_year = end_date.year - 1
-        end_year = end_date.year
-        total_papers = 0
-        while total_papers < expected_papers and start_year >= start_date.year:
-            request = create_request(parameters, True, start_year, end_year)
-            headers = {'X-ELS-APIKey': api_access}
-            raw_papers = client.request(request, 'get', {}, headers)
-            expected_papers_request = get_expected_papers(raw_papers)
-            if expected_papers_request > 0:
-                list_years.append({'start_year': start_year, 'end_year': end_year,
-                                   'expected_papers': expected_papers_request})
-            end_year = start_year - 1
-            start_year = end_year - 1
-            total_papers = total_papers + expected_papers_request
+    total_requests = 0
+    while start_year >= start_date.year:
+        request = create_request(query, parameters, True, start_year, end_year)
+        headers = {'X-ELS-APIKey': api_access}
+        raw_papers = client.request(request, 'get', {}, headers)
+        total_requests = total_requests + 1
+        expected_papers_request = get_expected_papers(raw_papers)
+        if expected_papers_request > 0:
+            list_years.append({'start_year': start_year, 'end_year': end_year,
+                               'expected_papers': expected_papers_request})
+        end_year = end_year - 1
+        start_year = start_year - 1
+        expected_papers = expected_papers + expected_papers_request
+    times = int(expected_papers / max_papers) - 1
+    mod = int(expected_papers) % max_papers
+    if mod > 0:
+        times = times + 1
+    if times < quota:
+        papers = request_papers(query, parameters, list_years)
     else:
-        list_years.append({'start_year': start_date.year, 'end_year': end_date.year,
-                           'expected_papers': expected_papers})
+        logger.info("The number of expected papers requires " + str(times + total_requests) + " requests which exceeds the " + database + " quota of " + str(quota) + " requests per day.")
+        if len(parameters['syntactic_filters']) > 0:
+            logger.info("Trying to reduce the number of requests using syntactic filters.")
+            que = ''
+            syntactic_filters = parameters['syntactic_filters']
+            for word in syntactic_filters:
+                que = que.replace('&last', '& ')
+                que = que + "'" + word + "' &last"
+            que = que.replace(' &last', '')
+            parameters['query'] = que
+            start_year = end_date.year - 1
+            end_year = end_date.year
+            expected_papers = 0
+            list_years = []
+            total_requests = 0
+            while start_year >= start_date.year:
+                request = create_request(query, parameters, True, start_year, end_year)
+                headers = {'X-ELS-APIKey': api_access}
+                raw_papers = client.request(request, 'get', {}, headers)
+                total_requests = total_requests + 1
+                expected_papers_request = get_expected_papers(raw_papers)
+                if expected_papers_request > 0:
+                    list_years.append({'start_year': start_year, 'end_year': end_year,
+                                       'expected_papers': expected_papers_request})
+                end_year = end_year - 1
+                start_year = start_year - 1
+                expected_papers = expected_papers + expected_papers_request
+            logger.info("Expected papers from " + database + " using syntactic filters: " + str(expected_papers) + "...")
+            times = int(expected_papers / max_papers) - 1
+            mod = int(expected_papers) % max_papers
+            if mod > 0:
+                times = times + 1
+            if times < quota:
+                papers = request_papers(query, parameters, list_years)
+            else:
+                logger.info("The number of expected papers requires " + str(times + total_requests) + " requests which exceeds the " + database + " quota of " + str(quota) + " requests per day.")
+                logger.info("Skipping to next repository. Try to redefine your search queries and syntactic filters.")
+        else:
+            logger.info("Skipping to next repository. Please use syntactic filters to avoid this problem.")
+    return papers
 
+
+def request_papers(query, parameters, list_years):
+    current_request = 0
+    papers = pd.DataFrame()
+    logger.info("There will be " + str(len(list_years)) + " different queries to the " + database + " API...")
     for years in list_years:
+        current_request = current_request + 1
+        logger.info("Query " + str(current_request) + "...")
         expected_papers = years['expected_papers']
         start_year = years['start_year']
         end_year = years['end_year']
@@ -94,11 +143,11 @@ def request_papers(query, parameters, dates, start_date, end_date):
         mod = int(expected_papers) % max_papers
         if mod > 0:
             times = times + 1
-        for t in range(0, times + 1):
+        for t in tqdm(range(0, times + 1)):
             time.sleep(waiting_time)
             global start
             start = t * max_papers
-            request = create_request(parameters, dates, start_year, end_year)
+            request = create_request(query, parameters, True, start_year, end_year)
             headers = {'X-ELS-APIKey': api_access}
             raw_papers = client.request(request, 'get', {}, headers)
             # if there is an exception from the API, retry request
@@ -116,7 +165,7 @@ def request_papers(query, parameters, dates, start_date, end_date):
     return papers
 
 
-def create_request(parameters, dates, start_date, end_date):
+def create_request(query, parameters, dates, start_date, end_date):
     request = api_url.replace('<type>', 'search')
     request = request + 'scopus?' + 'start=' + str(start) + '&count=' + str(max_papers)
     query = client.default_query(parameters)
@@ -183,10 +232,11 @@ def process_raw_papers(query, raw_papers):
 
 
 def get_abstracts(papers):
-    logger.info("Retrieving abstracts from Scopus. It might take a while...")
+    logger.info("Retrieving abstracts for " + str(len(papers)) + " papers from Scopus. It might take a while...")
     try:
         links = []
         abstracts = []
+        pbar = tqdm(total=len(papers))
         for index, paper in papers.iterrows():
             urls = paper['url']
             link = ''
@@ -197,6 +247,8 @@ def get_abstracts(papers):
             links.append(link)
             abstract = get_abstract(paper)
             abstracts.append(abstract)
+            pbar.update(1)
+        pbar.close()
         papers['url'] = links
         papers['abstract'] = abstracts
     except Exception as ex:

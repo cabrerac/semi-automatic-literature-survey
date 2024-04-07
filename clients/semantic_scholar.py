@@ -4,13 +4,15 @@ import json
 from .apis.generic import Generic
 from os.path import exists
 from analysis import util
+from tqdm import tqdm
 import logging
-
+import datetime
 
 client = Generic()
 database = 'semantic_scholar'
-api_url = 'https://api.semanticscholar.org/graph/v1/paper/search?query=<query>&offset=<offset>&limit=<max_papers>&' \
-          'fields=title,abstract,url,year,venue,externalIds'
+api_url = 'https://api.semanticscholar.org/graph/v1/paper/search/?query=<query>&offset=<offset>&limit=<max_papers>&' \
+          'fields=title,abstract,url,year,venue,externalIds&publicationTypes=JournalArticle,BookSection,Study' \
+          '&sort=citationCount:desc'
 citations_url = 'https://api.semanticscholar.org/graph/v1/paper/{paper_id}/citations?fields=title,abstract,url,year,' \
                 'venue&offset=<offset>&limit=<max_papers>'
 api_access = ''
@@ -31,7 +33,7 @@ file_handler = ''
 logger = logging.getLogger('logger')
 
 
-def get_papers(query, types, dates, start_date, end_date, folder_name, search_date):
+def get_papers(query, syntactic_filters, types, dates, start_date, end_date, folder_name, search_date):
     global logger
     logger = logging.getLogger('logger')
     global file_handler
@@ -41,8 +43,8 @@ def get_papers(query, types, dates, start_date, end_date, folder_name, search_da
     file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
                 + query_name.lower().replace(' ', '_') + '_' + database + '.csv'
     if not exists(file_name):
-        parameters = {'query': query_value, 'synonyms': {}, 'types': types}
-        papers = request_papers(query, parameters, dates, start_date, end_date)
+        parameters = {'query': query_value, 'syntactic_filters': syntactic_filters, 'synonyms': {}, 'types': types}
+        papers = plan_requests(query, parameters, dates, start_date, end_date)
         if len(papers) > 0:
             papers = filter_papers(papers, dates, start_date, end_date)
         if len(papers) > 0:
@@ -54,11 +56,67 @@ def get_papers(query, types, dates, start_date, end_date, folder_name, search_da
         logger.info("File already exists.")
 
 
-def request_papers(query, parameters, dates, start_date, end_date):
+def plan_requests(query, parameters, dates, start_date, end_date):
     logger.info("Retrieving papers. It might take a while...")
     papers = pd.DataFrame()
     requests = create_request(parameters, dates, start_date, end_date)
+    planned_requests = []
     for request in requests:
+        req = api_url.replace('<query>', request['query']).replace('<offset>', str(start)).replace('<max_papers>', str(max_papers))
+        headers = {}
+        if len(api_access) > 0:
+            headers = {'x-api-key': api_access}
+        raw_papers = client.request(req, 'get', {}, headers=headers)
+        # if there is an exception from the API, retry request
+        retry = 0
+        while raw_papers.status_code != 200 and retry < max_retries:
+            time.sleep(waiting_time)
+            retry = retry + 1
+            raw_papers = client.request(req, 'get', {}, headers=headers)
+        papers_request, next_paper, total = process_raw_papers(query, raw_papers)
+        if total < offset_limit:
+            planned_requests.append(request['query'])
+        else:
+            que = ''
+            syntactic_filters = parameters['syntactic_filters']
+            for word in syntactic_filters:
+                que = que.replace('&last', '& ')
+                que = que + "'" + word + "' &last"
+            que = que.replace(' &last', '')
+            parameters_syn = parameters
+            parameters_syn['query'] = que
+            start_d = datetime.datetime(request['initial_year'], 1, 1)
+            end_d = datetime.datetime(request['end_year'], 1, 1)
+            requests_syn = create_request(parameters_syn, dates, start_d, end_d)
+            for request_syn in requests_syn:
+                req = api_url.replace('<query>', request_syn['query']).replace('<offset>', str(start)).replace(
+                    '<max_papers>', str(max_papers))
+                headers = {}
+                if len(api_access) > 0:
+                    headers = {'x-api-key': api_access}
+                raw_papers = client.request(req, 'get', {}, headers=headers)
+                # if there is an exception from the API, retry request
+                retry = 0
+                while raw_papers.status_code != 200 and retry < max_retries:
+                    time.sleep(waiting_time)
+                    retry = retry + 1
+                    raw_papers = client.request(req, 'get', {}, headers=headers)
+                papers_request, next_paper, total = process_raw_papers(query, raw_papers)
+                if total < offset_limit:
+                    planned_requests.append(request_syn['query'])
+                else:
+                    planned_requests.append(request['query'])
+    papers = request_papers(query, planned_requests)
+    return papers
+
+
+def request_papers(query, requests):
+    papers = pd.DataFrame()
+    logger.info("There will be " + str(len(requests)) + " different queries to the " + database + " API...")
+    current_request = 0
+    for request in requests:
+        current_request = current_request + 1
+        logger.info("Query " + str(current_request) + "...")
         req = api_url.replace('<query>', request).replace('<offset>', str(start)).replace('<max_papers>', str(max_papers))
         headers = {}
         if len(api_access) > 0:
@@ -70,11 +128,17 @@ def request_papers(query, parameters, dates, start_date, end_date):
             time.sleep(waiting_time)
             retry = retry + 1
             raw_papers = client.request(req, 'get', {}, headers=headers)
-        papers_request, next_paper = process_raw_papers(query, raw_papers)
+        papers_request, next_paper, total = process_raw_papers(query, raw_papers)
         if len(papers) == 0:
             papers = papers_request
         else:
             papers = pd.concat([papers, papers_request])
+        if total > offset_limit:
+            logger.info("The query returns more papers than the " + database + " limit...")
+            logger.info("Retrieving the first " + str(offset_limit) + " more cited papers instead...")
+            total = offset_limit
+        pbar = tqdm(total=total)
+        pbar.update(len(papers_request))
         while next_paper != -1 and next_paper < offset_limit:
             time.sleep(waiting_time)
             req = api_url.replace('<query>', request).replace('<offset>', str(next_paper))
@@ -85,11 +149,13 @@ def request_papers(query, parameters, dates, start_date, end_date):
                 time.sleep(waiting_time)
                 retry = retry + 1
                 raw_papers = client.request(req, 'get', {}, headers=headers)
-            papers_request, next_paper = process_raw_papers(query, raw_papers)
+            papers_request, next_paper, total = process_raw_papers(query, raw_papers)
             if len(papers) == 0:
                 papers = papers_request
             else:
                 papers = pd.concat([papers, papers_request])
+            pbar.update(len(papers_request))
+        pbar.close()
     return papers
 
 
@@ -105,11 +171,12 @@ def create_request(parameters, dates, start_date, end_date):
             final_year = end_date.year
             while initial_year < final_year:
                 query = query.replace('<dates>', '&year=' + str(initial_year) + '-' + str(initial_year+1))
-                queries.append(query)
+                queries.append({'query': query, 'initial_year': initial_year, 'end_year': initial_year+1})
                 query = query_temp + '<dates>'
                 initial_year = initial_year + 1
         else:
             query = query.replace('<dates>', '')
+            queries.append({'query': query})
             queries.append(query)
     return queries
 
@@ -119,11 +186,14 @@ def process_raw_papers(query, raw_papers):
     query_value = query[query_name]
     papers_request = pd.DataFrame()
     next_paper = -1
+    total = -1
     if raw_papers.status_code == 200:
         try:
             raw_json = json.loads(raw_papers.text)
             if 'next' in raw_json:
                 next_paper = raw_json['next']
+            if 'total' in raw_json:
+                    total = raw_json['total']
             papers_request = pd.json_normalize(raw_json['data'])
             papers_request.loc[:, 'database'] = database
             papers_request.loc[:, 'query_name'] = query_name
@@ -139,7 +209,7 @@ def process_raw_papers(query, raw_papers):
                     + file_handler)
         logger.debug("API response: " + raw_papers.text)
         logger.debug("Request: " + raw_papers.request.url)
-    return papers_request, next_paper
+    return papers_request, next_paper, total
 
 
 def filter_papers(papers, dates, start_date, end_date):
@@ -177,34 +247,32 @@ def clean_papers(papers):
 
 def get_citations(folder_name, search_date, step, dates, start_date, end_date):
     logger.info("Retrieving citation papers. It might take a while...")
-    preprocessed_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
-                             '_preprocessed_papers.csv'
-    if not exists(preprocessed_file_name):
-        papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + \
-                      '_manually_filtered_by_full_text_papers.csv'
-        papers = pd.read_csv(papers_file)
-        citations = pd.DataFrame()
-        for index, row in papers.iterrows():
-            paper_id = 'DOI:' + row['doi']
-            if 'http' in paper_id or paper_id == '':
-                paper_id = 'URL:' + row['doi']
-            if paper_id != '':
-                papers_request = request_citations(paper_id)
-                if len(citations) == 0:
-                    citations = papers_request
-                else:
-                    citations = pd.concat([citations, papers_request])
-        if len(citations) > 0:
-            citations = filter_papers(citations, dates, start_date, end_date)
-        if len(citations) > 0:
-            citations = clean_papers(citations)
-        if len(citations) > 0:
-            citations.loc[:, 'type'] = 'preprocessed'
-            citations.loc[:, 'status'] = 'unknown'
-            citations.loc[:, 'id'] = list(range(1, len(citations) + 1))
-            util.save(preprocessed_file_name, citations, fr, 'a+')
-        logger.info("Retrieved papers after filters and cleaning: " + str(len(papers)))
-    return preprocessed_file_name
+    papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + '_manually_filtered_by_full_text_papers.csv'
+    papers = pd.read_csv(papers_file)
+    citations = pd.DataFrame()
+    pbar = tqdm(total=len(papers))
+    for index, row in papers.iterrows():
+        paper_id = 'DOI:' + row['doi']
+        if 'http' in paper_id or paper_id == '':
+            paper_id = 'URL:' + row['doi']
+        if paper_id != '':
+            papers_request = request_citations(paper_id)
+            if len(citations) == 0:
+                citations = papers_request
+            else:
+                citations = pd.concat([citations, papers_request])
+        pbar.update(1)
+    pbar.close()
+    if len(citations) > 0:
+        citations = filter_papers(citations, dates, start_date, end_date)
+    if len(citations) > 0:
+        citations = clean_papers(citations)
+    if len(citations) > 0:
+        citations.loc[:, 'type'] = 'preprocessed'
+        citations.loc[:, 'status'] = 'unknown'
+        citations.loc[:, 'id'] = list(range(1, len(citations) + 1))
+    logger.info("Retrieved papers after filters and cleaning: " + str(len(citations)))
+    return citations
 
 
 def request_citations(paper_id):

@@ -8,6 +8,7 @@ from clients import springer
 from clients import elsevier
 from clients import core
 from clients import semantic_scholar
+from analysis import semantic_analyser
 from os.path import exists
 from gensim.utils import simple_preprocess
 from gensim.parsing.preprocessing import strip_tags
@@ -21,21 +22,21 @@ w_tokenizer = WhitespaceTokenizer()
 logger = logging.getLogger('logger')
 
 
-def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, start_date, end_date, search_date):
+def get_papers(queries, syntactic_filters, synonyms, databases, fields, types, folder_name, dates, start_date, end_date, search_date):
     global logger
     logger = logging.getLogger('logger')
     for query in queries:
         if 'arxiv' in databases:
             logger.info("# Requesting ArXiv for query: " + list(query.keys())[0] + "...")
-            arxiv.get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+            arxiv.get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'springer' in databases:
             logger.info("# Requesting Springer for query: " + list(query.keys())[0] + "...")
-            springer.get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+            springer.get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'ieeexplore' in databases:
             logger.info("# Requesting IEEE Xplore for query: " + list(query.keys())[0] + "...")
-            ieeexplore.get_papers(query, synonyms, fields, types, folder_name, search_date)
+            ieeexplore.get_papers(query, syntactic_filters, synonyms, fields, types, folder_name, search_date)
 
         # Scopus provides papers metadata then abstracts must be retrieved from the science direct database.
         # Scopus indexes different databases which are queried separately (e.g., ieeeXplore).
@@ -43,24 +44,33 @@ def get_papers(queries, synonyms, databases, fields, types, folder_name, dates, 
         # from science direct.
         if 'scopus' in databases:
             logger.info("# Requesting Scopus for query: " + list(query.keys())[0] + "...")
-            elsevier.get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+            elsevier.get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'core' in databases:
             logger.info("# Requesting CORE for query: " + list(query.keys())[0] + "...")
-            core.get_papers(query, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+            core.get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'semantic_scholar' in databases:
             # Semantic Scholar searches over its knowledge graph. Synonyms are not needed in this case.
             logger.info("# Requesting Semantic Scholar query: " + list(query.keys())[0] + "...")
-            semantic_scholar.get_papers(query, types, dates, start_date, end_date, folder_name, search_date)
+            semantic_scholar.get_papers(query, syntactic_filters, types, dates, start_date, end_date, folder_name, search_date)
 
 
-def get_citations(folder_name, search_date, step, dates, start_date, end_date):
+def snowballing(folder_name, search_date, step, dates, start_date, end_date, semantic_filters):
     global logger
     logger = logging.getLogger('logger')
-    logger.info("Requesting Semantic Scholar for papers citations...")
-    file_name = semantic_scholar.get_citations(folder_name, search_date, step, dates, start_date, end_date)
-    return file_name
+    preprocessed_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
+                             '_preprocessed_papers.csv'
+    if not exists(preprocessed_file_name):
+        logger.info("Requesting Semantic Scholar for papers citations...")
+        citations_papers = semantic_scholar.get_citations(folder_name, search_date, step, dates, start_date, end_date)
+        logger.info("Using semantic search to find relevant papers using the manually selected set...")
+        logger.info("This process is applied on the preprocessed paeprs set and the citations papers...")
+        relevant_papers = semantic_analyser.get_relevant_papers(folder_name, search_date, step, semantic_filters, citations_papers)
+        util.save(preprocessed_file_name, relevant_papers, fr, 'a+')
+    else:
+        logger.info("File already exists.")
+    return preprocessed_file_name
 
 
 def preprocess(queries, databases, folder_name, search_date, date_filter, start_date, end_date, step):

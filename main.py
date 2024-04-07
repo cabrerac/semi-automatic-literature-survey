@@ -39,7 +39,7 @@ def main(parameters_file):
         # Getting papers from databases
         step = 0
         logger.info(str(step) + '. Getting all papers...')
-        retrieve.get_papers(queries, synonyms, databases, fields, types, folder_name, dates, start_date, end_date,
+        retrieve.get_papers(queries, syntactic_filters, synonyms, databases, fields, types, folder_name, dates, start_date, end_date,
                             search_date)
 
         # Preprocessing papers
@@ -49,23 +49,15 @@ def main(parameters_file):
         logger.info('# Preprocessing results can be found at: ' + file_name)
         next_file = str(step) + '_preprocessed_papers.csv'
 
-        # Syntactic filter by abstract
-        if len(syntactic_filters) > 0:
-            step = step + 1
-            logger.info(str(step) + '. Syntactic filter by abstract...')
-            file_name = retrieve.filter_papers(syntactic_filters, synonyms, folder_name, next_file, search_date, step)
-            logger.info('# Syntactic filtering results can be found at: ' + file_name)
-            next_file = str(step) + '_syntactic_filtered_papers.csv'
-
         # Semantic filter by abstract
         if len(semantic_filters) > 0:
             step = step + 1
             logger.info(str(step) + '. Semantic filter by abstract...')
             file_name = semantic_analyser.search(semantic_filters, folder_name, next_file, search_date, step)
             logger.info('Semantic filtering results can be found at: ' + file_name)
-            if file_name == str(step-1) + '_syntactic_filtered_papers.csv':
+            if file_name == str(step-1) + '_preprocessed_papers.csv':
                 step = step - 1
-                next_file = str(step) + '_syntactic_filtered_papers.csv'
+                next_file = str(step) + '_preprocessed_papers.csv'
             else:
                 next_file = str(step) + '_semantic_filtered_papers.csv'
 
@@ -80,41 +72,26 @@ def main(parameters_file):
         next_file = manual.manual_filter_by_full_text(folder_name, next_file, search_date, step)
         merge_step_1 = step
 
-        # Snowballing process and apply filters on citing papers
-        # Snowballing
+        # Snowballing process
         step = step + 1
         logger.info(str(step) + '. Snowballing...')
-        file_name = retrieve.get_citations(folder_name, search_date, step, dates, start_date, end_date)
+        file_name = retrieve.snowballing(folder_name, search_date, step, dates, start_date, end_date, semantic_filters)
         logger.info('Snowballing results can be found at: ' + file_name)
         next_file = str(step) + '_preprocessed_papers.csv'
 
-        # Syntactic filter by abstract
-        if len(syntactic_filters) > 0:
-            step = step + 1
-            logger.info(str(step) + '. Syntactic filter by abstract snowballing papers...')
-            file_name = retrieve.filter_papers(syntactic_filters, synonyms, folder_name, search_date, step)
-            logger.info('Syntactic filtering results can be found at: ' + file_name)
-            next_file = str(step) + '_syntactic_filtered_papers.csv'
-
-        # Semantic filter by abstract
-        if len(semantic_filters) > 0:
-            step = step + 1
-            logger.info(str(step) + '. Semantic filter snowballing papers...')
-            file_name = semantic_analyser.lbl2vec(semantic_filters, folder_name, search_date, step)
-            logger.info('Semantic filtering results can be found at: ' + file_name)
-            next_file = str(step) + '_semantic_filtered_papers.csv'
-
         # Manual filtering by abstract
-        step = step + 1
-        logger.info(str(step) + '. Manual filtering by abstract snowballing papers...')
-        manual.manual_filter_by_abstract(folder_name, next_file, search_date, step)
+        if len(file_name) > 0:
+            step = step + 1
+            logger.info(str(step) + '. Manual filtering by abstract snowballing papers...')
+            next_file = manual.manual_filter_by_abstract(folder_name, next_file, search_date, step)
 
-        # Manual filtering by full paper
-        step = step + 1
-        logger.info(str(step) + '. Manual filtering by full paper snowballing papers...')
-        manual.manual_filter_by_full_text(folder_name, search_date, step)
-        merge_step_2 = step
-
+            # Manual filtering by full paper
+            step = step + 1
+            logger.info(str(step) + '. Manual filtering by full paper snowballing papers...')
+            next_file = manual.manual_filter_by_full_text(folder_name, next_file, search_date, step)
+            merge_step_2 = step
+        else:
+            merge_step_2 = -1
         # Merge papers
         step = step + 1
         logger.info(str(step) + '. Merging papers...')
