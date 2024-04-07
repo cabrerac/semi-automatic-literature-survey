@@ -105,7 +105,7 @@ class Generic:
 
     def default_query(self, parameters):
         query = parameters['query'].replace('(', '%28').replace(')', '%29').replace("'", "")
-        words = re.split(' & | Â¦ ', query)
+        words = re.split(' <AND> | <OR> ', query)
         for word in words:
             word = word.replace('%29', '').replace('%28', '')
             synonyms = parameters['synonyms']
@@ -120,7 +120,7 @@ class Generic:
             else:
                 query_parameter = query_parameter + '<field>:%22' + word + '%22'
                 query = query.replace(word, query_parameter)
-        query = query.replace(' & ', '+AND+').replace(' Â¦ ', '+OR+').replace(' ', '+')
+        query = query.replace(' <AND> ', '+AND+').replace(' <OR> ', '+OR+').replace(' ', '+')
         query = '%28' + query + '%29'
 
         if 'fields' in parameters:
@@ -133,7 +133,7 @@ class Generic:
 
     def ieeexplore_query(self, parameters):
         query = parameters['query'].replace("\'", '')
-        words = re.split(' & | Â¦ ', query)
+        words = re.split(' <AND> | <OR> ', query)
         for word in words:
             word = word.replace(')', '').replace('(', '')
             synonyms = parameters['synonyms']
@@ -148,7 +148,7 @@ class Generic:
             else:
                 query_parameter = query_parameter + '"' + word + '"'
                 query = query.replace(word, query_parameter)
-        query = query.replace(' & ', 'AND').replace(' Â¦ ', 'OR')
+        query = query.replace(' <AND> ', 'AND').replace(' <OR> ', 'OR')
         first_term = query.split('AND')[0]
         first_term = first_term.replace('(', '').replace(')', '')
         words_first_term = first_term.split('OR')
@@ -187,7 +187,7 @@ class Generic:
 
     def core_query(self, parameters):
         query = parameters['query'].replace("'", "")
-        words = re.split(' & | Â¦ ', query)
+        words = re.split(' <AND> | <OR> ', query)
         for word in words:
             word = word.replace('(', '').replace(')', '')
             synonyms = parameters['synonyms']
@@ -203,7 +203,7 @@ class Generic:
                 query_parameter = query_parameter + ' ' + word + ' '
                 query_parameter = '(' + query_parameter + ')'
                 query = query.replace(word, query_parameter)
-        query = query.replace(' & ', ' AND ').replace(' Â¦ ', ' OR ')
+        query = query.replace(' <AND> ', ' AND ').replace(' <OR> ', ' OR ')
         query = '<field>:(' + query + ')'
 
         if 'fields' in parameters:
@@ -225,8 +225,8 @@ class Generic:
             query = re.sub(r"'", '"', query)
             # Add field specifications and URL encoding for AND and OR operators
             query = re.sub(r'(\w+)', r'<field>:"\1"', query)
-            query = re.sub(r'&', '+AND+', query)
-            query = re.sub(r'Â¦', '+OR+', query)
+            query = re.sub(r'<AND>', '+AND+', query)
+            query = re.sub(r'<OR>', '+OR+', query)
 
             # Wrap the whole expression in parentheses
             query = f'({query})'
@@ -246,8 +246,8 @@ class Generic:
             # Replace single quotes with double quotes
             query = re.sub(r"'", '"', query)
             # Add parentheses for grouping
-            query = re.sub(r'&', ' AND ', query)
-            query = re.sub(r'\|', ' OR ', query)
+            query = re.sub(r'<AND>', ' AND ', query)
+            query = re.sub(r'<OR>', ' OR ', query)
             if 'fields' in parameters:
                 qf = ''
                 fields = parameters['fields']
@@ -265,8 +265,8 @@ class Generic:
             # Replace single quotes with double quotes
             query = re.sub(r"'", '"', query)
             # Add parentheses for grouping
-            query = re.sub(r'&', 'AND', query)
-            query = re.sub(r'\|', 'OR', query)
+            query = re.sub(r'<AND>', 'AND', query)
+            query = re.sub(r'<OR>', 'OR', query)
             first_term = query.split('AND')[0]
             first_term = first_term.replace('(', '').replace(')', '')
             words_first_term = first_term.split('OR')

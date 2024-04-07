@@ -48,9 +48,7 @@ def get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_d
 
 
 def plan_requests(query, parameters):
-    papers = pd.DataFrame()
     logger.info("Retrieving papers. It might take a while...")
-    papers = pd.DataFrame()
     request = create_request(parameters)
     raw_papers = client.request(request, 'get', {}, {})
     expected_papers = get_expected_papers(raw_papers)
@@ -132,7 +130,7 @@ def process_raw_papers(query, raw_papers):
                                          namespaces={"feed": "http://www.w3.org/2005/Atom"})
             papers_request.loc[:, 'database'] = database
             papers_request.loc[:, 'query_name'] = query_name
-            papers_request.loc[:, 'query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
+            papers_request.loc[:, 'query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
         except Exception as ex:
             logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
                         "details: " + file_handler)

@@ -80,9 +80,9 @@ def plan_requests(query, parameters, dates, start_date, end_date):
             que = ''
             syntactic_filters = parameters['syntactic_filters']
             for word in syntactic_filters:
-                que = que.replace('&last', '& ')
-                que = que + "'" + word + "' &last"
-            que = que.replace(' &last', '')
+                que = que.replace('<AND>last', '<AND> ')
+                que = que + "'" + word + "' <AND>last"
+            que = que.replace(' <AND>last', '')
             parameters_syn = parameters
             parameters_syn['query'] = que
             start_d = datetime.datetime(request['initial_year'], 1, 1)
@@ -197,7 +197,7 @@ def process_raw_papers(query, raw_papers):
             papers_request = pd.json_normalize(raw_json['data'])
             papers_request.loc[:, 'database'] = database
             papers_request.loc[:, 'query_name'] = query_name
-            papers_request.loc[:, 'query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
+            papers_request.loc[:, 'query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
             if 'abstract' not in papers_request:
                 papers_request = pd.DataFrame()
         except Exception as ex:

@@ -33,6 +33,11 @@ def read_parameters(parameters_file_name):
     else:
         queries = []
 
+    for query in queries:
+        keys = query.keys()
+        for key in keys:
+            query[key] = query[key].replace('&', '<AND>').replace('Â', '').replace('¦', '<OR>')
+
     if 'syntactic_filters' in parameters:
         syntactic_filters = parameters['syntactic_filters']
     else:

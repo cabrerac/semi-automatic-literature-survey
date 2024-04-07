@@ -88,9 +88,9 @@ def plan_requests(query, parameters):
             que = ''
             syntactic_filters = parameters['syntactic_filters']
             for word in syntactic_filters:
-                que = que.replace('&last', '& ')
-                que = que + "'" + word + "' &last"
-            que = que.replace(' &last', '')
+                que = que.replace('<AND>last', '<AND> ')
+                que = que + "'" + word + "' <AND>last"
+            que = que.replace(' <AND>last', '')
             parameters['query'] = que
             reqs = create_request(parameters)
             fields = parameters['fields']
@@ -216,7 +216,7 @@ def process_raw_papers(query, raw_papers):
                                         'publication_title', 'publication_date']].copy()
                 papers_request.loc[:, 'database'] = database
                 papers_request.loc[:, 'query_name'] = query_name
-                papers_request.loc[:, 'query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
+                papers_request.loc[:, 'query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
             except Exception as ex:
                 logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
                             "details: " + file_handler)

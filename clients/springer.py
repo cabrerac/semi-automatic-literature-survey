@@ -128,9 +128,9 @@ def create_request(parameters, dates, start_date, end_date, syntactic_filter):
         query = ''
         syntactic_filters = parameters['syntactic_filters']
         for word in syntactic_filters:
-            query = query.replace('&last', '& ')
-            query = query + "'" + word + "' &last"
-        query = query.replace(' &last', '')
+            query = query.replace('<AND>last', '<AND> ')
+            query = query + "'" + word + "' <AND>last"
+        query = query.replace(' <AND>last', '')
         parameters['query'] = query
         req = req + client.default_query(parameters)
         req = req.replace('%28', '(').replace('%29', ')').replace('+', '%20')
@@ -167,7 +167,7 @@ def process_raw_papers(query, raw_papers):
             papers_request = pd.json_normalize(json_results['records'])
             papers_request.loc[:, 'database'] = database
             papers_request.loc[:, 'query_name'] = query_name
-            papers_request.loc[:, 'query_value'] = query_value.replace('&', 'AND').replace('Â¦', 'OR')
+            papers_request.loc[:, 'query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
         except Exception as ex:
             logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
                         "details: " + file_handler)
