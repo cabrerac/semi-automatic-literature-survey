@@ -233,11 +233,11 @@ def process_raw_papers(query, raw_papers):
 
 def get_abstracts(papers):
     logger.info("Retrieving abstracts for " + str(len(papers)) + " papers from Scopus. It might take a while...")
-    try:
-        links = []
-        abstracts = []
-        pbar = tqdm(total=len(papers))
-        for index, paper in papers.iterrows():
+    links = []
+    abstracts = []
+    pbar = tqdm(total=len(papers))
+    for index, paper in papers.iterrows():
+        try:
             urls = paper['url']
             link = ''
             for record in urls:
@@ -247,14 +247,15 @@ def get_abstracts(papers):
             links.append(link)
             abstract = get_abstract(paper)
             abstracts.append(abstract)
-            pbar.update(1)
-        pbar.close()
-        papers['url'] = links
-        papers['abstract'] = abstracts
-    except Exception as ex:
-        logger.info("Error getting abstract. Skipping to next request. Please see the log file for "
-                    "details: " + file_handler)
-        logger.debug("Error getting abstract: " + str(type(ex)) + ' - ' + str(ex))
+        except Exception as ex:
+            logger.info("Error getting abstract. Skipping to next request. Please see the log file for "
+                        "details: " + file_handler)
+            logger.debug("Error getting abstract: " + str(type(ex)) + ' - ' + str(ex))
+            abstracts.append('')
+        pbar.update(1)
+    pbar.close()
+    papers['url'] = links
+    papers['abstract'] = abstracts
     return papers
 
 
@@ -263,9 +264,12 @@ def get_abstract(paper):
     if 'pii' in paper:
         pii = str(paper['pii'])
         if pii != 'nan':
-            req = api_url.replace('<type>', 'article') + 'pii/' + pii + '?apiKey=' + api_access
-            result = client.request(req, 'get', {}, {})
-            abstract = parse_abstract(result, 'json')
+            try:
+                req = api_url.replace('<type>', 'article') + 'pii/' + pii + '?apiKey=' + api_access
+                result = client.request(req, 'get', {}, {})
+                abstract = parse_abstract(result, 'json')
+            except Exception as ex:
+                abstract = ''
     if abstract == '':
         try:
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '

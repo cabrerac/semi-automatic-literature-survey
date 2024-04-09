@@ -26,7 +26,7 @@ client_fields = {'title': 'title', 'abstract': 'keyword'}
 database = 'semantic_scholar'
 fr = 'utf-8'
 client = Generic()
-waiting_time = 10
+waiting_time = 3
 max_retries = 3
 offset_limit = 1000
 file_handler = ''
@@ -61,7 +61,8 @@ def plan_requests(query, parameters, dates, start_date, end_date):
     papers = pd.DataFrame()
     requests = create_request(parameters, dates, start_date, end_date)
     planned_requests = []
-    for request in requests:
+    logger.info("Planning queries...")
+    for request in tqdm(requests):
         req = api_url.replace('<query>', request['query']).replace('<offset>', str(start)).replace('<max_papers>', str(max_papers))
         headers = {}
         if len(api_access) > 0:
@@ -73,8 +74,8 @@ def plan_requests(query, parameters, dates, start_date, end_date):
             time.sleep(waiting_time)
             retry = retry + 1
             raw_papers = client.request(req, 'get', {}, headers=headers)
-        papers_request, next_paper, total = process_raw_papers(query, raw_papers)
-        if total < offset_limit:
+        papers_request, next_paper, total = process_raw_papers(query, raw_papers, False)
+        if offset_limit > total > -1:
             planned_requests.append(request['query'])
         else:
             que = ''
@@ -101,7 +102,7 @@ def plan_requests(query, parameters, dates, start_date, end_date):
                     time.sleep(waiting_time)
                     retry = retry + 1
                     raw_papers = client.request(req, 'get', {}, headers=headers)
-                papers_request, next_paper, total = process_raw_papers(query, raw_papers)
+                papers_request, next_paper, total = process_raw_papers(query, raw_papers, False)
                 if total < offset_limit:
                     planned_requests.append(request_syn['query'])
                 else:
@@ -128,7 +129,7 @@ def request_papers(query, requests):
             time.sleep(waiting_time)
             retry = retry + 1
             raw_papers = client.request(req, 'get', {}, headers=headers)
-        papers_request, next_paper, total = process_raw_papers(query, raw_papers)
+        papers_request, next_paper, total = process_raw_papers(query, raw_papers, True)
         if len(papers) == 0:
             papers = papers_request
         else:
@@ -149,7 +150,7 @@ def request_papers(query, requests):
                 time.sleep(waiting_time)
                 retry = retry + 1
                 raw_papers = client.request(req, 'get', {}, headers=headers)
-            papers_request, next_paper, total = process_raw_papers(query, raw_papers)
+            papers_request, next_paper, total = process_raw_papers(query, raw_papers, True)
             if len(papers) == 0:
                 papers = papers_request
             else:
@@ -181,7 +182,7 @@ def create_request(parameters, dates, start_date, end_date):
     return queries
 
 
-def process_raw_papers(query, raw_papers):
+def process_raw_papers(query, raw_papers, print_error):
     query_name = list(query.keys())[0]
     query_value = query[query_name]
     papers_request = pd.DataFrame()
@@ -201,14 +202,16 @@ def process_raw_papers(query, raw_papers):
             if 'abstract' not in papers_request:
                 papers_request = pd.DataFrame()
         except Exception as ex:
-            logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
-                        "details: " + file_handler)
-            logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
+            if print_error:
+                logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
+                            "details: " + file_handler)
+                logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
     else:
-        logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
-                    + file_handler)
-        logger.debug("API response: " + raw_papers.text)
-        logger.debug("Request: " + raw_papers.request.url)
+        if print_error:
+            logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
+                        + file_handler)
+            logger.debug("API response: " + raw_papers.text)
+            logger.debug("Request: " + raw_papers.request.url)
     return papers_request, next_paper, total
 
 
