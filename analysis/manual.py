@@ -46,7 +46,9 @@ def manual_filter_by_abstract(folder_name, next_file, search_date, step):
                     paper_df = pd.DataFrame.from_dict(paper_dict)
                     util.save(file_name, paper_df, fr, 'a+')
                 update_semantic_filtered_papers(to_check_papers, papers_file, paper_id, included)
-    return next_file
+    to_check_papers = pd.read_csv(papers_file)
+    removed_papers = to_check_papers.loc[to_check_papers['status'] == 'not included']
+    return next_file, removed_papers
 
 
 def print_paper_info(to_check_paper, file_name):
@@ -127,7 +129,9 @@ def manual_filter_by_full_text(folder_name, next_file, search_date, step):
                     paper_df = pd.DataFrame.from_dict(paper_dict)
                     util.save(file_name, paper_df, fr, 'a+')
                 update_filtered_papers_by_abstract(filtered_by_abstract, papers_file, paper_id, t)
-    return next_file
+    filtered_by_abstract = pd.read_csv(papers_file)
+    removed_papers = filtered_by_abstract.loc[filtered_by_abstract['status'] == 'excluded']
+    return next_file, removed_papers
 
 
 def print_paper_info_full_paper(to_check_paper, file_name):

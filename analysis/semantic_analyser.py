@@ -70,7 +70,7 @@ def bert_search(semantic_filters, folder_name, next_file, search_date, step):
     return semantic_filtered_file_name
 
 
-def get_relevant_papers(folder_name, search_date, step, semantic_filters, citations_papers):
+def get_relevant_papers(folder_name, search_date, step, semantic_filters, citations_papers, removed_papers):
     relevant_papers = pd.DataFrame()
     original_papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + '1_preprocessed_papers.csv'
     selected_papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + '_manually_filtered_by_full_text_papers.csv'
@@ -82,7 +82,11 @@ def get_relevant_papers(folder_name, search_date, step, semantic_filters, citati
                 search_algorithm = keyword['type']
         if exists(original_papers_file):
             original_papers = pd.read_csv(original_papers_file)
-            original_papers = pd.concat(original_papers,citations_papers)
+            original_papers = original_papers.drop(['id'], axis=1)
+            citations_papers['publication'] = 'semantic_scholar'
+            citations_papers = citations_papers.drop(['id'], axis=1)
+            original_papers = pd.concat([original_papers, selected_papers, citations_papers, removed_papers]).drop_duplicates(keep=False, subset=['doi'])
+            original_papers.loc[:, 'id'] = list(range(1, len(original_papers) + 1))
             if search_algorithm == 'bert':
                 relevant_papers = bert_search_relevant_papers(semantic_filters, original_papers, selected_papers)
         else:
@@ -93,7 +97,7 @@ def get_relevant_papers(folder_name, search_date, step, semantic_filters, citati
     return relevant_papers
 
 
-def bert_search_relevant_papers(semantic_filters, original_papers, citations_papers, selected_papers):
+def bert_search_relevant_papers(semantic_filters, original_papers, selected_papers):
     model = SentenceTransformer('allenai-specter')
     selected_papers['concatenated'] = (selected_papers['title'] + '[SEP]' + selected_papers['abstract'])
     selected_papers_array = selected_papers['concatenated'].values
@@ -105,14 +109,21 @@ def bert_search_relevant_papers(semantic_filters, original_papers, citations_pap
             score = keyword['score']
     original_papers['concatenated'] = (original_papers['title'] + '[SEP]' + original_papers['abstract'])
     original_papers['semantic_score'] = 0.0
-    logger.info("# Comparing preprocessed papers...")
+    logger.info("# Semantic comparison of " + str(len(original_papers)) + " preprocessed papers...")
     pbar = tqdm(total=len(original_papers))
     for index, original_paper in original_papers.iterrows():
         concatenated = original_paper['concatenated']
         concatenated_embedding = model.encode(concatenated, convert_to_tensor=True)
         hits = sentence_util.semantic_search(encoded_selected_papers, concatenated_embedding)
-        original_paper['score'] = hits[0]['score']
+        avg_score = 0.0
+        for hit in hits:
+            avg_score = avg_score + hit[0]['score']
+        avg_score = avg_score/len(hits)
+        original_papers.loc[index, 'semantic_score'] = avg_score
         pbar.update(1)
     pbar.close()
-    found_papers = original_papers[original_papers['score'] >= score]
+    found_papers = original_papers[original_papers['semantic_score'] >= score]
+    found_papers = found_papers.drop(['id'], axis=1)
+    found_papers = found_papers.drop(['concatenated'], axis=1)
+    found_papers.loc[:, 'id'] = list(range(1, len(found_papers) + 1))
     return found_papers

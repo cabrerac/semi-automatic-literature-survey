@@ -5,6 +5,7 @@ from analysis import manual
 import sys
 import logging
 from datetime import datetime
+import pandas as pd
 import os
 
 
@@ -64,31 +65,32 @@ def main(parameters_file):
         # Manual filtering by abstract
         step = step + 1
         logger.info(str(step) + '. Manual filtering by abstract...')
-        next_file = manual.manual_filter_by_abstract(folder_name, next_file, search_date, step)
+        next_file, removed_papers_abstract = manual.manual_filter_by_abstract(folder_name, next_file, search_date, step)
 
         # Manual filtering by full paper
         step = step + 1
         logger.info(str(step) + '. Manual filtering by full paper...')
-        next_file = manual.manual_filter_by_full_text(folder_name, next_file, search_date, step)
+        next_file, removed_papers_full = manual.manual_filter_by_full_text(folder_name, next_file, search_date, step)
         merge_step_1 = step
 
         # Snowballing process
         step = step + 1
         logger.info(str(step) + '. Snowballing...')
-        file_name = retrieve.snowballing(folder_name, search_date, step, dates, start_date, end_date, semantic_filters)
+        removed_papers = pd.concat([removed_papers_abstract, removed_papers_full])
+        file_name = retrieve.snowballing(folder_name, search_date, step, dates, start_date, end_date, semantic_filters, removed_papers)
         logger.info('Snowballing results can be found at: ' + file_name)
-        next_file = str(step) + '_preprocessed_papers.csv'
+        next_file = str(step) + '_snowballing_papers.csv'
 
         # Manual filtering by abstract
         if len(file_name) > 0:
             step = step + 1
             logger.info(str(step) + '. Manual filtering by abstract snowballing papers...')
-            next_file = manual.manual_filter_by_abstract(folder_name, next_file, search_date, step)
+            next_file, removed_papers_abstract_snowballing = manual.manual_filter_by_abstract(folder_name, next_file, search_date, step)
 
             # Manual filtering by full paper
             step = step + 1
             logger.info(str(step) + '. Manual filtering by full paper snowballing papers...')
-            next_file = manual.manual_filter_by_full_text(folder_name, next_file, search_date, step)
+            next_file, removed_papers_full_snowballing = manual.manual_filter_by_full_text(folder_name, next_file, search_date, step)
             merge_step_2 = step
         else:
             merge_step_2 = -1

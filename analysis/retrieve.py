@@ -55,21 +55,21 @@ def get_papers(queries, syntactic_filters, synonyms, databases, fields, types, f
             semantic_scholar.get_papers(query, syntactic_filters, types, dates, start_date, end_date, folder_name, search_date)
 
 
-def snowballing(folder_name, search_date, step, dates, start_date, end_date, semantic_filters):
+def snowballing(folder_name, search_date, step, dates, start_date, end_date, semantic_filters, removed_papers):
     global logger
     logger = logging.getLogger('logger')
-    preprocessed_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
-                             '_preprocessed_papers.csv'
-    if not exists(preprocessed_file_name):
+    snowballing_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + '_snowballing_papers.csv'
+    if not exists(snowballing_file_name):
         logger.info("Requesting Semantic Scholar for papers citations...")
         citations_papers = semantic_scholar.get_citations(folder_name, search_date, step, dates, start_date, end_date)
-        logger.info("Using semantic search to find relevant papers using the manually selected set...")
-        logger.info("This process is applied on the preprocessed paeprs set and the citations papers...")
-        relevant_papers = semantic_analyser.get_relevant_papers(folder_name, search_date, step, semantic_filters, citations_papers)
-        util.save(preprocessed_file_name, relevant_papers, fr, 'a+')
+        logger.info("Using semantic search to find relevant papers based on manually selected set...")
+        logger.info("This process is applied on the preprocessed papers set and the citations papers...")
+        relevant_papers = semantic_analyser.get_relevant_papers(folder_name, search_date, step, semantic_filters, citations_papers, removed_papers)
+        logger.info("Snowballing process papers: " + str(len(relevant_papers)) + "...")
+        util.save(snowballing_file_name, relevant_papers, fr, 'a+')
     else:
         logger.info("File already exists.")
-    return preprocessed_file_name
+    return snowballing_file_name
 
 
 def preprocess(queries, databases, folder_name, search_date, date_filter, start_date, end_date, step):
