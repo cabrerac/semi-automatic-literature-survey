@@ -6,6 +6,7 @@ from analysis import util
 from .apis.generic import Generic
 from bs4 import BeautifulSoup
 import logging
+import random
 from tqdm import tqdm
 
 
@@ -153,7 +154,8 @@ def request_papers(query, parameters, list_years):
             # if there is an exception from the API, retry request
             retry = 0
             while raw_papers.status_code != 200 and retry < max_retries:
-                time.sleep(waiting_time)
+                delay = util.exponential_backoff(retry, waiting_time, 64)
+                time.sleep(delay)
                 retry = retry + 1
                 headers = {'X-ELS-APIKey': api_access}
                 raw_papers = client.request(request, 'get', {}, headers)
@@ -285,7 +287,7 @@ def get_abstract(paper):
                 abstract = parse_abstract(result, 'html')
         except Exception as ex:
             abstract = ''
-    time.sleep(waiting_time)
+    time.sleep(waiting_time + random.random())
     return abstract
 
 

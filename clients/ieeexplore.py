@@ -148,7 +148,8 @@ def request_papers(query, parameters, planning_requests):
                         # if there is an exception from the API, retry request
                         retry = 0
                         while raw_papers.status_code != 200 and retry < max_retries:
-                            time.sleep(waiting_time)
+                            delay = util.exponential_backoff(retry, waiting_time, 64)
+                            time.sleep(delay)
                             retry = retry + 1
                             raw_papers = request(req, field, p_type, start)
                             total_requests = total_requests + 1

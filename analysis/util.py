@@ -8,6 +8,7 @@ from datetime import datetime
 import spacy
 from os.path import exists
 import logging
+import random
 
 logger = logging.getLogger('logger')
 
@@ -228,3 +229,9 @@ def clean_papers(file):
     df = df.drop(columns=['language'])
     logger.info('Number of papers: ' + str(len(df)))
     save(file, df, fr, 'w')
+
+
+def exponential_backoff(attempt, base_delay=1, max_delay=64):
+    delay = min(base_delay * (2 ** attempt), max_delay)
+    delay_with_jitter = delay * (random.random() + 0.5)
+    return delay_with_jitter

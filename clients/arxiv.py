@@ -72,7 +72,8 @@ def request_papers(query, parameters, times, expected_papers, mod):
         # if there is an exception from the API, retry request
         retry = 0
         while raw_papers.status_code != 200 and retry < max_retries:
-            time.sleep(waiting_time)
+            delay = util.exponential_backoff(retry, waiting_time, 64)
+            time.sleep(delay)
             retry = retry + 1
             raw_papers = client.request(request, 'get', {}, {})
         papers_request = process_raw_papers(query, raw_papers)

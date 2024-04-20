@@ -71,7 +71,8 @@ def plan_requests(query, parameters, dates, start_date, end_date):
         # if there is an exception from the API, retry request
         retry = 0
         while raw_papers.status_code != 200 and retry < max_retries:
-            time.sleep(waiting_time)
+            delay = util.exponential_backoff(retry, waiting_time, 64)
+            time.sleep(delay)
             retry = retry + 1
             raw_papers = client.request(req, 'get', {}, headers=headers)
         papers_request, next_paper, total = process_raw_papers(query, raw_papers, False)
@@ -100,7 +101,8 @@ def plan_requests(query, parameters, dates, start_date, end_date):
                     # if there is an exception from the API, retry request
                     retry = 0
                     while raw_papers.status_code != 200 and retry < max_retries:
-                        time.sleep(waiting_time)
+                        delay = util.exponential_backoff(retry, waiting_time, 64)
+                        time.sleep(delay)
                         retry = retry + 1
                         raw_papers = client.request(req, 'get', {}, headers=headers)
                     papers_request, next_paper, total = process_raw_papers(query, raw_papers, False)
@@ -128,7 +130,8 @@ def request_papers(query, requests):
         # if there is an exception from the API, retry request
         retry = 0
         while raw_papers.status_code != 200 and retry < max_retries:
-            time.sleep(waiting_time)
+            delay = util.exponential_backoff(retry, waiting_time, 64)
+            time.sleep(delay)
             retry = retry + 1
             raw_papers = client.request(req, 'get', {}, headers=headers)
         papers_request, next_paper, total = process_raw_papers(query, raw_papers, True)
@@ -149,7 +152,8 @@ def request_papers(query, requests):
             raw_papers = client.request(req, 'get', {}, {})
             retry = 0
             while raw_papers.status_code != 200 and retry < max_retries:
-                time.sleep(waiting_time)
+                delay = util.exponential_backoff(retry, waiting_time, 64)
+                time.sleep(delay)
                 retry = retry + 1
                 raw_papers = client.request(req, 'get', {}, headers=headers)
             papers_request, next_paper, total = process_raw_papers(query, raw_papers, True)
