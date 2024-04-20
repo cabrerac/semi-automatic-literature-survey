@@ -86,9 +86,9 @@ def plan_requests(query, parameters, dates, start_date, end_date):
                 papers = request_papers(times, query, parameters, dates, start_date, end_date, True)
             else:
                 logger.info("The number of expected papers requires " + str(times + total_requests) + " requests which exceeds the " + database + " quota of " + str(quota) + " requests per day.")
-                logger.info("Skipping to next repository. Try to redefine your search queries and syntactic filters.")
+                logger.info("Skipping to next repository. Try to redefine your search queries and syntactic filters. Using dates to limit your search can help in case you are not.")
         else:
-            logger.info("Skipping to next repository. Please use syntactic filters to avoid this problem.")
+            logger.info("Skipping to next repository. Please use syntactic filters to avoid this problem. Using dates to limit your search can help in case you are not.")
     return papers
 
 

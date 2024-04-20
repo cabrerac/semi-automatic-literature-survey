@@ -83,6 +83,7 @@ def read_parameters(parameters_file_name):
 
     if not dates:
         logger.debug('Search dates missing in parameters file. Searching without considering dates...')
+        logger.debug('Including dates can reduce the searching time...')
 
     if 'search_date' in parameters:
         search_date = parameters['search_date']
