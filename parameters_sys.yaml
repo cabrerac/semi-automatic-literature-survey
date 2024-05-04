@@ -1,0 +1,50 @@
+# List of queries in the format <query_name>: "<query_value>". & (and operator) ¦ (or operator).
+queries:
+  - systems engineering: "'systems engineering' & ('generative ai' ¦ 'artificial intelligence')"
+# Syntactic filters are used to restrict the number of papers that massive repositories (e.g., springer, scopus) return
+# The exact terms and their synonyms must appear in the paper title or abstract to be retrieved.
+# If the number of returned papers is too big and syntactic filters are not provided,
+# the platform will skip the repository to avoid quota errors or overloading the APIs.
+# We advise including syntactic filters to make the retrieval process more feasible.
+syntactic_filters:
+  - 'systems engineering'
+  - 'generative ai'
+# Semantic filters uses LLMs to match abstracts with the provided description.
+# The type parameter corresponds to the embedding the semantic search uses. Bert is the open option it currently uses.
+# The description parameter is the text that describes the papers you are looking for. A way to create such description is to think of the ideal abstract a selected paper should have.
+# The score parameter is the similarity degree between the queries and the included papers.
+# Papers with greater or equal score are included.
+semantic_filters:
+  - type: "bert"
+  - description: "This paper proposes a systems engineering approach to analyse, design, implement, evaluate, and deploy systems based on artificial intelligence. AI-based systems are complex, dependable, data-driven, and critical systems that contains one or more components based on AI or machine learning. The systems engineering approach helps to address the challenges that AI-based components generate in the systems (e.g., lack of explainability, security issues, unreliable behaviour, lack of alignment, etc.). This help is based on systems engineering practices and principles that define models, methodologies, techniques, architectural patterns, among others tools to facilitate the integration of AI into systems."
+  - score: 0.8
+#Synonyms of the keywords to expand the queries.
+systems engineering:
+  - systems thinking
+  - dependable systems
+  - engineering ai
+generative ai:
+  - llm
+  - large language model
+artificial intelligence:
+  - ai
+  - machine learning
+  - ml
+  - deep learning
+# Databases where to search for papers. arXiv and Semantic Scholar by default as they are open. You can use other
+# repositories by uncommenting the respective lines. You should add the API access keys to the ./config.json file
+# in order to use them. (See step 7 in the How to run it? instructions)
+databases:
+  - arxiv
+  #- semantic_scholar
+  - springer
+  - ieeexplore
+  #- scopus
+  - core
+# Search time interval YYYY-mm-dd. If you do not want to include search dates comment start_date and
+# end_date parameters.
+#start_date: 2017-01-01
+#end_date: 2024-04-07
+# Date of the search and folder name where the outputs will be stored
+search_date: 2024-04-20
+folder_name: sys_search

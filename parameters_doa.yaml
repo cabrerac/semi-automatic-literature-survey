@@ -1,4 +1,7 @@
 # List of queries in the format <query_name>: "<query_value>". & (and operator) ¦ (or operator).
+# The <query_name> must be keywords that you want to be in the title of the retrieved papers.
+# This condition helps to reduce the number of retrieved papers from repositories that return too many papers.
+# That is the case of the Springer API that returns several papers in the outputs.
 queries:
   - autonomous vehicle: "'autonomous vehicle' & 'machine learning' & ('real-world' & 'deploy')"
   - health: "'health' & 'machine learning' & ('real-world' & 'deploy')"
