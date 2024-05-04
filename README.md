@@ -107,4 +107,4 @@ A description of the semi-automatic methodology applied in a survey can be found
 
 [3] SBERT.net Sentence Transformers. 2024. Semantic Search [Available online](https://www.sbert.net/examples/applications/semantic-search/README.html)
 
-[4] Cabrera, Christian, et al. "Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective." arXiv preprint arXiv:2302.04810 (2023). [Available online](https://arxiv.org/abs/2302.04810)
+[4] Christian Cabrera, Andrei Paleyes, Pierre Thodoroff, and Neil Lawrence, N. D. 2023. Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective. arXiv preprint arXiv:2302.04810. [Available online](https://arxiv.org/abs/2302.04810)
