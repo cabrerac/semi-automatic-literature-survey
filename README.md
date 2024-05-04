@@ -95,7 +95,7 @@ Ignore this step if you are testing the tool with arXiv. Also, you should only a
 python main.py parameters_ar.yaml
 ```
 
-A simple self-explanatory example of a search parameters file can be found in `./parameters_ar.yaml`. Alternatively, a parameters file including semantic filters can be found in `./parameters_end.yaml`
+A simple self-explanatory example of a search parameters file can be found in `./parameters_ar.yaml`. Alternatively, a parameters file including syntactic and semantic filters can be found in `./parameters_sys.yaml`
 
 # References
 
