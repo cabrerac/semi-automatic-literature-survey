@@ -2,7 +2,7 @@ import time
 import pandas as pd
 import json
 from os.path import exists
-from analysis import util
+from util import util
 from .apis.generic import Generic
 from bs4 import BeautifulSoup
 import logging

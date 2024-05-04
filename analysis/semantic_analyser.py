@@ -2,7 +2,7 @@ import pandas as pd
 from sentence_transformers import SentenceTransformer
 from sentence_transformers import util as sentence_util
 from os.path import exists
-from . import util
+from util import util
 from tqdm import tqdm
 import logging
 

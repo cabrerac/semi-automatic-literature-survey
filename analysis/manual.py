@@ -1,7 +1,7 @@
 import pandas as pd
 from rich import print
 from os.path import exists
-from analysis import util
+from util import util
 
 fr = 'utf-8'
 

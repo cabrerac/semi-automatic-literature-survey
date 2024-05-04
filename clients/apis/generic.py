@@ -96,10 +96,10 @@ class Generic:
         if request_result is None:
             logger.info("The API response is None. Please see the log file for "
                         "details: " + file_handler)
-            logger.debug("Request: " + query)
+            logger.debug("Request: " + str(query))
             request_result = Response()
             request_result.status_code = 404
-            request_result._content = b"The API response is None for query: " + query
+            request_result._content = "The API response is None for query: " + str(query)
             request_result.headers = {'Content-Type': 'text/plain'}
         return request_result
 

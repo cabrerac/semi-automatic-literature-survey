@@ -3,7 +3,7 @@ import pandas as pd
 import json
 from .apis.generic import Generic
 from os.path import exists
-from analysis import util
+from util import util
 from tqdm import tqdm
 import logging
 

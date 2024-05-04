@@ -1,6 +1,6 @@
 import pandas as pd
 import re
-from . import util
+from util import util
 from clients import arxiv
 from clients import ieeexplore
 from clients import springer

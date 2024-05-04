@@ -4,7 +4,7 @@ from .apis.generic import Generic
 import json
 import pandas as pd
 from os.path import exists
-from analysis import util
+from util import util
 from tqdm import tqdm
 import logging
 

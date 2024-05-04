@@ -2,7 +2,7 @@ import time
 import pandas as pd
 from .apis.generic import Generic
 from os.path import exists
-from analysis import util
+from util import util
 from tqdm import tqdm
 import logging
 

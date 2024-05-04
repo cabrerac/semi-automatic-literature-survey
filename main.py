@@ -1,4 +1,4 @@
-from analysis import util
+from util import util
 from analysis import retrieve
 from analysis import semantic_analyser
 from analysis import manual
@@ -35,8 +35,9 @@ def main(parameters_file):
     queries, syntactic_filters, semantic_filters, fields, types, synonyms, databases, dates, start_date, end_date, \
         search_date, folder_name = util.read_parameters(parameters_file)
 
-    if len(queries) > 0:
+    parsed_queries, valid = util.parse_queries(queries)
 
+    if valid:
         # Getting papers from databases
         step = 0
         logger.info(str(step) + '. Getting all papers...')
@@ -100,7 +101,7 @@ def main(parameters_file):
         file_name = util.merge_papers(step, merge_step_1, merge_step_2, folder_name, search_date)
         logger.info('Merged papers can be found at: ' + file_name)
     else:
-        logger.info('Queries are missing in parameters file...')
+        logger.info('Invalid queries in parameters file. Finishing the program.')
 
 
 if __name__ == "__main__":
