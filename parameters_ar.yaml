@@ -38,5 +38,5 @@ databases:
 #start_date: 2010-01-01
 #end_date: 2022-08-01
 # Date of the search and folder name where the outputs will be stored
-search_date: 2022-08-04
+search_date: 2024-05-04
 folder_name: ar_search
