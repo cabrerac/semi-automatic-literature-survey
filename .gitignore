@@ -142,3 +142,6 @@ config.json
 
 # Papers
 papers/
+
+# Local parameter files
+local/
