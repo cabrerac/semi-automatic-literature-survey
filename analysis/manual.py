@@ -40,9 +40,10 @@ def manual_filter_by_abstract(folder_name, next_file, search_date, step):
                                   'publisher': to_check_paper['publisher'], 'database': to_check_paper['database'],
                                   'query_name': to_check_paper['query_name'], 'query_value': to_check_paper['query_value'],
                                   'url': to_check_paper['url'], 'publication_date': to_check_paper['publication_date'],
-                                  'title': to_check_paper['title'], 'abstract': to_check_paper['abstract'],
-                                  'semantic_score': to_check_paper['semantic_score']
+                                  'title': to_check_paper['title'], 'abstract': to_check_paper['abstract']
                                   }
+                    if 'semantic_score' in to_check_paper:
+                        paper_dict['semantic_score'] = to_check_paper['semantic_score']
                     paper_df = pd.DataFrame.from_dict(paper_dict)
                     util.save(file_name, paper_df, fr, 'a+')
                 update_semantic_filtered_papers(to_check_papers, papers_file, paper_id, included)
@@ -58,7 +59,8 @@ def print_paper_info(to_check_paper, file_name):
         print(' :: Query Name :: ' + str(list(to_check_paper['query_name'])[0]) + ' ::')
         print(' :: Query Value :: ' + str(list(to_check_paper['query_value'])[0]) + ' ::')
     print(' :: Publisher :: ' + str(list(to_check_paper['publisher'])[0]).title() + ' :: \n')
-    print(' :: Semantic Score :: ' + str(list(to_check_paper['semantic_score'])[0]) + ' :: \n')
+    if 'semantic_score' in to_check_paper:
+        print(' :: Semantic Score :: ' + str(list(to_check_paper['semantic_score'])[0]) + ' :: \n')
     print(' :: Title :: ' + str(list(to_check_paper['title'])[0].replace('\n', '')).title() + ' :: \n')
     abstract = list(to_check_paper['abstract'])[0].replace('\n', ' ').replace('</p', '').split(' ')
     i = 0
@@ -124,8 +126,10 @@ def manual_filter_by_full_text(folder_name, next_file, search_date, step):
                                   'publisher': to_check_paper['publisher'], 'database': to_check_paper['database'],
                                   'query_name': to_check_paper['query_name'], 'query_value': to_check_paper['query_value'],
                                   'url': to_check_paper['url'], 'publication_date': to_check_paper['publication_date'],
-                                  'title': title, 'abstract': to_check_paper['abstract'],
-                                  'semantic_score': to_check_paper['semantic_score']}
+                                  'title': title, 'abstract': to_check_paper['abstract']
+                                  }
+                    if 'semantic_score' in to_check_paper:
+                        paper_dict['semantic_score'] = to_check_paper['semantic_score']
                     paper_df = pd.DataFrame.from_dict(paper_dict)
                     util.save(file_name, paper_df, fr, 'a+')
                 update_filtered_papers_by_abstract(filtered_by_abstract, papers_file, paper_id, t)
@@ -141,7 +145,8 @@ def print_paper_info_full_paper(to_check_paper, file_name):
     print(' :: Publisher :: ' + str(list(to_check_paper['publisher'])[0]).title() + ' ::')
     print(' :: url :: [link=' + str(list(to_check_paper['url'])[0]) + ']'+str(list(to_check_paper['url'])[0])+'[/link] ::')
     print(' :: Title :: ' + str(list(to_check_paper['title'])[0].replace('\n', '')).title() + ' :: \n')
-    print(' :: Semantic Score :: ' + str(list(to_check_paper['semantic_score'])[0]) + ' :: \n')
+    if 'semantic_score' in to_check_paper:
+        print(' :: Semantic Score :: ' + str(list(to_check_paper['semantic_score'])[0]) + ' :: \n')
 
 
 def ask_manual_input_full_paper():

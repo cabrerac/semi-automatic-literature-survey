@@ -39,23 +39,22 @@ def bert_search(semantic_filters, folder_name, next_file, search_date, step):
         queries = []
         score = 0.0
         for keyword in semantic_filters:
-            if 'queries' in keyword:
-                queries = keyword['queries']
+            if 'description' in keyword:
+                description = keyword['description']
             if 'score' in keyword:
                 score = keyword['score']
-        logger.info("# Queries semantic matching...")
-        for query in queries:
-            query_embedding = model.encode(query, convert_to_tensor=True)
-            hits = sentence_util.semantic_search(query_embedding, encoded_papers, top_k=len(papers_array))
-            for hit in hits[0]:
-                if hit['score'] >= score:
-                    paper_array = papers_array[hit['corpus_id']]
-                    if len(found_papers) == 0:
-                        papers.loc[papers['concatenated'] == paper_array, 'semantic_score'] = hit['score']
-                        found_papers = papers[papers['concatenated'] == paper_array]
-                    else:
-                        papers.loc[papers['concatenated'] == paper_array, 'semantic_score'] = hit['score']
-                        found_papers = pd.concat([found_papers, papers[papers['concatenated'] == paper_array]])
+        logger.info("# Description semantic matching...")
+        query_embedding = model.encode(description, convert_to_tensor=True)
+        hits = sentence_util.semantic_search(query_embedding, encoded_papers, top_k=len(papers_array))
+        for hit in hits[0]:
+            if hit['score'] >= score:
+                paper_array = papers_array[hit['corpus_id']]
+                if len(found_papers) == 0:
+                    papers.loc[papers['concatenated'] == paper_array, 'semantic_score'] = hit['score']
+                    found_papers = papers[papers['concatenated'] == paper_array]
+                else:
+                    papers.loc[papers['concatenated'] == paper_array, 'semantic_score'] = hit['score']
+                    found_papers = pd.concat([found_papers, papers[papers['concatenated'] == paper_array]])
         if len(found_papers) > 0:
             columns_to_drop = ['concatenated']
             found_papers = found_papers.drop(columns_to_drop, axis=1)
@@ -125,5 +124,6 @@ def bert_search_relevant_papers(semantic_filters, original_papers, selected_pape
     found_papers = original_papers[original_papers['semantic_score'] >= score]
     found_papers = found_papers.drop(['id'], axis=1)
     found_papers = found_papers.drop(['concatenated'], axis=1)
+    found_papers['status'] = 'unknown'
     found_papers.loc[:, 'id'] = list(range(1, len(found_papers) + 1))
     return found_papers

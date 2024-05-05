@@ -194,8 +194,11 @@ def get_expected_papers(raw_papers):
     else:
         logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
                     + file_handler)
-        logger.debug("API response: " + str(raw_papers.text))
-        logger.debug("Request: " + raw_papers.request.url)
+        if raw_papers.request is not None:
+            logger.debug("API response: " + str(raw_papers.text))
+            logger.debug("Request: " + raw_papers.request.url)
+        else:
+            logger.debug("API response: " + str(raw_papers.content))
     return total
 
 

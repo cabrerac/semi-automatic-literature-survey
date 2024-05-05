@@ -101,6 +101,7 @@ class Generic:
             request_result.status_code = 404
             request_result._content = "The API response is None for query: " + str(query)
             request_result.headers = {'Content-Type': 'text/plain'}
+            request_result._text = "The API response is None for query: " + str(query)
         return request_result
 
     def default_query(self, parameters):
