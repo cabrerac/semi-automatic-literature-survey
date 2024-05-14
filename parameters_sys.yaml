@@ -16,7 +16,7 @@ syntactic_filters:
 # Papers with greater or equal score are included.
 semantic_filters:
   - type: "bert"
-  - description: "This paper proposes a systems engineering approach to analyse, design, implement, evaluate, and deploy systems based on artificial intelligence. AI-based systems are complex, dependable, data-driven, and critical systems that contains one or more components based on AI or machine learning. The systems engineering approach helps to address the challenges that AI-based components generate in the systems (e.g., lack of explainability, security issues, unreliable behaviour, lack of alignment, etc.). This help is based on systems engineering practices and principles that define models, methodologies, techniques, architectural patterns, among others tools to facilitate the integration of AI into systems."
+  - description: "This paper proposes a systems engineering approach to analyse, design, implement, evaluate, and deploy systems based on artificial intelligence. AI-based systems are complex, dependable, data-driven, and critical systems containing one or more components based on AI or machine learning. The systems engineering approach helps to address the challenges that AI-based components generate in the systems (e.g., lack of explainability, security issues, unreliable behaviour, lack of alignment, etc.). This help relies on systems engineering practices and principles that define models, methodologies, techniques, architectural patterns, to facilitate the integration of AI into systems."
   - score: 0.8
 #Synonyms of the keywords to expand the queries.
 systems engineering:
