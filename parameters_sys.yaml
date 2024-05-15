@@ -46,5 +46,5 @@ databases:
 #start_date: 2017-01-01
 #end_date: 2024-04-07
 # Date of the search and folder name where the outputs will be stored
-search_date: 2024-04-20
+search_date: 2024-04-07
 folder_name: sys_search
