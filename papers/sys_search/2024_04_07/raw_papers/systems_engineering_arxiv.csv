@@ -1,0 +1,1475 @@
+id,updated,published,title,summary,database,query_name,query_value
+http://arxiv.org/abs/2404.00869v1,2024-04-01T02:34:53Z,2024-04-01,"towards automated generation of smart grid cyber range for cybersecurity
+  experiments and training","Assurance of cybersecurity is crucial to ensure dependability and resilience
+of smart power grid systems. In order to evaluate the impact of potential cyber
+attacks, to assess deployability and effectiveness of cybersecurity measures,
+and to enable hands-on exercise and training of personals, an interactive,
+virtual environment that emulates the behaviour of a smart grid system, namely
+smart grid cyber range, has been demanded by industry players as well as
+academia. A smart grid cyber range is typically implemented as a combination of
+cyber system emulation, which allows interactivity, and physical system (i.e.,
+power grid) simulation that are tightly coupled for consistent cyber and
+physical behaviours. However, its design and implementation require intensive
+expertise and efforts in cyber and physical aspects of smart power systems as
+well as software/system engineering. While many industry players, including
+power grid operators, device vendors, research and education sectors are
+interested, availability of the smart grid cyber range is limited to a small
+number of research labs. To address this challenge, we have developed a
+framework for modelling a smart grid cyber range using an XML-based language,
+called SG-ML, and for ""compiling"" the model into an operational cyber range
+with minimal engineering efforts. The modelling language includes standardized
+schema from IEC 61850 and IEC 61131, which allows industry players to utilize
+their existing configurations. The SG-ML framework aims at making a smart grid
+cyber range available to broader user bases to facilitate cybersecurity R\&D
+and hands-on exercises.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2403.13309v1,2024-03-20T05:17:22Z,2024-03-20,"mapping llm security landscapes: a comprehensive stakeholder risk
+  assessment proposal","The rapid integration of Large Language Models (LLMs) across diverse sectors
+has marked a transformative era, showcasing remarkable capabilities in text
+generation and problem-solving tasks. However, this technological advancement
+is accompanied by significant risks and vulnerabilities. Despite ongoing
+security enhancements, attackers persistently exploit these weaknesses, casting
+doubts on the overall trustworthiness of LLMs. Compounding the issue,
+organisations are deploying LLM-integrated systems without understanding the
+severity of potential consequences. Existing studies by OWASP and MITRE offer a
+general overview of threats and vulnerabilities but lack a method for directly
+and succinctly analysing the risks for security practitioners, developers, and
+key decision-makers who are working with this novel technology. To address this
+gap, we propose a risk assessment process using tools like the OWASP risk
+rating methodology which is used for traditional systems. We conduct scenario
+analysis to identify potential threat agents and map the dependent system
+components against vulnerability factors. Through this analysis, we assess the
+likelihood of a cyberattack. Subsequently, we conduct a thorough impact
+analysis to derive a comprehensive threat matrix. We also map threats against
+three key stakeholder groups: developers engaged in model fine-tuning,
+application developers utilizing third-party APIs, and end users. The proposed
+threat matrix provides a holistic evaluation of LLM-related risks, enabling
+stakeholders to make informed decisions for effective mitigation strategies.
+Our outlined process serves as an actionable and comprehensive tool for
+security practitioners, offering insights for resource management and enhancing
+the overall system security.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2403.14697v1,2024-03-15T20:30:02Z,2024-03-15,"an aic-based approach for articulating unpredictable problems in open
+  complex environments","This research paper presents an approach to enhancing the predictive
+capability of architects in the design and assurance of systems, focusing on
+systems operating in dynamic and unpredictable environments. By adopting a
+systems approach, we aim to improve architects' predictive capabilities in
+designing dependable systems (for example, ML-based systems). An aerospace case
+study is used to illustrate the approach. Multiple factors (challenges)
+influencing aircraft detection are identified, demonstrating the effectiveness
+of our approach in a complex operational setting. Our approach primarily aimed
+to enhance the architect's predictive capability.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2403.09509v1,2024-03-14T15:56:02Z,2024-03-14,"on stpa for distributed development of safe autonomous driving: an
+  interview study","Safety analysis is used to identify hazards and build knowledge during the
+design phase of safety-relevant functions. This is especially true for complex
+AI-enabled and software intensive systems such as Autonomous Drive (AD).
+System-Theoretic Process Analysis (STPA) is a novel method applied in
+safety-related fields like defense and aerospace, which is also becoming
+popular in the automotive industry. However, STPA assumes prerequisites that
+are not fully valid in the automotive system engineering with distributed
+system development and multi-abstraction design levels. This would inhibit
+software developers from using STPA to analyze their software as part of a
+bigger system, resulting in a lack of traceability. This can be seen as a
+maintainability challenge in continuous development and deployment (DevOps). In
+this paper, STPA's different guidelines for the automotive industry, e.g.
+J31887/ISO21448/STPA handbook, are firstly compared to assess their
+applicability to the distributed development of complex AI-enabled systems like
+AD. Further, an approach to overcome the challenges of using STPA in a
+multi-level design context is proposed. By conducting an interview study with
+automotive industry experts for the development of AD, the challenges are
+validated and the effectiveness of the proposed approach is evaluated.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2402.12111v1,2024-02-19T13:04:05Z,2024-02-19,"evaluating versal ai engines for option price discovery in market risk
+  analysis","Whilst Field-Programmable Gate Arrays (FPGAs) have been popular in
+accelerating high-frequency financial workload for many years, their
+application in quantitative finance, the utilisation of mathematical models to
+analyse financial markets and securities, is less mature. Nevertheless, recent
+work has demonstrated the benefits that FPGAs can deliver to quantitative
+workloads, and in this paper, we study whether the Versal ACAP and its AI
+Engines (AIEs) can also deliver improved performance. We focus specifically on
+the industry standard Strategic Technology Analysis Center's (STAC) derivatives
+risk analysis benchmark STAC-A2. Porting a purely FPGA-based accelerator
+STAC-A2 inspired market risk (SIMR) benchmark to the Versal ACAP device by
+combining Programmable Logic (PL) and AIEs, we explore the development approach
+and techniques, before comparing performance across PL and AIEs. Ultimately, we
+found that our AIE approach is slower than a highly optimised existing PL-only
+version due to limits on both the AIE and PL that we explore and describe.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2402.10977v1,2024-02-15T18:20:42Z,2024-02-15,generative ai and process systems engineering: the next frontier,"This article explores how emerging generative artificial intelligence (GenAI)
+models, such as large language models (LLMs), can enhance solution
+methodologies within process systems engineering (PSE). These cutting-edge
+GenAI models, particularly foundation models (FMs), which are pre-trained on
+extensive, general-purpose datasets, offer versatile adaptability for a broad
+range of tasks, including responding to queries, image generation, and complex
+decision-making. Given the close relationship between advancements in PSE and
+developments in computing and systems technologies, exploring the synergy
+between GenAI and PSE is essential. We begin our discussion with a compact
+overview of both classic and emerging GenAI models, including FMs, and then
+dive into their applications within key PSE domains: synthesis and design,
+optimization and integration, and process monitoring and control. In each
+domain, we explore how GenAI models could potentially advance PSE
+methodologies, providing insights and prospects for each area. Furthermore, the
+article identifies and discusses potential challenges in fully leveraging GenAI
+within PSE, including multiscale modeling, data requirements, evaluation
+metrics and benchmarks, and trust and safety, thereby deepening the discourse
+on effective GenAI integration into systems analysis, design, optimization,
+operations, monitoring, and control. This paper provides a guide for future
+research focused on the applications of emerging GenAI in PSE.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2401.16792v1,2024-01-30T07:11:03Z,2024-01-30,"widesa: a high array utilization mapping scheme for uniform recurrences
+  on the versal acap architecture","The Versal Adaptive Compute Acceleration Platform (ACAP) is a new
+architecture that combines AI Engines (AIEs) with reconfigurable fabric. This
+architecture offers significant acceleration potential for uniform recurrences
+in various domains, such as deep learning, high-performance computation, and
+signal processing. However, efficiently mapping these computations onto the
+Versal ACAP architecture while achieving high utilization of AIEs poses a
+challenge.
+  To address this issue, we propose a mapping scheme called \fname, which aims
+to accelerate uniform recurrences on the Versal ACAP architecture by leveraging
+the features of both the hardware and the computations. Considering the array
+architecture of AIEs, our approach utilizes space-time transformations based on
+the polyhedral model to generate legally optimized systolic array mappings.
+Concurrently, we have developed a routing-aware PLIO assignment algorithm
+tailored for communication on the AIE array, and the algorithm aims at
+successful compilation while maximizing array utilization. Furthermore, we
+introduce an automatic mapping framework. This framework is designed to
+generate the corresponding executable code for uniform recurrences, which
+encompasses the AIE kernel program, programmable logic bitstreams, and the host
+program. The experimental results validate the effectiveness of our mapping
+scheme. Specifically, when applying our scheme to matrix multiplication
+computations on the VCK5000 board, we achieve a throughput of 4.15TOPS on float
+data type, which is 1.11$\times$ higher compared to the state-of-the-art
+accelerator on the Versal ACAP architecture.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2401.11013v1,2024-01-19T20:21:46Z,2024-01-19,custom developer gpt for ethical ai solutions,"The main goal of this project is to create a new software artefact: a custom
+Generative Pre-trained Transformer (GPT) for developers to discuss and solve
+ethical issues through AI engineering. This conversational agent will provide
+developers with practical application on (1) how to comply with legal
+frameworks which regard AI systems (like the EU AI Act~\cite{aiact} and
+GDPR~\cite{gdpr}) and (2) present alternate ethical perspectives to allow
+developers to understand and incorporate alternate moral positions. In this
+paper, we provide motivation for the need of such an agent, detail our idea and
+demonstrate a use case. The use of such a tool can allow practitioners to
+engineer AI solutions which meet legal requirements and satisfy diverse ethical
+perspectives.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2401.05618v1,2024-01-11T01:52:25Z,2024-01-11,"the benefits of a concise chain of thought on problem-solving in large
+  language models","In this paper, we introduce Concise Chain-of-Thought (CCoT) prompting. We
+compared standard CoT and CCoT prompts to see how conciseness impacts response
+length and correct-answer accuracy. We evaluated this using GPT-3.5 and GPT-4
+with a multiple-choice question-and-answer (MCQA) benchmark. CCoT reduced
+average response length by 48.70% for both GPT-3.5 and GPT-4 while having a
+negligible impact on problem-solving performance. However, on math problems,
+GPT-3.5 with CCoT incurs a performance penalty of 27.69%. Overall, CCoT leads
+to an average per-token cost reduction of 22.67%. These results have practical
+implications for AI systems engineers using LLMs to solve real-world problems
+with CoT prompt-engineering techniques. In addition, these results provide more
+general insight for AI researchers studying the emergent behavior of
+step-by-step reasoning in LLMs.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2401.03223v2,2024-01-12T02:14:56Z,2024-01-06,"an intelligent sociotechnical systems (ists) framework: toward a
+  sociotechnically-based hierarchical human-centered ai approach","Insights: - The human-centered AI (HCAI) approach and the sociotechnical
+systems (STS) theory share the same goal: ensuring that new technologies such
+as AI best serve humans in a sociotechnical environment. - HCAI practice needs
+to fully embrace sociotechnical systems thinking, while traditional STS needs
+to evolve to address the emerging characteristics of AI technology. - We
+propose a conceptual framework for intelligent sociotechnical systems (iSTS) to
+enhance traditional STS theory in the AI era. - Based on iSTS, we further
+propose a sociotechnical-based hierarchical HCAI approach as a paradigmatic
+extension to existing HCAI practice, further advancing HCAI practice.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2312.14769v3,2023-12-29T11:07:09Z,2023-12-22,large language model (llm) bias index -- llmbi,"The Large Language Model Bias Index (LLMBI) is a pioneering approach designed
+to quantify and address biases inherent in large language models (LLMs), such
+as GPT-4. We recognise the increasing prevalence and impact of LLMs across
+diverse sectors. This research introduces a novel metric, LLMBI, to
+systematically measure and mitigate biases potentially skewing model responses.
+We formulated LLMBI using a composite scoring system incorporating multiple
+dimensions of bias, including but not limited to age, gender, and racial
+biases. To operationalise this metric, we engaged in a multi-step process
+involving collecting and annotating LLM responses, applying sophisticated
+Natural Language Processing (NLP) techniques for bias detection, and computing
+the LLMBI score through a specially crafted mathematical formula. The formula
+integrates weighted averages of various bias dimensions, a penalty for dataset
+diversity deficiencies, and a correction for sentiment biases. Our empirical
+analysis, conducted using responses from OpenAI's API, employs advanced
+sentiment analysis as a representative method for bias detection. The research
+reveals LLMs, whilst demonstrating impressive capabilities in text generation,
+exhibit varying degrees of bias across different dimensions. LLMBI provides a
+quantifiable measure to compare biases across models and over time, offering a
+vital tool for systems engineers, researchers and regulators in enhancing the
+fairness and reliability of LLMs. It highlights the potential of LLMs in
+mimicking unbiased human-like responses. Additionally, it underscores the
+necessity of continuously monitoring and recalibrating such models to align
+with evolving societal norms and ethical standards.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2311.12755v1,2023-11-21T18:02:52Z,2023-11-21,"digital twin framework for optimal and autonomous decision-making in
+  cyber-physical systems: enhancing reliability and adaptability in the oil and
+  gas industry","The concept of creating a virtual copy of a complete Cyber-Physical System
+opens up numerous possibilities, including real-time assessments of the
+physical environment and continuous learning from the system to provide
+reliable and precise information. This process, known as the twinning process
+or the development of a digital twin (DT), has been widely adopted across
+various industries. However, challenges arise when considering the
+computational demands of implementing AI models, such as those employed in
+digital twins, in real-time information exchange scenarios. This work proposes
+a digital twin framework for optimal and autonomous decision-making applied to
+a gas-lift process in the oil and gas industry, focusing on enhancing the
+robustness and adaptability of the DT. The framework combines Bayesian
+inference, Monte Carlo simulations, transfer learning, online learning, and
+novel strategies to confer cognition to the DT, including model
+hyperdimensional reduction and cognitive tack. Consequently, creating a
+framework for efficient, reliable, and trustworthy DT identification was
+possible. The proposed approach addresses the current gap in the literature
+regarding integrating various learning techniques and uncertainty management in
+digital twin strategies. This digital twin framework aims to provide a reliable
+and efficient system capable of adapting to changing environments and
+incorporating prediction uncertainty, thus enhancing the overall
+decision-making process in complex, real-world scenarios. Additionally, this
+work lays the foundation for further developments in digital twins for process
+systems engineering, potentially fostering new advancements and applications
+across various industrial sectors.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2311.04326v1,2023-11-07T20:06:38Z,2023-11-07,"educating for ai cybersecurity work and research: ethics, systems
+  thinking, and communication requirements","The present study explored managerial and instructor perceptions of their
+freshly employed cybersecurity workers' or students' preparedness to work
+effectively in a changing cybersecurity environment that includes AI tools.
+Specifically, we related perceptions of technical preparedness to ethical,
+systems thinking, and communication skills. We found that managers and
+professors perceive preparedness to use AI tools in cybersecurity to be
+significantly associated with all three non-technical skill sets. Most
+important, ethics is a clear leader in the network of relationships. Contrary
+to expectations that ethical concerns are left behind in the rush to adopt the
+most advanced AI tools in security, both higher education instructors and
+managers appreciate their role and see them closely associated with technical
+prowess. Another significant finding is that professors over-estimate students'
+preparedness for ethical, system thinking, and communication abilities compared
+to IT managers' perceptions of their newly employed IT workers.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2311.00903v1,2023-11-02T00:08:07Z,2023-11-02,"artificial intelligence ethics education in cybersecurity: challenges
+  and opportunities: a focus group report","The emergence of AI tools in cybersecurity creates many opportunities and
+uncertainties. A focus group with advanced graduate students in cybersecurity
+revealed the potential depth and breadth of the challenges and opportunities.
+The salient issues are access to open source or free tools, documentation,
+curricular diversity, and clear articulation of ethical principles for AI
+cybersecurity education. Confronting the ""black box"" mentality in AI
+cybersecurity work is also of the greatest importance, doubled by deeper and
+prior education in foundational AI work. Systems thinking and effective
+communication were considered relevant areas of educational improvement. Future
+AI educators and practitioners need to address these issues by implementing
+rigorous technical training curricula, clear documentation, and frameworks for
+ethically monitoring AI combined with critical and system's thinking and
+communication skills.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2310.18948v4,2024-02-21T14:35:31Z,2023-10-29,"probabilistic feature augmentation for ais-based multi-path long-term
+  vessel trajectory forecasting","Maritime transportation is paramount in achieving global economic growth,
+entailing concurrent ecological obligations in sustainability and safeguarding
+endangered marine species, most notably preserving large whale populations. In
+this regard, the Automatic Identification System (AIS) data plays a significant
+role by offering real-time streaming data on vessel movement, allowing enhanced
+traffic monitoring. This study explores using AIS data to prevent
+vessel-to-whale collisions by forecasting long-term vessel trajectories from
+engineered AIS data sequences. For such a task, we have developed an
+encoder-decoder model architecture using Bidirectional Long Short-Term Memory
+Networks (Bi-LSTM) to predict the next 12 hours of vessel trajectories using 1
+to 3 hours of AIS data as input. We feed the model with probabilistic features
+engineered from historical AIS data that refer to each trajectory's potential
+route and destination. The model then predicts the vessel's trajectory,
+considering these additional features by leveraging convolutional layers for
+spatial feature learning and a position-aware attention mechanism that
+increases the importance of recent timesteps of a sequence during temporal
+feature learning. The probabilistic features have an F1 Score of approximately
+85% and 75% for each feature type, respectively, demonstrating their
+effectiveness in augmenting information to the neural network. We test our
+model on the Gulf of St. Lawrence, a region known to be the habitat of North
+Atlantic Right Whales (NARW). Our model achieved a high R2 score of over 98%
+using various techniques and features. It stands out among other approaches as
+it can make complex decisions during turnings and path selection. Our study
+highlights the potential of data engineering and trajectory forecasting models
+for marine life species preservation.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2310.08401v1,2023-10-12T15:10:55Z,2023-10-12,"performance/power assessment of cnn packages on embedded automotive
+  platforms","The rise of power-efficient embedded computers based on highly-parallel
+accelerators opens a number of opportunities and challenges for researchers and
+engineers, and paved the way to the era of edge computing. At the same time,
+advances in embedded AI for object detection and categorization such as YOLO,
+GoogleNet and AlexNet reached an unprecedented level of accuracy (mean-Average
+Precision - mAP) and performance (Frames-Per-Second - FPS). Today, edge
+computers based on heterogeneous many-core systems are a predominant choice to
+deploy such systems in industry 4.0, wearable devices, and - our focus -
+autonomous driving systems. In these latter systems, engineers struggle to make
+reduced automotive power and size budgets co-exist with the accuracy and
+performance targets requested by autonomous driving. We aim at validating the
+effectiveness and efficiency of most recent networks on state-of-the-art
+platforms with embedded commercial-off-the-shelf System-on-Chips, such as
+Xavier AGX, Tegra X2 and Nano for NVIDIA and XCZU9EG and XCZU3EG of the Zynq
+UltraScale+ family, for the Xilinx counterpart. Our work aims at supporting
+engineers in choosing the most appropriate CNN package and computing system for
+their designs, and deriving guidelines for adequately sizing their systems.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2310.07082v1,2023-10-10T23:49:26Z,2023-10-10,"taking the human out of decomposition-based optimization via artificial
+  intelligence: part ii. learning to initialize","The repeated solution of large-scale optimization problems arises frequently
+in process systems engineering tasks. Decomposition-based solution methods have
+been widely used to reduce the corresponding computational time, yet their
+implementation has multiple steps that are difficult to configure. We propose a
+machine learning approach to learn the optimal initialization of such
+algorithms which minimizes the computational time. Active and supervised
+learning is used to learn a surrogate model that predicts the computational
+performance for a given initialization. We apply this approach to the
+initialization of Generalized Benders Decomposition for the solution of mixed
+integer model predictive control problems. The surrogate models are used to
+find the optimal number of initial cuts that should be added in the master
+problem. The results show that the proposed approach can lead to a significant
+reduction in solution time, and active learning can reduce the data required
+for learning.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2311.06263v1,2023-09-27T09:08:41Z,2023-09-27,no trust without regulation!,"The explosion in the performance of Machine Learning (ML) and the potential
+of its applications are strongly encouraging us to consider its use in
+industrial systems, including for critical functions such as decision-making in
+autonomous systems. While the AI community is well aware of the need to ensure
+the trustworthiness of AI-based applications, it is still leaving too much to
+one side the issue of safety and its corollary, regulation and standards,
+without which it is not possible to certify any level of safety, whether the
+systems are slightly or very critical.The process of developing and qualifying
+safety-critical software and systems in regulated industries such as aerospace,
+nuclear power stations, railways or automotive industry has long been well
+rationalized and mastered. They use well-defined standards, regulatory
+frameworks and processes, as well as formal techniques to assess and
+demonstrate the quality and safety of the systems and software they develop.
+However, the low level of formalization of specifications and the uncertainties
+and opacity of machine learning-based components make it difficult to validate
+and verify them using most traditional critical systems engineering methods.
+This raises the question of qualification standards, and therefore of
+regulations adapted to AI. With the AI Act, the European Commission has laid
+the foundations for moving forward and building solid approaches to the
+integration of AI-based applications that are safe, trustworthy and respect
+European ethical values. The question then becomes ""How can we rise to the
+challenge of certification and propose methods and tools for trusted artificial
+intelligence?""",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2309.09495v1,2023-09-18T05:38:23Z,2023-09-18,pwr: exploring the role of representations in conversational programming,"Large Language Models (LLMs) have revolutionized programming and software
+engineering. AI programming assistants such as GitHub Copilot X enable
+conversational programming, narrowing the gap between human intent and code
+generation. However, prior literature has identified a key challenge--there is
+a gap between user's mental model of the system's understanding after a
+sequence of natural language utterances, and the AI system's actual
+understanding. To address this, we introduce Programming with Representations
+(PwR), an approach that uses representations to convey the system's
+understanding back to the user in natural language. We conducted an in-lab
+task-centered study with 14 users of varying programming proficiency and found
+that representations significantly improve understandability, and instilled a
+sense of agency among our participants. Expert programmers use them for
+verification, while intermediate programmers benefit from confirmation. Natural
+language-based development with LLMs, coupled with representations, promises to
+transform software development, making it more accessible and efficient.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2309.07930v1,2023-09-13T08:21:59Z,2023-09-13,generative ai,"The term ""generative AI"" refers to computational techniques that are capable
+of generating seemingly new, meaningful content such as text, images, or audio
+from training data. The widespread diffusion of this technology with examples
+such as Dall-E 2, GPT-4, and Copilot is currently revolutionizing the way we
+work and communicate with each other. In this article, we provide a
+conceptualization of generative AI as an entity in socio-technical systems and
+provide examples of models, systems, and applications. Based on that, we
+introduce limitations of current generative AI and provide an agenda for
+Business & Information Systems Engineering (BISE) research. Different from
+previous works, we focus on generative AI in the context of information
+systems, and, to this end, we discuss several opportunities and challenges that
+are unique to the BISE community and make suggestions for impactful directions
+for BISE research.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2309.02065v1,2023-09-05T09:07:24Z,2023-09-05,"efficiency is not enough: a critical perspective of environmentally
+  sustainable ai","Artificial Intelligence (AI) is currently spearheaded by machine learning
+(ML) methods such as deep learning (DL) which have accelerated progress on many
+tasks thought to be out of reach of AI. These ML methods can often be compute
+hungry, energy intensive, and result in significant carbon emissions, a known
+driver of anthropogenic climate change. Additionally, the platforms on which ML
+systems run are associated with environmental impacts including and beyond
+carbon emissions. The solution lionized by both industry and the ML community
+to improve the environmental sustainability of ML is to increase the efficiency
+with which ML systems operate in terms of both compute and energy consumption.
+In this perspective, we argue that efficiency alone is not enough to make ML as
+a technology environmentally sustainable. We do so by presenting three high
+level discrepancies between the effect of efficiency on the environmental
+sustainability of ML when considering the many variables which it interacts
+with. In doing so, we comprehensively demonstrate, at multiple levels of
+granularity both technical and non-technical reasons, why efficiency is not
+enough to fully remedy the environmental impacts of ML. Based on this, we
+present and argue for systems thinking as a viable path towards improving the
+environmental sustainability of ML holistically.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2308.08102v1,2023-08-16T02:21:52Z,2023-08-16,"chatlogo: a large language model-driven hybrid natural-programming
+  language interface for agent-based modeling and programming","Building on Papert (1980)'s idea of children talking to computers, we propose
+ChatLogo, a hybrid natural-programming language interface for agent-based
+modeling and programming. We build upon previous efforts to scaffold ABM & P
+learning and recent development in leveraging large language models (LLMs) to
+support the learning of computational programming. ChatLogo aims to support
+conversations with computers in a mix of natural and programming languages,
+provide a more user-friendly interface for novice learners, and keep the
+technical system from over-reliance on any single LLM. We introduced the main
+elements of our design: an intelligent command center, and a conversational
+interface to support creative expression. We discussed the presentation format
+and future work. Responding to the challenges of supporting open-ended
+constructionist learning of ABM & P and leveraging LLMs for educational
+purposes, we contribute to the field by proposing the first constructionist
+LLM-driven interface to support computational and complex systems thinking.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2308.05381v3,2024-02-16T01:07:25Z,2023-08-10,"an exploratory study of v-model in building ml-enabled software: a
+  systems engineering perspective","Machine learning (ML) components are being added to more and more critical
+and impactful software systems, but the software development process of
+real-world production systems from prototyped ML models remains challenging
+with additional complexity and interdisciplinary collaboration challenges. This
+poses difficulties in using traditional software lifecycle models such as
+waterfall, spiral, or agile models when building \textit{ML-enabled systems}.
+In this research, we apply a Systems Engineering lens to investigate the use of
+V-Model in addressing the interdisciplinary collaboration challenges when
+building ML-enabled systems. By interviewing practitioners from software
+companies, we established a set of 8 propositions for using V-Model to manage
+interdisciplinary collaborations when building products with ML components.
+Based on the propositions, we found that despite requiring additional efforts,
+the characteristics of V-Model align effectively with several collaboration
+challenges encountered by practitioners when building ML-enabled systems. We
+recommend future research to investigate new process models that leverage the
+characteristics of V-Model such as the system decomposition, clear system
+boundary, and consistency of Validation \& Verification (V\&V) for building
+ML-enabled systems.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2307.14206v1,2023-07-26T14:12:16Z,2023-07-26,"ai and education: an investigation into the use of chatgpt for systems
+  thinking","This exploratory study investigates the potential of the artificial
+intelligence tool, ChatGPT, to support systems thinking (ST) in various
+subjects. Using both general and subject specific prompts, the study assesses
+the accuracy, helpfulness, and reliability of ChatGPT's responses across
+different versions of the tool. The results indicate that ChatGPT can provide
+largely correct and very helpful responses in various subjects, demonstrating
+its potential as a tool for enhancing ST skills. However, occasional
+inaccuracies highlight the need for users to remain critical of ChatGPT's
+responses. Despite some limitations, this study suggests that with careful use
+and attention to its idiosyncrasies, ChatGPT can be a valuable tool for
+teaching and learning ST.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2307.06027v1,2023-07-12T09:16:33Z,2023-07-12,"semantic communications system with model division multiple access and
+  controllable coding rate for point cloud","Point cloud, as a 3D representation, is widely used in autonomous driving,
+virtual reality (VR), and augmented reality (AR). However, traditional
+communication systems think that the point cloud's semantic information is
+irrelevant to communication, which hinders the efficient transmission of point
+clouds in the era of artificial intelligence (AI). This paper proposes a point
+cloud based semantic communication system (PCSC), which uses AI-based encoding
+techniques to extract the semantic information of the point cloud and joint
+source-channel coding (JSCC) technology to overcome the distortion caused by
+noise channels and solve the ""cliff effect"" in traditional communication. In
+addition, the system realizes the controllable coding rate without fine-tuning
+the network. The method analyzes the coded semantic vector's importance and
+discards semantically-unimportant information, thereby improving the
+transmission efficiency. Besides, PCSC and the recently proposed non-orthogonal
+model division multiple access (MDMA) technology are combined to design a point
+cloud MDMA transmission system (M-PCSC) for multi-user transmission. Relevant
+experimental results show that the proposed method outperforms the traditional
+method 10dB in the same channel bandwidth ratio under the PSNR D1 and PSNR D2
+metrics. In terms of transmission, the proposed method can effectively solve
+the ""cliff effect"" in the traditional methods.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2307.04495v1,2023-07-10T11:33:46Z,2023-07-10,"model-driven engineering method to support the formalization of machine
+  learning using sysml","Methods: This work introduces a method supporting the collaborative
+definition of machine learning tasks by leveraging model-based engineering in
+the formalization of the systems modeling language SysML. The method supports
+the identification and integration of various data sources, the required
+definition of semantic connections between data attributes, and the definition
+of data processing steps within the machine learning support.
+  Results: By consolidating the knowledge of domain and machine learning
+experts, a powerful tool to describe machine learning tasks by formalizing
+knowledge using the systems modeling language SysML is introduced. The method
+is evaluated based on two use cases, i.e., a smart weather system that allows
+to predict weather forecasts based on sensor data, and a waste prevention case
+for 3D printer filament that cancels the printing if the intended result cannot
+be achieved (image processing). Further, a user study is conducted to gather
+insights of potential users regarding perceived workload and usability of the
+elaborated method.
+  Conclusion: Integrating machine learning-specific properties in systems
+engineering techniques allows non-data scientists to understand formalized
+knowledge and define specific aspects of a machine learning problem, document
+knowledge on the data, and to further support data scientists to use the
+formalized knowledge as input for an implementation using (semi-) automatic
+code generation. In this respect, this work contributes by consolidating
+knowledge from various domains and therefore, fosters the integration of
+machine learning in industry by involving several stakeholders.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2307.02867v1,2023-07-06T09:08:20Z,2023-07-06,"towards a safe mlops process for the continuous development and safety
+  assurance of ml-based systems in the railway domain","Traditional automation technologies alone are not sufficient to enable
+driverless operation of trains (called Grade of Automation (GoA) 4) on
+non-restricted infrastructure. The required perception tasks are nowadays
+realized using Machine Learning (ML) and thus need to be developed and deployed
+reliably and efficiently. One important aspect to achieve this is to use an
+MLOps process for tackling improved reproducibility, traceability,
+collaboration, and continuous adaptation of a driverless operation to changing
+conditions. MLOps mixes ML application development and operation (Ops) and
+enables high frequency software releases and continuous innovation based on the
+feedback from operations. In this paper, we outline a safe MLOps process for
+the continuous development and safety assurance of ML-based systems in the
+railway domain. It integrates system engineering, safety assurance, and the ML
+life-cycle in a comprehensive workflow. We present the individual stages of the
+process and their interactions. Moreover, we describe relevant challenges to
+automate the different stages of the safe MLOps process.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2306.06124v1,2023-06-08T04:41:34Z,2023-06-08,"unsupervised clustering of disturbances in power systems via deep
+  convolutional autoencoders","Power quality (PQ) events are recorded by PQ meters whenever anomalous events
+are detected on the power grid. Using neural networks with machine learning can
+aid in accurately classifying the recorded waveforms and help power system
+engineers diagnose and rectify the root causes of problems. However, many of
+the waveforms captured during a disturbance in the power system need to be
+labeled for supervised learning, leaving a large number of data recordings for
+engineers to process manually or go unseen. This paper presents an autoencoder
+and K-means clustering-based unsupervised technique that can be used to cluster
+PQ events into categories like sag, interruption, transients, normal, and
+harmonic distortion to enable filtering of anomalous waveforms from recurring
+or normal waveforms. The method is demonstrated using three-phase,
+field-obtained voltage waveforms recorded in a distribution grid. First, a
+convolutional autoencoder compresses the input signals into a set of lower
+feature dimensions which, after further processing, is passed to the K-means
+algorithm to identify data clusters. Using a small, labeled dataset, numerical
+labels are then assigned to events based on a cosine similarity analysis.
+Finally, the study analyzes the clusters using the t-distributed stochastic
+neighbor embedding (t-SNE) visualization tool, demonstrating that the technique
+can help investigate a large number of captured events in a quick manner.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2304.04640v3,2024-01-17T20:40:28Z,2023-04-10,"neurobench: a framework for benchmarking neuromorphic computing
+  algorithms and systems","Neuromorphic computing shows promise for advancing computing efficiency and
+capabilities of AI applications using brain-inspired principles. However, the
+neuromorphic research field currently lacks standardized benchmarks, making it
+difficult to accurately measure technological advancements, compare performance
+with conventional methods, and identify promising future research directions.
+Prior neuromorphic computing benchmark efforts have not seen widespread
+adoption due to a lack of inclusive, actionable, and iterative benchmark design
+and guidelines. To address these shortcomings, we present NeuroBench: a
+benchmark framework for neuromorphic computing algorithms and systems.
+NeuroBench is a collaboratively-designed effort from an open community of
+nearly 100 co-authors across over 50 institutions in industry and academia,
+aiming to provide a representative structure for standardizing the evaluation
+of neuromorphic approaches. The NeuroBench framework introduces a common set of
+tools and systematic methodology for inclusive benchmark measurement,
+delivering an objective reference framework for quantifying neuromorphic
+approaches in both hardware-independent (algorithm track) and
+hardware-dependent (system track) settings. In this article, we present initial
+performance baselines across various model architectures on the algorithm track
+and outline the system track benchmark tasks and guidelines. NeuroBench is
+intended to continually expand its benchmarks and features to foster and track
+the progress made by the research community.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2303.17262v2,2023-10-17T01:02:15Z,2023-03-30,ontology in hybrid intelligence: a concise literature review,"In a context of constant evolution and proliferation of AI technology,Hybrid
+Intelligence is gaining popularity to refer a balanced coexistence between
+human and artificial intelligence. The term has been extensively used in the
+past two decades to define models of intelligence involving more than one
+technology. This paper aims to provide (i) a concise and focused overview of
+the adoption of Ontology in the broad context of Hybrid Intelligence regardless
+of its definition and (ii) a critical discussion on the possible role of
+Ontology to reduce the gap between human and artificial intelligence within
+hybrid intelligent systems. Beside the typical benefits provided by an
+effective use of ontologies, at a conceptual level, the conducted analysis has
+pointed out a significant contribution of Ontology to improve quality and
+accuracy, as well as a more specific role to enable extended interoperability,
+system engineering and explainable/transparent systems. Additionally, an
+application-oriented analysis has shown a significant role in present systems
+(70+% of the cases) and, potentially, in future systems. However, despite the
+relatively consistent number of papers on the topic, a proper holistic
+discussion on the establishment of the next generation of hybrid-intelligent
+environments with a balanced co-existence of human and artificial intelligence
+is fundamentally missed in literature. Last but not the least, there is
+currently a relatively low explicit focus on automatic reasoning and inference
+in hybrid intelligent systems.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2303.09073v1,2023-03-16T04:10:47Z,2023-03-16,"combined machine learning and physics-based forecaster for intra-day and
+  1-week ahead solar irradiance forecasting under variable weather conditions","Power systems engineers are actively developing larger power plants out of
+photovoltaics imposing some major challenges which include its intermittent
+power generation and its poor dispatchability. The issue is that PV is a
+variable generation source unless additional planning and system additions for
+mitigation of generation intermittencies. One underlying factor that can
+enhance the applications around mitigating distributed energy resource
+intermittency challenges is forecasting the generation output. This is
+challenging especially with renewable energy sources which are weather
+dependent as due to the random nature of weather variance. This work puts forth
+a forecasting model which uses the solar variables to produce a PV generation
+forecast and evaluates a set of machine learning models for this task. In this
+paper, a forecaster for irradiance prediction for intra-day is proposed. This
+forecaster is capable of forecasting 15 minutes and hourly irradiance up to one
+week ahead. The paper performed a correlation and sensitivity analysis of the
+strength of the relationship between local weather parameters and system
+generation. In this study performance of SVM, CART, ANN, and Ensemble learning
+were analyzed for the prediction of 15-minute intraday and day-ahead
+irradiance. The results show that SVM and Ensemble learning yielded the lowest
+MAE for 15-minute intraday and day-ahead irradiance, respectively.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2302.07872v1,2023-02-14T07:22:32Z,2023-02-14,data-centric governance,"Artificial intelligence (AI) governance is the body of standards and
+practices used to ensure that AI systems are deployed responsibly. Current AI
+governance approaches consist mainly of manual review and documentation
+processes. While such reviews are necessary for many systems, they are not
+sufficient to systematically address all potential harms, as they do not
+operationalize governance requirements for system engineering, behavior, and
+outcomes in a way that facilitates rigorous and reproducible evaluation. Modern
+AI systems are data-centric: they act on data, produce data, and are built
+through data engineering. The assurance of governance requirements must also be
+carried out in terms of data. This work explores the systematization of
+governance requirements via datasets and algorithmic evaluations. When applied
+throughout the product lifecycle, data-centric governance decreases time to
+deployment, increases solution quality, decreases deployment risks, and places
+the system in a continuous state of assured compliance with governance
+requirements.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2301.09926v2,2023-01-25T07:36:14Z,2023-01-24,"a two stages deep learning architecture for model reduction of
+  parametric time-dependent problems","Parametric time-dependent systems are of a crucial importance in modeling
+real phenomena, often characterized by non-linear behaviors too. Those
+solutions are typically difficult to generalize in a sufficiently wide
+parameter space while counting on limited computational resources available. As
+such, we present a general two-stages deep learning framework able to perform
+that generalization with low computational effort in time. It consists in a
+separated training of two pipe-lined predictive models. At first, a certain
+number of independent neural networks are trained with data-sets taken from
+different subsets of the parameter space. Successively, a second predictive
+model is specialized to properly combine the first-stage guesses and compute
+the right predictions. Promising results are obtained applying the framework to
+incompressible Navier-Stokes equations in a cavity (Rayleigh-Bernard cavity),
+obtaining a 97% reduction in the computational time comparing with its
+numerical resolution for a new value of the Grashof number.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2301.06674v1,2023-01-17T03:13:45Z,2023-01-17,"multi-fidelity surrogate modeling for temperature field prediction using
+  deep convolution neural network","Temperature field prediction is of great importance in the thermal design of
+systems engineering, and building the surrogate model is an effective way for
+the task. Generally, large amounts of labeled data are required to guarantee a
+good prediction performance of the surrogate model, especially the deep
+learning model, which have more parameters and better representational ability.
+However, labeled data, especially high-fidelity labeled data, are usually
+expensive to obtain and sometimes even impossible. To solve this problem, this
+paper proposes a pithy deep multi-fidelity model (DMFM) for temperature field
+prediction, which takes advantage of low-fidelity data to boost the performance
+with less high-fidelity data. First, a pre-train and fine-tune paradigm are
+developed in DMFM to train the low-fidelity and high-fidelity data, which
+significantly reduces the complexity of the deep surrogate model. Then, a
+self-supervised learning method for training the physics-driven deep
+multi-fidelity model (PD-DMFM) is proposed, which fully utilizes the physics
+characteristics of the engineering systems and reduces the dependence on large
+amounts of labeled low-fidelity data in the training process. Two diverse
+temperature field prediction problems are constructed to validate the
+effectiveness of DMFM and PD-DMFM, and the result shows that the proposed
+method can greatly reduce the dependence of the model on high-fidelity data.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2212.05885v1,2022-12-01T20:17:48Z,2022-12-01,"image-based artificial intelligence empowered surrogate model and shape
+  morpher for real-time blank shape optimisation in the hot stamping process","As the complexity of modern manufacturing technologies increases, traditional
+trial-and-error design, which requires iterative and expensive simulations,
+becomes unreliable and time-consuming. This difficulty is especially
+significant for the design of hot-stamped safety-critical components, such as
+ultra-high-strength-steel (UHSS) B-pillars. To reduce design costs and ensure
+manufacturability, scalar-based Artificial-Intelligence-empowered surrogate
+modelling (SAISM) has been investigated and implemented, which can allow
+real-time manufacturability-constrained structural design optimisation.
+However, SAISM suffers from low accuracy and generalisability, and usually
+requires a high volume of training samples. To solve this problem, an
+image-based Artificial-intelligence-empowered surrogate modelling (IAISM)
+approach is developed in this research, in combination with an
+auto-decoder-based blank shape generator. The IAISM, which is based on a
+Mask-Res-SE-U-Net architecture, is trained to predict the full thinning field
+of the as-formed component given an arbitrary blank shape. Excellent prediction
+performance of IAISM is achieved with only 256 training samples, which
+indicates the small-data learning nature of engineering AI tasks using
+structured data representations. The trained auto-decoder, trained
+Mask-Res-SE-U-Net, and Adam optimiser are integrated to conduct blank
+optimisation by modifying the latent vector. The optimiser can rapidly find
+blank shapes that satisfy manufacturability criteria. As a high-accuracy and
+generalisable surrogate modelling and optimisation tool, the proposed pipeline
+is promising to be integrated into a full-chain digital twin to conduct
+real-time, multi-objective design optimisation.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2209.09618v1,2022-09-20T11:23:51Z,2022-09-20,on a uniform causality model for industrial automation,"The increasing complexity of Cyber-Physical Systems (CPS) makes industrial
+automation challenging. Large amounts of data recorded by sensors need to be
+processed to adequately perform tasks such as diagnosis in case of fault. A
+promising approach to deal with this complexity is the concept of causality.
+However, most research on causality has focused on inferring causal relations
+between parts of an unknown system. Engineering uses causality in a
+fundamentally different way: complex systems are constructed by combining
+components with known, controllable behavior. As CPS are constructed by the
+second approach, most data-based causality models are not suited for industrial
+automation. To bridge this gap, a Uniform Causality Model for various
+application areas of industrial automation is proposed, which will allow better
+communication and better data usage across disciplines. The resulting model
+describes the behavior of CPS mathematically and, as the model is evaluated on
+the unique requirements of the application areas, it is shown that the Uniform
+Causality Model can work as a basis for the application of new approaches in
+industrial automation that focus on machine learning.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2208.06430v1,2022-07-31T19:27:55Z,2022-07-31,"a hetero-functional graph structural analysis of the american
+  multi-modal energy system","As one of the most pressing challenges of the 21st century, global climate
+change demands a host of changes across four critical energy infrastructures:
+the electric grid, the natural gas system, the oil system, and the coal system.
+Unfortunately, these four systems are often studied individually, and rarely
+together as integrated systems. Instead, holistic multi-energy system models
+can serve to improve the understanding of these interdependent systems and
+guide policies that shape the systems as they evolve into the future. The NSF
+project entitled ""American Multi-Modal Energy System Synthetic \& Simulated
+Data (AMES-3D)"" seeks to fill this void with an open-source,
+physically-informed, structural and behavioral machine-learning model of the
+AMES. To that end, this paper uses a GIS-data-driven, model-based system
+engineering approach to develop structural models of the American Multi-Modal
+Energy System (AMES). This paper produces and reports the hetero-functional
+incidence tensor, hetero-functional adjacency matrix, and the formal graph
+adjacency matrix in terms of their statistics. This work compares these four
+hetero-functional graph models across the states of New York (NY), California
+(CA), Texas (TX), and the United States of America (USA) as a whole. From the
+reported statistics, the paper finds that the geography and the sustainable
+energy policies of these states are deeply reflected in the structure of their
+multi-energy infrastructure systems and impact the full USA's structure.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2206.12551v1,2022-06-25T04:42:52Z,2022-06-25,"integrating machine learning with discrete event simulation for
+  improving health referral processing in a care management setting","Post-discharge care management coordinates patients' referrals to improve
+their health after being discharged from hospitals, especially elderly and
+chronically ill patients. In a care management setting, health referrals are
+processed by a specialized unit in the managed care organization (MCO), which
+interacts with many other entities including inpatient hospitals, insurance
+companies, and post-discharge care providers. In this paper, a
+machine-learning-guided discrete event simulation framework to improve health
+referrals processing is proposed. Random-forest-based prediction models are
+developed to predict the LOS and referral type. Two simulation models are
+constructed to represent the as-is configuration of the referral processing
+system and the intelligent system after incorporating the prediction
+functionality, respectively. By incorporating a prediction module for the
+referral processing system to plan and prioritize referrals, the overall
+performance was enhanced in terms of reducing the average referral creation
+delay time. This research will emphasize the role of post-discharge care
+management in improving health quality and reducing associated costs. Also, the
+paper demonstrates how to use integrated systems engineering methods for
+process improvement of complex healthcare systems.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2207.07599v1,2022-06-21T14:36:41Z,2022-06-21,value-based engineering with ieee 7000tm,"Digital ethics is being discussed worldwide as a necessity to create more
+reliable IT systems. This discussion, fueled by the fear of uncontrollable
+artificial intelligence (AI) has moved many institutions and scientists to
+demand a value-based system engineering. This article presents how
+organizations can build responsible and ethically founded systems with the
+'Value-based Engineering' (VBE) approach that was standardized in the IEEE
+7000TM standard. VBE is a transparent, clearly-structured, step-by-step
+methodology combining innovation management, risk management, system and
+software engineering in one process framework. It embeds a robust value
+ontology and terminology. It has been tested in various case studies. This
+article introduces readers to the most important steps and contributions of the
+approach.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2205.01423v3,2023-02-17T18:47:48Z,2022-05-03,"autonomy and intelligence in the computing continuum: challenges,
+  enablers, and future directions for orchestration","Future AI applications require performance, reliability and privacy that the
+existing, cloud-dependant system architectures cannot provide. In this article,
+we study orchestration in the device-edge-cloud continuum, and focus on edge AI
+for resource orchestration. We claim that to support the constantly growing
+requirements of intelligent applications in the device-edge-cloud computing
+continuum, resource orchestration needs to embrace edge AI and emphasize local
+autonomy and intelligence. To justify the claim, we provide a general
+definition for continuum orchestration, and look at how current and emerging
+orchestration paradigms are suitable for the computing continuum. We describe
+certain major emerging research themes that may affect future orchestration,
+and provide an early vision of an orchestration paradigm that embraces those
+research themes. Finally, we survey current key edge AI methods and look at how
+they may contribute into fulfilling the vision of future continuum
+orchestration.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2205.01070v1,2022-04-20T04:20:14Z,2022-04-20,five ps: leverage zones towards responsible ai,"There is a growing debate amongst academics and practitioners on whether
+interventions made, thus far, towards Responsible AI would have been enough to
+engage with root causes of AI problems. Failure to effect meaningful changes in
+this system could see these initiatives to not reach their potential and lead
+to the concept becoming another buzzword for companies to use in their
+marketing campaigns. We propose that there is an opportunity to improve the
+extent to which interventions are understood to be effective in their
+contribution to the change required for Responsible AI. Using the notions of
+leverage zones adapted from the 'Systems Thinking' literature, we suggest a
+novel approach to evaluate the effectiveness of interventions, to focus on
+those that may bring about the real change that is needed. In this paper we
+argue that insights from using this perspective demonstrate that the majority
+of current initiatives taken by various actors in the field, focus on low-order
+interventions, such as short-term fixes, tweaking algorithms and updating
+parameters, absent from higher-order interventions, such as redefining the
+system's foundational structures that govern those parameters, or challenging
+the underlying purpose upon which those structures are built and developed in
+the first place(high-leverage). This paper presents a conceptual framework
+called the Five Ps to identify interventions towards Responsible AI and
+provides a scaffold for transdisciplinary question asking to improve outcomes
+towards Responsible AI.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2203.15628v1,2022-03-29T14:49:46Z,2022-03-29,"exploring opportunities in usable hazard analysis processes for ai
+  engineering","Embedding artificial intelligence into systems introduces significant
+challenges to modern engineering practices. Hazard analysis tools and processes
+have not yet been adequately adapted to the new paradigm. This paper describes
+initial research and findings regarding current practices in AI-related hazard
+analysis and on the tools used to conduct this work. Our goal with this initial
+research is to better understand the needs of practitioners and the emerging
+challenges of considering hazards and risks for AI-enabled products and
+services. Our primary research question is: Can we develop new structured
+thinking methods and systems engineering tools to support effective and
+engaging ways for preemptively considering failure modes in AI systems? The
+preliminary findings from our review of the literature and interviews with
+practitioners highlight various challenges around integrating hazard analysis
+into modern AI development processes and suggest opportunities for exploration
+of usable, human-centered hazard analysis tools.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2201.06961v1,2022-01-18T13:22:40Z,2022-01-18,"ai for closed-loop control systems -- new opportunities for modeling,
+  designing, and tuning control systems","Control Systems, particularly closed-loop control systems (CLCS), are
+frequently used in production machines, vehicles, and robots nowadays. CLCS are
+needed to actively align actual values of a process to a given reference or set
+values in real-time with a very high precession. Yet, artificial intelligence
+(AI) is not used to model, design, optimize, and tune CLCS. This paper will
+highlight potential AI-empowered and -based control system designs and
+designing procedures, gathering new opportunities and research direction in the
+field of control system engineering. Therefore, this paper illustrates which
+building blocks within the standard block diagram of CLCS can be replaced by
+AI, i.e., artificial neuronal networks (ANN). Having processes with real-time
+contains and functional safety in mind, it is discussed if AI-based controller
+blocks can cope with these demands. By concluding the paper, the pros and cons
+of AI-empowered as well as -based CLCS designs are discussed, and possible
+research directions for introducing AI in the domain of control system
+engineering are given.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2201.03413v2,2022-04-26T15:15:13Z,2022-01-10,systems challenges for trustworthy embodied systems,"A new generation of increasingly autonomous and self-learning embodied
+systems is about to be developed. When deploying embodied systems into a
+real-life context we face various engineering challenges, as it is crucial to
+coordinate the behavior of embodied systems in a beneficial manner, ensure
+their compatibility with our human-centered social values, and design
+verifiably safe and reliable human-machine interaction. We are arguing that
+traditional systems engineering is coming to a climacteric from embedded to
+embodied systems, and with assuring the trustworthiness of dynamic federations
+of situationally aware, intent-driven, explorative, ever-evolving, largely
+non-predictable, and increasingly autonomous embodied systems in uncertain,
+complex, and unpredictable real-world contexts. We are therefore identifying a
+number of urgent systems challenges for trustworthy embodied systems, including
+robust and human-centric AI, cognitive architectures, uncertainty
+quantification, trustworthy self-integration, and continual analysis and
+assurance.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2112.01629v1,2021-12-02T22:47:16Z,2021-12-02,"engineering ai tools for systematic and scalable quality assessment in
+  magnetic resonance imaging","A desire to achieve large medical imaging datasets keeps increasing as
+machine learning algorithms, parallel computing, and hardware technology
+evolve. Accordingly, there is a growing demand in pooling data from multiple
+clinical and academic institutes to enable large-scale clinical or
+translational research studies. Magnetic resonance imaging (MRI) is a
+frequently used, non-invasive imaging modality. However, constructing a big MRI
+data repository has multiple challenges related to privacy, data size, DICOM
+format, logistics, and non-standardized images. Not only building the data
+repository is difficult, but using data pooled from the repository is also
+challenging, due to heterogeneity in image acquisition, reconstruction, and
+processing pipelines across MRI vendors and imaging sites. This position paper
+describes challenges in constructing a large MRI data repository and using data
+downloaded from such data repositories in various aspects. To help address the
+challenges, the paper proposes introducing a quality assessment pipeline, with
+considerations and general design principles.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2111.01763v1,2021-11-01T08:42:37Z,2021-11-01,"modelling covid-19 pandemic dynamics using transparent, interpretable,
+  parsimonious and simulatable (tips) machine learning models: a case study
+  from systems thinking and system identification perspectives","Since the outbreak of COVID-19, an astronomical number of publications on the
+pandemic dynamics appeared in the literature, of which many use the susceptible
+infected removed (SIR) and susceptible exposed infected removed (SEIR) models,
+or their variants, to simulate and study the spread of the coronavirus. SIR and
+SEIR are continuous-time models which are a class of initial value problems
+(IVPs) of ordinary differential equations (ODEs). Discrete-time models such as
+regression and machine learning have also been applied to analyze COVID-19
+pandemic data (e.g. predicting infection cases), but most of these methods use
+simplified models involving a small number of input variables pre-selected
+based on a priori knowledge, or use very complicated models (e.g. deep
+learning), purely focusing on certain prediction purposes and paying little
+attention to the model interpretability. There have been relatively fewer
+studies focusing on the investigations of the inherent time-lagged or
+time-delayed relationships e.g. between the reproduction number (R number),
+infection cases, and deaths, analyzing the pandemic spread from a systems
+thinking and dynamic perspective. The present study, for the first time,
+proposes using systems engineering and system identification approach to build
+transparent, interpretable, parsimonious and simulatable (TIPS) dynamic machine
+learning models, establishing links between the R number, the infection cases
+and deaths caused by COVID-19. The TIPS models are developed based on the
+well-known NARMAX (Nonlinear AutoRegressive Moving Average with eXogenous
+inputs) model, which can help better understand the COVID-19 pandemic dynamics.
+A case study on the UK COVID-19 data is carried out, and new findings are
+detailed. The proposed method and the associated new findings are useful for
+better understanding the spread dynamics of the COVID-19 pandemic.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2112.01226v1,2021-10-31T14:47:05Z,2021-10-31,"role of artificial intelligence, clinicians & policymakers in clinical
+  decision making: a systems viewpoint","What is a system? Is one of those questions that is yet not clear to most
+individuals in this world. A system is an assemblage of interacting,
+interrelated and interdependent components forming a complex and integrated
+whole with an unambiguous and common goal. This paper emphasizes on the fact
+that all components of a complex system are inter-related and interdependent in
+some way and the behavior of that system depends on these independences. A
+health care system as portrayed in this article is widespread and complex. This
+encompasses not only hospitals but also governing bodies like the FDA,
+technologies such as AI, biomedical devices, Cloud computing and many more. The
+interactions between all these components govern the behavior and existence of
+the overall healthcare system. In this paper, we focus on the interaction of
+artificial intelligence, care providers and policymakers and analyze using
+systems thinking approach, their impact on clinical decision making",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2109.09657v3,2024-02-19T01:51:40Z,2021-09-20,"convex mixed-integer nonlinear programs derived from generalized
+  disjunctive programming using cones","We propose the formulation of convex Generalized Disjunctive Programming
+(GDP) problems using conic inequalities leading to conic GDP problems. We then
+show the reformulation of conic GDPs into Mixed-Integer Conic Programming
+(MICP) problems through both the big-M and hull reformulations. These
+reformulations have the advantage that they are representable using the same
+cones as the original conic GDP. In the case of the hull reformulation, they
+require no approximation of the perspective function. Moreover, the MICP
+problems derived can be solved by specialized conic solvers and offer a natural
+extended formulation amenable to both conic and gradient-based solvers. We
+present the closed form of several convex functions and their respective
+perspectives in conic sets, allowing users to formulate their conic GDP
+problems easily. We finally implement a large set of conic GDP examples and
+solve them via the scalar nonlinear and conic mixed-integer reformulations.
+These examples include applications from Process Systems Engineering, Machine
+learning, and randomly generated instances. Our results show that the conic
+structure can be exploited to solve these challenging MICP problems more
+efficiently. Our main contribution is providing the reformulations, examples,
+and computational results that support the claim that taking advantage of conic
+formulations of convex GDP instead of their nonlinear algebraic descriptions
+can lead to a more efficient solution to these problems.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2109.04646v1,2021-09-10T03:24:50Z,2021-09-10,ai agents in emergency response applications,"Emergency personnel respond to various situations ranging from fire, medical,
+hazardous materials, industrial accidents, to natural disasters. Situations
+such as natural disasters or terrorist acts require a multifaceted response of
+firefighters, paramedics, hazmat teams, and other agencies. Engineering AI
+systems that aid emergency personnel proves to be a difficult system
+engineering problem. Mission-critical ""edge AI"" situations require low-latency,
+reliable analytics. To further add complexity, a high degree of model accuracy
+is required when lives are at stake, creating a need for the deployment of
+highly accurate, however computationally intensive models to
+resource-constrained devices. To address all these issues, we propose an
+agent-based architecture for deployment of AI agents via 5G service-based
+architecture.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2108.13836v4,2023-11-19T16:24:19Z,2021-08-30,"explainable ai for engineering design: a unified approach of systems
+  engineering and component-based deep learning","Data-driven models created by machine learning gain in importance in all
+fields of design and engineering. They have high potential to assist
+decision-makers in creating novel artefacts with better performance and
+sustainability. However, limited generalization and the black-box nature of
+these models lead to limited explainability and reusability. To overcome this
+situation, we propose a component-based approach to create partial component
+models by machine learning (ML). This component-based approach aligns deep
+learning with systems engineering (SE). For the domain of energy efficient
+building design, we first demonstrate better generalization of the
+component-based method by analyzing prediction accuracy outside the training
+data. We observe a much higher accuracy (R2 = 0.94) compared to conventional
+monolithic methods (R2 = 0.71). Second, we illustrate explainability by
+exemplary demonstrating how sensitivity information from SE and rules from
+low-depth decision trees serve engineering. Third, we evaluate explainability
+by qualitative and quantitative methods demonstrating the matching of
+preliminary knowledge and data-driven derived strategies and show correctness
+of activations at component interfaces compared to white-box simulation results
+(envelope components: R2 = 0.92..0.99; zones: R2 = 0.78..0.93). The key for
+component-based explainability is that activations at interfaces between the
+components are interpretable engineering quantities. The large range of
+possible configurations in composing components allows the examination of novel
+unseen design cases with understandable data-driven models. The matching of
+parameter ranges of components by similar probability distribution produces
+reusable, well-generalizing, and trustworthy models. The approach adapts the
+model structure to engineering methods of systems engineering and to domain
+knowledge.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2108.06963v1,2021-08-16T08:36:37Z,2021-08-16,"supply of engineering techniques and software design patterns in
+  psychoanalysis and psychometrics sciences","The purpose of this study is to introduce software technologies and models
+and artificial intelligence algorithms to improve the weaknesses of CBT
+(Cognitive Behavior Therapy) method in psychotherapy. The presentation method
+for this purpose is the implementation of psychometric experiments in which the
+hidden human variables are inferred from the answers of tests. In this report,
+we describe the various models of Item Response Theory and measure the hidden
+components of ability and complementary parameters of the reality of the
+individual's situation. Psychometrics, selecting the appropriate model and
+estimating its parameters have been introduced and implemented using R language
+developed libraries. Due to the high flexibility of the Multi variant Rasch
+mixture Model, machine learning has been applied to this method of data
+modeling. BIC and CML were used to determine the number of hidden classes of
+the model and its parameters respectively, to obtain Measurement Invariance.
+The sensitivity of items to hidden attributes varies between groups (DIF), so
+methods for detecting it are introduced. This simulation is done based on the
+Verbal Aggression Dataset. We also analyze and compile a reference model based
+on this certificate based on the discovered patterns of software engineering.
+Other achievements of this study are related to providing a solution to explain
+the reengineering problems of the mind, by preparing an identity card for the
+clients by an ontology. Finally, applying the developed knowledge in the form
+of system thinking and recommended patterns in software engineering during the
+treatment process is pointed out.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2107.01184v1,2021-07-02T16:45:58Z,2021-07-02,empirically measuring transfer distance for system design and operation,"Classical machine learning approaches are sensitive to non-stationarity.
+Transfer learning can address non-stationarity by sharing knowledge from one
+system to another, however, in areas like machine prognostics and defense, data
+is fundamentally limited. Therefore, transfer learning algorithms have little,
+if any, examples from which to learn. Herein, we suggest that these constraints
+on algorithmic learning can be addressed by systems engineering. We formally
+define transfer distance in general terms and demonstrate its use in
+empirically quantifying the transferability of models. We consider the use of
+transfer distance in the design of machine rebuild procedures to allow for
+transferable prognostic models. We also consider the use of transfer distance
+in predicting operational performance in computer vision. Practitioners can use
+the presented methodology to design and operate systems with consideration for
+the learning theoretic challenges faced by component learning systems.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2105.01925v1,2021-05-05T08:27:36Z,2021-05-05,commonsense knowledge base construction in the age of big data,"Compiling commonsense knowledge is traditionally an AI topic approached by
+manual labor. Recent advances in web data processing have enabled automated
+approaches. In this demonstration we will showcase three systems for automated
+commonsense knowledge base construction, highlighting each time one aspect of
+specific interest to the data management community. (i) We use Quasimodo to
+illustrate knowledge extraction systems engineering, (ii) Dice to illustrate
+the role that schema constraints play in cleaning fuzzy commonsense knowledge,
+and (iii) Ascent to illustrate the relevance of conceptual modelling. The demos
+are available online at https://quasimodo.r2.enst.fr,
+https://dice.mpi-inf.mpg.de and ascent.mpi-inf.mpg.de.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2104.13714v1,2021-04-28T11:38:31Z,2021-04-28,"the algonauts project 2021 challenge: how the human brain makes sense of
+  a world in motion","The sciences of natural and artificial intelligence are fundamentally
+connected. Brain-inspired human-engineered AI are now the standard for
+predicting human brain responses during vision, and conversely, the brain
+continues to inspire invention in AI. To promote even deeper connections
+between these fields, we here release the 2021 edition of the Algonauts Project
+Challenge: How the Human Brain Makes Sense of a World in Motion
+(http://algonauts.csail.mit.edu/). We provide whole-brain fMRI responses
+recorded while 10 human participants viewed a rich set of over 1,000 short
+video clips depicting everyday events. The goal of the challenge is to
+accurately predict brain responses to these video clips. The format of our
+challenge ensures rapid development, makes results directly comparable and
+transparent, and is open to all. In this way it facilitates interdisciplinary
+collaboration towards a common goal of understanding visual intelligence. The
+2021 Algonauts Project is conducted in collaboration with the Cognitive
+Computational Neuroscience (CCN) conference.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2103.12854v1,2021-03-23T21:32:07Z,2021-03-23,actionable cognitive twins for decision making in manufacturing,"Actionable Cognitive Twins are the next generation Digital Twins enhanced
+with cognitive capabilities through a knowledge graph and artificial
+intelligence models that provide insights and decision-making options to the
+users. The knowledge graph describes the domain-specific knowledge regarding
+entities and interrelationships related to a manufacturing setting. It also
+contains information on possible decision-making options that can assist
+decision-makers, such as planners or logisticians. In this paper, we propose a
+knowledge graph modeling approach to construct actionable cognitive twins for
+capturing specific knowledge related to demand forecasting and production
+planning in a manufacturing plant. The knowledge graph provides semantic
+descriptions and contextualization of the production lines and processes,
+including data identification and simulation or artificial intelligence
+algorithms and forecasts used to support them. Such semantics provide ground
+for inferencing, relating different knowledge types: creative, deductive,
+definitional, and inductive. To develop the knowledge graph models for
+describing the use case completely, systems thinking approach is proposed to
+design and verify the ontology, develop a knowledge graph and build an
+actionable cognitive twin. Finally, we evaluate our approach in two use cases
+developed for a European original equipment manufacturer related to the
+automotive industry as part of the European Horizon 2020 project FACTLOG.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2103.08645v1,2021-03-15T18:38:51Z,2021-03-15,tomography of time-dependent quantum spin networks with machine learning,"Interacting spin networks are fundamental to quantum computing. Data-based
+tomography of time-independent spin networks has been achieved, but an open
+challenge is to ascertain the structures of time-dependent spin networks using
+time series measurements taken locally from a small subset of the spins.
+Physically, the dynamical evolution of a spin network under time-dependent
+driving or perturbation is described by the Heisenberg equation of motion.
+Motivated by this basic fact, we articulate a physics-enhanced machine learning
+framework whose core is Heisenberg neural networks. In particular, we develop a
+deep learning algorithm according to some physics motivated loss function based
+on the Heisenberg equation, which ""forces"" the neural network to follow the
+quantum evolution of the spin variables. We demonstrate that, from local
+measurements, not only the local Hamiltonian can be recovered but the
+Hamiltonian reflecting the interacting structure of the whole system can also
+be faithfully reconstructed. We test our Heisenberg neural machine on spin
+networks of a variety of structures. In the extreme case where measurements are
+taken from only one spin, the achieved tomography fidelity values can reach
+about 90%. The developed machine learning framework is applicable to any
+time-dependent systems whose quantum dynamical evolution is governed by the
+Heisenberg equation of motion.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2103.00821v1,2021-03-01T07:41:34Z,2021-03-01,"rethinking complexity for software code structures: a pioneering study
+  on linux kernel code repository","The recent progress of artificial intelligence(AI) has shown great potentials
+for alleviating human burden in various complex tasks. From the view of
+software engineering, AI techniques can be seen in many fundamental aspects of
+development, such as source code comprehension, in which state-of-the-art
+models are implemented to extract and express the meaning of code snippets
+automatically. However, such technologies are still struggling to tackle and
+comprehend the complex structures within industrial code, thus far from
+real-world applications. In the present work, we built an innovative and
+systematical framework, emphasizing the problem of complexity in code
+comprehension and further software engineering. Upon automatic data collection
+from the latest Linux kernel source code, we modeled code structures as complex
+networks through token extraction and relation parsing. Comprehensive analysis
+of complexity further revealed the density and scale of network-based code
+representations. Our work constructed the first large-scale dataset from
+industrial-strength software code for downstream software engineering tasks
+including code comprehension, and incorporated complex network theory into
+code-level investigations of software development for the first time. In the
+longer term, the proposed methodology could play significant roles in the
+entire software engineering process, powering software design, coding,
+debugging, testing, and sustaining by redefining and embracing complexity.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2102.06349v1,2021-02-12T04:32:50Z,2021-02-12,"physics-informed graphical neural network for parameter & state
+  estimations in power systems","Parameter Estimation (PE) and State Estimation (SE) are the most wide-spread
+tasks in the system engineering. They need to be done automatically, fast and
+frequently, as measurements arrive. Deep Learning (DL) holds the promise of
+tackling the challenge, however in so far, as PE and SE in power systems is
+concerned, (a) DL did not win trust of the system operators because of the lack
+of the physics of electricity based, interpretations and (b) DL remained
+illusive in the operational regimes were data is scarce. To address this, we
+present a hybrid scheme which embeds physics modeling of power systems into
+Graphical Neural Networks (GNN), therefore empowering system operators with a
+reliable and explainable real-time predictions which can then be used to
+control the critical infrastructure. To enable progress towards trustworthy DL
+for PE and SE, we build a physics-informed method, named Power-GNN, which
+reconstructs physical, thus interpretable, parameters within Effective Power
+Flow (EPF) models, such as admittances of effective power lines, and NN
+parameters, representing implicitly unobserved elements of the system. In our
+experiments, we test the Power-GNN on different realistic power networks,
+including these with thousands of loads and hundreds of generators. We show
+that the Power-GNN outperforms vanilla NN scheme unaware of the EPF physics.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2101.03989v2,2021-11-29T17:41:07Z,2021-01-11,technology readiness levels for machine learning systems,"The development and deployment of machine learning (ML) systems can be
+executed easily with modern tools, but the process is typically rushed and
+means-to-an-end. The lack of diligence can lead to technical debt, scope creep
+and misaligned objectives, model misuse and failures, and expensive
+consequences. Engineering systems, on the other hand, follow well-defined
+processes and testing standards to streamline development for high-quality,
+reliable results. The extreme is spacecraft systems, where mission critical
+measures and robustness are ingrained in the development process. Drawing on
+experience in both spacecraft engineering and ML (from research through product
+across domain areas), we have developed a proven systems engineering approach
+for machine learning development and deployment. Our ""Machine Learning
+Technology Readiness Levels"" (MLTRL) framework defines a principled process to
+ensure robust, reliable, and responsible systems while being streamlined for ML
+workflows, including key distinctions from traditional software engineering.
+Even more, MLTRL defines a lingua franca for people across teams and
+organizations to work collaboratively on artificial intelligence and machine
+learning technologies. Here we describe the framework and elucidate it with
+several real world use-cases of developing ML methods from basic research
+through productization and deployment, in areas such as medical diagnostics,
+consumer computer vision, satellite imagery, and particle physics.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2012.07919v3,2021-06-15T10:51:13Z,2020-12-14,"a software engineering perspective on engineering machine learning
+  systems: state of the art and challenges","Context: Advancements in machine learning (ML) lead to a shift from the
+traditional view of software development, where algorithms are hard-coded by
+humans, to ML systems materialized through learning from data. Therefore, we
+need to revisit our ways of developing software systems and consider the
+particularities required by these new types of systems. Objective: The purpose
+of this study is to systematically identify, analyze, summarize, and synthesize
+the current state of software engineering (SE) research for engineering ML
+systems. Method: I performed a systematic literature review (SLR). I
+systematically selected a pool of 141 studies from SE venues and then conducted
+a quantitative and qualitative analysis using the data extracted from these
+studies. Results: The non-deterministic nature of ML systems complicates all SE
+aspects of engineering ML systems. Despite increasing interest from 2018
+onwards, the results reveal that none of the SE aspects have a mature set of
+tools and techniques. Testing is by far the most popular area among
+researchers. Even for testing ML systems, engineers have only some tool
+prototypes and solution proposals with weak experimental proof. Many of the
+challenges of ML systems engineering were identified through surveys and
+interviews. Researchers should conduct experiments and case studies, ideally in
+industrial environments, to further understand these challenges and propose
+solutions. Conclusion: The results may benefit (1) practitioners in foreseeing
+the challenges of ML systems engineering; (2) researchers and academicians in
+identifying potential research questions; and (3) educators in designing or
+updating SE courses to cover ML systems engineering.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2010.04990v2,2020-10-26T11:25:18Z,2020-10-10,"the emergence of explainability of intelligent systems: delivering
+  explainable and personalised recommendations for energy efficiency","The recent advances in artificial intelligence namely in machine learning and
+deep learning, have boosted the performance of intelligent systems in several
+ways. This gave rise to human expectations, but also created the need for a
+deeper understanding of how intelligent systems think and decide. The concept
+of explainability appeared, in the extent of explaining the internal system
+mechanics in human terms. Recommendation systems are intelligent systems that
+support human decision making, and as such, they have to be explainable in
+order to increase user trust and improve the acceptance of recommendations. In
+this work, we focus on a context-aware recommendation system for energy
+efficiency and develop a mechanism for explainable and persuasive
+recommendations, which are personalized to user preferences and habits. The
+persuasive facts either emphasize on the economical saving prospects (Econ) or
+on a positive ecological impact (Eco) and explanations provide the reason for
+recommending an energy saving action. Based on a study conducted using a
+Telegram bot, different scenarios have been validated with actual data and
+human feedback. Current results show a total increase of 19\% on the
+recommendation acceptance ratio when both economical and ecological persuasive
+facts are employed. This revolutionary approach on recommendation systems,
+demonstrates how intelligent recommendations can effectively encourage energy
+saving behavior.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2010.07022v1,2020-10-06T18:32:31Z,2020-10-06,"towards a policy-as-a-service framework to enable compliant, trustworthy
+  ai and hri systems in the wild","Building trustworthy autonomous systems is challenging for many reasons
+beyond simply trying to engineer agents that 'always do the right thing.' There
+is a broader context that is often not considered within AI and HRI: that the
+problem of trustworthiness is inherently socio-technical and ultimately
+involves a broad set of complex human factors and multidimensional
+relationships that can arise between agents, humans, organizations, and even
+governments and legal institutions, each with their own understanding and
+definitions of trust. This complexity presents a significant barrier to the
+development of trustworthy AI and HRI systems---while systems developers may
+desire to have their systems 'always do the right thing,' they generally lack
+the practical tools and expertise in law, regulation, policy and ethics to
+ensure this outcome. In this paper, we emphasize the ""fuzzy"" socio-technical
+aspects of trustworthiness and the need for their careful consideration during
+both design and deployment. We hope to contribute to the discussion of
+trustworthy engineering in AI and HRI by i) describing the policy landscape
+that must be considered when addressing trustworthy computing and the need for
+usable trust models, ii) highlighting an opportunity for trustworthy-by-design
+intervention within the systems engineering process, and iii) introducing the
+concept of a ""policy-as-a-service"" (PaaS) framework that can be readily applied
+by AI systems engineers to address the fuzzy problem of trust during the
+development and (eventually) runtime process. We envision that the PaaS
+approach, which offloads the development of policy design parameters and
+maintenance of policy standards to policy experts, will enable runtime trust
+capabilities intelligent systems in the wild.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2007.14928v2,2021-03-21T00:33:52Z,2020-07-29,a development cycle for automated self-exploration of robot behaviors,"In this paper we introduce Q-Rock, a development cycle for the automated
+self-exploration and qualification of robot behaviors. With Q-Rock, we suggest
+a novel, integrative approach to automate robot development processes. Q-Rock
+combines several machine learning and reasoning techniques to deal with the
+increasing complexity in the design of robotic systems. The Q-Rock development
+cycle consists of three complementary processes: (1) automated exploration of
+capabilities that a given robotic hardware provides, (2) classification and
+semantic annotation of these capabilities to generate more complex behaviors,
+and (3) mapping between application requirements and available behaviors. These
+processes are based on a graph-based representation of a robot's structure,
+including hardware and software components. A central, scalable knowledge base
+enables collaboration of robot designers including mechanical, electrical and
+systems engineers, software developers and machine learning experts. In this
+paper we formalize Q-Rock's integrative development cycle and highlight its
+benefits with a proof-of-concept implementation and a use case demonstration.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2007.01900v1,2020-07-03T18:23:56Z,2020-07-03,examining redundancy in the context of safe machine learning,"This paper describes a set of experiments with neural network classifiers on
+the MNIST database of digits. The purpose is to investigate na\""ive
+implementations of redundant architectures as a first step towards safe and
+dependable machine learning. We report on a set of measurements using the MNIST
+database which ultimately serve to underline the expected difficulties in using
+NN classifiers in safe and dependable systems.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2006.12497v3,2020-12-16T14:47:51Z,2020-06-21,technology readiness levels for ai & ml,"The development and deployment of machine learning systems can be executed
+easily with modern tools, but the process is typically rushed and
+means-to-an-end. The lack of diligence can lead to technical debt, scope creep
+and misaligned objectives, model misuse and failures, and expensive
+consequences. Engineering systems, on the other hand, follow well-defined
+processes and testing standards to streamline development for high-quality,
+reliable results. The extreme is spacecraft systems, where mission critical
+measures and robustness are ingrained in the development process. Drawing on
+experience in both spacecraft engineering and AI/ML (from research through
+product), we propose a proven systems engineering approach for machine learning
+development and deployment. Our Technology Readiness Levels for ML (TRL4ML)
+framework defines a principled process to ensure robust systems while being
+streamlined for ML research and product, including key distinctions from
+traditional software engineering. Even more, TRL4ML defines a common language
+for people across the organization to work collaboratively on ML technologies.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2006.09892v1,2020-06-08T09:47:55Z,2020-06-08,"stad: spatio-temporal adjustment of traffic-oblivious travel-time
+  estimation","Travel time estimation is an important component in modern transportation
+applications. The state of the art techniques for travel time estimation use
+GPS traces to learn the weights of a road network, often modeled as a directed
+graph, then apply Dijkstra-like algorithms to find shortest paths. Travel time
+is then computed as the sum of edge weights on the returned path. In order to
+enable time-dependency, existing systems compute multiple weighted graphs
+corresponding to different time windows. These graphs are often optimized
+offline before they are deployed into production routing engines, causing a
+serious engineering overhead. In this paper, we present STAD, a system that
+adjusts - on the fly - travel time estimates for any trip request expressed in
+the form of origin, destination, and departure time. STAD uses machine learning
+and sparse trips data to learn the imperfections of any basic routing engine,
+before it turns it into a full-fledged time-dependent system capable of
+adjusting travel times to real traffic conditions in a city. STAD leverages the
+spatio-temporal properties of traffic by combining spatial features such as
+departing and destination geographic zones with temporal features such as
+departing time and day to significantly improve the travel time estimates of
+the basic routing engine. Experiments on real trip datasets from Doha, New York
+City, and Porto show a reduction in median absolute errors of 14% in the first
+two cities and 29% in the latter. We also show that STAD performs better than
+different commercial and research baselines in all three cities.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2005.04116v2,2023-02-07T15:42:22Z,2020-05-08,"stochastic optimization methods for the simultaneous control of
+  parameter-dependent systems","We address the application of stochastic optimization methods for the
+simultaneous control of parameter-dependent systems. In particular, we focus on
+the classical Stochastic Gradient Descent (SGD) approach of Robbins and Monro,
+and on the recently developed Continuous Stochastic Gradient (CSG) algorithm.
+We consider the problem of computing simultaneous controls through the
+minimization of a cost functional defined as the superposition of individual
+costs for each realization of the system. We compare the performances of these
+stochastic approaches, in terms of their computational complexity, with those
+of the more classical Gradient Descent (GD) and Conjugate Gradient (CG)
+algorithms, and we discuss the advantages and disadvantages of each
+methodology. In agreement with well-established results in the machine learning
+context, we show how the SGD and CSG algorithms can significantly reduce the
+computational burden when treating control problems depending on a large amount
+of parameters. This is corroborated by numerical experiments.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2004.00059v1,2020-03-31T18:54:28Z,2020-03-31,"the global extended-rational arnoldi method for matrix function
+  approximation","The numerical computation of matrix functions such as $f(A)V$, where $A$ is
+an $n\times n$ large and sparse square matrix, $V$ is an $n \times p$ block
+with $p\ll n$ and $f$ is a nonlinear matrix function, arises in various
+applications such as network analysis ($f(t)=exp(t)$ or $f(t)=t^3)$, machine
+learning $(f(t)=log(t))$, theory of quantum chromodynamics $(f(t)=t^{1/2})$,
+electronic structure computation, and others. In this work, we propose the use
+of global extended-rational Arnoldi method for computing approximations of such
+expressions. The derived method projects the initial problem onto an global
+extended-rational Krylov subspace
+$\mathcal{RK}^{e}_m(A,V)=\text{span}(\{\prod\limits_{i=1}^m(A-s_iI_n)^{-1}V,\ldots,(A-s_1I_n)^{-1}V,V$
+$,AV, \ldots,A^{m-1}V\})$ of a low dimension. An adaptive procedure for the
+selection of shift parameters $\{s_1,\ldots,s_m\}$ is given. The proposed
+method is also applied to solve parameter dependent systems. Numerical examples
+are presented to show the performance of the global extended-rational Arnoldi
+for these problems.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2003.11816v1,2020-03-26T10:00:33Z,2020-03-26,"do deep minds think alike? selective adversarial attacks for
+  fine-grained manipulation of multiple deep neural networks","Recent works have demonstrated the existence of {\it adversarial examples}
+targeting a single machine learning system. In this paper we ask a simple but
+fundamental question of ""selective fooling"": given {\it multiple} machine
+learning systems assigned to solve the same classification problem and taking
+the same input signal, is it possible to construct a perturbation to the input
+signal that manipulates the outputs of these {\it multiple} machine learning
+systems {\it simultaneously} in arbitrary pre-defined ways? For example, is it
+possible to selectively fool a set of ""enemy"" machine learning systems but does
+not fool the other ""friend"" machine learning systems? The answer to this
+question depends on the extent to which these different machine learning
+systems ""think alike"". We formulate the problem of ""selective fooling"" as a
+novel optimization problem, and report on a series of experiments on the MNIST
+dataset. Our preliminary findings from these experiments show that it is in
+fact very easy to selectively manipulate multiple MNIST classifiers
+simultaneously, even when the classifiers are identical in their architectures,
+training algorithms and training datasets except for random initialization
+during training. This suggests that two nominally equivalent machine learning
+systems do not in fact ""think alike"" at all, and opens the possibility for many
+novel applications and deeper understandings of the working principles of deep
+neural networks.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2002.01014v1,2020-02-03T21:03:20Z,2020-02-03,"four principles of explainable ai as applied to biometrics and facial
+  forensic algorithms","Traditionally, researchers in automatic face recognition and biometric
+technologies have focused on developing accurate algorithms. With this
+technology being integrated into operational systems, engineers and scientists
+are being asked, do these systems meet societal norms? The origin of this line
+of inquiry is `trust' of artificial intelligence (AI) systems. In this paper,
+we concentrate on adapting explainable AI to face recognition and biometrics,
+and we present four principles of explainable AI to face recognition and
+biometrics. The principles are illustrated by $\it{four}$ case studies, which
+show the challenges and issues in developing algorithms that can produce
+explanations.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2001.12004v2,2020-04-17T01:58:32Z,2020-01-31,"neural mmo v1.3: a massively multiagent game environment for training
+  and evaluating neural networks","Progress in multiagent intelligence research is fundamentally limited by the
+number and quality of environments available for study. In recent years,
+simulated games have become a dominant research platform within reinforcement
+learning, in part due to their accessibility and interpretability. Previous
+works have targeted and demonstrated success on arcade, first person shooter
+(FPS), real-time strategy (RTS), and massive online battle arena (MOBA) games.
+Our work considers massively multiplayer online role-playing games (MMORPGs or
+MMOs), which capture several complexities of real-world learning that are not
+well modeled by any other game genre. We present Neural MMO, a massively
+multiagent game environment inspired by MMOs and discuss our progress on two
+more general challenges in multiagent systems engineering for AI research:
+distributed infrastructure and game IO. We further demonstrate that standard
+policy gradient methods and simple baseline models can learn interesting
+emergent exploration and specialization behaviors in this setting.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2001.09734v1,2020-01-27T13:10:12Z,2020-01-27,"one explanation does not fit all: the promise of interactive
+  explanations for machine learning transparency","The need for transparency of predictive systems based on Machine Learning
+algorithms arises as a consequence of their ever-increasing proliferation in
+the industry. Whenever black-box algorithmic predictions influence human
+affairs, the inner workings of these algorithms should be scrutinised and their
+decisions explained to the relevant stakeholders, including the system
+engineers, the system's operators and the individuals whose case is being
+decided. While a variety of interpretability and explainability methods is
+available, none of them is a panacea that can satisfy all diverse expectations
+and competing objectives that might be required by the parties involved. We
+address this challenge in this paper by discussing the promises of Interactive
+Machine Learning for improved transparency of black-box systems using the
+example of contrastive explanations -- a state-of-the-art approach to
+Interpretable Machine Learning.
+  Specifically, we show how to personalise counterfactual explanations by
+interactively adjusting their conditional statements and extract additional
+explanations by asking follow-up ""What if?"" questions. Our experience in
+building, deploying and presenting this type of system allowed us to list
+desired properties as well as potential limitations, which can be used to guide
+the development of interactive explainers. While customising the medium of
+interaction, i.e., the user interface comprising of various communication
+channels, may give an impression of personalisation, we argue that adjusting
+the explanation itself and its content is more important. To this end,
+properties such as breadth, scope, context, purpose and target of the
+explanation have to be considered, in addition to explicitly informing the
+explainee about its limitations and caveats...",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/2001.07522v2,2020-06-03T12:59:36Z,2020-01-16,engineering ai systems: a research agenda,"Artificial intelligence (AI) and machine learning (ML) are increasingly
+broadly adopted in industry, However, based on well over a dozen case studies,
+we have learned that deploying industry-strength, production quality ML models
+in systems proves to be challenging. Companies experience challenges related to
+data quality, design methods and processes, performance of models as well as
+deployment and compliance. We learned that a new, structured engineering
+approach is required to construct and evolve systems that contain ML/DL
+components. In this paper, we provide a conceptualization of the typical
+evolution patterns that companies experience when employing ML as well as an
+overview of the key problems experienced by the companies that we have studied.
+The main contribution of the paper is a research agenda for AI engineering that
+provides an overview of the key engineering challenges surrounding ML solutions
+and an overview of open items that need to be addressed by the research
+community at large.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/1911.07133v1,2019-11-17T02:27:31Z,2019-11-17,"autonomics: in search of a foundation for next generation autonomous
+  systems","The potential benefits of autonomous systems have been driving intensive
+development of such systems, and of supporting tools and methodologies.
+However, there are still major issues to be dealt with before such development
+becomes commonplace engineering practice, with accepted and trustworthy
+deliverables. We argue that a solid, evolving, publicly available,
+community-controlled foundation for developing next generation autonomous
+systems is a must. We discuss what is needed for such a foundation, identify a
+central aspect thereof, namely, decision-making, and focus on three main
+challenges: (i) how to specify autonomous system behavior and the associated
+decisions in the face of unpredictability of future events and conditions and
+the inadequacy of current languages for describing these; (ii) how to carry out
+faithful simulation and analysis of system behavior with respect to rich
+environments that include humans, physical artifacts, and other systems,; and
+(iii) how to engineer systems that combine executable model-driven techniques
+and data-driven machine learning techniques. We argue that autonomics, i.e.,
+the study of unique challenges presented by next generation autonomous systems,
+and research towards resolving them, can introduce substantial contributions
+and innovations in system engineering and computer science.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/1911.02912v1,2019-10-15T14:33:12Z,2019-10-15,priority quality attributes for engineering ai-enabled systems,"Deploying successful software-reliant systems that address their mission
+goals and user needs within cost, resource, and expected quality constraints
+require design trade-offs. These trade-offs dictate how systems are structured
+and how they behave and consequently can effectively be evolved and sustained.
+Software engineering practices address this challenge by centering system
+design and evolution around delivering key quality attributes, such as
+security, privacy, data centricity, sustainability, and explainability. These
+concerns are more urgent requirements for software-reliant systems that also
+include AI components due to the uncertainty introduced by data elements.
+Moreover, systems employed by the public sector exhibit unique design time and
+runtime challenges due to the regulatory nature of the domains. We assert that
+the quality attributes of security, privacy, data centricity, sustainability,
+and explainability pose new challenges to AI engineering and will drive the
+success of AI-enabled systems in the public sector. In this position paper, we
+enumerate with examples from healthcare domain concerns related to these
+requirements to mitigate barriers to architecting and fielding AI-enabled
+systems in the public sector.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/1909.09357v1,2019-09-20T07:34:43Z,2019-09-20,"locality, statefulness, and causality in distributed information systems
+  (concerning the scale dependence of system promises)","Several popular best-practice manifestos for IT design and architecture use
+terms like `stateful', `stateless', `shared nothing', etc, and describe `fact
+based' or `functional' descriptions of causal evolution to describe computer
+processes, especially in cloud computing. The concepts are used ambiguously and
+sometimes in contradictory ways, which has led to many imprecise beliefs about
+their implications. This paper outlines the simple view of state and causation
+in Promise Theory, which accounts for the scaling of processes and the
+relativity of different observers in a natural way. It's shown that the
+concepts of statefulness or statelessness are artifacts of observational scale
+and causal bias towards functional evaluation. If we include feedback loops,
+recursion, and process convergence, which appear acausal to external observers,
+the arguments about (im)mutable state need to be modified in a scale-dependent
+way. In most cases the intended focus of such remarks is not terms like
+`statelessness' but process predictability. A simple principle may be
+substituted in most cases as a guide to system design: the principle the
+separation of dynamic scales.
+  Understanding data reliance and the ability to keep stable promises is of
+crucial importance to the consistency of data pipelines, and distributed
+client-server interactions, albeit in different ways. With increasingly data
+intensive processes over widely separated distributed deployments, e.g. in the
+Internet of Things and AI applications, the effects of instability need a more
+careful treatment.
+  These notes are part of an initiative to engage with thinkers and
+practitioners towards a more rational and disciplined language for systems
+engineering for era of ubiquitous extended-cloud computing.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/1904.01934v1,2019-04-03T11:54:22Z,2019-04-03,"optimization under uncertainty in the era of big data and deep learning:
+  when machine learning meets mathematical programming","This paper reviews recent advances in the field of optimization under
+uncertainty via a modern data lens, highlights key research challenges and
+promise of data-driven optimization that organically integrates machine
+learning and mathematical programming for decision-making under uncertainty,
+and identifies potential research opportunities. A brief review of classical
+mathematical programming techniques for hedging against uncertainty is first
+presented, along with their wide spectrum of applications in Process Systems
+Engineering. A comprehensive review and classification of the relevant
+publications on data-driven distributionally robust optimization, data-driven
+chance constrained program, data-driven robust optimization, and data-driven
+scenario-based optimization is then presented. This paper also identifies
+fertile avenues for future research that focuses on a closed-loop data-driven
+optimization framework, which allows the feedback from mathematical programming
+to machine learning, as well as scenario-based optimization leveraging the
+power of deep learning techniques. Perspectives on online learning-based
+data-driven multistage optimization with a learning-while-optimizing scheme is
+presented.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/1807.00502v1,2018-07-02T07:42:51Z,2018-07-02,leveraging uncertainty estimates for predicting segmentation quality,"The use of deep learning for medical imaging has seen tremendous growth in
+the research community. One reason for the slow uptake of these systems in the
+clinical setting is that they are complex, opaque and tend to fail silently.
+Outside of the medical imaging domain, the machine learning community has
+recently proposed several techniques for quantifying model uncertainty (i.e.~a
+model knowing when it has failed). This is important in practical settings, as
+we can refer such cases to manual inspection or correction by humans. In this
+paper, we aim to bring these recent results on estimating uncertainty to bear
+on two important outputs in deep learning-based segmentation. The first is
+producing spatial uncertainty maps, from which a clinician can observe where
+and why a system thinks it is failing. The second is quantifying an image-level
+prediction of failure, which is useful for isolating specific cases and
+removing them from automated pipelines. We also show that reasoning about
+spatial uncertainty, the first output, is a useful intermediate representation
+for generating segmentation quality predictions, the second output. We propose
+a two-stage architecture for producing these measures of uncertainty, which can
+accommodate any deep learning-based medical segmentation pipeline.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/1804.03116v1,2018-04-09T17:29:44Z,2018-04-09,on analyzing self-driving networks: a systems thinking approach,"The networking field has recently started to incorporate artificial
+intelligence (AI), machine learning (ML), big data analytics combined with
+advances in networking (such as software-defined networks, network functions
+virtualization, and programmable data planes) in a bid to construct highly
+optimized self-driving and self-organizing networks. It is worth remembering
+that the modern Internet that interconnects millions of networks is a `complex
+adaptive social system', in which interventions not only cause effects but the
+effects have further knock-on effects (not all of which are desirable or
+anticipated). We believe that self-driving networks will likely raise new
+unanticipated challenges (particularly in the human-facing domains of ethics,
+privacy, and security). In this paper, we propose the use of insights and tools
+from the field of ""systems thinking""---a rich discipline developing for more
+than half a century, which encompasses qualitative and quantitative nonlinear
+models of complex social systems---and highlight their relevance for studying
+the long-term effects of network architectural interventions, particularly for
+self-driving networks. We show that these tools complement existing simulation
+and modeling tools and provide new insights and capabilities. To the best of
+our knowledge, this is the first study that has considered the relevance of
+formal systems thinking tools for the analysis of self-driving networks.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/1803.01896v1,2018-03-05T19:40:50Z,2018-03-05,"sacre: supporting contextual requirements' adaptation in modern
+  self-adaptive systems in the presence of uncertainty at runtime","Runtime uncertainty such as unpredictable resource unavailability, changing
+environmental conditions and user needs, as well as system intrusions or faults
+represents one of the main current challenges of self-adaptive systems.
+Moreover, today's systems are increasingly more complex, distributed,
+decentralized, etc. and therefore have to reason about and cope with more and
+more unpredictable events. Approaches to deal with such changing requirements
+in complex today's systems are still missing. This work presents SACRE (Smart
+Adaptation through Contextual REquirements), our approach leveraging an
+adaptation feedback loop to detect self-adaptive systems' contextual
+requirements affected by uncertainty and to integrate machine learning
+techniques to determine the best operationalization of context based on sensed
+data at runtime. SACRE is a step forward of our former approach ACon which
+focus had been on adapting the context in contextual requirements, as well as
+their basic implementation. SACRE primarily focuses on architectural decisions,
+addressing self-adaptive systems' engineering challenges. Furthering the work
+on ACon, in this paper, we perform an evaluation of the entire approach in
+different uncertainty scenarios in real-time in the extremely demanding domain
+of smart vehicles. The real-time evaluation is conducted in a simulated
+environment in which the smart vehicle is implemented through software
+components. The evaluation results provide empirical evidence about the
+applicability of SACRE in real and complex software system domains.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/1707.09095v2,2017-10-18T06:40:51Z,2017-07-28,toward the starting line: a systems engineering approach to strong ai,"Artificial General Intelligence (AGI) or Strong AI aims to create machines
+with human-like or human-level intelligence, which is still a very ambitious
+goal when compared to the existing computing and AI systems. After many hype
+cycles and lessons from AI history, it is clear that a big conceptual leap is
+needed for crossing the starting line to kick-start mainstream AGI research.
+This position paper aims to make a small conceptual contribution toward
+reaching that starting line. After a broad analysis of the AGI problem from
+different perspectives, a system-theoretic and engineering-based research
+approach is introduced, which builds upon the existing mainstream AI and
+systems foundations. Several promising cross-fertilization opportunities
+between systems disciplines and AI research are identified. Specific potential
+research directions are discussed.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
+http://arxiv.org/abs/1702.07193v1,2017-02-23T12:36:14Z,2017-02-23,ontologies in system engineering: a field report,"In recent years ontologies enjoyed a growing popularity outside specialized
+AI communities. System engineering is no exception to this trend, with
+ontologies being proposed as a basis for several tasks in complex industrial
+implements, including system design, monitoring and diagnosis. In this paper,
+we consider four different contributions to system engineering wherein
+ontologies are instrumental to provide enhancements over traditional ad-hoc
+techniques. For each application, we briefly report the methodologies, the
+tools and the results obtained with the goal to provide an assessment of merits
+and limits of ontologies in such domains.",arxiv,systems engineering,'systems engineering' AND ('generative ai' OR 'artificial intelligence')
