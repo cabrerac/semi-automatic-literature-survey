@@ -141,7 +141,7 @@ data/
 config.json
 
 # Papers
-#papers/
+papers/
 
 # Local parameter files
 local/
