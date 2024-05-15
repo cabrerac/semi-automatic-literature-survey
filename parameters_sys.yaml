@@ -36,15 +36,15 @@ artificial intelligence:
 # in order to use them. (See step 7 in the How to run it? instructions)
 databases:
   - arxiv
-  #- semantic_scholar
+  - semantic_scholar
   - springer
   - ieeexplore
-  #- scopus
+  - scopus
   - core
 # Search time interval YYYY-mm-dd. If you do not want to include search dates comment start_date and
 # end_date parameters.
-#start_date: 2017-01-01
-#end_date: 2024-04-07
+start_date: 2017-01-01
+end_date: 2024-04-07
 # Date of the search and folder name where the outputs will be stored
 search_date: 2024-04-07
 folder_name: sys_search
