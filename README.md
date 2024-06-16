@@ -97,8 +97,6 @@ python main.py parameters_ar.yaml
 
 A simple self-explanatory example of a search parameters file can be found in `./parameters_ar.yaml`. Alternatively, a parameters file including syntactic and semantic filters can be found in `./parameters_sys.yaml`
 
-A description of the semi-automatic methodology applied in a survey can be found in the paper ["Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective"](https://arxiv.org/abs/2302.04810) [4].
-
 # References
 
 [1] Barbara Kitchenham and Pearl Brereton. 2013. A systematic review of systematic review process research in software engineering. Information and Software Technology 55, 12 (2013), 2049–2075. https://doi.org/10.1016/j.infsof.2013.07.010
@@ -106,5 +104,3 @@ A description of the semi-automatic methodology applied in a survey can be found
 [2] Barbara Kitchenham and Stuart Charters. 2007. Guidelines for performing Systematic Literature Reviews in Software Engineering. Technical Report EBSE 2007-001. Keele University and Durham University Joint Report. https://www.elsevier.com/__data/promis_misc/525444systematicreviewsguide.pdf
 
 [3] SBERT.net Sentence Transformers. 2024. Semantic Search [Available online](https://www.sbert.net/examples/applications/semantic-search/README.html)
-
-[4] Christian Cabrera, Andrei Paleyes, Pierre Thodoroff, and Neil D. Lawrence. 2023. Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective. arXiv preprint arXiv:2302.04810. [Available online](https://arxiv.org/abs/2302.04810)
