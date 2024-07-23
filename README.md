@@ -36,7 +36,7 @@ Alternatively, you can use the tool for requesting papers from arXiv which is op
 # How to run it?
 
 The following instructions were tested on:
-- A Windows machine (i.e., Windows PowerShell) with Python 3.10.11
+- A Windows machine (i.e., Windows PowerShell) with Python 3.10.11.
 - Windows Subsystem for Linux ([WSL](https://docs.microsoft.com/en-us/windows/wsl/install)) with Python 3.8.
 - An Ubuntu machine with Python 3.8.
 
