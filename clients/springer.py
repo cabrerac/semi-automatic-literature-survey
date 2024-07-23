@@ -13,7 +13,8 @@ api_access = ''
 if exists('./config.json'):
     with open("./config.json", "r") as file:
         config = json.load(file)
-    api_access = config['api_access_springer']
+    if 'api_access_springer' in config:
+        api_access = config['api_access_springer']
 start = 0
 max_papers = 50
 quota = 500

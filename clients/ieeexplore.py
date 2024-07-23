@@ -12,7 +12,8 @@ api_access = ''
 if exists('./config.json'):
     with open("./config.json", "r") as file:
         config = json.load(file)
-    api_access = config['api_access_ieee']
+    if 'api_access_ieee' in config:
+        api_access = config['api_access_ieee']
 start = 0
 max_papers = 200
 quota = 200

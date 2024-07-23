@@ -19,7 +19,8 @@ api_access = ''
 if exists('./config.json'):
     with open("./config.json", "r") as file:
         config = json.load(file)
-    api_access = config['api_access_elsevier']
+    if 'api_access_elsevier' in config:
+        api_access = config['api_access_elsevier']
 
 start = 0
 max_papers = 25

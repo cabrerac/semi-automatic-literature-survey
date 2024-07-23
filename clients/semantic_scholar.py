@@ -19,7 +19,8 @@ api_access = ''
 if exists('./config.json'):
     with open("./config.json", "r") as file:
         config = json.load(file)
-    api_access = config['api_access_semantic_scholar']
+    if 'api_access_semantic_scholar' in config:
+        api_access = config['api_access_semantic_scholar']
 max_papers = 100
 start = 0
 client_fields = {'title': 'title', 'abstract': 'keyword'}
