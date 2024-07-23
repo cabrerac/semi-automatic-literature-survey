@@ -37,23 +37,26 @@ def get_papers(query, syntactic_filters, synonyms, fields, types, folder_name, s
     file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
                 + query_name.lower().replace(' ', '_') + '_' + database + '.csv'
     if not exists(file_name):
-        c_fields = []
-        for field in fields:
-            if field in client_fields:
-                c_fields.append(client_fields[field])
-        c_types = []
-        for t in types:
-            if t in client_types:
-                c_types.append(client_types[t])
-        parameters = {'query': query_value, 'syntactic_filters': syntactic_filters, 'synonyms': synonyms, 'fields': c_fields, 'types': c_types}
-        papers = plan_requests(query, parameters)
-        if len(papers) > 0:
-            papers = filter_papers(papers)
-        if len(papers) > 0:
-            papers = clean_papers(papers)
-        if len(papers) > 0:
-            util.save(file_name, papers, f, 'a')
-        logger.info("Retrieved papers after filters and cleaning: " + str(len(papers)))
+        if api_access == '':
+            c_fields = []
+            for field in fields:
+                if field in client_fields:
+                    c_fields.append(client_fields[field])
+            c_types = []
+            for t in types:
+                if t in client_types:
+                    c_types.append(client_types[t])
+            parameters = {'query': query_value, 'syntactic_filters': syntactic_filters, 'synonyms': synonyms, 'fields': c_fields, 'types': c_types}
+            papers = plan_requests(query, parameters)
+            if len(papers) > 0:
+                papers = filter_papers(papers)
+            if len(papers) > 0:
+                papers = clean_papers(papers)
+            if len(papers) > 0:
+                util.save(file_name, papers, f, 'a')
+            logger.info("Retrieved papers after filters and cleaning: " + str(len(papers)))
+        else:
+            logger.info("API key access not provided. Skipping this client...")
     else:
         logger.info("File already exists.")
 
