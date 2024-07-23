@@ -37,7 +37,7 @@ def get_papers(query, syntactic_filters, synonyms, fields, types, folder_name, s
     file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
                 + query_name.lower().replace(' ', '_') + '_' + database + '.csv'
     if not exists(file_name):
-        if api_access == '':
+        if api_access != '':
             c_fields = []
             for field in fields:
                 if field in client_fields:

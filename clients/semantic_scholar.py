@@ -43,7 +43,7 @@ def get_papers(query, syntactic_filters, types, dates, start_date, end_date, fol
     file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
                 + query_name.lower().replace(' ', '_') + '_' + database + '.csv'
     if not exists(file_name):
-        if api_acces == '':
+        if api_access != '':
             parameters = {'query': query_value, 'syntactic_filters': syntactic_filters, 'synonyms': {}, 'types': types}
             papers = plan_requests(query, parameters, dates, start_date, end_date)
             if len(papers) > 0:
