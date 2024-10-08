@@ -8,7 +8,7 @@ from tqdm import tqdm
 import logging
 
 
-api_url = 'http://api.springernature.com/metadata/json?q=language:en<dates>'
+api_url = 'http://api.springernature.com/metadata/json?q=type:Journal<dates>'
 api_access = ''
 if exists('./config.json'):
     with open("./config.json", "r") as file:
@@ -16,7 +16,7 @@ if exists('./config.json'):
     if 'api_access_springer' in config:
         api_access = config['api_access_springer']
 start = 0
-max_papers = 50
+max_papers = 25
 quota = 500
 client_fields = {'title': 'title'}
 database = 'springer'
