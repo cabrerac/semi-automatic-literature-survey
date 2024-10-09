@@ -235,8 +235,13 @@ def process_raw_papers(query, raw_papers):
     else:
         logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
                     + file_handler)
-        logger.debug("API response: " + raw_papers.text)
-        logger.debug("Request: " + raw_papers.request.url)
+        try:
+            logger.debug("API response: " + raw_papers.text)
+            logger.debug("Request: " + raw_papers.request.url)
+        except Exception as ex:
+            logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
+                        "details: " + file_handler)
+            logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
     return papers_request
 
 
