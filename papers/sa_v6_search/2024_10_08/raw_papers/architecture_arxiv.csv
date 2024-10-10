@@ -1,0 +1,25 @@
+id,updated,published,title,summary,database,query_name,query_value
+http://arxiv.org/abs/2212.13993v2,2023-01-09T20:15:29Z,2022-12-25T03:37:35Z,"metaverse communications, networking, security, and applications:
+  research issues, state-of-the-art, and future directions","Metaverse is an evolving orchestrator of the next-generation Internet
+architecture that produces an immersive and self-adapting virtual world in
+which humans perform activities similar to those in the real world, such as
+playing sports, doing work, and socializing. It is becoming a reality and is
+driven by ever-evolving advanced technologies such as extended reality,
+artificial intelligence, and blockchain. In this context, Metaverse will play
+an essential role in developing smart cities, which becomes more evident in the
+post COVID 19 pandemic metropolitan setting. However, the new paradigm imposes
+new challenges, such as developing novel privacy and security threats that can
+emerge in the digital Metaverse ecosystem. Moreover, it requires the
+convergence of several media types with the capability to quickly process
+massive amounts of data to keep the residents safe and well-informed, which can
+raise issues related to scalability and interoperability. In light of this,
+this research study aims to review the literature on the state of the art of
+integrating the Metaverse architecture concepts in smart cities. First, this
+paper presents the theoretical architecture of Metaverse and discusses
+international companies interest in this emerging technology. It also examines
+the notion of Metaverse relevant to virtual reality, identifies the prevalent
+threats, and determines the importance of communication infrastructure in
+information gathering for efficient Metaverse operation. Next, the notion of
+blockchain technologies is discussed regarding privacy preservation and how it
+can provide tamper-proof content sharing among Metaverse users. Finally, the
+application of distributed Metaverse for social good is highlighted.",arxiv,architecture,'architecture' AND ('generative ai' OR 'artificial intelligence') AND 'public sector' AND 'public value'

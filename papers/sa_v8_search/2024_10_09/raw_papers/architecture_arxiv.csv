@@ -1,0 +1,101 @@
+id,updated,published,title,summary,database,query_name,query_value
+http://arxiv.org/abs/2410.01819v1,2024-09-16T06:00:42Z,2024-09-16T06:00:42Z,strategic ai governance: insights from leading nations,"Artificial Intelligence (AI) has the potential to revolutionize various
+sectors, yet its adoption is often hindered by concerns about data privacy,
+security, and the understanding of AI capabilities. This paper synthesizes AI
+governance approaches, strategic themes, and enablers and challenges for AI
+adoption by reviewing national AI strategies from leading nations. The key
+contribution is the development of an EPIC (Education, Partnership,
+Infrastructure, Community) framework, which maps AI implementation requirements
+to fully realize social impacts and public good from successful and sustained
+AI deployment. Through a multi-perspective content analysis of the latest AI
+strategy documents, this paper provides a structured comparison of AI
+governance strategies across nations. The findings offer valuable insights for
+governments, academics, industries, and communities to enable responsible and
+trustworthy AI deployments. Future work should focus on incorporating specific
+requirements for developing countries and applying the strategies to specific
+AI applications, industries, and the public sector.",arxiv,architecture,'architecture' AND ('generative ai' OR 'artificial intelligence') AND 'public sector' AND 'public value'
+http://arxiv.org/abs/2212.13993v2,2023-01-09T20:15:29Z,2022-12-25T03:37:35Z,"metaverse communications, networking, security, and applications:
+  research issues, state-of-the-art, and future directions","Metaverse is an evolving orchestrator of the next-generation Internet
+architecture that produces an immersive and self-adapting virtual world in
+which humans perform activities similar to those in the real world, such as
+playing sports, doing work, and socializing. It is becoming a reality and is
+driven by ever-evolving advanced technologies such as extended reality,
+artificial intelligence, and blockchain. In this context, Metaverse will play
+an essential role in developing smart cities, which becomes more evident in the
+post COVID 19 pandemic metropolitan setting. However, the new paradigm imposes
+new challenges, such as developing novel privacy and security threats that can
+emerge in the digital Metaverse ecosystem. Moreover, it requires the
+convergence of several media types with the capability to quickly process
+massive amounts of data to keep the residents safe and well-informed, which can
+raise issues related to scalability and interoperability. In light of this,
+this research study aims to review the literature on the state of the art of
+integrating the Metaverse architecture concepts in smart cities. First, this
+paper presents the theoretical architecture of Metaverse and discusses
+international companies interest in this emerging technology. It also examines
+the notion of Metaverse relevant to virtual reality, identifies the prevalent
+threats, and determines the importance of communication infrastructure in
+information gathering for efficient Metaverse operation. Next, the notion of
+blockchain technologies is discussed regarding privacy preservation and how it
+can provide tamper-proof content sharing among Metaverse users. Finally, the
+application of distributed Metaverse for social good is highlighted.",arxiv,architecture,'architecture' AND ('generative ai' OR 'artificial intelligence') AND 'public sector' AND 'public value'
+http://arxiv.org/abs/1906.05684v1,2019-06-11T22:14:07Z,2019-06-11T22:14:07Z,understanding artificial intelligence ethics and safety,"A remarkable time of human promise has been ushered in by the convergence of
+the ever-expanding availability of big data, the soaring speed and stretch of
+cloud computing platforms, and the advancement of increasingly sophisticated
+machine learning algorithms. Innovations in AI are already leaving a mark on
+government by improving the provision of essential social goods and services
+from healthcare, education, and transportation to food supply, energy, and
+environmental management. These bounties are likely just the start. The
+prospect that progress in AI will help government to confront some of its most
+urgent challenges is exciting, but legitimate worries abound. As with any new
+and rapidly evolving technology, a steep learning curve means that mistakes and
+miscalculations will be made and that both unanticipated and harmful impacts
+will occur.
+  This guide, written for department and delivery leads in the UK public sector
+and adopted by the British Government in its publication, 'Using AI in the
+Public Sector,' identifies the potential harms caused by AI systems and
+proposes concrete, operationalisable measures to counteract them. It stresses
+that public sector organisations can anticipate and prevent these potential
+harms by stewarding a culture of responsible innovation and by putting in place
+governance processes that support the design and implementation of ethical,
+fair, and safe AI systems. It also highlights the need for algorithmically
+supported outcomes to be interpretable by their users and made understandable
+to decision subjects in clear, non-technical, and accessible ways. Finally, it
+builds out a vision of human-centred and context-sensitive implementation that
+gives a central role to communication, evidence-based reasoning, situational
+awareness, and moral justifiability.",arxiv,architecture,'architecture' AND ('generative ai' OR 'artificial intelligence') AND 'public sector' AND 'public value'
+http://arxiv.org/abs/1802.01029v1,2018-02-03T20:57:13Z,2018-02-03T20:57:13Z,"fairness and accountability design needs for algorithmic support in
+  high-stakes public sector decision-making","Calls for heightened consideration of fairness and accountability in
+algorithmically-informed public decisions---like taxation, justice, and child
+protection---are now commonplace. How might designers support such human
+values? We interviewed 27 public sector machine learning practitioners across 5
+OECD countries regarding challenges understanding and imbuing public values
+into their work. The results suggest a disconnect between organisational and
+institutional realities, constraints and needs, and those addressed by current
+research into usable, transparent and 'discrimination-aware' machine
+learning---absences likely to undermine practical initiatives unless addressed.
+We see design opportunities in this disconnect, such as in supporting the
+tracking of concept drift in secondary data sources, and in building usable
+transparency tools to identify risks and incorporate domain knowledge, aimed
+both at managers and at the 'street-level bureaucrats' on the frontlines of
+public service. We conclude by outlining ethical challenges and future
+directions for collaboration in these high-stakes applications.",arxiv,architecture,'architecture' AND ('generative ai' OR 'artificial intelligence') AND 'public sector' AND 'public value'
+http://arxiv.org/abs/1609.08765v1,2016-09-28T04:45:53Z,2016-09-28T04:45:53Z,"irescu - data for social good saving lives bridging the gaps in sudden
+  cardiac arrest survival","Currently every day in the USA 1000 people die of sudden cardiac arrest (SCA)
+outside of hospitals or ambulances - before emergency medical help arrives - in
+the streets, workplaces, schools and homes of our cities, adults and children.
+Brain death commences in 3 minutes, and often the ambulance just can't be there
+in time. Citizen cardiopulmonary resuscitation (CPR) and automated external
+defibrillator (AED) use can save precious minutes and lives. Using public
+access AED's saves lives in SCA- however AEDs are used in <2% of cardiac
+arrests, though could save lives in 80% if available, findable, functioning,
+and used. The systems problem to solve is that there is no comprehensive or
+real time accessible database of the AED locations, and also it is not known
+that they are actually being positioned where they are needed. The iRescU
+project is designed to bridge this gap in SCA survival, by substantially
+augmenting the AED database. Utilizing a combination of AED crowd sourcing and
+geolocation integrated with existing 911 services and SCA events and projected
+events based on machine learning data information to help make the nearest AED
+accessible and available in the setting of a SCA emergency and to identify the
+areas of greatest need for AEDs to be positioned in the community. Helping to
+save lives and address preventable death with a social good approach and
+applied big data.",arxiv,architecture,'architecture' AND ('generative ai' OR 'artificial intelligence') AND 'public sector' AND 'public value'
