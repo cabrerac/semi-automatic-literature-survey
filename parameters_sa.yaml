@@ -1,0 +1,70 @@
+# List of queries in the format <query_name>: "<query_value>". & (and operator) ¦ (or operator).
+queries:
+  - architecture: "'architecture' & ('generative ai' ¦ 'artificial intelligence') & 'public sector' & 'public value'"
+#Synonyms of the keywords to expand the queries.
+syntactic_filters:
+  - 'architecture'
+  - 'generative ai'
+  - 'public sector'
+  - 'public value'
+# Semantic filters uses LLMs to match abstracts with the provided description.
+# The type parameter corresponds to the embedding the semantic search uses. Bert is the open option it currently uses.
+# The description parameter is the text that describes the papers you are looking for. A way to create such description is to think of the ideal abstract a selected paper should have.
+# The score parameter is the similarity degree between the queries and the included papers.
+# Papers with greater or equal score are included.
+semantic_filters:
+  - type: "bert"
+  - description: "The public sector has a strong interest in artificial intelligence (AI) systems. However, many public agencies lack the tools and frameworks to guide the design of AI-based systems aimed at creating public value. Architectures and frameworks offer a foundation for designing coherent AI-based systems. This paper reports on the design and evaluation of an AI-based system architecture for public value creation. The architecture comprises distinct and interrelated architectural layers. The architecture offers guidance on innovative models for public agencies to create and capture AI-enabled public value. The architecture presents a validated tool to guide the implementation of AI in public agencies, while creating public value and mitigating potential societal harms."
+  - score: 0.8
+#Synonyms of the keywords to expand the queries.
+architecture:
+  - design
+  - model
+  - metamodel
+  - framework
+  - business model
+generative ai:
+  - llm
+  - large language model
+artificial intelligence:
+  - ai
+  - machine learning
+  - ml
+  - deep learning
+public sector:
+  - goverment
+  - local authority
+  - local authorities
+  - public servants
+  - public administration
+  - public agency
+  - city
+  - cities
+  - urban
+  - urban built environment
+  - smart city
+  - smart cities
+public value:
+  - social good
+  - common good
+  - public good
+  - public interest
+  - common welfare
+  - common wealth
+# Databases where to search for papers. arXiv and Semantic Scholar by default as they are open. You can use other
+# repositories by uncommenting the respective lines. You should add the API access keys to the ./config.json file
+# in order to use them. (See step 7 in the How to run it? instructions)
+databases:
+  - arxiv
+  - semantic_scholar
+  - springer
+  - ieeexplore
+  - scopus
+  - core
+# Search time interval YYYY-mm-dd. If you do not want to include search dates comment start_date and
+# end_date parameters.
+#start_date: 2010-01-01
+#end_date: 2022-08-01
+# Date of the search and folder name where the outputs will be stored
+search_date: 2024-10-09
+folder_name: sa_v8_search
