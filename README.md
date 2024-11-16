@@ -1,6 +1,9 @@
 # SaLS: Semi-automatic Literature Survey
 
-This project implements SaLS: a semi-automatic tool to survey research papers based on the systematic methodology proposed by Kitchenham et al.[1, 2]. The goal of this project is to semi-automate the research papers survey process while providing a framework to enable surveys reproducibility and evolution. An use case of SaLS following the mentioned methodology can be found [here](https://arxiv.org/abs/2302.04810) (under review).
+This project implements SaLS: a semi-automatic tool to survey research papers based on the systematic methodology proposed by Kitchenham et al.[1, 2]. The goal of this project is to semi-automate the research papers survey process while providing a framework to enable surveys reproducibility and evolution. Two SaLS use cases are:
+
+- Cabrera, Christian, et al. *The Systems Engineering Approach in Times of Large Language Models.* Proceedings of the 58th Hawaii international conference on system sciences (2025) (To Appear). [Paper.](https://arxiv.org/abs/2411.09050v1) [Code.](https://github.com/cabrerac/semi-automatic-literature-survey/tree/sys-llms-survey)
+- Cabrera, Christian, et al. *Real-world machine learning systems: A survey from a data-oriented architecture perspective.* arXiv preprint arXiv:2302.04810 (2023) (Under Review) [Paper.](https://arxiv.org/abs/2302.04810) [Code.](https://github.com/cabrerac/semi-automatic-literature-survey/tree/doa-survey)
 
 SaLS automatically retrives papers metadata based on queries that users provide. These queries are used to consume the search APIs exposed by the most popular research papers repositories in different domains. Currently, SaLS retrieves papers information from the following repositories:
 
