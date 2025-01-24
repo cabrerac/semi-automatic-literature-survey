@@ -66,5 +66,5 @@ databases:
 #start_date: 2010-01-01
 #end_date: 2022-08-01
 # Date of the search and folder name where the outputs will be stored
-search_date: 2024-10-09
-folder_name: sa_v8_search
+search_date: 2024-10-14
+folder_name: sa_v9_search
