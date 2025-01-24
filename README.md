@@ -31,7 +31,7 @@ Some of the APIs provided by the repositories require an access key to be consum
 - [CORE](https://core.ac.uk/services/api)
 - [Semantic Scholar](https://www.semanticscholar.org/product/api/tutorial)
 
-Alternatively, you can use the tool for requesting papers from arXiv which is open and do not need an access key. SaLS does not have control over the maintenance of the APIs. If an API produces an error, you can see the details in the log files. We recommend to stop using the API that produces errors for a while. 
+Alternatively, you can use the tool for requesting papers from arXiv or Semantic Scholar which are open and do not need an access key. SaLS does not have control over the maintenance of the APIs. If an API produces an error, you can see the details in the log files. We recommend to stop using the API that produces errors for a while. 
 
 # How to run it?
 
@@ -83,8 +83,7 @@ python -m spacy download en_core_web_sm
   "api_access_core": "CORE_API_ACCESS_KEY",
   "api_access_ieee": "IEEE_API_ACCESS_KEY",
   "api_access_springer": "SPRINGER_API_ACCESS_KEY",
-  "api_access_elsevier": "ELSEVIER_API_ACCESS_KEY",
-  "api_access_semantic_scholar": "SEMANTIC_SCHOLAR_API_ACCESS_KEY"
+  "api_access_elsevier": "ELSEVIER_API_ACCESS_KEY"
 }
 ```
 Ignore this step if you are testing the tool with arXiv. Also, you should only add the access keys of the repositories you want to use.
