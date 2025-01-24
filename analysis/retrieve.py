@@ -66,7 +66,7 @@ def snowballing(folder_name, search_date, step, dates, start_date, end_date, sem
         logger.info("This process is applied on the preprocessed papers set and the citations papers...")
         relevant_papers = semantic_analyser.get_relevant_papers(folder_name, search_date, step, semantic_filters, citations_papers, removed_papers)
         logger.info("Snowballing process papers: " + str(len(relevant_papers)) + "...")
-        if len(relevant_papers > 0):
+        if len(relevant_papers) > 0:
             util.save(snowballing_file_name, relevant_papers, fr, 'a+')
         else:
             snowballing_file_name = ''
