@@ -34,7 +34,7 @@ Some of the APIs provided by the repositories require an access key to be consum
 - [CORE](https://core.ac.uk/services/api)
 - [Semantic Scholar](https://www.semanticscholar.org/product/api/tutorial)
 
-Alternatively, you can use the tool for requesting papers from arXiv or semantic scholar which are open and do not need an access key. SaLS does not have control over the maintenance of the APIs. If an API produces an error, you can see the details in the log files. We recommend to stop using the API that produces errors for a while.
+Alternatively, you can use the tool for requesting papers from arXiv or Semantic Scholar which are open and do not need an access key. SaLS does not have control over the maintenance of the APIs. If an API produces an error, you can see the details in the log files. We recommend to stop using the API that produces errors for a while.
 
 # How to run it?
 
