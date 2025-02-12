@@ -294,8 +294,8 @@ def request_citations(paper_id):
         request = citations_url.replace('{paper_id}', str(paper_id))
         request = request.replace('<offset>', str(next_paper)).replace('<max_papers>', str(max_papers))
         headers = {}
-        if len(api_access) > 0:
-            headers = {'x-api-key': api_access}
+        #if len(api_access) > 0:
+            #headers = {'x-api-key': api_access}
         raw_citations = client.request(request, 'get', {}, headers=headers)
         papers_request, next_paper = process_raw_citations(raw_citations)
         if len(papers) == 0:
