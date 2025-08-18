@@ -43,7 +43,7 @@ def bert_search(semantic_filters, folder_name, next_file, search_date, step):
                 description = keyword['description']
             if 'score' in keyword:
                 score = keyword['score']
-        logger.info("# Description semantic matching...")
+        logger.info("# Abstracts semantic matching...")
         query_embedding = model.encode(description, convert_to_tensor=True)
         hits = sentence_util.semantic_search(query_embedding, encoded_papers, top_k=len(papers_array))
         for hit in hits[0]:
@@ -65,7 +65,7 @@ def bert_search(semantic_filters, folder_name, next_file, search_date, step):
             util.save(semantic_filtered_file_name, found_papers, fr, 'a+')
             util.clean_papers(semantic_filtered_file_name)
         else:
-            semantic_filtered_file_name = ''
+            semantic_filtered_file_name = next_file
     return semantic_filtered_file_name
 
 

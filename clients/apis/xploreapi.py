@@ -4,6 +4,7 @@ from urllib.request import urlopen
 import xml.etree.ElementTree as ET
 import json
 import requests
+import time
 
 
 class XPLORE:

@@ -10,6 +10,7 @@ from os.path import exists
 import logging
 import random
 from . import parser as par
+from tqdm import tqdm
 
 
 logger = logging.getLogger('logger')
@@ -89,7 +90,7 @@ def read_parameters(parameters_file_name):
         logger.debug('Including dates can reduce the searching time...')
 
     if 'search_date' in parameters:
-        search_date = parameters['search_date']
+        search_date = str(parameters['search_date'])
     else:
         logger.debug('Search date missing in parameters file. Using current date: '
                     + datetime.today().strftime('%Y-%m-%d'))
@@ -214,6 +215,7 @@ def clean_papers(file):
     df.loc[:, 'language'] = 'english'
     total_papers = len(df.index)
     current_paper = 0
+    pbar = tqdm(total=len(df.index))
     for index, row in df.iterrows():
         current_paper = current_paper + 1
         doc = nlp(row['abstract'])
@@ -226,6 +228,8 @@ def clean_papers(file):
                 row['language'] = 'not english'
                 not_included = not_included + 1
         df.loc[index] = row
+        pbar.update(1)
+    pbar.close()
     print('', end="\r")
     df = df[df['language'] != 'not english']
     df = df.drop(columns=['language'])

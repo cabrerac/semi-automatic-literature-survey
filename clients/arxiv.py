@@ -1,180 +1,194 @@
-import time
 import pandas as pd
+import json
+from .base_client import DatabaseClient
 from .apis.generic import Generic
 from os.path import exists
-from util import util
-from tqdm import tqdm
 import logging
-
-api_url = 'http://export.arxiv.org/api/query?search_query='
-start = 0
-max_papers = 5000
-client_fields = {'title': 'ti', 'abstract': 'abs'}
-database = 'arxiv'
-f = 'utf-8'
-client = Generic()
-waiting_time = 2
-max_retries = 3
-file_handler = ''
-logger = logging.getLogger()
+import time
+from tqdm import tqdm
 
 
-def get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date):
-    global logger
-    logger = logging.getLogger('logger')
-    print(logger.handlers)
-    global file_handler
-    file_handler = logger.handlers[1].baseFilename
-    query_name = list(query.keys())[0]
-    query_value = query[query_name]
-    file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' \
-                + query_name.lower().replace(' ', '_') + '_' + database + '.csv'
-    if not exists(file_name):
+class ArxivClient(DatabaseClient):
+    """
+    Refactored arXiv client using the Template Method pattern.
+    """
+    
+    def __init__(self):
+        super().__init__(
+            database_name='arxiv',
+            max_papers=5000,
+            waiting_time=2,
+            max_retries=3,
+            client_fields={'title': 'ti', 'abstract': 'abs'}
+        )
+        self.api_url = 'http://export.arxiv.org/api/query?search_query='
+        self.client = Generic()
+        
+    def _has_api_access(self) -> bool:
+        """ArXiv is open access, so no API key is needed."""
+        return True
+    
+    def _plan_requests(self, query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date) -> pd.DataFrame:
+        """Plan the API requests for arXiv."""
+        # Extract query value from the query dictionary (same as original arxiv.py)
+        query_name = list(query.keys())[0]
+        query_value = query[query_name]
+        
+        # Build query parameters
         c_fields = []
         for field in fields:
-            if field in client_fields:
-                c_fields.append(client_fields[field])
-        parameters = {'query': query_value, 'syntactic_filters': syntactic_filters, 'synonyms': synonyms, 'fields': c_fields, 'types': types}
-        papers = plan_requests(query, parameters)
-        if len(papers) > 0:
-            papers = filter_papers(papers, dates, start_date, end_date)
-        if len(papers) > 0:
-            papers = clean_papers(papers)
-        if len(papers) > 0:
-            util.save(file_name, papers, f, 'a')
-        logger.info("Retrieved papers after filters and cleaning: " + str(len(papers)))
-    else:
-        logger.info("File already exists.")
-
-
-def plan_requests(query, parameters):
-    logger.info("Retrieving papers. It might take a while...")
-    request = create_request(parameters)
-    raw_papers = client.request(request, 'get', {}, {})
-    expected_papers = get_expected_papers(raw_papers)
-    logger.info("Expected papers from arxiv: " + str(expected_papers) + "...")
-    times = int(expected_papers / max_papers) - 1
-    mod = int(expected_papers) % max_papers
-    if mod > 0:
-        times = times + 1
-    papers = request_papers(query, parameters, times, expected_papers, mod)
-    return papers
-
-
-def request_papers(query, parameters, times, expected_papers, mod):
-    papers = pd.DataFrame()
-    for t in tqdm(range(0, times + 1)):
-        time.sleep(waiting_time)
-        global start
-        start = t * max_papers
-        request = create_request(parameters)
-        raw_papers = client.request(request, 'get', {}, {})
-        # if there is an exception from the API, retry request
-        retry = 0
-        while raw_papers.status_code != 200 and retry < max_retries:
-            delay = util.exponential_backoff(retry, waiting_time, 64)
-            time.sleep(delay)
-            retry = retry + 1
-            raw_papers = client.request(request, 'get', {}, {})
-        papers_request = process_raw_papers(query, raw_papers)
-        # sometimes the arxiv API does not respond with all the papers, so we request again
-        expected_per_request = expected_papers
-        if expected_papers > max_papers:
-            expected_per_request = max_papers
-        if t == times and mod > 0:
-            expected_per_request = mod
-        while len(papers_request) < expected_per_request:
-            time.sleep(waiting_time)
-            raw_papers = client.request(request, 'get', {}, {})
-            papers_request = process_raw_papers(query, raw_papers)
-        if len(papers) == 0:
-            papers = papers_request
+            if field in self.client_fields:
+                c_fields.append(self.client_fields[field])
+        
+        parameters = {
+            'query': query_value,  # Use query_value string, not the entire query dict
+            'syntactic_filters': syntactic_filters,
+            'synonyms': synonyms,
+            'fields': c_fields,
+            'types': types
+        }
+        
+        # Create initial request to get total count
+        request = self._create_request(parameters)
+        raw_papers = self._retry_request(self.client.request, request, 'get', {}, {})
+        expected_papers = self._get_expected_papers(raw_papers)
+        
+        self.logger.info(f"Expected papers from arxiv: {expected_papers}...")
+        
+        # Calculate number of requests needed
+        times = int(expected_papers / self.max_papers) - 1
+        mod = int(expected_papers) % self.max_papers
+        if mod > 0:
+            times = times + 1
+            
+        # Execute requests
+        papers = self._execute_requests(query, parameters, times, expected_papers, mod)
+        return papers
+    
+    def _execute_requests(self, query, parameters, times, expected_papers, mod):
+        """Execute the planned requests to retrieve papers."""
+        papers = pd.DataFrame()
+        
+        for t in tqdm(range(0, times + 1)):
+            time.sleep(self.waiting_time)
+            start = t * self.max_papers
+            
+            request = self._create_request(parameters, start)
+            raw_papers = self._retry_request(self.client.request, request, 'get', {}, {})
+            
+            if raw_papers is None:
+                continue
+                
+            papers_request = self._process_raw_papers(query, raw_papers)
+            
+            # Sometimes arXiv API doesn't respond with all papers, so retry
+            expected_per_request = expected_papers
+            if expected_papers > self.max_papers:
+                expected_per_request = self.max_papers
+            if t == times and mod > 0:
+                expected_per_request = mod
+                
+            while len(papers_request) < expected_per_request:
+                time.sleep(self.waiting_time)
+                raw_papers = self._retry_request(self.client.request, request, 'get', {}, {})
+                papers_request = self._process_raw_papers(query, raw_papers)
+            
+            if len(papers) == 0:
+                papers = papers_request
+            else:
+                papers = pd.concat([papers, papers_request])
+        
+        return papers
+    
+    def _create_request(self, parameters, start=0):
+        """Create the API request URL for arXiv."""
+        req = self.api_url
+        req = req + self.client.default_query(parameters)
+        req = req + '&start=' + str(start)
+        req = req + '&max_results=' + str(self.max_papers)
+        req = req + '&sortBy=submittedDate&sortOrder=descending'
+        return req
+    
+    def _get_expected_papers(self, raw_papers):
+        """Get the expected number of papers from the API response."""
+        total = 0
+        if raw_papers.status_code == 200:
+            try:
+                total_text = raw_papers.text.split('opensearch:totalResults')[1]
+                total = int(total_text.split('>')[1].replace('</', ''))
+            except Exception as ex:
+                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
         else:
-            papers = pd.concat([papers, papers_request])
-    return papers
-
-
-def create_request(parameters):
-    req = api_url
-    req = req + client.default_query(parameters)
-    req = req + '&start=' + str(start)
-    req = req + '&max_results='+str(max_papers)
-    req = req + '&sortBy=submittedDate&sortOrder=descending'
-    return req
-
-
-def get_expected_papers(raw_papers):
-    total = 0
-    if raw_papers.status_code == 200:
-        try:
-            total_text = raw_papers.text.split('opensearch:totalResults')[1]
-            total = int(total_text.split('>')[1].replace('</', ''))
-        except Exception as ex:
-            logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
-                        "details: " + file_handler)
-            logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-    else:
-        logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
-                    + file_handler)
-        if raw_papers.request is not None:
-            logger.debug("API response: " + str(raw_papers.text))
-            logger.debug("Request: " + raw_papers.request.url)
+            self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
+        return total
+    
+    def _process_raw_papers(self, query, raw_papers):
+        """Process the raw API response into a DataFrame."""
+        query_name = list(query.keys())[0]
+        query_value = query[query_name]
+        papers_request = pd.DataFrame()
+        
+        if raw_papers.status_code == 200:
+            try:
+                papers_request = pd.read_xml(raw_papers.text, xpath='//feed:entry',
+                                           namespaces={"feed": "http://www.w3.org/2005/Atom"})
+                papers_request.loc[:, 'database'] = self.database_name
+                papers_request.loc[:, 'query_name'] = query_name
+                papers_request.loc[:, 'query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
+            except Exception as ex:
+                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
         else:
-            logger.debug("API response: " + str(raw_papers.content))
-    return total
-
-
-def process_raw_papers(query, raw_papers):
-    query_name = list(query.keys())[0]
-    query_value = query[query_name]
-    papers_request = pd.DataFrame()
-    if raw_papers.status_code == 200:
+            self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
+        
+        return papers_request
+    
+    def _filter_papers(self, papers: pd.DataFrame, dates, start_date, end_date) -> pd.DataFrame:
+        """Filter papers based on criteria."""
+        self.logger.info("Filtering papers...")
         try:
-            papers_request = pd.read_xml(raw_papers.text, xpath='//feed:entry',
-                                         namespaces={"feed": "http://www.w3.org/2005/Atom"})
-            papers_request.loc[:, 'database'] = database
-            papers_request.loc[:, 'query_name'] = query_name
-            papers_request.loc[:, 'query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
+            # Filter by title
+            papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
+            papers.dropna(subset=['title'], inplace=True)
+            papers.loc[:, 'title'] = papers['title'].str.lower()
+            papers = papers.drop_duplicates('title')
+            
+            # Filter by abstract
+            papers.loc[:, 'summary'] = papers['summary'].replace('', float("NaN"))
+            papers.dropna(subset=['summary'], inplace=True)
+            
+            # Filter by dates if specified
+            if dates is True:
+                papers['published'] = pd.to_datetime(papers['published']).dt.date
+                papers = papers[(papers['published'] >= start_date) & (papers['published'] <= end_date)]
+                
         except Exception as ex:
-            logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
-                        "details: " + file_handler)
-            logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-    else:
-        logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
-                    + file_handler)
-        logger.debug("API response: " + raw_papers.text)
-        logger.debug("Request: " + raw_papers.request.url)
-    return papers_request
+            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
+            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+        
+        return papers
+    
+    def _clean_papers(self, papers: pd.DataFrame) -> pd.DataFrame:
+        """Clean and standardize paper data."""
+        self.logger.info("Cleaning papers...")
+        try:
+            # Remove unnecessary columns
+            papers = papers.drop(columns=[
+                'author', 'comment', 'link', 'primary_category', 'category', 
+                'doi', 'journal_ref'
+            ], errors='ignore')
+            
+            # Clean empty values
+            papers.replace('', float("NaN"), inplace=True)
+            papers.dropna(how='all', axis=1, inplace=True)
+            
+        except Exception as ex:
+            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
+            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+        
+        return papers
 
-
-def filter_papers(papers, dates, start_date, end_date):
-    logger.info("Filtering papers...")
-    try:
-        papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
-        papers.dropna(subset=['title'], inplace=True)
-        papers.loc[:, 'title'] = papers['title'].str.lower()
-        papers = papers.drop_duplicates('title')
-        papers.loc[:, 'summary'] = papers['summary'].replace('', float("NaN"))
-        papers.dropna(subset=['summary'], inplace=True)
-        if dates is True:
-            papers['published'] = pd.to_datetime(papers['published']).dt.date
-            papers = papers[(papers['published'] >= start_date) & (papers['published'] <= end_date)]
-    except Exception as ex:
-        logger.info("Error filtering papers. Please see the log file for details: "
-                    + file_handler)
-        logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-    return papers
-
-
-def clean_papers(papers):
-    logger.info("Cleaning papers...")
-    try:
-        papers = papers.drop(columns=['author', 'comment', 'link', 'primary_category', 'category', 'doi',
-                                      'journal_ref'], errors='ignore')
-        papers.replace('', float("NaN"), inplace=True)
-        papers.dropna(how='all', axis=1, inplace=True)
-    except Exception as ex:
-        logger.info("Error cleaning papers. Please see the log file for details: "
-                    + file_handler)
-        logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
-    return papers
+    def _get_abstracts(self, papers: pd.DataFrame) -> pd.DataFrame:
+        """Get abstracts for papers."""
+        pass

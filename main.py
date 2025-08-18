@@ -38,9 +38,9 @@ def main(parameters_file):
     parsed_queries, valid = util.parse_queries(queries)
 
     if valid:
-        # Getting papers from databases
+        # Retrieving papers from the databases
         step = 0
-        logger.info(str(step) + '. Getting all papers...')
+        logger.info(str(step) + '. Retrieving papers from the databases...')
         retrieve.get_papers(queries, syntactic_filters, synonyms, databases, fields, types, folder_name, dates, start_date, end_date,
                             search_date)
 

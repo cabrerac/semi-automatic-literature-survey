@@ -1,12 +1,16 @@
 import pandas as pd
 import re
 from util import util
-from clients import arxiv
-from clients import ieeexplore
-from clients import springer
-from clients import elsevier
-from clients import core
-from clients import semantic_scholar
+from clients.arxiv import ArxivClient
+from clients.ieeexplore import IeeeXploreClient
+from clients.springer import SpringerClient
+from clients.elsevier import ElsevierClient
+from clients.core import CoreClient
+from clients.semantic_scholar import SemanticScholarClient
+"""
+Additional clients (OpenAlex, Crossref, Europe PMC, PubMed) are intentionally
+not wired into v1. Their files remain in the codebase for v2 enablement.
+"""
 from analysis import semantic_analyser
 from os.path import exists
 from gensim.utils import simple_preprocess
@@ -24,18 +28,35 @@ logger = logging.getLogger('logger')
 def get_papers(queries, syntactic_filters, synonyms, databases, fields, types, folder_name, dates, start_date, end_date, search_date):
     global logger
     logger = logging.getLogger('logger')
+    
+    # Initialize client instances
+    clients = {}
+    if 'arxiv' in databases:
+        clients['arxiv'] = ArxivClient()
+    if 'springer' in databases:
+        clients['springer'] = SpringerClient()
+    if 'ieeexplore' in databases:
+        clients['ieeexplore'] = IeeeXploreClient()
+    if 'scopus' in databases:
+        clients['scopus'] = ElsevierClient()
+    if 'core' in databases:
+        clients['core'] = CoreClient()
+    if 'semantic_scholar' in databases:
+        clients['semantic_scholar'] = SemanticScholarClient()
+    # v1: Do not wire additional abstract-providing clients; reserved for v2
+    
     for query in queries:
         if 'arxiv' in databases:
             logger.info("# Requesting ArXiv for query: " + list(query.keys())[0] + "...")
-            arxiv.get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+            clients['arxiv'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'springer' in databases:
             logger.info("# Requesting Springer for query: " + list(query.keys())[0] + "...")
-            springer.get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+            clients['springer'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'ieeexplore' in databases:
             logger.info("# Requesting IEEE Xplore for query: " + list(query.keys())[0] + "...")
-            ieeexplore.get_papers(query, syntactic_filters, synonyms, fields, types, folder_name, search_date)
+            clients['ieeexplore'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         # Scopus provides papers metadata then abstracts must be retrieved from the science direct database.
         # Scopus indexes different databases which are queried separately (e.g., ieeeXplore).
@@ -43,16 +64,18 @@ def get_papers(queries, syntactic_filters, synonyms, databases, fields, types, f
         # from science direct.
         if 'scopus' in databases:
             logger.info("# Requesting Scopus for query: " + list(query.keys())[0] + "...")
-            elsevier.get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+            clients['scopus'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'core' in databases:
             logger.info("# Requesting CORE for query: " + list(query.keys())[0] + "...")
-            core.get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+            clients['core'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
         if 'semantic_scholar' in databases:
             # Semantic Scholar searches over its knowledge graph. Synonyms are not needed in this case.
             logger.info("# Requesting Semantic Scholar query: " + list(query.keys())[0] + "...")
-            semantic_scholar.get_papers(query, syntactic_filters, types, dates, start_date, end_date, folder_name, search_date)
+            clients['semantic_scholar'].get_papers(query, syntactic_filters, {}, fields, types, dates, start_date, end_date, folder_name, search_date)
+
+        # v1: Additional abstract-providing clients are intentionally not invoked
 
 
 def snowballing(folder_name, search_date, step, dates, start_date, end_date, semantic_filters, removed_papers):
@@ -61,7 +84,8 @@ def snowballing(folder_name, search_date, step, dates, start_date, end_date, sem
     snowballing_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + '_snowballing_papers.csv'
     if not exists(snowballing_file_name):
         logger.info("Requesting Semantic Scholar for papers citations...")
-        citations_papers = semantic_scholar.get_citations(folder_name, search_date, step, dates, start_date, end_date)
+        semantic_scholar_client = SemanticScholarClient()
+        citations_papers = semantic_scholar_client.get_citations(folder_name, search_date, step, dates, start_date, end_date)
         logger.info("Using semantic search to find relevant papers based on manually selected set...")
         logger.info("This process is applied on the preprocessed papers set and the citations papers...")
         relevant_papers = semantic_analyser.get_relevant_papers(folder_name, search_date, step, semantic_filters, citations_papers, removed_papers)
@@ -146,15 +170,15 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                         papers = pd.concat([papers, papers_scopus])
                     if database == 'core':
                         df = df.drop_duplicates('id')
-                        dates = df['publishedDate']
+                        dates = df['publication_date']
                         df['publication_date'] = parse_dates(dates)
                         df['id'] = get_ids(df, database)
                         papers_core = pd.DataFrame(
                             {
                                 'doi': df['id'], 'type': df['database'], 'query_name': df['query_name'],
-                                'query_value': df['query_value'], 'publication': df['journals'],
-                                'publisher': df['database'], 'publication_date': df['publishedDate'],
-                                'database': df['database'], 'title': df['title'], 'url': df['downloadUrl'],
+                                'query_value': df['query_value'], 'publication': df['publication'],
+                                'publisher': df['database'], 'publication_date': df['publication_date'],
+                                'database': df['database'], 'title': df['title'], 'url': df['url'],
                                 'abstract': df['abstract']
                             }
                         )
