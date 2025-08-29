@@ -92,7 +92,7 @@ python -m spacy download en_core_web_sm
   "api_access_elsevier": "ELSEVIER_API_ACCESS_KEY"
 }
 ```
-Ignore this step if you are testing the tool with arXiv. Also, you should only add the access keys of the repositories you want to use.
+Ignore this step if you are using the tool with arXiv and Semantic Scholar. Also, you should only add the access keys of the repositories you want to use.
 
 6. Run the main passing the search parameters file. For example:
 
@@ -103,6 +103,32 @@ python main.py parameters_ar.yaml
 A simple self-explanatory example of a search parameters file can be found in `./parameters_ar.yaml`. Alternatively, a parameters file including syntactic and semantic filters can be found in `./parameters_sys.yaml`
 
 A description of the semi-automatic methodology applied in a survey can be found in the paper ["Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective"](https://arxiv.org/abs/2302.04810) [4]. Another paper using this tool is [The Systems Engineering Approach in Times of Large Language Models](https://scholarspace.manoa.hawaii.edu/items/ccd98c8b-bb61-4a86-9cd4-4719078d028f)[5].
+
+# Query syntax
+
+SaLS uses a simple, user‑friendly boolean expression to describe search queries. The syntax you write is normalized and validated, then translated per‑API to each provider’s expected format.
+
+Supported features
+- Operators: AND and OR
+  - Accepted forms: `AND`, `and`, `&&`, `&`, `OR`, `or`, `||`, `|`, and the legacy `¦` for OR
+  - Only AND/OR are supported (no NOT)
+- Parentheses: use `(` and `)` to group expressions and control precedence
+- Phrases: wrap multi‑word terms in single or double quotes, e.g., `'systems engineering'` or "large language model"
+- Identifiers without quotes: letters, digits, and common symbols are allowed (e.g., `- _ . / : + *`)
+- Whitespace: not significant outside of quotes; preserved inside quotes
+
+Examples
+```
+'systems engineering' & ('generative ai' ¦ 'artificial intelligence')
+"ml systems" AND (security OR safety)
+(robotics AND control) OR 'reinforcement learning'
+systems-engineering && (generative_ai || ai)
+```
+
+Validation and errors
+- Unbalanced parentheses or unterminated quotes are rejected with a helpful message and a caret indicator
+- Dangling operators (e.g., `a AND`, `a OR`) are rejected
+- Symbols inside quotes are preserved literally (e.g., `'a & b' && c` treats `a & b` as a phrase)
 
 # References
 

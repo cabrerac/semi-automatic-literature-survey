@@ -16,6 +16,79 @@ from tqdm import tqdm
 logger = logging.getLogger('logger')
 
 
+def _apply_word_replacements_outside_quotes(text):
+    """Normalize boolean operators outside quoted phrases to internal tokens <AND>/<OR>.
+
+    - Supports: AND/and, OR/or, &&, ||, single & and |, and the '¦' character
+    - Preserves anything inside single or double quotes
+    """
+    import re
+
+    def apply_replacements(segment):
+        # Textual operators (word boundaries, case-insensitive)
+        segment = re.sub(r"\bAND\b", " <AND> ", segment, flags=re.IGNORECASE)
+        segment = re.sub(r"\bOR\b", " <OR> ", segment, flags=re.IGNORECASE)
+        # Symbol operators – replace doubles first, then singles
+        segment = segment.replace('&&', ' <AND> ')
+        segment = segment.replace('||', ' <OR> ')
+        # Handle legacy/alternate symbols
+        segment = segment.replace('¦', ' <OR> ')
+        # Replace single symbols after doubles are handled
+        segment = re.sub(r"(?<!<)\&(?!>)", " <AND> ", segment)  # avoid touching existing <AND>
+        segment = re.sub(r"(?<!<)\|(?!>)", " <OR> ", segment)   # avoid touching existing <OR>
+        # Collapse multiple spaces
+        segment = re.sub(r"\s+", " ", segment)
+        return segment
+
+    result_chars = []
+    i = 0
+    n = len(text)
+    in_quote = False
+    quote_char = ''
+    buffer_outside = []
+    while i < n:
+        ch = text[i]
+        if in_quote:
+            result_chars.append(ch)
+            if ch == quote_char:
+                in_quote = False
+            i += 1
+        else:
+            if ch == '"' or ch == '\'':
+                # flush buffer with replacements
+                if buffer_outside:
+                    segment = ''.join(buffer_outside)
+                    result_chars.append(apply_replacements(segment))
+                    buffer_outside = []
+                in_quote = True
+                quote_char = ch
+                result_chars.append(ch)
+                i += 1
+            else:
+                buffer_outside.append(ch)
+                i += 1
+    if buffer_outside:
+        segment = ''.join(buffer_outside)
+        result_chars.append(apply_replacements(segment))
+
+    normalized = ''.join(result_chars)
+    return normalized.strip()
+
+
+def normalize_query_expression(expression):
+    """Return a normalized boolean expression string.
+
+    - Removes stray encoding artifacts
+    - Normalizes boolean operators to <AND>/<OR> outside quotes
+    - Ensures consistent spacing
+    """
+    # Remove common stray encoding artifacts
+    expression = expression.replace('Â', '')
+    # Normalize operators outside of quotes
+    expression = _apply_word_replacements_outside_quotes(expression)
+    return expression.strip()
+
+
 @Language.factory('language_detector')
 def language_detector(nlp, name):
     return LanguageDetector()
@@ -40,7 +113,8 @@ def read_parameters(parameters_file_name):
     for query in queries:
         keys = query.keys()
         for key in keys:
-            query[key] = query[key].replace('&', '<AND>').replace('Â', '').replace('¦', '<OR>')
+            # Normalize to make the syntax user-friendly while keeping internal tokens
+            query[key] = normalize_query_expression(query[key])
 
     if 'syntactic_filters' in parameters:
         syntactic_filters = parameters['syntactic_filters']

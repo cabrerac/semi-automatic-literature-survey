@@ -44,7 +44,7 @@ databases:
 # Search time interval YYYY-mm-dd. If you do not want to include search dates comment start_date and
 # end_date parameters.
 start_date: 2017-01-01
-end_date: 2025-08-07
+end_date: 2025-08-18
 # Date of the search and folder name where the outputs will be stored
-search_date: 2025-08-07
+search_date: 2025-08-18
 folder_name: sys_search

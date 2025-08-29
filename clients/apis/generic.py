@@ -261,8 +261,7 @@ class Generic:
             queries.append(query)
 
         elif api == 'ieeexplore' or api == 'semantic_scholar':
-            # Remove whitespace and add no spaces between terms
-            query = re.sub(r'\s*', '', query)
+            # Preserve whitespace, especially inside quoted phrases
             # Replace single quotes with double quotes
             query = re.sub(r"'", '"', query)
             # Add parentheses for grouping

@@ -179,7 +179,6 @@ class CoreClient(DatabaseClient):
                 papers_request['title'] = raw_papers['title']
                 papers_request['abstract'] = raw_papers['abstract']
                 papers_request['url'] = raw_papers['downloadUrl']
-                papers_request['type'] = raw_papers['documentType']
                 papers_request['publication'] = raw_papers['publisher']
                 papers_request['publisher'] = self.database_name
                 papers_request['publication_date'] = raw_papers['publishedDate']
