@@ -1,0 +1,153 @@
+# =============================================================================
+# SaLS Machine Learning Research Configuration Template
+# =============================================================================
+# Specialized template for machine learning, AI, and data science research
+# Optimized for finding papers on ML algorithms, systems, and applications
+# =============================================================================
+
+# REQUIRED: ML-focused research queries
+# Use specific ML terminology and combine with application domains
+queries:
+  - deep learning: "'deep learning' & ('neural networks' | 'CNN' | 'RNN' | 'transformer')"
+  - reinforcement learning: "'reinforcement learning' & ('Q-learning' | 'policy gradient' | 'actor-critic')"
+  - ml systems: "'machine learning systems' & ('production' | 'deployment' | 'scaling' | 'mlops')"
+  - computer vision: "'computer vision' & ('image recognition' | 'object detection' | 'segmentation')"
+  - natural language processing: "'natural language processing' | 'NLP' & ('text analysis' | 'language models')"
+
+# REQUIRED: ML-specific synonyms and terminology
+# Include abbreviations, alternative names, and related concepts
+deep learning:
+  - deep neural networks
+  - deep learning models
+  - deep architectures
+  - deep learning algorithms
+  - deep learning frameworks
+  - deep learning applications
+
+neural networks:
+  - artificial neural networks
+  - neural network models
+  - neural architectures
+  - neural network training
+  - neural network optimization
+
+reinforcement learning:
+  - rl
+  - reinforcement learning algorithms
+  - rl methods
+  - rl frameworks
+  - rl applications
+  - rl optimization
+
+machine learning systems:
+  - ml systems
+  - production ml
+  - ml infrastructure
+  - ml deployment
+  - ml operations
+  - mlops
+  - ml engineering
+
+computer vision:
+  - cv
+  - image processing
+  - visual recognition
+  - image understanding
+  - visual analysis
+  - computer vision systems
+
+natural language processing:
+  - nlp
+  - text processing
+  - language understanding
+  - text analysis
+  - language models
+  - nlp systems
+
+# REQUIRED: Databases optimized for ML research
+# ML research is well-covered across all major databases
+databases:
+  - arxiv                    # Excellent for recent ML preprints
+  - semantic_scholar        # Good for ML citations and impact
+  - springer                # High-quality ML journals
+  - ieeexplore              # Excellent for ML conferences and journals
+  - scopus                  # Comprehensive ML coverage
+  - core                    # Open access ML papers
+
+# OPTIONAL: Date range for ML research (YYYY-MM-DD format)
+# ML field evolves rapidly - consider focusing on recent years
+# Comment out both lines to search all available papers
+start_date: 2019-01-01      # Focus on recent ML developments
+end_date: 2024-12-31        # Include current year
+
+# REQUIRED: Search metadata
+search_date: 2024-12-15     # Date when this search was performed
+folder_name: ml_research     # Output folder name (will be created automatically)
+
+# OPTIONAL: ML-specific syntactic filters
+# These terms must appear in the paper content
+syntactic_filters:
+  - machine learning
+  - artificial intelligence
+  - deep learning
+  - neural networks
+  - algorithm
+  - model
+  - dataset
+  - evaluation
+  - performance
+  - accuracy
+
+# OPTIONAL: ML-specific semantic filters using AI-powered similarity matching
+# Be specific about ML subfields and applications
+semantic_filters:
+  - deep learning systems: "Research on deep learning systems, architectures, and frameworks including neural network design, training methodologies, optimization techniques, and deployment strategies for deep learning models"
+  
+  - reinforcement learning applications: "Papers about reinforcement learning applications in robotics, game playing, autonomous systems, recommendation systems, and other real-world domains with focus on practical implementation and performance evaluation"
+  
+  - production ml systems: "Research on machine learning systems in production environments including MLOps, model deployment, monitoring, scaling, A/B testing, and operational challenges of ML systems in industry settings"
+  
+  - computer vision applications: "Papers about computer vision applications in autonomous vehicles, medical imaging, surveillance, augmented reality, robotics, and other domains with focus on real-world deployment and performance"
+
+# =============================================================================
+# ML-SPECIFIC BEST PRACTICES
+# =============================================================================
+# 1. QUERIES: Use specific ML terminology (e.g., 'CNN' not just 'neural networks')
+# 2. SYNONYMS: Include abbreviations and alternative names commonly used in ML
+# 3. DATES: ML field evolves rapidly - focus on recent years for cutting-edge research
+# 4. FILTERS: Use ML-specific terms to filter out non-ML papers
+# 5. ITERATION: ML research has many subfields - refine queries based on results
+# 6. VALIDATION: Check that results are actually ML research, not just mentions
+# 7. COVERAGE: ML papers appear in many venues - use multiple databases
+# 8. TERMINOLOGY: Stay current with ML terminology and naming conventions
+# =============================================================================
+
+# =============================================================================
+# ML RESEARCH SUBFIELDS TO CONSIDER
+# =============================================================================
+# - Supervised Learning: classification, regression, structured prediction
+# - Unsupervised Learning: clustering, dimensionality reduction, generative models
+# - Reinforcement Learning: Q-learning, policy methods, multi-agent systems
+# - Deep Learning: CNNs, RNNs, transformers, attention mechanisms
+# - Computer Vision: image recognition, object detection, segmentation
+# - Natural Language Processing: text analysis, language models, translation
+# - ML Systems: MLOps, production deployment, scaling, monitoring
+# - ML Applications: healthcare, finance, autonomous systems, recommendation
+# =============================================================================
+
+# =============================================================================
+# COMMON ML CONFERENCES AND JOURNALS
+# =============================================================================
+# Conferences: NeurIPS, ICML, ICLR, CVPR, ICCV, ACL, EMNLP, KDD, AAAI, IJCAI
+# Journals: JMLR, TPAMI, TMLR, AIJ, MLJ, JAIR, TACL, Computational Linguistics
+# =============================================================================
+
+# =============================================================================
+# TROUBLESHOOTING FOR ML RESEARCH
+# =============================================================================
+# - Too many results: Add specific ML subfield terms or application domains
+# - Too few results: Broaden ML terminology or remove overly specific filters
+# - Irrelevant results: Use more specific ML terms and syntactic filters
+# - Missing recent papers: Check date ranges and ensure recent databases are included
+# - API errors: Use open databases (arxiv, semantic_scholar) if commercial ones fail
+# =============================================================================

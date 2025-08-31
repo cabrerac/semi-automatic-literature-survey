@@ -102,6 +102,25 @@ python main.py parameters_ar.yaml
 
 A simple self-explanatory example of a search parameters file can be found in `./parameters_ar.yaml`. Alternatively, a parameters file including syntactic and semantic filters can be found in `./parameters_sys.yaml`
 
+## Configuration and Documentation
+
+### Quick Start
+- **Quick Start Guide**: `docs/quick_start_guide.md` - Get running in 5 minutes
+- **Configuration Guide**: `docs/configuration_guide.md` - Comprehensive configuration reference
+- **Configuration Templates**: `templates/` directory - Ready-to-use configuration examples
+
+### Configuration Templates
+- **Basic Template**: `templates/basic_search_template.yaml` - Simple searches
+- **Advanced Template**: `templates/advanced_research_template.yaml` - Complex research projects
+- **Machine Learning Template**: `templates/machine_learning_template.yaml` - ML/AI research
+
+### Getting Help
+- Start with the **Quick Start Guide** for your first search
+- Use **Configuration Templates** as starting points
+- Refer to the **Configuration Guide** for advanced features
+- **Error Recovery**: SaLS automatically detects configuration issues and provides recovery suggestions
+- Check error messages for specific guidance and automatic fallbacks
+
 A description of the semi-automatic methodology applied in a survey can be found in the paper ["Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective"](https://arxiv.org/abs/2302.04810) [4]. Another paper using this tool is [The Systems Engineering Approach in Times of Large Language Models](https://scholarspace.manoa.hawaii.edu/items/ccd98c8b-bb61-4a86-9cd4-4719078d028f)[5].
 
 # Query syntax

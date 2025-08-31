@@ -101,6 +101,377 @@ nlp.add_pipe('language_detector', last=True)
 fr = 'utf-8'
 
 
+def _validate_configuration(parameters, parameters_file_name):
+    """
+    Validate configuration parameters and provide user-friendly error messages with recovery suggestions.
+    Returns (is_valid, error_message, recovery_suggestions) tuple.
+    """
+    try:
+        recovery_suggestions = []
+        critical_errors = []
+        warnings = []
+        
+        # Validate queries (CRITICAL - pipeline cannot continue without)
+        if 'queries' not in parameters:
+            critical_errors.append(f"Configuration error: 'queries' section is missing in {parameters_file_name}")
+            recovery_suggestions.append({
+                'issue': 'Missing queries section',
+                'fix': 'Add a queries section with your search terms',
+                'example': '''queries:
+  - augmented reality: "'augmented reality' & 'edge'"
+  - machine learning: "'machine learning' & 'systems'"
+''',
+                'severity': 'critical'
+            })
+        elif not isinstance(parameters['queries'], list):
+            critical_errors.append(f"Configuration error: 'queries' must be a list in {parameters_file_name}")
+            recovery_suggestions.append({
+                'issue': f'Queries is {type(parameters["queries"]).__name__}, not a list',
+                'fix': 'Ensure queries is formatted as a list with "-" items',
+                'example': '''queries:
+  - topic1: "'term1' & 'term2'"
+  - topic2: "'term3' | 'term4'"
+''',
+                'severity': 'critical'
+            })
+        elif len(parameters['queries']) == 0:
+            critical_errors.append(f"Configuration error: 'queries' list is empty in {parameters_file_name}")
+            recovery_suggestions.append({
+                'issue': 'Empty queries list',
+                'fix': 'Add at least one search query to proceed',
+                'example': '''queries:
+  - your_topic: "'your research topic' & 'key concept'"
+''',
+                'severity': 'critical'
+            })
+        else:
+            # Validate individual queries
+            for i, query in enumerate(parameters['queries']):
+                if not isinstance(query, dict):
+                    critical_errors.append(f"Configuration error: Query {i+1} must be a dictionary in {parameters_file_name}")
+                    recovery_suggestions.append({
+                        'issue': f'Query {i+1} is {type(query).__name__}, not a dictionary',
+                        'fix': 'Format each query as: query_name: "query_value"',
+                        'example': f'  - query_name: "term1 & term2"',
+                        'severity': 'critical'
+                    })
+                    break
+                elif len(query) != 1:
+                    critical_errors.append(f"Configuration error: Query {i+1} must have exactly one key-value pair in {parameters_file_name}")
+                    recovery_suggestions.append({
+                        'issue': f'Query {i+1} has {len(query)} keys: {list(query.keys())}',
+                        'fix': 'Each query should have exactly one key-value pair',
+                        'example': f'  - query_name: "term1 & term2"',
+                        'severity': 'critical'
+                    })
+                    break
+                else:
+                    query_name = list(query.keys())[0]
+                    query_value = query[query_name]
+                    
+                    if not isinstance(query_name, str) or not query_name.strip():
+                        critical_errors.append(f"Configuration error: Query {i+1} name must be a non-empty string in {parameters_file_name}")
+                        recovery_suggestions.append({
+                            'issue': f'Query name is {repr(query_name)}',
+                            'fix': 'Use a descriptive, non-empty string for the query name',
+                            'example': f'  - machine_learning: "term1 & term2"',
+                            'severity': 'critical'
+                        })
+                        break
+                    
+                    if not isinstance(query_value, str) or not query_value.strip():
+                        critical_errors.append(f"Configuration error: Query '{query_name}' value must be a non-empty string in {parameters_file_name}")
+                        recovery_suggestions.append({
+                            'issue': f'Query value is {repr(query_value)}',
+                            'fix': 'Use a non-empty string for the query value',
+                            'example': f'  - {query_name}: "term1 & term2"',
+                            'severity': 'critical'
+                        })
+                        break
+        
+        # Validate databases (WARNING - can provide defaults)
+        if 'databases' not in parameters:
+            warnings.append("Configuration warning: 'databases' section is missing")
+            recovery_suggestions.append({
+                'issue': 'Missing databases section',
+                'fix': 'Add databases section or use default open databases',
+                'example': '''databases:
+  - arxiv                    # Open access, no API key needed
+  - semantic_scholar        # Open access, no API key needed
+''',
+                'severity': 'warning',
+                'default': ['arxiv', 'semantic_scholar']
+            })
+        elif not isinstance(parameters['databases'], list):
+            warnings.append(f"Configuration warning: 'databases' must be a list in {parameters_file_name}")
+            recovery_suggestions.append({
+                'issue': f'Databases is {type(parameters["databases"]).__name__}, not a list',
+                'fix': 'Format databases as a list with "-" items',
+                'example': '''databases:
+  - arxiv
+  - semantic_scholar
+''',
+                'severity': 'warning',
+                'default': ['arxiv', 'semantic_scholar']
+            })
+        else:
+            valid_databases = ['arxiv', 'springer', 'ieeexplore', 'scopus', 'core', 'semantic_scholar', 
+                             'crossref', 'europe_pmc', 'pubmed', 'openalex']
+            
+            invalid_dbs = []
+            for db in parameters['databases']:
+                if not isinstance(db, str):
+                    invalid_dbs.append(f"{repr(db)} (not a string)")
+                elif db not in valid_databases:
+                    invalid_dbs.append(f"'{db}' (unknown database)")
+            
+            if invalid_dbs:
+                warnings.append(f"Configuration warning: Invalid database(s) found: {', '.join(invalid_dbs)}")
+                recovery_suggestions.append({
+                    'issue': f'Invalid databases: {", ".join(invalid_dbs)}',
+                    'fix': 'Use only valid database names',
+                    'example': f'Valid databases: {", ".join(valid_databases)}',
+                    'severity': 'warning',
+                    'note': 'Some databases require API keys in config.json'
+                })
+        
+        # Validate dates (WARNING - can provide defaults)
+        if 'start_date' in parameters:
+            try:
+                if isinstance(parameters['start_date'], str):
+                    datetime.strptime(parameters['start_date'], '%Y-%m-%d')
+                elif hasattr(parameters['start_date'], 'strftime'):
+                    if parameters['start_date'].year < 1900 or parameters['start_date'].year > 2100:
+                        warnings.append(f"Configuration warning: 'start_date' year seems unreasonable: {parameters['start_date'].year}")
+                        recovery_suggestions.append({
+                            'issue': f'Unreasonable start_date year: {parameters["start_date"].year}',
+                            'fix': 'Use a year between 1900 and 2100',
+                            'example': 'start_date: 2020-01-01',
+                            'severity': 'warning',
+                            'default': '1950-01-01'
+                        })
+                else:
+                    warnings.append(f"Configuration warning: 'start_date' must be a string or date in {parameters_file_name}")
+                    recovery_suggestions.append({
+                        'issue': f'start_date is {type(parameters["start_date"]).__name__}',
+                        'fix': 'Use YYYY-MM-DD format',
+                        'example': 'start_date: 2020-01-01',
+                        'severity': 'warning',
+                        'default': '1950-01-01'
+                    })
+            except ValueError:
+                warnings.append(f"Configuration warning: Invalid 'start_date' format in {parameters_file_name}")
+                recovery_suggestions.append({
+                    'issue': f'Invalid start_date format: {parameters["start_date"]}',
+                    'fix': 'Use YYYY-MM-DD format',
+                    'example': 'start_date: 2020-01-01',
+                    'severity': 'warning',
+                    'default': '1950-01-01'
+                })
+        
+        if 'end_date' in parameters:
+            try:
+                if isinstance(parameters['end_date'], str):
+                    datetime.strptime(parameters['end_date'], '%Y-%m-%d')
+                elif hasattr(parameters['end_date'], 'strftime'):
+                    if parameters['end_date'].year < 1900 or parameters['end_date'].year > 2100:
+                        warnings.append(f"Configuration warning: 'end_date' year seems unreasonable: {parameters['end_date'].year}")
+                        recovery_suggestions.append({
+                            'issue': f'Unreasonable end_date year: {parameters["end_date"].year}',
+                            'fix': 'Use a year between 1900 and 2100',
+                            'example': 'end_date: 2024-12-31',
+                            'severity': 'warning',
+                            'default': 'current date'
+                        })
+                else:
+                    warnings.append(f"Configuration warning: 'end_date' must be a string or date in {parameters_file_name}")
+                    recovery_suggestions.append({
+                        'issue': f'end_date is {type(parameters["end_date"]).__name__}',
+                        'fix': 'Use YYYY-MM-DD format',
+                        'example': 'end_date: 2024-12-31',
+                        'severity': 'warning',
+                        'default': 'current date'
+                    })
+            except ValueError:
+                warnings.append(f"Configuration warning: Invalid 'end_date' format in {parameters_file_name}")
+                recovery_suggestions.append({
+                    'issue': f'Invalid end_date format: {parameters["end_date"]}',
+                    'fix': 'Use YYYY-MM-DD format',
+                    'example': 'end_date: 2024-12-31',
+                    'severity': 'warning',
+                    'default': 'current date'
+                })
+        
+        # Validate search_date (WARNING - can provide default)
+        if 'search_date' not in parameters:
+            warnings.append("Configuration warning: 'search_date' is missing")
+            recovery_suggestions.append({
+                'issue': 'Missing search_date',
+                'fix': 'Add search_date or use current date',
+                'example': f'search_date: {datetime.today().strftime("%Y-%m-%d")}',
+                'severity': 'warning',
+                'default': 'current date'
+            })
+        else:
+            try:
+                if isinstance(parameters['search_date'], str):
+                    datetime.strptime(parameters['search_date'], '%Y-%m-%d')
+                elif hasattr(parameters['search_date'], 'strftime'):
+                    if parameters['search_date'].year < 1900 or parameters['search_date'].year > 2100:
+                        warnings.append(f"Configuration warning: 'search_date' year seems unreasonable: {parameters['search_date'].year}")
+                        recovery_suggestions.append({
+                            'issue': f'Unreasonable search_date year: {parameters["search_date"].year}',
+                            'fix': 'Use a year between 1900 and 2100',
+                            'example': f'search_date: {datetime.today().strftime("%Y-%m-%d")}',
+                            'severity': 'warning',
+                            'default': 'current date'
+                        })
+                else:
+                    warnings.append(f"Configuration warning: 'search_date' must be a string or date in {parameters_file_name}")
+                    recovery_suggestions.append({
+                        'issue': f'search_date is {type(parameters["search_date"]).__name__}',
+                        'fix': 'Use YYYY-MM-DD format',
+                        'example': f'search_date: {datetime.today().strftime("%Y-%m-%d")}',
+                        'severity': 'warning',
+                        'default': 'current date'
+                    })
+            except ValueError:
+                warnings.append(f"Configuration warning: Invalid 'search_date' format in {parameters_file_name}")
+                recovery_suggestions.append({
+                    'issue': f'Invalid search_date format: {parameters["search_date"]}',
+                    'fix': 'Use YYYY-MM-DD format',
+                    'example': f'search_date: {datetime.today().strftime("%Y-%m-%d")}',
+                    'severity': 'warning',
+                    'default': 'current date'
+                })
+        
+        # Validate folder_name (WARNING - can provide default)
+        if 'folder_name' not in parameters:
+            warnings.append("Configuration warning: 'folder_name' is missing")
+            recovery_suggestions.append({
+                'issue': 'Missing folder_name',
+                'fix': 'Add folder_name or use filename-based default',
+                'example': f'folder_name: {parameters_file_name.replace(".yaml", "")}',
+                'severity': 'warning',
+                'default': 'filename-based'
+            })
+        elif not isinstance(parameters['folder_name'], str) or not parameters['folder_name'].strip():
+            warnings.append(f"Configuration warning: 'folder_name' must be a non-empty string in {parameters_file_name}")
+            recovery_suggestions.append({
+                'issue': f'folder_name is {repr(parameters["folder_name"])}',
+                'fix': 'Use a non-empty string for folder_name',
+                'example': 'folder_name: my_literature_search',
+                'severity': 'warning',
+                'default': 'filename-based'
+            })
+        
+        # Validate filters (WARNING - can provide defaults)
+        if 'syntactic_filters' in parameters and not isinstance(parameters['syntactic_filters'], list):
+            warnings.append(f"Configuration warning: 'syntactic_filters' must be a list in {parameters_file_name}")
+            recovery_suggestions.append({
+                'issue': f'syntactic_filters is {type(parameters["syntactic_filters"]).__name__}',
+                'fix': 'Format as a list with "-" items',
+                'example': '''syntactic_filters:
+  - edge
+  - orchestration
+''',
+                'severity': 'warning',
+                'default': 'empty list'
+            })
+        
+        if 'semantic_filters' in parameters and not isinstance(parameters['semantic_filters'], list):
+            warnings.append(f"Configuration warning: 'semantic_filters' must be a list in {parameters_file_name}")
+            recovery_suggestions.append({
+                'issue': f'semantic_filters is {type(parameters["semantic_filters"]).__name__}',
+                'fix': 'Format as a list with "-" items',
+                'example': '''semantic_filters:
+  - edge computing: "Edge computing and fog computing technologies"
+  - orchestration: "Service orchestration and composition"
+''',
+                'severity': 'warning',
+                'default': 'empty list'
+            })
+        
+        # Determine overall validation result
+        if critical_errors:
+            # Critical errors prevent pipeline execution
+            error_message = "\n".join(critical_errors)
+            error_message += "\n\n🔴 CRITICAL ERRORS - Pipeline cannot continue:"
+            for suggestion in recovery_suggestions:
+                if suggestion['severity'] == 'critical':
+                    error_message += f"\n\n❌ {suggestion['issue']}"
+                    error_message += f"\n   Fix: {suggestion['fix']}"
+                    error_message += f"\n   Example:\n{suggestion['example']}"
+            
+            return False, error_message, recovery_suggestions
+        else:
+            # Only warnings - pipeline can continue with defaults
+            if warnings:
+                warning_message = "Configuration validation completed with warnings:\n"
+                warning_message += "\n".join(warnings)
+                warning_message += "\n\n🟡 WARNINGS - Pipeline will continue with defaults where possible:"
+                
+                for suggestion in recovery_suggestions:
+                    if suggestion['severity'] == 'warning':
+                        warning_message += f"\n\n⚠️  {suggestion['issue']}"
+                        warning_message += f"\n   Fix: {suggestion['fix']}"
+                        if 'default' in suggestion:
+                            warning_message += f"\n   Default: {suggestion['default']}"
+                        warning_message += f"\n   Example:\n{suggestion['example']}"
+                
+                return True, warning_message, recovery_suggestions
+            else:
+                return True, "Configuration validation passed successfully!", []
+        
+    except Exception as ex:
+        return False, f"Configuration validation error: {type(ex).__name__}: {str(ex)}\n" \
+                     f"Please check your configuration file format and try again.", []
+
+
+def _apply_configuration_fallbacks(parameters, parameters_file_name, recovery_suggestions):
+    """
+    Apply graceful fallbacks for missing or invalid configuration values.
+    Returns updated parameters with defaults applied.
+    """
+    try:
+        logger.info("Applying configuration fallbacks...")
+        
+        # Apply fallbacks based on recovery suggestions
+        for suggestion in recovery_suggestions:
+            if suggestion['severity'] == 'warning' and 'default' in suggestion:
+                if 'databases' in suggestion['issue']:
+                    if 'databases' not in parameters or not isinstance(parameters['databases'], list):
+                        parameters['databases'] = ['arxiv', 'semantic_scholar']
+                        logger.info("Applied default databases: arxiv, semantic_scholar")
+                
+                elif 'search_date' in suggestion['issue']:
+                    if 'search_date' not in parameters:
+                        parameters['search_date'] = datetime.today().strftime('%Y-%m-%d')
+                        logger.info(f"Applied default search_date: {parameters['search_date']}")
+                
+                elif 'folder_name' in suggestion['issue']:
+                    if 'folder_name' not in parameters or not isinstance(parameters['folder_name'], str) or not parameters['folder_name'].strip():
+                        parameters['folder_name'] = parameters_file_name.replace('.yaml', '')
+                        logger.info(f"Applied default folder_name: {parameters['folder_name']}")
+                
+                elif 'syntactic_filters' in suggestion['issue']:
+                    if 'syntactic_filters' not in parameters or not isinstance(parameters['syntactic_filters'], list):
+                        parameters['syntactic_filters'] = []
+                        logger.info("Applied default syntactic_filters: empty list")
+                
+                elif 'semantic_filters' in suggestion['issue']:
+                    if 'semantic_filters' not in parameters or not isinstance(parameters['semantic_filters'], list):
+                        parameters['semantic_filters'] = []
+                        logger.info("Applied default semantic_filters: empty list")
+        
+        logger.info("Configuration fallbacks applied successfully!")
+        return parameters
+        
+    except Exception as ex:
+        logger.warning(f"Error applying configuration fallbacks: {type(ex).__name__}: {str(ex)}")
+        return parameters
+
+
 def read_parameters(parameters_file_name):
     try:
         # Read and parse YAML file with error handling
@@ -115,6 +486,25 @@ def read_parameters(parameters_file_name):
             raise
         except Exception as ex:
             logger.error(f"Unexpected error reading parameters file {parameters_file_name}: {type(ex).__name__}: {str(ex)}")
+            raise
+
+        # NEW: Proactive configuration validation with error recovery and graceful fallbacks
+        try:
+            is_valid, validation_message, recovery_suggestions = _validate_configuration(parameters, parameters_file_name)
+            if not is_valid:
+                logger.error(f"Configuration validation failed:\n{validation_message}")
+                raise ValueError(f"Configuration validation failed. Please fix the critical errors above and restart the pipeline.")
+            elif validation_message != "Configuration validation passed successfully!":
+                # Show warnings but continue with defaults
+                logger.warning(f"Configuration validation completed with warnings:\n{validation_message}")
+                logger.info("Pipeline will continue with default values where possible.")
+                
+                # Apply graceful fallbacks for missing values
+                parameters = _apply_configuration_fallbacks(parameters, parameters_file_name, recovery_suggestions)
+            else:
+                logger.info("Configuration validation passed successfully!")
+        except Exception as ex:
+            logger.error(f"Error during configuration validation: {type(ex).__name__}: {str(ex)}")
             raise
 
         # Safe extraction of queries with error handling

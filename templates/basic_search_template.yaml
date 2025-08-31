@@ -1,0 +1,76 @@
+# =============================================================================
+# SaLS Basic Search Configuration Template
+# =============================================================================
+# This template provides a minimal configuration for basic literature searches
+# Copy this file and modify the values according to your research needs
+# =============================================================================
+
+# REQUIRED: Search queries in the format <query_name>: "<query_value>"
+# Supported operators: & (AND), | (OR), and parentheses for grouping
+# Use quotes around multi-word terms: 'machine learning' & 'edge computing'
+queries:
+  - machine learning: "'machine learning' & 'edge computing'"
+  - artificial intelligence: "'artificial intelligence' | 'AI'"
+
+# OPTIONAL: Synonyms to expand your search queries
+# These will be automatically added to your searches to increase coverage
+machine learning:
+  - ml
+  - deep learning
+  - neural networks
+  - supervised learning
+  - unsupervised learning
+
+artificial intelligence:
+  - ai
+  - machine intelligence
+  - cognitive computing
+
+# REQUIRED: Databases to search for papers
+# Open databases (no API key required): arxiv, semantic_scholar
+# Commercial databases (API key required): springer, ieeexplore, scopus, core
+# See README.md for API key setup instructions
+databases:
+  - arxiv                    # Open access, no API key needed
+  - semantic_scholar        # Open access, no API key needed
+  # - springer               # Uncomment and add API key to config.json
+  # - ieeexplore            # Uncomment and add API key to config.json
+  # - scopus                # Uncomment and add API key to config.json
+  # - core                  # Uncomment and add API key to config.json
+
+# OPTIONAL: Date range for your search (YYYY-MM-DD format)
+# Comment out both lines to search all available papers
+# Including dates can significantly reduce search time and improve relevance
+# start_date: 2020-01-01    # Papers published from this date
+# end_date: 2024-12-31      # Papers published until this date
+
+# REQUIRED: Search metadata
+search_date: 2024-12-15     # Date when this search was performed
+folder_name: basic_search    # Output folder name (will be created automatically)
+
+# =============================================================================
+# ADVANCED FEATURES (Optional - uncomment and configure as needed)
+# =============================================================================
+
+# OPTIONAL: Syntactic filters for more precise control
+# These terms will be required in the paper content
+# syntactic_filters:
+#   - edge computing
+#   - distributed systems
+
+# OPTIONAL: Semantic filters using AI-powered similarity matching
+# Format: filter_name: "detailed description of what you're looking for"
+# semantic_filters:
+#   - edge computing: "Papers about edge computing, fog computing, and distributed edge systems"
+#   - machine learning: "Research on machine learning algorithms and applications in edge environments"
+
+# =============================================================================
+# BEST PRACTICES
+# =============================================================================
+# 1. Start with simple queries and refine based on results
+# 2. Use specific terms rather than broad concepts
+# 3. Include synonyms to catch related research
+# 4. Set reasonable date ranges to focus on recent work
+# 5. Test with open databases first before adding commercial ones
+# 6. Use semantic filters for complex research areas
+# =============================================================================

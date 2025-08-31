@@ -1,0 +1,148 @@
+# =============================================================================
+# SaLS Advanced Research Configuration Template
+# =============================================================================
+# This template demonstrates all SaLS features for comprehensive literature reviews
+# Use this for systematic literature reviews, PhD research, or complex research projects
+# =============================================================================
+
+# REQUIRED: Primary research queries
+# Use complex boolean expressions with parentheses for precise control
+# Supported operators: & (AND), | (OR), and parentheses for grouping
+queries:
+  - systems engineering: "'systems engineering' & ('large language models' | 'LLM' | 'generative AI')"
+  - edge orchestration: "'edge computing' & ('orchestration' | 'composition' | 'choreography') & 'placement'"
+  - machine learning systems: "'machine learning systems' & ('production' | 'deployment' | 'operations')"
+
+# REQUIRED: Comprehensive synonyms for query expansion
+# These synonyms will be automatically added to increase search coverage
+# Group related terms under meaningful categories
+systems engineering:
+  - systems thinking
+  - system architecture
+  - system design
+  - system integration
+  - system lifecycle
+  - requirements engineering
+  - verification and validation
+
+large language models:
+  - llm
+  - transformer models
+  - language models
+  - neural language models
+  - foundation models
+  - generative models
+
+edge computing:
+  - edge
+  - fog computing
+  - mobile edge computing
+  - multi-access edge computing
+  - edge intelligence
+  - edge AI
+
+orchestration:
+  - service orchestration
+  - service composition
+  - service choreography
+  - resource orchestration
+  - workflow orchestration
+  - microservice orchestration
+
+placement:
+  - service placement
+  - resource placement
+  - workload placement
+  - task placement
+  - service offloading
+  - resource allocation
+
+machine learning systems:
+  - ml systems
+  - production ml
+  - mlops
+  - machine learning operations
+  - ml infrastructure
+  - ml deployment
+
+# REQUIRED: Database selection for comprehensive coverage
+# Mix open and commercial databases for best results
+# Open databases: arxiv, semantic_scholar (no API key needed)
+# Commercial databases: springer, ieeexplore, scopus, core (API key required)
+databases:
+  - arxiv                    # Open access, excellent for recent research
+  - semantic_scholar        # Open access, good citation analysis
+  - springer                # Commercial, high-quality journals
+  - ieeexplore              # Commercial, excellent for engineering
+  - scopus                  # Commercial, comprehensive coverage
+  - core                    # Commercial, open access repository
+  # Additional databases available: crossref, europe_pmc, pubmed, openalex
+
+# OPTIONAL: Date range for focused research (YYYY-MM-DD format)
+# Use date ranges to focus on recent developments or specific time periods
+# Comment out both lines to search all available papers
+start_date: 2018-01-01      # Focus on recent research (last 6 years)
+end_date: 2024-12-31        # Include current year
+
+# REQUIRED: Search metadata
+search_date: 2024-12-15     # Date when this search was performed
+folder_name: advanced_research  # Output folder name (will be created automatically)
+
+# OPTIONAL: Syntactic filters for precise control
+# These terms must appear in the paper content
+# Use for filtering out irrelevant papers early in the process
+syntactic_filters:
+  - systems
+  - engineering
+  - architecture
+  - design
+  - implementation
+  - evaluation
+  - analysis
+
+# OPTIONAL: Semantic filters using AI-powered similarity matching
+# These use BERT-based models to find semantically similar papers
+# Format: filter_name: "detailed description of what you're looking for"
+# Be specific and descriptive for best results
+semantic_filters:
+  - systems engineering: "Research on systems engineering methodologies, frameworks, and approaches applied to complex systems, including requirements engineering, system architecture, design patterns, and lifecycle management"
+  
+  - edge orchestration: "Papers about orchestration, composition, and choreography of edge computing resources and services, including placement strategies, resource allocation, and workload distribution in edge environments"
+  
+  - production ml: "Research on machine learning systems in production environments, including MLOps, deployment strategies, monitoring, scaling, and operational challenges of ML systems"
+
+# =============================================================================
+# ADVANCED CONFIGURATION OPTIONS
+# =============================================================================
+
+# OPTIONAL: Custom fields and types (advanced users)
+# fields: ['title', 'abstract', 'keywords', 'full_text']
+# types: ['conferences', 'journals', 'preprints', 'reports']
+
+# OPTIONAL: Custom search parameters (advanced users)
+# max_papers_per_database: 1000
+# search_timeout: 300
+# retry_attempts: 3
+
+# =============================================================================
+# BEST PRACTICES FOR ADVANCED RESEARCH
+# =============================================================================
+# 1. QUERIES: Start broad, then narrow down based on initial results
+# 2. SYNONYMS: Include variations, abbreviations, and related terminology
+# 3. DATABASES: Use a mix of open and commercial for comprehensive coverage
+# 4. DATES: Set reasonable ranges to focus on relevant time periods
+# 5. FILTERS: Use syntactic filters for precision, semantic filters for recall
+# 6. ITERATION: Run multiple searches with refined parameters
+# 7. VALIDATION: Check results manually to ensure quality
+# 8. DOCUMENTATION: Keep track of search parameters and results
+# =============================================================================
+
+# =============================================================================
+# TROUBLESHOOTING TIPS
+# =============================================================================
+# - If you get too many results: Add more specific terms or use date ranges
+# - If you get too few results: Broaden queries or add synonyms
+# - If semantic filtering fails: Check that descriptions are detailed and specific
+# - If API errors occur: Verify API keys in config.json or use open databases
+# - If validation fails: Check YAML syntax and required field formats
+# =============================================================================
