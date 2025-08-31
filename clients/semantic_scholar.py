@@ -188,11 +188,18 @@ class SemanticScholarClient(DatabaseClient):
                         papers_request = pd.DataFrame()
                 else:
                     papers_request = pd.DataFrame()
+            except (json.JSONDecodeError, KeyError) as e:
+                if print_error:
+                    # User-friendly message explaining what's happening
+                    self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                    # Detailed logging for debugging
+                    self.logger.debug(f"Data parsing error in Semantic Scholar response: {type(e).__name__}: {str(e)}")
             except Exception as ex:
                 if print_error:
-                    self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
-                                "details: " + self.file_handler)
-                    self.logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
+                    # User-friendly message explaining what's happening
+                    self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                    # Detailed logging for debugging
+                    self.logger.error(f"Unexpected error parsing Semantic Scholar response: {type(ex).__name__}: {str(ex)}")
         else:
             if print_error:
                 self.logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
@@ -213,10 +220,24 @@ class SemanticScholarClient(DatabaseClient):
             papers = papers.dropna(subset=['abstract'])
             if dates:
                 papers = papers[(papers['publication_date'] >= start_date.year) & (papers['publication_date'] <= end_date.year)]
+        except (ValueError, TypeError) as e:
+            # User-friendly message explaining what's happening
+            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.debug(f"Data type error during Semantic Scholar paper filtering: {type(e).__name__}: {str(e)}")
+            # Continue with unfiltered papers rather than failing completely
+        except KeyError as e:
+            # User-friendly message explaining what's happening
+            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.debug(f"Missing required column during Semantic Scholar paper filtering: {type(e).__name__}: {str(e)}")
+            # Return papers as-is to prevent complete failure
         except Exception as ex:
-            self.logger.info("Error filtering papers. Skipping to next request. Please see the log file for details: "
-                        + self.file_handler)
-            self.logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
+            # User-friendly message explaining what's happening
+            self.logger.info("Unexpected error filtering papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.error(f"Unexpected error during Semantic Scholar paper filtering: {type(ex).__name__}: {str(ex)}")
+            # Return papers as-is to prevent complete failure
         return papers
     
     def _clean_papers(self, papers):
@@ -228,10 +249,24 @@ class SemanticScholarClient(DatabaseClient):
                                           'externalIds.ACL'], errors='ignore')
             papers.replace('', float("NaN"), inplace=True)
             papers.dropna(how='all', axis=1, inplace=True)
+        except (ValueError, TypeError) as e:
+            # User-friendly message explaining what's happening
+            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.debug(f"Data type error during Semantic Scholar paper cleaning: {type(e).__name__}: {str(e)}")
+            # Continue with uncleaned papers rather than failing completely
+        except KeyError as e:
+            # User-friendly message explaining what's happening
+            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.debug(f"Missing required column during Semantic Scholar paper cleaning: {type(e).__name__}: {str(e)}")
+            # Return papers as-is to prevent complete failure
         except Exception as ex:
-            self.logger.info("Error cleaning papers. Skipping to next request. Please see the log file for details: "
-                        + self.file_handler)
-            self.logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
+            # User-friendly message explaining what's happening
+            self.logger.info("Unexpected error cleaning papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.error(f"Unexpected error during Semantic Scholar paper cleaning: {type(ex).__name__}: {str(ex)}")
+            # Return papers as-is to prevent complete failure
         return papers
     
     def get_citations(self, folder_name, search_date, step, dates, start_date, end_date):
@@ -301,10 +336,16 @@ class SemanticScholarClient(DatabaseClient):
                     papers.loc[:, 'database'] = self.database_name
                     papers.loc[:, 'query_name'] = 'citation'
                     papers.loc[:, 'query_value'] = 'citation'
+            except (json.JSONDecodeError, KeyError) as e:
+                # User-friendly message explaining what's happening
+                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                # Detailed logging for debugging
+                self.logger.debug(f"Data parsing error in Semantic Scholar citations response: {type(e).__name__}: {str(e)}")
             except Exception as ex:
-                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for "
-                            "details: " + self.file_handler)
-                self.logger.debug("Exception: " + str(type(ex)) + ' - ' + str(ex))
+                # User-friendly message explaining what's happening
+                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                # Detailed logging for debugging
+                self.logger.error(f"Unexpected error parsing Semantic Scholar citations response: {type(ex).__name__}: {str(ex)}")
         else:
             self.logger.info("Error requesting the API for citations. Skipping to next request. Please see the log file for "
                         "details: " + self.file_handler)

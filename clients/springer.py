@@ -156,9 +156,21 @@ class SpringerClient(DatabaseClient):
             try:
                 json_results = json.loads(raw_papers.text)
                 total = int(json_results['result'][0]['total'])
-            except Exception as ex:
+            except (json.JSONDecodeError, KeyError, IndexError) as e:
+                # User-friendly message explaining what's happening
                 self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+                # Detailed logging for debugging
+                self.logger.debug(f"Data parsing error in Springer response: {type(e).__name__}: {str(e)}")
+            except (ValueError, TypeError) as e:
+                # User-friendly message explaining what's happening
+                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                # Detailed logging for debugging
+                self.logger.debug(f"Data type error in Springer response: {type(e).__name__}: {str(e)}")
+            except Exception as ex:
+                # User-friendly message explaining what's happening
+                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                # Detailed logging for debugging
+                self.logger.error(f"Unexpected error parsing Springer response: {type(ex).__name__}: {str(ex)}")
         else:
             self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
         return total
@@ -176,9 +188,16 @@ class SpringerClient(DatabaseClient):
                 papers_request.loc[:, 'database'] = self.database_name
                 papers_request.loc[:, 'query_name'] = query_name
                 papers_request.loc[:, 'query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
-            except Exception as ex:
+            except (json.JSONDecodeError, KeyError) as e:
+                # User-friendly message explaining what's happening
                 self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+                # Detailed logging for debugging
+                self.logger.debug(f"Data parsing error in Springer response: {type(e).__name__}: {str(e)}")
+            except Exception as ex:
+                # User-friendly message explaining what's happening
+                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                # Detailed logging for debugging
+                self.logger.error(f"Unexpected error parsing Springer response: {type(ex).__name__}: {str(ex)}")
         else:
             self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
         
@@ -203,9 +222,24 @@ class SpringerClient(DatabaseClient):
             if 'language' in papers:
                 papers = papers[papers['language'].str.contains('en')]
                 
-        except Exception as ex:
+        except (ValueError, TypeError) as e:
+            # User-friendly message explaining what's happening
             self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
-            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+            # Detailed logging for debugging
+            self.logger.debug(f"Data type error during Springer paper filtering: {type(e).__name__}: {str(e)}")
+            # Continue with unfiltered papers rather than failing completely
+        except KeyError as e:
+            # User-friendly message explaining what's happening
+            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.debug(f"Missing required column during Springer paper filtering: {type(e).__name__}: {str(e)}")
+            # Return papers as-is to prevent complete failure
+        except Exception as ex:
+            # User-friendly message explaining what's happening
+            self.logger.info("Unexpected error filtering papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.error(f"Unexpected error during Springer paper filtering: {type(ex).__name__}: {str(ex)}")
+            # Return papers as-is to prevent complete failure
         
         return papers
 
@@ -238,9 +272,30 @@ class SpringerClient(DatabaseClient):
             papers.replace('', float("NaN"), inplace=True)
             papers.dropna(how='all', axis=1, inplace=True)
             
-        except Exception as ex:
+        except (ValueError, TypeError) as e:
+            # User-friendly message explaining what's happening
             self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+            # Detailed logging for debugging
+            self.logger.debug(f"Data type error during Springer paper cleaning: {type(e).__name__}: {str(e)}")
+            # Continue with uncleaned papers rather than failing completely
+        except KeyError as e:
+            # User-friendly message explaining what's happening
+            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.debug(f"Missing required column during Springer paper cleaning: {type(e).__name__}: {str(e)}")
+            # Return papers as-is to prevent complete failure
+        except (IndexError, AttributeError) as e:
+            # User-friendly message explaining what's happening
+            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.debug(f"URL extraction error during Springer paper cleaning: {type(e).__name__}: {str(e)}")
+            # Continue with empty URLs rather than failing completely
+        except Exception as ex:
+            # User-friendly message explaining what's happening
+            self.logger.info("Unexpected error cleaning papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.error(f"Unexpected error during Springer paper cleaning: {type(ex).__name__}: {str(ex)}")
+            # Return papers as-is to prevent complete failure
         
         return papers
     

@@ -116,9 +116,16 @@ class ArxivClient(DatabaseClient):
             try:
                 total_text = raw_papers.text.split('opensearch:totalResults')[1]
                 total = int(total_text.split('>')[1].replace('</', ''))
-            except Exception as ex:
+            except (IndexError, ValueError) as e:
+                # User-friendly message explaining what's happening
                 self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+                # Detailed logging for debugging
+                self.logger.debug(f"Data parsing error in arXiv response: {type(e).__name__}: {str(e)}")
+            except Exception as ex:
+                # User-friendly message explaining what's happening
+                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                # Detailed logging for debugging
+                self.logger.error(f"Unexpected error parsing arXiv response: {type(ex).__name__}: {str(ex)}")
         else:
             self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
         return total
@@ -136,9 +143,16 @@ class ArxivClient(DatabaseClient):
                 papers_request.loc[:, 'database'] = self.database_name
                 papers_request.loc[:, 'query_name'] = query_name
                 papers_request.loc[:, 'query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
-            except Exception as ex:
+            except (ValueError, TypeError) as e:
+                # User-friendly message explaining what's happening
                 self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+                # Detailed logging for debugging
+                self.logger.debug(f"Data type error in arXiv response: {type(e).__name__}: {str(e)}")
+            except Exception as ex:
+                # User-friendly message explaining what's happening
+                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                # Detailed logging for debugging
+                self.logger.error(f"Unexpected error parsing arXiv response: {type(ex).__name__}: {str(ex)}")
         else:
             self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
         
@@ -163,9 +177,24 @@ class ArxivClient(DatabaseClient):
                 papers['published'] = pd.to_datetime(papers['published']).dt.date
                 papers = papers[(papers['published'] >= start_date) & (papers['published'] <= end_date)]
                 
-        except Exception as ex:
+        except (ValueError, TypeError) as e:
+            # User-friendly message explaining what's happening
             self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
-            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+            # Detailed logging for debugging
+            self.logger.debug(f"Data type error during arXiv paper filtering: {type(e).__name__}: {str(e)}")
+            # Continue with unfiltered papers rather than failing completely
+        except KeyError as e:
+            # User-friendly message explaining what's happening
+            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.debug(f"Missing required column during arXiv paper filtering: {type(e).__name__}: {str(e)}")
+            # Return papers as-is to prevent complete failure
+        except Exception as ex:
+            # User-friendly message explaining what's happening
+            self.logger.info("Unexpected error filtering papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.error(f"Unexpected error during arXiv paper filtering: {type(ex).__name__}: {str(ex)}")
+            # Return papers as-is to prevent complete failure
         
         return papers
     
@@ -183,9 +212,24 @@ class ArxivClient(DatabaseClient):
             papers.replace('', float("NaN"), inplace=True)
             papers.dropna(how='all', axis=1, inplace=True)
             
-        except Exception as ex:
+        except (ValueError, TypeError) as e:
+            # User-friendly message explaining what's happening
             self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+            # Detailed logging for debugging
+            self.logger.debug(f"Data type error during arXiv paper cleaning: {type(e).__name__}: {str(e)}")
+            # Continue with uncleaned papers rather than failing completely
+        except KeyError as e:
+            # User-friendly message explaining what's happening
+            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.debug(f"Missing required column during arXiv paper cleaning: {type(e).__name__}: {str(e)}")
+            # Return papers as-is to prevent complete failure
+        except Exception as ex:
+            # User-friendly message explaining what's happening
+            self.logger.info("Unexpected error cleaning papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.error(f"Unexpected error during arXiv paper cleaning: {type(ex).__name__}: {str(ex)}")
+            # Return papers as-is to prevent complete failure
         
         return papers
 

@@ -198,14 +198,28 @@ class IeeeXploreClient(DatabaseClient):
                     raw_json = json.loads(raw_papers.text)
                     if 'articles' in raw_json:
                         total = raw_json['total_records']
-                except Exception as ex:
+                except (json.JSONDecodeError, KeyError) as e:
+                    # User-friendly message explaining what's happening
                     self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                    self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+                    # Detailed logging for debugging
+                    self.logger.debug(f"Data parsing error in IEEE Xplore response: {type(e).__name__}: {str(e)}")
+                except Exception as ex:
+                    # User-friendly message explaining what's happening
+                    self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                    # Detailed logging for debugging
+                    self.logger.error(f"Unexpected error parsing IEEE Xplore response: {type(ex).__name__}: {str(ex)}")
             else:
                 self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
-        except Exception as ex:
+        except (AttributeError, TypeError) as e:
+            # User-friendly message explaining what's happening
             self.logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: " + self.file_handler)
-            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+            # Detailed logging for debugging
+            self.logger.debug(f"Attribute error in IEEE Xplore request: {type(e).__name__}: {str(e)}")
+        except Exception as ex:
+            # User-friendly message explaining what's happening
+            self.logger.info("Unexpected error requesting the API. Skipping to next request. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.error(f"Unexpected error in IEEE Xplore request: {type(ex).__name__}: {str(ex)}")
         return total
 
     def _process_raw_papers(self, query, raw_papers):
@@ -224,14 +238,20 @@ class IeeeXploreClient(DatabaseClient):
                     papers_request.loc[:, 'database'] = self.database_name
                     papers_request.loc[:, 'query_name'] = query_name
                     papers_request.loc[:, 'query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
+                except (json.JSONDecodeError, KeyError) as e:
+                    # Handle JSON parsing and missing key errors
+                    self.logger.warning(f"Data parsing error in IEEE Xplore response: {type(e).__name__}: {str(e)}")
                 except Exception as ex:
-                    self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                    self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+                    # Handle unexpected errors
+                    self.logger.error(f"Unexpected error parsing IEEE Xplore response: {type(ex).__name__}: {str(ex)}")
             else:
                 self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
+        except (AttributeError, TypeError) as e:
+            # Handle attribute access errors
+            self.logger.warning(f"Attribute error in IEEE Xplore request: {type(e).__name__}: {str(e)}")
         except Exception as ex:
-            self.logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: " + self.file_handler)
-            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+            # Handle unexpected errors
+            self.logger.error(f"Unexpected error in IEEE Xplore request: {type(ex).__name__}: {str(ex)}")
         
         return papers_request
 
@@ -250,9 +270,18 @@ class IeeeXploreClient(DatabaseClient):
             papers = papers.dropna(subset=['abstract'])
             papers = papers.drop_duplicates(subset=['doi'])
             
+        except (ValueError, TypeError) as e:
+            # Handle data type conversion errors (e.g., non-string titles, invalid data)
+            self.logger.warning(f"Data type error during IEEE Xplore paper filtering: {type(e).__name__}: {str(e)}")
+            # Continue with unfiltered papers rather than failing completely
+        except KeyError as e:
+            # Handle missing column errors
+            self.logger.error(f"Missing required column during IEEE Xplore paper filtering: {type(e).__name__}: {str(e)}")
+            # Return papers as-is to prevent complete failure
         except Exception as ex:
-            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
-            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+            # Handle unexpected errors
+            self.logger.error(f"Unexpected error during IEEE Xplore paper filtering: {type(ex).__name__}: {str(ex)}")
+            # Return papers as-is to prevent complete failure
         
         return papers
 
@@ -262,9 +291,18 @@ class IeeeXploreClient(DatabaseClient):
         try:
             papers.replace('', float("NaN"), inplace=True)
             papers.dropna(how='all', axis=1, inplace=True)
+        except (ValueError, TypeError) as e:
+            # Handle data type conversion errors
+            self.logger.warning(f"Data type error during IEEE Xplore paper cleaning: {type(e).__name__}: {str(e)}")
+            # Continue with uncleaned papers rather than failing completely
+        except KeyError as e:
+            # Handle missing column errors
+            self.logger.error(f"Missing required column during IEEE Xplore paper cleaning: {type(e).__name__}: {str(e)}")
+            # Return papers as-is to prevent complete failure
         except Exception as ex:
-            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+            # Handle unexpected errors
+            self.logger.error(f"Unexpected error during IEEE Xplore paper cleaning: {type(ex).__name__}: {str(ex)}")
+            # Return papers as-is to prevent complete failure
         
         return papers
 

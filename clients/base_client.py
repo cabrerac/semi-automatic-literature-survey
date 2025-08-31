@@ -81,9 +81,16 @@ class DatabaseClient(ABC):
             self.logger.info(f"Retrieved papers after filters and cleaning: {len(papers)}")
             return file_name
             
+        except (ValueError, TypeError) as e:
+            # User-friendly message explaining what's happening
+            self.logger.info("Error in paper retrieval workflow. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.debug(f"Data type error in paper retrieval workflow: {type(e).__name__}: {str(e)}")
         except Exception as ex:
-            self.logger.error(f"Error in paper retrieval workflow: {str(ex)}")
-            self.logger.debug(f"Exception details: {type(ex)} - {str(ex)}")
+            # User-friendly message explaining what's happening
+            self.logger.info("Unexpected error in paper retrieval workflow. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.error(f"Unexpected error in paper retrieval workflow: {type(ex).__name__}: {str(ex)}")
     
     def _generate_file_name(self, folder_name, search_date, query_name):
         """Generate the file name for saving papers."""
@@ -122,8 +129,10 @@ class DatabaseClient(ABC):
                 result = request_func(*args, **kwargs)
                 if self._is_successful_response(result):
                     return result
+            except (ValueError, TypeError) as e:
+                self.logger.debug(f"Request failed due to data type error (attempt {retry + 1}): {type(e).__name__}: {str(e)}")
             except Exception as ex:
-                self.logger.debug(f"Request failed (attempt {retry + 1}): {str(ex)}")
+                self.logger.debug(f"Request failed due to unexpected error (attempt {retry + 1}): {type(ex).__name__}: {str(ex)}")
             
             retry += 1
             if retry < self.max_retries:

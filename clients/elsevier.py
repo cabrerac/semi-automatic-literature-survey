@@ -220,12 +220,19 @@ class ElsevierClient(DatabaseClient):
                 elif 'dc:identifier' in raw_papers_data:
                     # Sometimes provided as 'SCOPUS_ID:XXXXXXXX'
                     def _extract_scopus_id(val):
+                        """Extract Scopus ID from identifier string."""
                         try:
                             if isinstance(val, str) and 'SCOPUS_ID:' in val:
                                 return val.split('SCOPUS_ID:')[-1]
-                        except Exception:
                             return ''
-                        return ''
+                        except (AttributeError, IndexError) as e:
+                            # Log specific error for debugging
+                            self.logger.debug(f"Error extracting Scopus ID from '{val}': {type(e).__name__}: {str(e)}")
+                            return ''
+                        except Exception as e:
+                            # Log unexpected errors
+                            self.logger.warning(f"Unexpected error extracting Scopus ID from '{val}': {type(e).__name__}: {str(e)}")
+                            return ''
                     papers_request['scopus_id'] = raw_papers_data['dc:identifier'].apply(_extract_scopus_id)
                 else:
                     papers_request['scopus_id'] = ''
@@ -262,10 +269,18 @@ class ElsevierClient(DatabaseClient):
             if dates is True:
                 papers.loc[:, 'publication_date'] = pd.to_datetime(papers['publication_date']).dt.date
                 papers = papers[(papers['publication_date'] >= start_date) & (papers['publication_date'] <= end_date)]
+        except (ValueError, TypeError) as e:
+            # Handle data type conversion errors (e.g., non-string titles, invalid dates)
+            self.logger.warning(f"Data type error during paper filtering: {type(e).__name__}: {str(e)}")
+            # Continue with unfiltered papers rather than failing completely
+        except KeyError as e:
+            # Handle missing column errors
+            self.logger.error(f"Missing required column during paper filtering: {type(e).__name__}: {str(e)}")
+            # Return papers as-is to prevent complete failure
         except Exception as ex:
-            self.logger.info("Error filtering papers. Skipping to next request. Please see the log file for details: "
-                            + self.file_handler)
-            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+            # Handle unexpected errors
+            self.logger.error(f"Unexpected error during paper filtering: {type(ex).__name__}: {str(ex)}")
+            # Return papers as-is to prevent complete failure
         return papers
 
     def _clean_papers(self, papers):
@@ -274,10 +289,18 @@ class ElsevierClient(DatabaseClient):
         try:
             papers.replace('', float("NaN"), inplace=True)
             papers.dropna(how='all', axis=1, inplace=True)
+        except (ValueError, TypeError) as e:
+            # Handle data type conversion errors
+            self.logger.warning(f"Data type error during paper cleaning: {type(e).__name__}: {str(e)}")
+            # Continue with uncleaned papers rather than failing completely
+        except KeyError as e:
+            # Handle missing column errors
+            self.logger.error(f"Missing required column during paper cleaning: {type(e).__name__}: {str(e)}")
+            # Return papers as-is to prevent complete failure
         except Exception as ex:
-            self.logger.info("Error cleaning papers. Skipping to next request. Please see the log file for details: "
-                            + self.file_handler)
-            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+            # Handle unexpected errors
+            self.logger.error(f"Unexpected error during paper cleaning: {type(ex).__name__}: {str(ex)}")
+            # Return papers as-is to prevent complete failure
         return papers
 
     def _get_abstracts(self, papers):
@@ -297,10 +320,17 @@ class ElsevierClient(DatabaseClient):
                 links.append(link)
                 abstract = self._get_abstract(paper)
                 abstracts.append(abstract)
+            except (KeyError, AttributeError) as e:
+                # Handle missing field or attribute errors
+                self.logger.warning(f"Missing field error getting abstract: {type(e).__name__}: {str(e)}")
+                abstracts.append('')
+            except (ValueError, TypeError) as e:
+                # Handle data type conversion errors
+                self.logger.warning(f"Data type error getting abstract: {type(e).__name__}: {str(e)}")
+                abstracts.append('')
             except Exception as ex:
-                self.logger.info("Error getting abstract. Skipping to next request. Please see the log file for "
-                                "details: " + self.file_handler)
-                self.logger.debug("Error getting abstract: " + str(type(ex)) + ' - ' + str(ex))
+                # Handle unexpected errors
+                self.logger.error(f"Unexpected error getting abstract: {type(ex).__name__}: {str(ex)}")
                 abstracts.append('')
             pbar.update(1)
         pbar.close()
@@ -321,8 +351,15 @@ class ElsevierClient(DatabaseClient):
                 scopus_id = str(paper['scopus_id'])
             if 'pii' in paper and str(paper['pii']) != 'nan':
                 pii = str(paper['pii'])
-        except Exception:
-            pass
+        except (KeyError, AttributeError) as e:
+            # Handle missing field or attribute errors
+            self.logger.debug(f"Missing field during abstract retrieval: {type(e).__name__}: {str(e)}")
+        except (ValueError, TypeError) as e:
+            # Handle data type conversion errors
+            self.logger.debug(f"Data type error during abstract retrieval: {type(e).__name__}: {str(e)}")
+        except Exception as e:
+            # Handle unexpected errors
+            self.logger.warning(f"Unexpected error during abstract retrieval: {type(e).__name__}: {str(e)}")
 
         # 1) Semantic Scholar by DOI
         abstract = self._get_abstract_via_semantic_scholar(doi)
@@ -349,7 +386,17 @@ class ElsevierClient(DatabaseClient):
                 if len(scopus_url) > 0:
                     result = self.client.request(scopus_url, 'get', {}, headers)
                     abstract = self._parse_abstract(result, 'html')
-            except Exception:
+            except (KeyError, AttributeError) as e:
+                # Handle missing field or attribute errors
+                self.logger.debug(f"Missing field during HTML parsing: {type(e).__name__}: {str(e)}")
+                abstract = ''
+            except (ValueError, TypeError) as e:
+                # Handle data type conversion errors
+                self.logger.debug(f"Data type error during HTML parsing: {type(e).__name__}: {str(e)}")
+                abstract = ''
+            except Exception as e:
+                # Handle unexpected errors
+                self.logger.warning(f"Unexpected error during HTML parsing: {type(e).__name__}: {str(e)}")
                 abstract = ''
 
         time.sleep(self.waiting_time + random.random())
@@ -384,7 +431,17 @@ class ElsevierClient(DatabaseClient):
                 abstract = self._parse_abstract(resp, 'json')
                 if abstract:
                     return abstract
-            except Exception:
+            except (KeyError, AttributeError) as e:
+                # Handle missing field or attribute errors
+                self.logger.debug(f"Missing field during Elsevier API call: {type(e).__name__}: {str(e)}")
+                continue
+            except (ValueError, TypeError) as e:
+                # Handle data type conversion errors
+                self.logger.debug(f"Data type error during Elsevier API call: {type(e).__name__}: {str(e)}")
+                continue
+            except Exception as e:
+                # Handle unexpected errors
+                self.logger.warning(f"Unexpected error during Elsevier API call: {type(e).__name__}: {str(e)}")
                 continue
         return ''
 
@@ -399,8 +456,15 @@ class ElsevierClient(DatabaseClient):
                 data = json.loads(resp.text)
                 if 'abstract' in data and isinstance(data['abstract'], str):
                     return data['abstract'] or ''
-        except Exception:
-            pass
+        except (KeyError, AttributeError) as e:
+            # Handle missing field or attribute errors
+            self.logger.debug(f"Missing field during Semantic Scholar API call: {type(e).__name__}: {str(e)}")
+        except (ValueError, TypeError) as e:
+            # Handle data type conversion errors
+            self.logger.debug(f"Data type error during Semantic Scholar API call: {type(e).__name__}: {str(e)}")
+        except Exception as e:
+            # Handle unexpected errors
+            self.logger.warning(f"Unexpected error during Semantic Scholar API call: {type(e).__name__}: {str(e)}")
         return ''
 
     def _parse_abstract(self, result, option):
@@ -436,7 +500,17 @@ class ElsevierClient(DatabaseClient):
                 # Generic top-level fallbacks
                 if not abstract and isinstance(json_result, dict):
                     abstract = json_result.get('abstract', '') or ''
-            except Exception:
+            except (KeyError, AttributeError) as e:
+                # Handle missing field or attribute errors
+                self.logger.debug(f"Missing field during JSON parsing: {type(e).__name__}: {str(e)}")
+                abstract = ''
+            except (ValueError, TypeError) as e:
+                # Handle data type conversion errors
+                self.logger.debug(f"Data type error during JSON parsing: {type(e).__name__}: {str(e)}")
+                abstract = ''
+            except Exception as e:
+                # Handle unexpected errors
+                self.logger.warning(f"Unexpected error during JSON parsing: {type(e).__name__}: {str(e)}")
                 abstract = ''
         
         if result.status_code == 200 and option == 'html':
@@ -445,7 +519,17 @@ class ElsevierClient(DatabaseClient):
                 abstract_section = soup.find('section', {'id': 'abstractSection', 'class': 'row'})
                 if abstract_section:
                     abstract = abstract_section.get_text()
-            except:
+            except (KeyError, AttributeError) as e:
+                # Handle missing field or attribute errors
+                self.logger.debug(f"Missing field during HTML parsing: {type(e).__name__}: {str(e)}")
+                abstract = ''
+            except (ValueError, TypeError) as e:
+                # Handle data type conversion errors
+                self.logger.debug(f"Data type error during HTML parsing: {type(e).__name__}: {str(e)}")
+                abstract = ''
+            except Exception as e:
+                # Handle unexpected errors
+                self.logger.warning(f"Unexpected error during HTML parsing: {type(e).__name__}: {str(e)}")
                 abstract = ''
         
         return abstract

@@ -158,9 +158,21 @@ class CoreClient(DatabaseClient):
             try:
                 json_results = json.loads(raw_papers.text)
                 total = int(json_results['totalHits'])
-            except Exception as ex:
+            except (json.JSONDecodeError, KeyError) as e:
+                # User-friendly message explaining what's happening
                 self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+                # Detailed logging for debugging
+                self.logger.debug(f"Data parsing error in CORE response: {type(e).__name__}: {str(e)}")
+            except (ValueError, TypeError) as e:
+                # User-friendly message explaining what's happening
+                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                # Detailed logging for debugging
+                self.logger.debug(f"Data type error in CORE response: {type(e).__name__}: {str(e)}")
+            except Exception as ex:
+                # User-friendly message explaining what's happening
+                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                # Detailed logging for debugging
+                self.logger.error(f"Unexpected error parsing CORE response: {type(ex).__name__}: {str(ex)}")
         else:
             self._log_api_error(raw_papers, self.api_url)
         return total
@@ -185,9 +197,16 @@ class CoreClient(DatabaseClient):
                 papers_request['database'] = self.database_name
                 papers_request['query_name'] = query_name
                 papers_request['query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
-            except Exception as ex:
+            except (json.JSONDecodeError, KeyError) as e:
+                # User-friendly message explaining what's happening
                 self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+                # Detailed logging for debugging
+                self.logger.debug(f"Data parsing error in CORE response: {type(e).__name__}: {str(e)}")
+            except Exception as ex:
+                # User-friendly message explaining what's happening
+                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
+                # Detailed logging for debugging
+                self.logger.error(f"Unexpected error parsing CORE response: {type(ex).__name__}: {str(ex)}")
         else:
             self._log_api_error(raw_papers, self.api_url)
         
@@ -207,9 +226,24 @@ class CoreClient(DatabaseClient):
             papers.loc[:, 'abstract'] = papers['abstract'].replace('', float("NaN"))
             papers = papers.dropna(subset=['abstract'])
             
-        except Exception as ex:
+        except (ValueError, TypeError) as e:
+            # User-friendly message explaining what's happening
             self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
-            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+            # Detailed logging for debugging
+            self.logger.debug(f"Data type error during CORE paper filtering: {type(e).__name__}: {str(e)}")
+            # Continue with unfiltered papers rather than failing completely
+        except KeyError as e:
+            # User-friendly message explaining what's happening
+            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.debug(f"Missing required column during CORE paper filtering: {type(e).__name__}: {str(e)}")
+            # Return papers as-is to prevent complete failure
+        except Exception as ex:
+            # User-friendly message explaining what's happening
+            self.logger.info("Unexpected error filtering papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.error(f"Unexpected error during CORE paper filtering: {type(ex).__name__}: {str(ex)}")
+            # Return papers as-is to prevent complete failure
         
         return papers
 
@@ -219,9 +253,24 @@ class CoreClient(DatabaseClient):
         try:
             papers.replace('', float("NaN"), inplace=True)
             papers.dropna(how='all', axis=1, inplace=True)
-        except Exception as ex:
+        except (ValueError, TypeError) as e:
+            # User-friendly message explaining what's happening
             self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+            # Detailed logging for debugging
+            self.logger.debug(f"Data type error during CORE paper cleaning: {type(e).__name__}: {str(e)}")
+            # Continue with uncleaned papers rather than failing completely
+        except KeyError as e:
+            # User-friendly message explaining what's happening
+            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.debug(f"Missing required column during CORE paper cleaning: {type(e).__name__}: {str(e)}")
+            # Return papers as-is to prevent complete failure
+        except Exception as ex:
+            # User-friendly message explaining what's happening
+            self.logger.info("Unexpected error cleaning papers. Please see the log file for details: " + self.file_handler)
+            # Detailed logging for debugging
+            self.logger.error(f"Unexpected error during CORE paper cleaning: {type(ex).__name__}: {str(ex)}")
+            # Return papers as-is to prevent complete failure
         
         return papers
     
