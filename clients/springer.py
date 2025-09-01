@@ -6,6 +6,11 @@ from os.path import exists
 import logging
 import time
 from tqdm import tqdm
+from util.error_standards import (
+    ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory,
+    get_standard_error_info
+)
+from util.logging_standards import LogCategory
 
 
 class SpringerClient(DatabaseClient):
@@ -66,7 +71,7 @@ class SpringerClient(DatabaseClient):
         raw_papers = self._retry_request(self.client.request, request, 'get', {}, {})
         expected_papers = self._get_expected_papers(raw_papers)
         
-        self.logger.info(f"Expected papers from springer: {expected_papers}...")
+        self.logger.info(LogCategory.DATABASE, "springer", "_plan_requests", f"Expected papers from springer: {expected_papers}...")
         
         # Calculate number of requests needed
         times = int(expected_papers / self.max_papers) - 1
@@ -76,23 +81,23 @@ class SpringerClient(DatabaseClient):
             
         # Check quota constraints
         if times >= self.quota:
-            self.logger.info(f"The number of expected papers requires {times + 1} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
+            self.logger.info(LogCategory.DATABASE, "springer", "_plan_requests", f"The number of expected papers requires {times + 1} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
             if len(syntactic_filters) > 0:
-                self.logger.info("Trying to reduce the number of requests using syntactic filters.")
+                self.logger.info(LogCategory.DATABASE, "springer", "_plan_requests", "Trying to reduce the number of requests using syntactic filters.")
                 request = self._create_request(parameters, dates, start_date, end_date, True)
                 raw_papers = self._retry_request(self.client.request, request, 'get', {}, {})
                 expected_papers = self._get_expected_papers(raw_papers)
-                self.logger.info(f"Expected papers from {self.database_name} using syntactic filters: {expected_papers}...")
+                self.logger.info(LogCategory.DATABASE, "springer", "_plan_requests", f"Expected papers from {self.database_name} using syntactic filters: {expected_papers}...")
                 times = int(expected_papers / self.max_papers) - 1
                 mod = int(expected_papers) % self.max_papers
                 if mod > 0:
                     times = times + 1
                 if times >= self.quota:
-                    self.logger.info(f"The number of expected papers requires {times + 1} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
-                    self.logger.info("Skipping to next repository. Try to redefine your search queries and syntactic filters. Using dates to limit your search can help in case you are not.")
+                    self.logger.info(LogCategory.DATABASE, "springer", "_plan_requests", f"The number of expected papers requires {times + 1} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
+                    self.logger.info(LogCategory.DATABASE, "springer", "_plan_requests", "Skipping to next repository. Try to redefine your search queries and syntactic filters. Using dates to limit your search can help in case you are not.")
                     return pd.DataFrame()
             else:
-                self.logger.info("Skipping to next repository. Please use syntactic filters to avoid this problem. Using dates to limit your search can help in case you are not.")
+                self.logger.info(LogCategory.DATABASE, "springer", "_plan_requests", "Skipping to next repository. Please use syntactic filters to avoid this problem. Using dates to limit your search can help in case you are not.")
                 return pd.DataFrame()
         
         # Execute requests
@@ -158,19 +163,34 @@ class SpringerClient(DatabaseClient):
                 total = int(json_results['result'][0]['total'])
             except (json.JSONDecodeError, KeyError, IndexError) as e:
                 # User-friendly message explaining what's happening
-                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.debug(f"Data parsing error in Springer response: {type(e).__name__}: {str(e)}")
+                context = create_error_context(
+                    "springer", "_get_expected_papers", 
+                    ErrorSeverity.WARNING, 
+                    ErrorCategory.DATA,
+                    f"Data parsing error in Springer response: {type(e).__name__}: {str(e)}"
+                )
+                error_info = get_standard_error_info("data_validation_failed")
+                ErrorHandler.handle_error(e, context, error_info, self.logger)
             except (ValueError, TypeError) as e:
                 # User-friendly message explaining what's happening
-                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.debug(f"Data type error in Springer response: {type(e).__name__}: {str(e)}")
+                context = create_error_context(
+                    "springer", "_get_expected_papers", 
+                    ErrorSeverity.WARNING, 
+                    ErrorCategory.DATA,
+                    f"Data type error in Springer response: {type(e).__name__}: {str(e)}"
+                )
+                error_info = get_standard_error_info("data_validation_failed")
+                ErrorHandler.handle_error(e, context, error_info, self.logger)
             except Exception as ex:
                 # User-friendly message explaining what's happening
-                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.error(f"Unexpected error parsing Springer response: {type(ex).__name__}: {str(ex)}")
+                context = create_error_context(
+                    "springer", "_get_expected_papers", 
+                    ErrorSeverity.ERROR, 
+                    ErrorCategory.DATA,
+                    f"Unexpected error parsing Springer response: {type(ex).__name__}: {str(ex)}"
+                )
+                error_info = get_standard_error_info("unexpected_error")
+                ErrorHandler.handle_error(ex, context, error_info, self.logger)
         else:
             self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
         return total
@@ -190,14 +210,24 @@ class SpringerClient(DatabaseClient):
                 papers_request.loc[:, 'query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
             except (json.JSONDecodeError, KeyError) as e:
                 # User-friendly message explaining what's happening
-                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.debug(f"Data parsing error in Springer response: {type(e).__name__}: {str(e)}")
+                context = create_error_context(
+                    "springer", "_process_raw_papers", 
+                    ErrorSeverity.WARNING, 
+                    ErrorCategory.DATA,
+                    f"Data parsing error in Springer response: {type(e).__name__}: {str(e)}"
+                )
+                error_info = get_standard_error_info("data_validation_failed")
+                ErrorHandler.handle_error(e, context, error_info, self.logger)
             except Exception as ex:
                 # User-friendly message explaining what's happening
-                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.error(f"Unexpected error parsing Springer response: {type(ex).__name__}: {str(ex)}")
+                context = create_error_context(
+                    "springer", "_process_raw_papers", 
+                    ErrorSeverity.ERROR, 
+                    ErrorCategory.DATA,
+                    f"Unexpected error parsing Springer response: {type(ex).__name__}: {str(ex)}"
+                )
+                error_info = get_standard_error_info("unexpected_error")
+                ErrorHandler.handle_error(ex, context, error_info, self.logger)
         else:
             self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
         
@@ -205,7 +235,7 @@ class SpringerClient(DatabaseClient):
 
     def _filter_papers(self, papers: pd.DataFrame, dates, start_date, end_date) -> pd.DataFrame:
         """Filter papers based on criteria."""
-        self.logger.info("Filtering papers...")
+        self.logger.info(LogCategory.DATA, "springer", "_filter_papers", "Filtering papers...")
         try:
             # Filter by title
             papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
@@ -224,28 +254,43 @@ class SpringerClient(DatabaseClient):
                 
         except (ValueError, TypeError) as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Data type error during Springer paper filtering: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "springer", "_filter_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Data type error during Springer paper filtering: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Continue with unfiltered papers rather than failing completely
         except KeyError as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Missing required column during Springer paper filtering: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "springer", "_filter_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Missing required column during Springer paper filtering: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         except Exception as ex:
             # User-friendly message explaining what's happening
-            self.logger.info("Unexpected error filtering papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.error(f"Unexpected error during Springer paper filtering: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                "springer", "_filter_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.DATA,
+                f"Unexpected error during Springer paper filtering: {type(ex).__name__}: {str(ex)}"
+            )
+            error_info = get_standard_error_info("unexpected_error")
+            ErrorHandler.handle_error(ex, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         
         return papers
 
     def _clean_papers(self, papers: pd.DataFrame) -> pd.DataFrame:
         """Clean and standardize paper data."""
-        self.logger.info("Cleaning papers...")
+        self.logger.info(LogCategory.DATA, "springer", "_clean_papers", "Cleaning papers...")
         try:
             # Extract URLs
             urls = []
@@ -274,27 +319,47 @@ class SpringerClient(DatabaseClient):
             
         except (ValueError, TypeError) as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Data type error during Springer paper cleaning: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "springer", "_clean_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Data type error during Springer paper cleaning: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Continue with uncleaned papers rather than failing completely
         except KeyError as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Missing required column during Springer paper cleaning: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "springer", "_clean_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Missing required column during Springer paper cleaning: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         except (IndexError, AttributeError) as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"URL extraction error during Springer paper cleaning: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "springer", "_clean_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"URL extraction error during Springer paper cleaning: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Continue with empty URLs rather than failing completely
         except Exception as ex:
             # User-friendly message explaining what's happening
-            self.logger.info("Unexpected error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.error(f"Unexpected error during Springer paper cleaning: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                "springer", "_clean_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.DATA,
+                f"Unexpected error during Springer paper cleaning: {type(ex).__name__}: {str(ex)}"
+            )
+            error_info = get_standard_error_info("unexpected_error")
+            ErrorHandler.handle_error(ex, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         
         return papers

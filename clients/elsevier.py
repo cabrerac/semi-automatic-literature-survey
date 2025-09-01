@@ -10,6 +10,11 @@ import logging
 import random
 from tqdm import tqdm
 import os
+from util.error_standards import (
+    ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory,
+    get_standard_error_info
+)
+from util.logging_standards import LogCategory
 
 class ElsevierClient(DatabaseClient):
     """Elsevier/Scopus client implementation using the DatabaseClient base class."""
@@ -67,7 +72,7 @@ class ElsevierClient(DatabaseClient):
         
         # Create initial requests to get total count
         end_date = end_date.replace(year=end_date.year + 1)
-        self.logger.info("Planning requests...")
+        self.logger.info(LogCategory.DATABASE, "elsevier", "_plan_requests", "Planning requests...")
         papers = pd.DataFrame()
         start_year = end_date.year - 1
         end_year = end_date.year
@@ -97,9 +102,9 @@ class ElsevierClient(DatabaseClient):
         if times < self.quota:
             papers = self._execute_requests(query, parameters, list_years)
         else:
-            self.logger.info(f"The number of expected papers requires {times + total_requests} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
+            self.logger.info(LogCategory.DATABASE, "elsevier", "_plan_requests", f"The number of expected papers requires {times + total_requests} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
             if len(parameters['syntactic_filters']) > 0:
-                self.logger.info("Trying to reduce the number of requests using syntactic filters.")
+                self.logger.info(LogCategory.DATABASE, "elsevier", "_plan_requests", "Trying to reduce the number of requests using syntactic filters.")
                 que = ''
                 syntactic_filters = parameters['syntactic_filters']
                 for word in syntactic_filters:
@@ -124,7 +129,7 @@ class ElsevierClient(DatabaseClient):
                     end_year = end_year - 1
                     start_year = start_year - 1
                     expected_papers = expected_papers + expected_papers_request
-                self.logger.info(f"Expected papers from {self.database_name} using syntactic filters: {expected_papers}...")
+                self.logger.info(LogCategory.DATABASE, "elsevier", "_plan_requests", f"Expected papers from {self.database_name} using syntactic filters: {expected_papers}...")
                 times = int(expected_papers / self.max_papers) - 1
                 mod = int(expected_papers) % self.max_papers
                 if mod > 0:
@@ -132,10 +137,10 @@ class ElsevierClient(DatabaseClient):
                 if times < self.quota:
                     papers = self._execute_requests(query, parameters, list_years)
                 else:
-                    self.logger.info(f"The number of expected papers requires {times + total_requests} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
-                    self.logger.info("Skipping to next repository. Try to redefine your search queries and syntactic filters. Using dates to limit your search can help in case you are not.")
+                    self.logger.info(LogCategory.DATABASE, "elsevier", "_plan_requests", f"The number of expected papers requires {times + total_requests} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
+                    self.logger.info(LogCategory.DATABASE, "elsevier", "_plan_requests", "Skipping to next repository. Try to redefine your search queries and syntactic filters. Using dates to limit your search can help in case you are not.")
             else:
-                self.logger.info("Skipping to next repository. Please use syntactic filters to avoid this problem. Using dates to limit your search can help in case you are not.")
+                self.logger.info(LogCategory.DATABASE, "elsevier", "_plan_requests", "Skipping to next repository. Please use syntactic filters to avoid this problem. Using dates to limit your search can help in case you are not.")
         
         return papers
 
@@ -143,7 +148,7 @@ class ElsevierClient(DatabaseClient):
         """Execute the planned requests to retrieve papers."""
         current_request = 0
         papers = pd.DataFrame()
-        self.logger.info(f"There will be {len(list_years)} different queries to the {self.database_name} API...")
+        self.logger.info(LogCategory.DATABASE, "elsevier", "_execute_requests", f"There will be {len(list_years)} different queries to the {self.database_name} API...")
         
         for years in tqdm(list_years):
             current_request = current_request + 1
@@ -196,8 +201,14 @@ class ElsevierClient(DatabaseClient):
                 json_results = json.loads(raw_papers.text)
                 total = int(json_results['search-results']['opensearch:totalResults'])
             except Exception as ex:
-                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                self.logger.debug(f"Exception: {type(ex)} - {str(ex)}")
+                context = create_error_context(
+                    "elsevier", "_get_expected_papers", 
+                    ErrorSeverity.WARNING, 
+                    ErrorCategory.DATA,
+                    f"Error parsing the API response: {type(ex)} - {str(ex)}"
+                )
+                error_info = get_standard_error_info("data_validation_failed")
+                ErrorHandler.handle_error(ex, context, error_info, self.logger)
         else:
             self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
         return total
@@ -260,7 +271,7 @@ class ElsevierClient(DatabaseClient):
 
     def _filter_papers(self, papers, dates, start_date, end_date):
         """Filter papers based on criteria."""
-        self.logger.info("Filtering papers...")
+        self.logger.info(LogCategory.DATA, "elsevier", "_filter_papers", "Filtering papers...")
         try:
             papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
             papers = papers.dropna(subset=['title'])
@@ -285,7 +296,7 @@ class ElsevierClient(DatabaseClient):
 
     def _clean_papers(self, papers):
         """Clean and standardize paper data."""
-        self.logger.info("Cleaning papers...")
+        self.logger.info(LogCategory.DATA, "elsevier", "_clean_papers", "Cleaning papers...")
         try:
             papers.replace('', float("NaN"), inplace=True)
             papers.dropna(how='all', axis=1, inplace=True)
@@ -305,7 +316,7 @@ class ElsevierClient(DatabaseClient):
 
     def _get_abstracts(self, papers):
         """Retrieve abstracts for papers from Scopus."""
-        self.logger.info("Retrieving abstracts for " + str(len(papers)) + " papers from Scopus. It might take a while...")
+        self.logger.info(LogCategory.DATA, "elsevier", "_get_abstracts", "Retrieving abstracts for " + str(len(papers)) + " papers from Scopus. It might take a while...")
         links = []
         abstracts = []
         pbar = tqdm(total=len(papers))

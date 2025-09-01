@@ -1,9 +1,15 @@
 import pandas as pd
-from rich import print
 from os.path import exists
 from util import util
+from util.error_standards import (
+    ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory,
+    get_standard_error_info
+)
+from util.logging_standards import LogCategory
+import logging
 
 fr = 'utf-8'
+logger = logging.getLogger('logger')
 
 
 # Manual filter by abstract
@@ -86,10 +92,44 @@ def manual_filter_by_abstract(folder_name, next_file, search_date, step):
                         break
                         
             except (pd.errors.EmptyDataError, pd.errors.ParserError, FileNotFoundError) as e:
-                print(f"Error reading papers file: {type(e).__name__}: {str(e)}")
+                context = create_error_context(
+                    module="manual",
+                    function="manual_filter_by_abstract",
+                    operation="file_reading",
+                    severity=ErrorSeverity.WARNING,
+                    category=ErrorCategory.FILE
+                )
+                
+                error_info = get_standard_error_info("file_not_found")
+                error_handler = ErrorHandler(logger)
+                error_msg = error_handler.handle_error(
+                    error=e,
+                    context=context,
+                    error_type="FileReadingError",
+                    error_description=f"Error reading papers file: {type(e).__name__}: {str(e)}",
+                    recovery_suggestion=error_info["recovery"],
+                    next_steps=error_info["next_steps"]
+                )
                 return next_file, pd.DataFrame()
             except Exception as ex:
-                print(f"Unexpected error reading papers file: {type(ex).__name__}: {str(ex)}")
+                context = create_error_context(
+                    module="manual",
+                    function="manual_filter_by_abstract",
+                    operation="file_reading",
+                    severity=ErrorSeverity.WARNING,
+                    category=ErrorCategory.FILE
+                )
+                
+                error_info = get_standard_error_info("file_not_found")
+                error_handler = ErrorHandler(logger)
+                error_msg = error_handler.handle_error(
+                    error=ex,
+                    context=context,
+                    error_type="FileReadingError",
+                    error_description=f"Unexpected error reading papers file: {type(ex).__name__}: {str(ex)}",
+                    recovery_suggestion=error_info["recovery"],
+                    next_steps=error_info["next_steps"]
+                )
                 return next_file, pd.DataFrame()
                 
         try:
@@ -97,10 +137,44 @@ def manual_filter_by_abstract(folder_name, next_file, search_date, step):
             removed_papers = to_check_papers.loc[to_check_papers['status'] == 'not included']
             return next_file, removed_papers
         except (pd.errors.EmptyDataError, pd.errors.ParserError, FileNotFoundError) as e:
-            print(f"Error reading final papers file: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                module="manual",
+                function="manual_filter_by_abstract",
+                operation="final_file_reading",
+                severity=ErrorSeverity.WARNING,
+                category=ErrorCategory.FILE
+            )
+            
+            error_info = get_standard_error_info("file_not_found")
+            error_handler = ErrorHandler(logger)
+            error_msg = error_handler.handle_error(
+                error=e,
+                context=context,
+                error_type="FileReadingError",
+                error_description=f"Error reading final papers file: {type(e).__name__}: {str(e)}",
+                recovery_suggestion=error_info["recovery"],
+                next_steps=error_info["next_steps"]
+            )
             return next_file, pd.DataFrame()
         except Exception as ex:
-            print(f"Unexpected error reading final papers file: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                module="manual",
+                function="manual_filter_by_abstract",
+                operation="final_file_reading",
+                severity=ErrorSeverity.WARNING,
+                category=ErrorCategory.FILE
+            )
+            
+            error_info = get_standard_error_info("file_not_found")
+            error_handler = ErrorHandler(logger)
+            error_msg = error_handler.handle_error(
+                error=ex,
+                context=context,
+                error_type="FileReadingError",
+                error_description=f"Unexpected error reading final papers file: {type(ex).__name__}: {str(ex)}",
+                recovery_suggestion=error_info["recovery"],
+                next_steps=error_info["next_steps"]
+            )
             return next_file, pd.DataFrame()
             
     except Exception as ex:

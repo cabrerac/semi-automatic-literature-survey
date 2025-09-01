@@ -8,6 +8,11 @@ from os.path import exists
 from util import util
 from tqdm import tqdm
 import logging
+from util.error_standards import (
+    ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory,
+    get_standard_error_info
+)
+from util.logging_standards import LogCategory
 
 
 class IeeeXploreClient(DatabaseClient):
@@ -91,9 +96,9 @@ class IeeeXploreClient(DatabaseClient):
         
         # Check quota constraints
         if total_requests >= self.quota:
-            self.logger.info(f"The number of expected papers requires {total_requests} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
+            self.logger.info(LogCategory.DATABASE, "ieeexplore", "_plan_requests", f"The number of expected papers requires {total_requests} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
             if len(syntactic_filters) > 0:
-                self.logger.info("Trying to reduce the number of requests using syntactic filters.")
+                self.logger.info(LogCategory.DATABASE, "ieeexplore", "_plan_requests", "Trying to reduce the number of requests using syntactic filters.")
                 que = ''
                 for word in syntactic_filters:
                     que = que.replace('<AND>last', '<AND> ')
@@ -118,11 +123,11 @@ class IeeeXploreClient(DatabaseClient):
                             total_requests = total_requests + times
                 
                 if total_requests >= self.quota:
-                    self.logger.info(f"The number of expected papers requires {total_requests} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
-                    self.logger.info("Skipping to next repository. Try to redefine your search queries and syntactic filters.")
+                    self.logger.info(LogCategory.DATABASE, "ieeexplore", "_plan_requests", f"The number of expected papers requires {total_requests} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
+                    self.logger.info(LogCategory.DATABASE, "ieeexplore", "_plan_requests", "Skipping to next repository. Try to redefine your search queries and syntactic filters.")
                     return pd.DataFrame()
             else:
-                self.logger.info("Skipping to next repository. Please use syntactic filters to avoid this problem.")
+                self.logger.info(LogCategory.DATABASE, "ieeexplore", "_plan_requests", "Skipping to next repository. Please use syntactic filters to avoid this problem.")
                 return pd.DataFrame()
         
         # Execute requests
@@ -139,7 +144,7 @@ class IeeeXploreClient(DatabaseClient):
         current_request = 0
         total_queries = len(reqs) * len(fields) * len(types)
         
-        self.logger.info(f"There will be {total_queries} different queries to the {self.database_name} API...")
+        self.logger.info(LogCategory.DATABASE, "ieeexplore", "_execute_requests", f"There will be {total_queries} different queries to the {self.database_name} API...")
         pbar = tqdm(total=total_queries)
         for req in reqs:
             for field in fields:
@@ -165,10 +170,10 @@ class IeeeXploreClient(DatabaseClient):
                             else:
                                 papers = pd.concat([papers, papers_request])
                     else:
-                        self.logger.info(f"Query {current_request}...")
-                        self.logger.info(f"The number of requests {total_requests} exceeds the {self.database_name} quota of {self.quota} requests per day.")
-                        self.logger.info(f"If you continue requesting the {self.database_name} API with the current key today, you will get errors from the API.")
-                        self.logger.info("Skipping to next repository.")
+                        self.logger.info(LogCategory.DATABASE, "ieeexplore", "_execute_requests", f"Query {current_request}...")
+                        self.logger.info(LogCategory.DATABASE, "ieeexplore", "_execute_requests", f"The number of requests {total_requests} exceeds the {self.database_name} quota of {self.quota} requests per day.")
+                        self.logger.info(LogCategory.DATABASE, "ieeexplore", "_execute_requests", f"If you continue requesting the {self.database_name} API with the current key today, you will get errors from the API.")
+                        self.logger.info(LogCategory.DATABASE, "ieeexplore", "_execute_requests", "Skipping to next repository.")
                         break
                     pbar.update(1)
         pbar.close()
@@ -200,26 +205,46 @@ class IeeeXploreClient(DatabaseClient):
                         total = raw_json['total_records']
                 except (json.JSONDecodeError, KeyError) as e:
                     # User-friendly message explaining what's happening
-                    self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                    # Detailed logging for debugging
-                    self.logger.debug(f"Data parsing error in IEEE Xplore response: {type(e).__name__}: {str(e)}")
+                    context = create_error_context(
+                        "ieeexplore", "_get_expected_papers", 
+                        ErrorSeverity.WARNING, 
+                        ErrorCategory.DATA,
+                        f"Data parsing error in IEEE Xplore response: {type(e).__name__}: {str(e)}"
+                    )
+                    error_info = get_standard_error_info("data_validation_failed")
+                    ErrorHandler.handle_error(e, context, error_info, self.logger)
                 except Exception as ex:
                     # User-friendly message explaining what's happening
-                    self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                    # Detailed logging for debugging
-                    self.logger.error(f"Unexpected error parsing IEEE Xplore response: {type(ex).__name__}: {str(ex)}")
+                    context = create_error_context(
+                        "ieeexplore", "_get_expected_papers", 
+                        ErrorSeverity.ERROR, 
+                        ErrorCategory.DATA,
+                        f"Unexpected error parsing IEEE Xplore response: {type(ex).__name__}: {str(ex)}"
+                    )
+                    error_info = get_standard_error_info("unexpected_error")
+                    ErrorHandler.handle_error(ex, context, error_info, self.logger)
             else:
                 self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
         except (AttributeError, TypeError) as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Attribute error in IEEE Xplore request: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "ieeexplore", "_get_expected_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Attribute error in IEEE Xplore request: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
         except Exception as ex:
             # User-friendly message explaining what's happening
-            self.logger.info("Unexpected error requesting the API. Skipping to next request. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.error(f"Unexpected error in IEEE Xplore request: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                "ieeexplore", "_get_expected_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.DATA,
+                f"Unexpected error in IEEE Xplore request: {type(ex).__name__}: {str(ex)}"
+            )
+            error_info = get_standard_error_info("unexpected_error")
+            ErrorHandler.handle_error(ex, context, error_info, self.logger)
         return total
 
     def _process_raw_papers(self, query, raw_papers):
@@ -240,24 +265,52 @@ class IeeeXploreClient(DatabaseClient):
                     papers_request.loc[:, 'query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
                 except (json.JSONDecodeError, KeyError) as e:
                     # Handle JSON parsing and missing key errors
-                    self.logger.warning(f"Data parsing error in IEEE Xplore response: {type(e).__name__}: {str(e)}")
+                    context = create_error_context(
+                        "ieeexplore", "_process_raw_papers", 
+                        ErrorSeverity.WARNING, 
+                        ErrorCategory.DATA,
+                        f"Data parsing error in IEEE Xplore response: {type(e).__name__}: {str(e)}"
+                    )
+                    error_info = get_standard_error_info("data_validation_failed")
+                    ErrorHandler.handle_error(e, context, error_info, self.logger)
                 except Exception as ex:
                     # Handle unexpected errors
-                    self.logger.error(f"Unexpected error parsing IEEE Xplore response: {type(ex).__name__}: {str(ex)}")
+                    context = create_error_context(
+                        "ieeexplore", "_process_raw_papers", 
+                        ErrorSeverity.ERROR, 
+                        ErrorCategory.DATA,
+                        f"Unexpected error parsing IEEE Xplore response: {type(ex).__name__}: {str(ex)}"
+                    )
+                    error_info = get_standard_error_info("unexpected_error")
+                    ErrorHandler.handle_error(ex, context, error_info, self.logger)
             else:
                 self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
         except (AttributeError, TypeError) as e:
             # Handle attribute access errors
-            self.logger.warning(f"Attribute error in IEEE Xplore request: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "ieeexplore", "_process_raw_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Attribute error in IEEE Xplore request: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
         except Exception as ex:
             # Handle unexpected errors
-            self.logger.error(f"Unexpected error in IEEE Xplore request: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                "ieeexplore", "_process_raw_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.DATA,
+                f"Unexpected error in IEEE Xplore request: {type(ex).__name__}: {str(ex)}"
+            )
+            error_info = get_standard_error_info("unexpected_error")
+            ErrorHandler.handle_error(ex, context, error_info, self.logger)
         
         return papers_request
 
     def _filter_papers(self, papers: pd.DataFrame, dates, start_date, end_date) -> pd.DataFrame:
         """Filter papers based on criteria."""
-        self.logger.info("Filtering papers...")
+        self.logger.info(LogCategory.DATA, "ieeexplore", "_filter_papers", "Filtering papers...")
         try:
             # Filter by title
             papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
@@ -272,36 +325,78 @@ class IeeeXploreClient(DatabaseClient):
             
         except (ValueError, TypeError) as e:
             # Handle data type conversion errors (e.g., non-string titles, invalid data)
-            self.logger.warning(f"Data type error during IEEE Xplore paper filtering: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "ieeexplore", "_filter_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Data type error during IEEE Xplore paper filtering: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Continue with unfiltered papers rather than failing completely
         except KeyError as e:
             # Handle missing column errors
-            self.logger.error(f"Missing required column during IEEE Xplore paper filtering: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "ieeexplore", "_filter_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.DATA,
+                f"Missing required column during IEEE Xplore paper filtering: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         except Exception as ex:
             # Handle unexpected errors
-            self.logger.error(f"Unexpected error during IEEE Xplore paper filtering: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                "ieeexplore", "_filter_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.DATA,
+                f"Unexpected error during IEEE Xplore paper filtering: {type(ex).__name__}: {str(ex)}"
+            )
+            error_info = get_standard_error_info("unexpected_error")
+            ErrorHandler.handle_error(ex, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         
         return papers
 
     def _clean_papers(self, papers: pd.DataFrame) -> pd.DataFrame:
         """Clean and standardize paper data."""
-        self.logger.info("Cleaning papers...")
+        self.logger.info(LogCategory.DATA, "ieeexplore", "_clean_papers", "Cleaning papers...")
         try:
             papers.replace('', float("NaN"), inplace=True)
             papers.dropna(how='all', axis=1, inplace=True)
         except (ValueError, TypeError) as e:
             # Handle data type conversion errors
-            self.logger.warning(f"Data type error during IEEE Xplore paper cleaning: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "ieeexplore", "_clean_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Data type error during IEEE Xplore paper cleaning: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Continue with uncleaned papers rather than failing completely
         except KeyError as e:
             # Handle missing column errors
-            self.logger.error(f"Missing required column during IEEE Xplore paper cleaning: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "ieeexplore", "_clean_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.DATA,
+                f"Missing required column during IEEE Xplore paper cleaning: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         except Exception as ex:
             # Handle unexpected errors
-            self.logger.error(f"Unexpected error during IEEE Xplore paper cleaning: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                "ieeexplore", "_clean_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.DATA,
+                f"Unexpected error during IEEE Xplore paper cleaning: {type(ex).__name__}: {str(ex)}"
+            )
+            error_info = get_standard_error_info("unexpected_error")
+            ErrorHandler.handle_error(ex, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         
         return papers

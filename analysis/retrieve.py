@@ -1,6 +1,11 @@
 import pandas as pd
 import re
 from util import util
+from util.error_standards import (
+    ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory,
+    get_standard_error_info
+)
+from util.logging_standards import LogCategory
 from clients.arxiv import ArxivClient
 from clients.ieeexplore import IeeeXploreClient
 from clients.springer import SpringerClient
@@ -46,57 +51,189 @@ def get_papers(queries, syntactic_filters, synonyms, databases, fields, types, f
     # v1: Do not wire additional abstract-providing clients; reserved for v2
     
     for query in queries:
-        if 'arxiv' in databases:
-            logger.info("# Requesting ArXiv for query: " + list(query.keys())[0] + "...")
-            clients['arxiv'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+        try:
+            query_name = list(query.keys())[0]
+            
+            if 'arxiv' in databases:
+                logger.info(
+                    LogCategory.DATABASE,
+                    "retrieve",
+                    "get_papers",
+                    f"Requesting ArXiv for query: {query_name}..."
+                )
+                clients['arxiv'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
-        if 'springer' in databases:
-            logger.info("# Requesting Springer for query: " + list(query.keys())[0] + "...")
-            clients['springer'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+            if 'springer' in databases:
+                logger.info(
+                    LogCategory.DATABASE,
+                    "retrieve",
+                    "get_papers",
+                    f"Requesting Springer for query: {query_name}..."
+                )
+                clients['springer'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
-        if 'ieeexplore' in databases:
-            logger.info("# Requesting IEEE Xplore for query: " + list(query.keys())[0] + "...")
-            clients['ieeexplore'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+            if 'ieeexplore' in databases:
+                logger.info(
+                    LogCategory.DATABASE,
+                    "retrieve",
+                    "get_papers",
+                    f"Requesting IEEE Xplore for query: {query_name}..."
+                )
+                clients['ieeexplore'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
-        # Scopus provides papers metadata then abstracts must be retrieved from the science direct database.
-        # Scopus indexes different databases which are queried separately (e.g., ieeeXplore).
-        # So the number of returned papers from scopus is always greater than the number of final abstracts retrieved
-        # from science direct.
-        if 'scopus' in databases:
-            logger.info("# Requesting Scopus for query: " + list(query.keys())[0] + "...")
-            clients['scopus'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+            # Scopus provides papers metadata then abstracts must be retrieved from the science direct database.
+            # Scopus indexes different databases which are queried separately (e.g., ieeeXplore).
+            # So the number of returned papers from scopus is always greater than the number of final abstracts retrieved
+            # from science direct.
+            if 'scopus' in databases:
+                logger.info(
+                    LogCategory.DATABASE,
+                    "retrieve",
+                    "get_papers",
+                    f"Requesting Scopus for query: {query_name}..."
+                )
+                clients['scopus'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
-        if 'core' in databases:
-            logger.info("# Requesting CORE for query: " + list(query.keys())[0] + "...")
-            clients['core'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
+            if 'core' in databases:
+                logger.info(
+                    LogCategory.DATABASE,
+                    "retrieve",
+                    "get_papers",
+                    f"Requesting CORE for query: {query_name}..."
+                )
+                clients['core'].get_papers(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date)
 
-        if 'semantic_scholar' in databases:
-            # Semantic Scholar searches over its knowledge graph. Synonyms are not needed in this case.
-            logger.info("# Requesting Semantic Scholar query: " + list(query.keys())[0] + "...")
-            clients['semantic_scholar'].get_papers(query, syntactic_filters, {}, fields, types, dates, start_date, end_date, folder_name, search_date)
+            if 'semantic_scholar' in databases:
+                # Semantic Scholar searches over its knowledge graph. Synonyms are not needed in this case.
+                logger.info(
+                    LogCategory.DATABASE,
+                    "retrieve",
+                    "get_papers",
+                    f"Requesting Semantic Scholar for query: {query_name}..."
+                )
+                clients['semantic_scholar'].get_papers(query, syntactic_filters, {}, fields, types, dates, start_date, end_date, folder_name, search_date)
 
-        # v1: Additional abstract-providing clients are intentionally not invoked
+            # v1: Additional abstract-providing clients are intentionally not invoked
+            
+        except Exception as ex:
+            context = create_error_context(
+                module="retrieve",
+                function="get_papers",
+                operation="query_processing",
+                severity=ErrorSeverity.WARNING,
+                category=ErrorCategory.DATABASE
+            )
+            
+            error_info = get_standard_error_info("data_validation_failed")
+            error_handler = ErrorHandler(logger)
+            error_msg = error_handler.handle_error(
+                error=ex,
+                context=context,
+                error_type="QueryProcessingError",
+                error_description=f"Error processing query {query}: {type(ex).__name__}: {str(ex)}",
+                recovery_suggestion=error_info["recovery"],
+                next_steps=error_info["next_steps"]
+            )
+            continue
 
 
 def snowballing(folder_name, search_date, step, dates, start_date, end_date, semantic_filters, removed_papers):
     global logger
     logger = logging.getLogger('logger')
-    snowballing_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + '_snowballing_papers.csv'
-    if not exists(snowballing_file_name):
-        logger.info("Requesting Semantic Scholar for papers citations...")
-        semantic_scholar_client = SemanticScholarClient()
-        citations_papers = semantic_scholar_client.get_citations(folder_name, search_date, step, dates, start_date, end_date)
-        logger.info("Using semantic search to find relevant papers based on manually selected set...")
-        logger.info("This process is applied on the preprocessed papers set and the citations papers...")
-        relevant_papers = semantic_analyser.get_relevant_papers(folder_name, search_date, step, semantic_filters, citations_papers, removed_papers)
-        logger.info("Snowballing process papers: " + str(len(relevant_papers)) + "...")
-        if len(relevant_papers) > 0:
-            util.save(snowballing_file_name, relevant_papers, fr, 'a+')
+    
+    try:
+        snowballing_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + '_snowballing_papers.csv'
+        
+        if not exists(snowballing_file_name):
+            logger.info(
+                LogCategory.DATABASE,
+                "retrieve",
+                "snowballing",
+                "Requesting Semantic Scholar for papers citations..."
+            )
+            
+            try:
+                semantic_scholar_client = SemanticScholarClient()
+                citations_papers = semantic_scholar_client.get_citations(folder_name, search_date, step, dates, start_date, end_date)
+                
+                logger.info(
+                    LogCategory.DATA,
+                    "retrieve",
+                    "snowballing",
+                    "Using semantic search to find relevant papers based on manually selected set..."
+                )
+                logger.info(
+                    LogCategory.DATA,
+                    "retrieve",
+                    "snowballing",
+                    "This process is applied on the preprocessed papers set and the citations papers..."
+                )
+                
+                relevant_papers = semantic_analyser.get_relevant_papers(folder_name, search_date, step, semantic_filters, citations_papers, removed_papers)
+                
+                logger.info(
+                    LogCategory.DATA,
+                    "retrieve",
+                    "snowballing",
+                    f"Snowballing process papers: {len(relevant_papers)}..."
+                )
+                
+                if len(relevant_papers) > 0:
+                    util.save(snowballing_file_name, relevant_papers, fr, 'a+')
+                else:
+                    snowballing_file_name = ''
+                    
+            except Exception as ex:
+                context = create_error_context(
+                    module="retrieve",
+                    function="snowballing",
+                    operation="citations_retrieval",
+                    severity=ErrorSeverity.WARNING,
+                    category=ErrorCategory.DATABASE
+                )
+                
+                error_info = get_standard_error_info("data_validation_failed")
+                error_handler = ErrorHandler(logger)
+                error_msg = error_handler.handle_error(
+                    error=ex,
+                    context=context,
+                    error_type="CitationsRetrievalError",
+                    error_description=f"Error retrieving citations: {type(ex).__name__}: {str(ex)}",
+                    recovery_suggestion=error_info["recovery"],
+                    next_steps=error_info["next_steps"]
+                )
+                snowballing_file_name = ''
         else:
-            snowballing_file_name = ''
-    else:
-        logger.info("File already exists.")
-    return snowballing_file_name
+            logger.info(
+                LogCategory.FILE,
+                "retrieve",
+                "snowballing",
+                "File already exists."
+            )
+            
+        return snowballing_file_name
+        
+    except Exception as ex:
+        context = create_error_context(
+            module="retrieve",
+            function="snowballing",
+            operation="snowballing",
+            severity=ErrorSeverity.ERROR,
+            category=ErrorCategory.DATABASE
+        )
+        
+        error_info = get_standard_error_info("data_validation_failed")
+        error_handler = ErrorHandler(logger)
+        error_msg = error_handler.handle_error(
+            error=ex,
+            context=context,
+            error_type="SnowballingError",
+            error_description=f"Error in snowballing process: {type(ex).__name__}: {str(ex)}",
+            recovery_suggestion=error_info["recovery"],
+            next_steps=error_info["next_steps"]
+        )
+        
+        return ''
 
 
 def preprocess(queries, databases, folder_name, search_date, date_filter, start_date, end_date, step):
@@ -112,20 +249,53 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                 file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/raw_papers/' + \
                             query_name.lower().replace(' ', '_') + '_' + database + '.csv'
                 if exists(file_name):
-                    logger.info('# Processing file: ' + file_name)
+                    logger.info(
+                        LogCategory.FILE,
+                        "retrieve",
+                        "preprocess",
+                        f"Processing file: {file_name}"
+                    )
                     try:
                         df = pd.read_csv(file_name)
                     except (pd.errors.EmptyDataError, pd.errors.ParserError) as e:
-                        # User-friendly message explaining what's happening
-                        logger.info(f"Error reading file {file_name}. Skipping this file. Please see the log file for details.")
-                        # Detailed logging for debugging
-                        logger.debug(f"File reading error for {database} database: {type(e).__name__}: {str(e)}")
+                        context = create_error_context(
+                            module="retrieve",
+                            function="preprocess",
+                            operation="file_reading",
+                            severity=ErrorSeverity.WARNING,
+                            category=ErrorCategory.FILE
+                        )
+                        
+                        error_info = get_standard_error_info("file_not_found")
+                        error_handler = ErrorHandler(logger)
+                        error_msg = error_handler.handle_error(
+                            error=e,
+                            context=context,
+                            error_type="FileReadingError",
+                            error_description=f"Error reading file {file_name} for {database} database: {type(e).__name__}: {str(e)}",
+                            recovery_suggestion=error_info["recovery"],
+                            next_steps=error_info["next_steps"]
+                        )
                         continue
                     except Exception as ex:
-                        # User-friendly message explaining what's happening
-                        logger.info(f"Unexpected error reading file {file_name}. Skipping this file. Please see the log file for details.")
-                        # Detailed logging for debugging
-                        logger.error(f"Unexpected file reading error for {database} database: {type(ex).__name__}: {str(ex)}")
+                        context = create_error_context(
+                            module="retrieve",
+                            function="preprocess",
+                            operation="file_reading",
+                            severity=ErrorSeverity.WARNING,
+                            category=ErrorCategory.FILE
+                        )
+                        
+                        error_info = get_standard_error_info("file_not_found")
+                        error_handler = ErrorHandler(logger)
+                        error_msg = error_handler.handle_error(
+                            error=ex,
+                            context=context,
+                            error_type="FileReadingError",
+                            error_description=f"Unexpected error reading file {file_name} for {database} database: {type(ex).__name__}: {str(ex)}",
+                            recovery_suggestion=error_info["recovery"],
+                            next_steps=error_info["next_steps"]
+                        )
                         continue
                     if database == 'ieeexplore':
                         try:
@@ -143,16 +313,44 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                             )
                             papers = pd.concat([papers, papers_ieee])
                         except (KeyError, ValueError, TypeError) as e:
-                            # User-friendly message explaining what's happening
-                            logger.info(f"Error processing IEEE Xplore data. Skipping this database. Please see the log file for details.")
-                            # Detailed logging for debugging
-                            logger.debug(f"Data processing error for IEEE Xplore: {type(e).__name__}: {str(e)}")
+                            context = create_error_context(
+                                module="retrieve",
+                                function="preprocess",
+                                operation="ieee_data_processing",
+                                severity=ErrorSeverity.WARNING,
+                                category=ErrorCategory.DATA
+                            )
+                            
+                            error_info = get_standard_error_info("data_validation_failed")
+                            error_handler = ErrorHandler(logger)
+                            error_msg = error_handler.handle_error(
+                                error=e,
+                                context=context,
+                                error_type="IEEEDataProcessingError",
+                                error_description=f"Error processing IEEE Xplore data: {type(e).__name__}: {str(e)}",
+                                recovery_suggestion=error_info["recovery"],
+                                next_steps=error_info["next_steps"]
+                            )
                             continue
                         except Exception as ex:
-                            # User-friendly message explaining what's happening
-                            logger.info(f"Unexpected error processing IEEE Xplore data. Skipping this database. Please see the log file for details.")
-                            # Detailed logging for debugging
-                            logger.error(f"Unexpected data processing error for IEEE Xplore: {type(ex).__name__}: {str(ex)}")
+                            context = create_error_context(
+                                module="retrieve",
+                                function="preprocess",
+                                operation="ieee_data_processing",
+                                severity=ErrorSeverity.WARNING,
+                                category=ErrorCategory.DATA
+                            )
+                            
+                            error_info = get_standard_error_info("data_validation_failed")
+                            error_handler = ErrorHandler(logger)
+                            error_msg = error_handler.handle_error(
+                                error=ex,
+                                context=context,
+                                error_type="IEEEDataProcessingError",
+                                error_description=f"Unexpected error processing IEEE Xplore data: {type(ex).__name__}: {str(ex)}",
+                                recovery_suggestion=error_info["recovery"],
+                                next_steps=error_info["next_steps"]
+                            )
                             continue
                     if database == 'springer':
                         try:
@@ -170,16 +368,44 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                             )
                             papers = pd.concat([papers, papers_springer])
                         except (KeyError, ValueError, TypeError) as e:
-                            # User-friendly message explaining what's happening
-                            logger.info(f"Error processing Springer data. Skipping this database. Please see the log file for details.")
-                            # Detailed logging for debugging
-                            logger.debug(f"Data processing error for Springer: {type(e).__name__}: {str(e)}")
+                            context = create_error_context(
+                                module="retrieve",
+                                function="preprocess",
+                                operation="springer_data_processing",
+                                severity=ErrorSeverity.WARNING,
+                                category=ErrorCategory.DATA
+                            )
+                            
+                            error_info = get_standard_error_info("data_validation_failed")
+                            error_handler = ErrorHandler(logger)
+                            error_msg = error_handler.handle_error(
+                                error=e,
+                                context=context,
+                                error_type="SpringerDataProcessingError",
+                                error_description=f"Error processing Springer data: {type(e).__name__}: {str(e)}",
+                                recovery_suggestion=error_info["recovery"],
+                                next_steps=error_info["next_steps"]
+                            )
                             continue
                         except Exception as ex:
-                            # User-friendly message explaining what's happening
-                            logger.info(f"Unexpected error processing Springer data. Skipping this database. Please see the log file for details.")
-                            # Detailed logging for debugging
-                            logger.error(f"Unexpected data processing error for Springer: {type(ex).__name__}: {str(ex)}")
+                            context = create_error_context(
+                                module="retrieve",
+                                function="preprocess",
+                                operation="springer_data_processing",
+                                severity=ErrorSeverity.WARNING,
+                                category=ErrorCategory.DATA
+                            )
+                            
+                            error_info = get_standard_error_info("data_validation_failed")
+                            error_handler = ErrorHandler(logger)
+                            error_msg = error_handler.handle_error(
+                                error=ex,
+                                context=context,
+                                error_type="SpringerDataProcessingError",
+                                error_description=f"Unexpected error processing Springer data: {type(ex).__name__}: {str(ex)}",
+                                recovery_suggestion=error_info["recovery"],
+                                next_steps=error_info["next_steps"]
+                            )
                             continue
                     if database == 'arxiv':
                         try:
@@ -197,16 +423,44 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                             )
                             papers = pd.concat([papers, papers_arxiv])
                         except (KeyError, ValueError, TypeError) as e:
-                            # User-friendly message explaining what's happening
-                            logger.info(f"Error processing arXiv data. Skipping this database. Please see the log file for details.")
-                            # Detailed logging for debugging
-                            logger.debug(f"Data processing error for arXiv: {type(e).__name__}: {str(e)}")
+                            context = create_error_context(
+                                module="retrieve",
+                                function="preprocess",
+                                operation="arxiv_data_processing",
+                                severity=ErrorSeverity.WARNING,
+                                category=ErrorCategory.DATA
+                            )
+                            
+                            error_info = get_standard_error_info("data_validation_failed")
+                            error_handler = ErrorHandler(logger)
+                            error_msg = error_handler.handle_error(
+                                error=e,
+                                context=context,
+                                error_type="ArxivDataProcessingError",
+                                error_description=f"Error processing arXiv data: {type(e).__name__}: {str(e)}",
+                                recovery_suggestion=error_info["recovery"],
+                                next_steps=error_info["next_steps"]
+                            )
                             continue
                         except Exception as ex:
-                            # User-friendly message explaining what's happening
-                            logger.info(f"Unexpected error processing arXiv data. Skipping this database. Please see the log file for details.")
-                            # Detailed logging for debugging
-                            logger.error(f"Unexpected data processing error for arXiv: {type(ex).__name__}: {str(ex)}")
+                            context = create_error_context(
+                                module="retrieve",
+                                function="preprocess",
+                                operation="arxiv_data_processing",
+                                severity=ErrorSeverity.WARNING,
+                                category=ErrorCategory.DATA
+                            )
+                            
+                            error_info = get_standard_error_info("data_validation_failed")
+                            error_handler = ErrorHandler(logger)
+                            error_msg = error_handler.handle_error(
+                                error=ex,
+                                context=context,
+                                error_type="ArxivDataProcessingError",
+                                error_description=f"Unexpected error processing arXiv data: {type(ex).__name__}: {str(ex)}",
+                                recovery_suggestion=error_info["recovery"],
+                                next_steps=error_info["next_steps"]
+                            )
                             continue
                     if database == 'scopus':
                         try:
@@ -222,16 +476,44 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                             )
                             papers = pd.concat([papers, papers_scopus])
                         except (KeyError, ValueError, TypeError) as e:
-                            # User-friendly message explaining what's happening
-                            logger.info(f"Error processing Scopus data. Skipping this database. Please see the log file for details.")
-                            # Detailed logging for debugging
-                            logger.debug(f"Data processing error for Scopus: {type(e).__name__}: {str(e)}")
+                            context = create_error_context(
+                                module="retrieve",
+                                function="preprocess",
+                                operation="scopus_data_processing",
+                                severity=ErrorSeverity.WARNING,
+                                category=ErrorCategory.DATA
+                            )
+                            
+                            error_info = get_standard_error_info("data_validation_failed")
+                            error_handler = ErrorHandler(logger)
+                            error_msg = error_handler.handle_error(
+                                error=e,
+                                context=context,
+                                error_type="ScopusDataProcessingError",
+                                error_description=f"Error processing Scopus data: {type(e).__name__}: {str(e)}",
+                                recovery_suggestion=error_info["recovery"],
+                                next_steps=error_info["next_steps"]
+                            )
                             continue
                         except Exception as ex:
-                            # User-friendly message explaining what's happening
-                            logger.info(f"Unexpected error processing Scopus data. Skipping this database. Please see the log file for details.")
-                            # Detailed logging for debugging
-                            logger.error(f"Unexpected data processing error for Scopus: {type(ex).__name__}: {str(ex)}")
+                            context = create_error_context(
+                                module="retrieve",
+                                function="preprocess",
+                                operation="scopus_data_processing",
+                                severity=ErrorSeverity.WARNING,
+                                category=ErrorCategory.DATA
+                            )
+                            
+                            error_info = get_standard_error_info("data_validation_failed")
+                            error_handler = ErrorHandler(logger)
+                            error_msg = error_handler.handle_error(
+                                error=ex,
+                                context=context,
+                                error_type="ScopusDataProcessingError",
+                                error_description=f"Unexpected error processing Scopus data: {type(ex).__name__}: {str(ex)}",
+                                recovery_suggestion=error_info["recovery"],
+                                next_steps=error_info["next_steps"]
+                            )
                             continue
                     if database == 'core':
                         try:
@@ -252,16 +534,44 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                             papers_core['publication'] = database
                             papers = pd.concat([papers, papers_core])
                         except (KeyError, ValueError, TypeError) as e:
-                            # User-friendly message explaining what's happening
-                            logger.info(f"Error processing CORE data. Skipping this database. Please see the log file for details.")
-                            # Detailed logging for debugging
-                            logger.debug(f"Data processing error for CORE: {type(e).__name__}: {str(e)}")
+                            context = create_error_context(
+                                module="retrieve",
+                                function="preprocess",
+                                operation="core_data_processing",
+                                severity=ErrorSeverity.WARNING,
+                                category=ErrorCategory.DATA
+                            )
+                            
+                            error_info = get_standard_error_info("data_validation_failed")
+                            error_handler = ErrorHandler(logger)
+                            error_msg = error_handler.handle_error(
+                                error=e,
+                                context=context,
+                                error_type="CoreDataProcessingError",
+                                error_description=f"Error processing CORE data: {type(e).__name__}: {str(e)}",
+                                recovery_suggestion=error_info["recovery"],
+                                next_steps=error_info["next_steps"]
+                            )
                             continue
                         except Exception as ex:
-                            # User-friendly message explaining what's happening
-                            logger.info(f"Unexpected error processing CORE data. Skipping this database. Please see the log file for details.")
-                            # Detailed logging for debugging
-                            logger.error(f"Unexpected data processing error for CORE: {type(ex).__name__}: {str(ex)}")
+                            context = create_error_context(
+                                module="retrieve",
+                                function="preprocess",
+                                operation="core_data_processing",
+                                severity=ErrorSeverity.WARNING,
+                                category=ErrorCategory.DATA
+                            )
+                            
+                            error_info = get_standard_error_info("data_validation_failed")
+                            error_handler = ErrorHandler(logger)
+                            error_msg = error_handler.handle_error(
+                                error=ex,
+                                context=context,
+                                error_type="CoreDataProcessingError",
+                                error_description=f"Unexpected error processing CORE data: {type(ex).__name__}: {str(ex)}",
+                                recovery_suggestion=error_info["recovery"],
+                                next_steps=error_info["next_steps"]
+                            )
                             continue
                     if database == 'semantic_scholar':
                         try:
@@ -284,41 +594,116 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                             )
                             papers = pd.concat([papers, papers_semantic])
                         except (KeyError, ValueError, TypeError) as e:
-                            # User-friendly message explaining what's happening
-                            logger.info(f"Error processing Semantic Scholar data. Skipping this database. Please see the log file for details.")
-                            # Detailed logging for debugging
-                            logger.debug(f"Data processing error for Semantic Scholar: {type(e).__name__}: {str(e)}")
+                            context = create_error_context(
+                                module="retrieve",
+                                function="preprocess",
+                                operation="semantic_scholar_data_processing",
+                                severity=ErrorSeverity.WARNING,
+                                category=ErrorCategory.DATA
+                            )
+                            
+                            error_info = get_standard_error_info("data_validation_failed")
+                            error_handler = ErrorHandler(logger)
+                            error_msg = error_handler.handle_error(
+                                error=e,
+                                context=context,
+                                error_type="SemanticScholarDataProcessingError",
+                                error_description=f"Error processing Semantic Scholar data: {type(e).__name__}: {str(e)}",
+                                recovery_suggestion=error_info["recovery"],
+                                next_steps=error_info["next_steps"]
+                            )
                             continue
                         except Exception as ex:
-                            # User-friendly message explaining what's happening
-                            logger.info(f"Unexpected error processing Semantic Scholar data. Skipping this database. Please see the log file for details.")
-                            # Detailed logging for debugging
-                            logger.error(f"Unexpected data processing error for Semantic Scholar: {type(ex).__name__}: {str(ex)}")
+                            context = create_error_context(
+                                module="retrieve",
+                                function="preprocess",
+                                operation="semantic_scholar_data_processing",
+                                severity=ErrorSeverity.WARNING,
+                                category=ErrorCategory.DATA
+                            )
+                            
+                            error_info = get_standard_error_info("data_validation_failed")
+                            error_handler = ErrorHandler(logger)
+                            error_msg = error_handler.handle_error(
+                                error=ex,
+                                context=context,
+                                error_type="SemanticScholarDataProcessingError",
+                                error_description=f"Unexpected error processing Semantic Scholar data: {type(ex).__name__}: {str(ex)}",
+                                recovery_suggestion=error_info["recovery"],
+                                next_steps=error_info["next_steps"]
+                            )
                             continue
         try:
             papers['type'] = 'preprocessed'
             papers['status'] = 'unknown'
             papers['id'] = list(range(1, len(papers) + 1))
             if date_filter:
-                logger.info('# Removing papers according to dates filter...')
+                logger.info(
+                    LogCategory.DATA,
+                    "retrieve",
+                    "preprocess",
+                    "Removing papers according to dates filter..."
+                )
                 papers = filter_papers_by_dates(papers, start_date, end_date)
-            logger.info('Number of papers: ' + str(len(papers)))
+            logger.info(
+                LogCategory.DATA,
+                "retrieve",
+                "preprocess",
+                f"Number of papers: {len(papers)}"
+            )
             util.save(preprocessed_file_name, papers, fr, 'a+')
-            logger.info('# Removing repeated papers by doi, title, and abstract...')
+            logger.info(
+                LogCategory.DATA,
+                "retrieve",
+                "preprocess",
+                "Removing repeated papers by doi, title, and abstract..."
+            )
             util.remove_repeated(preprocessed_file_name)
-            logger.info('# Removing papers not written in English, without title or abstract, surveys, reviews, reports, '
-                        'and theses...')
+            logger.info(
+                LogCategory.DATA,
+                "retrieve",
+                "preprocess",
+                "Removing papers not written in English, without title or abstract, surveys, reviews, reports, and theses..."
+            )
             util.clean_papers(preprocessed_file_name)
         except (KeyError, ValueError, TypeError) as e:
-            # User-friendly message explaining what's happening
-            logger.info("Error during final paper processing. Please see the log file for details.")
-            # Detailed logging for debugging
-            logger.debug(f"Final processing error: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                module="retrieve",
+                function="preprocess",
+                operation="final_paper_processing",
+                severity=ErrorSeverity.WARNING,
+                category=ErrorCategory.DATA
+            )
+            
+            error_info = get_standard_error_info("data_validation_failed")
+            error_handler = ErrorHandler(logger)
+            error_msg = error_handler.handle_error(
+                error=e,
+                context=context,
+                error_type="FinalPaperProcessingError",
+                error_description=f"Error during final paper processing: {type(e).__name__}: {str(e)}",
+                recovery_suggestion=error_info["recovery"],
+                next_steps=error_info["next_steps"]
+            )
         except Exception as ex:
-            # User-friendly message explaining what's happening
-            logger.info("Unexpected error during final paper processing. Please see the log file for details.")
-            # Detailed logging for debugging
-            logger.error(f"Unexpected final processing error: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                module="retrieve",
+                function="preprocess",
+                operation="final_paper_processing",
+                severity=ErrorSeverity.WARNING,
+                category=ErrorCategory.DATA
+            )
+            
+            error_info = get_standard_error_info("data_validation_failed")
+            error_handler = ErrorHandler(logger)
+            error_msg = error_handler.handle_error(
+                error=ex,
+                context=context,
+                error_type="FinalPaperProcessingError",
+                error_description=f"Unexpected error during final paper processing: {type(ex).__name__}: {str(ex)}",
+                recovery_suggestion=error_info["recovery"],
+                next_steps=error_info["next_steps"]
+            )
     return preprocessed_file_name
 
 
@@ -341,16 +726,44 @@ def get_ids(df, database):
                     ids.append(str(row['externalIds.DOI']))
         return ids
     except (KeyError, AttributeError, TypeError) as e:
-        # User-friendly message explaining what's happening
-        logger.info("Error extracting IDs. Returning empty list. Please see the log file for details.")
-        # Detailed logging for debugging
-        logger.debug(f"ID extraction error for {database}: {type(e).__name__}: {str(e)}")
+        context = create_error_context(
+            module="retrieve",
+            function="get_ids",
+            operation="id_extraction",
+            severity=ErrorSeverity.WARNING,
+            category=ErrorCategory.DATA
+        )
+        
+        error_info = get_standard_error_info("data_validation_failed")
+        error_handler = ErrorHandler(logger)
+        error_msg = error_handler.handle_error(
+            error=e,
+            context=context,
+            error_type="IDExtractionError",
+            error_description=f"Error extracting IDs for {database}: {type(e).__name__}: {str(e)}",
+            recovery_suggestion=error_info["recovery"],
+            next_steps=error_info["next_steps"]
+        )
         return []
     except Exception as ex:
-        # User-friendly message explaining what's happening
-        logger.info("Unexpected error extracting IDs. Returning empty list. Please see the log file for details.")
-        # Detailed logging for debugging
-        logger.error(f"Unexpected ID extraction error for {database}: {type(ex).__name__}: {str(ex)}")
+        context = create_error_context(
+            module="retrieve",
+            function="get_ids",
+            operation="id_extraction",
+            severity=ErrorSeverity.WARNING,
+            category=ErrorCategory.DATA
+        )
+        
+        error_info = get_standard_error_info("data_validation_failed")
+        error_handler = ErrorHandler(logger)
+        error_msg = error_handler.handle_error(
+            error=ex,
+            context=context,
+            error_type="IDExtractionError",
+            error_description=f"Unexpected error extracting IDs for {database}: {type(ex).__name__}: {str(ex)}",
+            recovery_suggestion=error_info["recovery"],
+            next_steps=error_info["next_steps"]
+        )
         return []
 
 

@@ -5,6 +5,8 @@ import time
 from tqdm import tqdm
 from os.path import exists
 from util import util
+from util.error_standards import ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory, get_standard_error_info
+from util.logging_standards import LogCategory
 
 
 class DatabaseClient(ABC):
@@ -48,18 +50,18 @@ class DatabaseClient(ABC):
         
         # Check if file already exists
         if exists(file_name):
-            self.logger.info("File already exists.")
+            self.logger.info(LogCategory.FILE, "base_client", "get_papers", "File already exists.")
             return
             
         # Check if API access is available
         if not self._has_api_access():
-            self.logger.info("API key access not provided. Skipping this client...")
+            self.logger.info(LogCategory.DATABASE, "base_client", "get_papers", "API key access not provided. Skipping this client...")
             return
             
         # Execute the paper retrieval workflow
         try:
             # Step 1: Plan requests
-            self.logger.info("Retrieving papers. It might take a while...")
+            self.logger.info(LogCategory.DATABASE, "base_client", "get_papers", "Retrieving papers. It might take a while...")
             papers = self._plan_requests(query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date)
             
             if len(papers) > 0:
@@ -78,19 +80,29 @@ class DatabaseClient(ABC):
                 # Step 4: Save papers
                 util.save(file_name, papers, 'utf-8', 'a')
                 
-            self.logger.info(f"Retrieved papers after filters and cleaning: {len(papers)}")
+            self.logger.info(LogCategory.DATABASE, "base_client", "get_papers", f"Retrieved papers after filters and cleaning: {len(papers)}")
             return file_name
             
         except (ValueError, TypeError) as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error in paper retrieval workflow. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Data type error in paper retrieval workflow: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "base_client", "get_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Data type error in paper retrieval workflow: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
         except Exception as ex:
             # User-friendly message explaining what's happening
-            self.logger.info("Unexpected error in paper retrieval workflow. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.error(f"Unexpected error in paper retrieval workflow: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                "base_client", "get_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.SYSTEM,
+                f"Unexpected error in paper retrieval workflow: {type(ex).__name__}: {str(ex)}"
+            )
+            error_info = get_standard_error_info("unexpected_error")
+            ErrorHandler.handle_error(ex, context, error_info, self.logger)
     
     def _generate_file_name(self, folder_name, search_date, query_name):
         """Generate the file name for saving papers."""
@@ -130,9 +142,9 @@ class DatabaseClient(ABC):
                 if self._is_successful_response(result):
                     return result
             except (ValueError, TypeError) as e:
-                self.logger.debug(f"Request failed due to data type error (attempt {retry + 1}): {type(e).__name__}: {str(e)}")
+                self.logger.debug(LogCategory.DATABASE, "base_client", "_retry_request", f"Request failed due to data type error (attempt {retry + 1}): {type(e).__name__}: {str(e)}")
             except Exception as ex:
-                self.logger.debug(f"Request failed due to unexpected error (attempt {retry + 1}): {type(ex).__name__}: {str(ex)}")
+                self.logger.debug(LogCategory.DATABASE, "base_client", "_retry_request", f"Request failed due to unexpected error (attempt {retry + 1}): {type(ex).__name__}: {str(ex)}")
             
             retry += 1
             if retry < self.max_retries:
@@ -163,8 +175,8 @@ class DatabaseClient(ABC):
     
     def _log_api_error(self, response, request_info=""):
         """Log API errors consistently across all clients."""
-        self.logger.info(f"Error requesting the API. Skipping to next request. Please see the log file for details: {self.file_handler}")
+        self.logger.info(LogCategory.DATABASE, "base_client", "_log_api_error", f"Error requesting the API. Skipping to next request. Please see the log file for details: {self.file_handler}")
         if hasattr(response, 'text'):
-            self.logger.debug(f"API response: {response.text}")
+            self.logger.debug(LogCategory.DATABASE, "base_client", "_log_api_error", f"API response: {response.text}")
         if hasattr(response, 'request') and response.request is not None:
-            self.logger.debug(f"Request: {request_info}")
+            self.logger.debug(LogCategory.DATABASE, "base_client", "_log_api_error", f"Request: {request_info}")

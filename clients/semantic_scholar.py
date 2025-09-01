@@ -8,6 +8,11 @@ from util import util
 from tqdm import tqdm
 import logging
 import datetime
+from util.error_standards import (
+    ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory,
+    get_standard_error_info
+)
+from util.logging_standards import LogCategory
 
 
 class SemanticScholarClient(DatabaseClient):
@@ -71,7 +76,7 @@ class SemanticScholarClient(DatabaseClient):
         papers = pd.DataFrame()
         requests = self._create_request(parameters, dates, start_date, end_date)
         planned_requests = []
-        self.logger.info("Planning queries...")
+        self.logger.info(LogCategory.DATABASE, "semantic_scholar", "_plan_requests", "Planning queries...")
         for request in tqdm(requests):
             req = self.api_url.replace('<query>', request['query']).replace('<offset>', str(self.start)).replace('<max_papers>', str(self.max_papers))
             headers = {}
@@ -133,7 +138,7 @@ class SemanticScholarClient(DatabaseClient):
     def _request_papers(self, query, requests):
         """Request papers from Semantic Scholar API."""
         papers = pd.DataFrame()
-        self.logger.info("There will be " + str(len(requests)) + " different queries to the " + self.database_name + " API...")
+        self.logger.info(LogCategory.DATABASE, "semantic_scholar", "_execute_requests", "There will be " + str(len(requests)) + " different queries to the " + self.database_name + " API...")
         current_request = 0
         for request in tqdm(requests):
             current_request = current_request + 1
@@ -148,10 +153,10 @@ class SemanticScholarClient(DatabaseClient):
             else:
                 papers = pd.concat([papers, papers_request])
             if total > self.offset_limit:
-                self.logger.info("Query " + str(current_request) + "...")
-                self.logger.info("The query returns more papers than the " + self.database_name + " limit...")
-                self.logger.info("The query returns " + str(total) + " papers, please consider using a more specific query or syntactic filters to reduce the number of papers...")
-                self.logger.info("Retrieving the first " + str(self.offset_limit) + " more cited papers instead...")
+                self.logger.info(LogCategory.DATABASE, "semantic_scholar", "_execute_requests", "Query " + str(current_request) + "...")
+                self.logger.info(LogCategory.DATABASE, "semantic_scholar", "_execute_requests", "The query returns more papers than the " + self.database_name + " limit...")
+                self.logger.info(LogCategory.DATABASE, "semantic_scholar", "_execute_requests", "The query returns " + str(total) + " papers, please consider using a more specific query or syntactic filters to reduce the number of papers...")
+                self.logger.info(LogCategory.DATABASE, "semantic_scholar", "_execute_requests", "Retrieving the first " + str(self.offset_limit) + " more cited papers instead...")
                 total = self.offset_limit
             while next_paper != -1 and next_paper < self.offset_limit:
                 time.sleep(self.waiting_time)
@@ -191,15 +196,25 @@ class SemanticScholarClient(DatabaseClient):
             except (json.JSONDecodeError, KeyError) as e:
                 if print_error:
                     # User-friendly message explaining what's happening
-                    self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                    # Detailed logging for debugging
-                    self.logger.debug(f"Data parsing error in Semantic Scholar response: {type(e).__name__}: {str(e)}")
+                    context = create_error_context(
+                        "semantic_scholar", "_process_raw_papers", 
+                        ErrorSeverity.WARNING, 
+                        ErrorCategory.DATA,
+                        f"Data parsing error in Semantic Scholar response: {type(e).__name__}: {str(e)}"
+                    )
+                    error_info = get_standard_error_info("data_validation_failed")
+                    ErrorHandler.handle_error(e, context, error_info, self.logger)
             except Exception as ex:
                 if print_error:
                     # User-friendly message explaining what's happening
-                    self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                    # Detailed logging for debugging
-                    self.logger.error(f"Unexpected error parsing Semantic Scholar response: {type(ex).__name__}: {str(ex)}")
+                    context = create_error_context(
+                        "semantic_scholar", "_process_raw_papers", 
+                        ErrorSeverity.ERROR, 
+                        ErrorCategory.DATA,
+                        f"Unexpected error parsing Semantic Scholar response: {type(ex).__name__}: {str(ex)}"
+                    )
+                    error_info = get_standard_error_info("unexpected_error")
+                    ErrorHandler.handle_error(ex, context, error_info, self.logger)
         else:
             if print_error:
                 self.logger.info("Error requesting the API. Skipping to next request. Please see the log file for details: "
@@ -210,7 +225,7 @@ class SemanticScholarClient(DatabaseClient):
     
     def _filter_papers(self, papers, dates, start_date, end_date):
         """Filter papers based on criteria."""
-        self.logger.info("Filtering papers...")
+        self.logger.info(LogCategory.DATA, "semantic_scholar", "_filter_papers", "Filtering papers...")
         try:
             papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
             papers = papers.dropna(subset=['title'])
@@ -222,27 +237,42 @@ class SemanticScholarClient(DatabaseClient):
                 papers = papers[(papers['publication_date'] >= start_date.year) & (papers['publication_date'] <= end_date.year)]
         except (ValueError, TypeError) as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Data type error during Semantic Scholar paper filtering: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "semantic_scholar", "_filter_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Data type error during Semantic Scholar paper filtering: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Continue with unfiltered papers rather than failing completely
         except KeyError as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Missing required column during Semantic Scholar paper filtering: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "semantic_scholar", "_filter_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Missing required column during Semantic Scholar paper filtering: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         except Exception as ex:
             # User-friendly message explaining what's happening
-            self.logger.info("Unexpected error filtering papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.error(f"Unexpected error during Semantic Scholar paper filtering: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                "semantic_scholar", "_filter_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.DATA,
+                f"Unexpected error during Semantic Scholar paper filtering: {type(ex).__name__}: {str(ex)}"
+            )
+            error_info = get_standard_error_info("unexpected_error")
+            ErrorHandler.handle_error(ex, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         return papers
     
     def _clean_papers(self, papers):
         """Clean papers data."""
-        self.logger.info("Cleaning papers...")
+        self.logger.info(LogCategory.DATA, "semantic_scholar", "_clean_papers", "Cleaning papers...")
         try:
             papers = papers.drop(columns=['externalIds.MAG', 'externalIds.DBLP', 'externalIds.PubMedCentral',
                                           'externalIds.PubMed', 'externalIds.ArXiv', 'externalIds.CorpusId',
@@ -251,27 +281,42 @@ class SemanticScholarClient(DatabaseClient):
             papers.dropna(how='all', axis=1, inplace=True)
         except (ValueError, TypeError) as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Data type error during Semantic Scholar paper cleaning: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "semantic_scholar", "_clean_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Data type error during Semantic Scholar paper cleaning: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Continue with uncleaned papers rather than failing completely
         except KeyError as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Missing required column during Semantic Scholar paper cleaning: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "semantic_scholar", "_clean_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Missing required column during Semantic Scholar paper cleaning: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         except Exception as ex:
             # User-friendly message explaining what's happening
-            self.logger.info("Unexpected error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.error(f"Unexpected error during Semantic Scholar paper cleaning: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                "semantic_scholar", "_clean_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.DATA,
+                f"Unexpected error during Semantic Scholar paper cleaning: {type(ex).__name__}: {str(ex)}"
+            )
+            error_info = get_standard_error_info("unexpected_error")
+            ErrorHandler.handle_error(ex, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         return papers
     
     def get_citations(self, folder_name, search_date, step, dates, start_date, end_date):
         """Get citations for papers."""
-        self.logger.info("Retrieving citation papers. It might take a while...")
+        self.logger.info(LogCategory.DATA, "semantic_scholar", "_get_citations", "Retrieving citation papers. It might take a while...")
         papers_file = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step-1) + '_manually_filtered_by_full_text_papers.csv'
         papers = pd.read_csv(papers_file)
         citations = pd.DataFrame()
@@ -296,7 +341,7 @@ class SemanticScholarClient(DatabaseClient):
             citations.loc[:, 'type'] = 'preprocessed'
             citations.loc[:, 'status'] = 'unknown'
             citations.loc[:, 'id'] = list(range(1, len(citations) + 1))
-        self.logger.info("Retrieved papers after filters and cleaning: " + str(len(citations)))
+        self.logger.info(LogCategory.DATA, "semantic_scholar", "_get_citations", "Retrieved papers after filters and cleaning: " + str(len(citations)))
         return citations
     
     def _request_citations(self, paper_id):

@@ -6,6 +6,11 @@ from os.path import exists
 import logging
 import time
 from tqdm import tqdm
+from util.error_standards import (
+    ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory,
+    get_standard_error_info
+)
+from util.logging_standards import LogCategory
 
 
 class ArxivClient(DatabaseClient):
@@ -117,15 +122,43 @@ class ArxivClient(DatabaseClient):
                 total_text = raw_papers.text.split('opensearch:totalResults')[1]
                 total = int(total_text.split('>')[1].replace('</', ''))
             except (IndexError, ValueError) as e:
-                # User-friendly message explaining what's happening
-                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.debug(f"Data parsing error in arXiv response: {type(e).__name__}: {str(e)}")
+                context = create_error_context(
+                    module="arxiv",
+                    function="_get_expected_papers",
+                    operation="api_response_parsing",
+                    severity=ErrorSeverity.WARNING,
+                    category=ErrorCategory.API
+                )
+                
+                error_info = get_standard_error_info("data_validation_failed")
+                error_handler = ErrorHandler(self.logger)
+                error_msg = error_handler.handle_error(
+                    error=e,
+                    context=context,
+                    error_type="APIResponseParsingError",
+                    error_description=f"Error parsing the API response: {type(e).__name__}: {str(e)}",
+                    recovery_suggestion=error_info["recovery"],
+                    next_steps=error_info["next_steps"]
+                )
             except Exception as ex:
-                # User-friendly message explaining what's happening
-                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.error(f"Unexpected error parsing arXiv response: {type(ex).__name__}: {str(ex)}")
+                context = create_error_context(
+                    module="arxiv",
+                    function="_get_expected_papers",
+                    operation="api_response_parsing",
+                    severity=ErrorSeverity.WARNING,
+                    category=ErrorCategory.API
+                )
+                
+                error_info = get_standard_error_info("data_validation_failed")
+                error_handler = ErrorHandler(self.logger)
+                error_msg = error_handler.handle_error(
+                    error=ex,
+                    context=context,
+                    error_type="APIResponseParsingError",
+                    error_description=f"Unexpected error parsing the API response: {type(ex).__name__}: {str(ex)}",
+                    recovery_suggestion=error_info["recovery"],
+                    next_steps=error_info["next_steps"]
+                )
         else:
             self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
         return total
@@ -144,15 +177,43 @@ class ArxivClient(DatabaseClient):
                 papers_request.loc[:, 'query_name'] = query_name
                 papers_request.loc[:, 'query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
             except (ValueError, TypeError) as e:
-                # User-friendly message explaining what's happening
-                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.debug(f"Data type error in arXiv response: {type(e).__name__}: {str(e)}")
+                context = create_error_context(
+                    module="arxiv",
+                    function="_process_raw_papers",
+                    operation="api_response_parsing",
+                    severity=ErrorSeverity.WARNING,
+                    category=ErrorCategory.API
+                )
+                
+                error_info = get_standard_error_info("data_validation_failed")
+                error_handler = ErrorHandler(self.logger)
+                error_msg = error_handler.handle_error(
+                    error=e,
+                    context=context,
+                    error_type="APIResponseParsingError",
+                    error_description=f"Error parsing the API response: {type(e).__name__}: {str(e)}",
+                    recovery_suggestion=error_info["recovery"],
+                    next_steps=error_info["next_steps"]
+                )
             except Exception as ex:
-                # User-friendly message explaining what's happening
-                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.error(f"Unexpected error parsing arXiv response: {type(ex).__name__}: {str(ex)}")
+                context = create_error_context(
+                    module="arxiv",
+                    function="_process_raw_papers",
+                    operation="api_response_parsing",
+                    severity=ErrorSeverity.WARNING,
+                    category=ErrorCategory.API
+                )
+                
+                error_info = get_standard_error_info("data_validation_failed")
+                error_handler = ErrorHandler(self.logger)
+                error_msg = error_handler.handle_error(
+                    error=ex,
+                    context=context,
+                    error_type="APIResponseParsingError",
+                    error_description=f"Unexpected error parsing the API response: {type(ex).__name__}: {str(ex)}",
+                    recovery_suggestion=error_info["recovery"],
+                    next_steps=error_info["next_steps"]
+                )
         else:
             self._log_api_error(raw_papers, raw_papers.request.url if raw_papers.request else "")
         
@@ -178,22 +239,64 @@ class ArxivClient(DatabaseClient):
                 papers = papers[(papers['published'] >= start_date) & (papers['published'] <= end_date)]
                 
         except (ValueError, TypeError) as e:
-            # User-friendly message explaining what's happening
-            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Data type error during arXiv paper filtering: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                module="arxiv",
+                function="_filter_papers",
+                operation="paper_filtering",
+                severity=ErrorSeverity.WARNING,
+                category=ErrorCategory.DATA
+            )
+            
+            error_info = get_standard_error_info("data_validation_failed")
+            error_handler = ErrorHandler(self.logger)
+            error_msg = error_handler.handle_error(
+                error=e,
+                context=context,
+                error_type="PaperFilteringError",
+                error_description=f"Error filtering papers: {type(e).__name__}: {str(e)}",
+                recovery_suggestion=error_info["recovery"],
+                next_steps=error_info["next_steps"]
+            )
             # Continue with unfiltered papers rather than failing completely
         except KeyError as e:
-            # User-friendly message explaining what's happening
-            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Missing required column during arXiv paper filtering: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                module="arxiv",
+                function="_filter_papers",
+                operation="paper_filtering",
+                severity=ErrorSeverity.WARNING,
+                category=ErrorCategory.DATA
+            )
+            
+            error_info = get_standard_error_info("data_validation_failed")
+            error_handler = ErrorHandler(self.logger)
+            error_msg = error_handler.handle_error(
+                error=e,
+                context=context,
+                error_type="PaperFilteringError",
+                error_description=f"Missing required column during paper filtering: {type(e).__name__}: {str(e)}",
+                recovery_suggestion=error_info["recovery"],
+                next_steps=error_info["next_steps"]
+            )
             # Return papers as-is to prevent complete failure
         except Exception as ex:
-            # User-friendly message explaining what's happening
-            self.logger.info("Unexpected error filtering papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.error(f"Unexpected error during arXiv paper filtering: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                module="arxiv",
+                function="_filter_papers",
+                operation="paper_filtering",
+                severity=ErrorSeverity.WARNING,
+                category=ErrorCategory.DATA
+            )
+            
+            error_info = get_standard_error_info("data_validation_failed")
+            error_handler = ErrorHandler(self.logger)
+            error_msg = error_handler.handle_error(
+                error=ex,
+                context=context,
+                error_type="PaperFilteringError",
+                error_description=f"Unexpected error during paper filtering: {type(ex).__name__}: {str(ex)}",
+                recovery_suggestion=error_info["recovery"],
+                next_steps=error_info["next_steps"]
+            )
             # Return papers as-is to prevent complete failure
         
         return papers
@@ -213,22 +316,64 @@ class ArxivClient(DatabaseClient):
             papers.dropna(how='all', axis=1, inplace=True)
             
         except (ValueError, TypeError) as e:
-            # User-friendly message explaining what's happening
-            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Data type error during arXiv paper cleaning: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                module="arxiv",
+                function="_clean_papers",
+                operation="paper_cleaning",
+                severity=ErrorSeverity.WARNING,
+                category=ErrorCategory.DATA
+            )
+            
+            error_info = get_standard_error_info("data_validation_failed")
+            error_handler = ErrorHandler(self.logger)
+            error_msg = error_handler.handle_error(
+                error=e,
+                context=context,
+                error_type="PaperCleaningError",
+                error_description=f"Error cleaning papers: {type(e).__name__}: {str(e)}",
+                recovery_suggestion=error_info["recovery"],
+                next_steps=error_info["next_steps"]
+            )
             # Continue with uncleaned papers rather than failing completely
         except KeyError as e:
-            # User-friendly message explaining what's happening
-            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Missing required column during arXiv paper cleaning: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                module="arxiv",
+                function="_clean_papers",
+                operation="paper_cleaning",
+                severity=ErrorSeverity.WARNING,
+                category=ErrorCategory.DATA
+            )
+            
+            error_info = get_standard_error_info("data_validation_failed")
+            error_handler = ErrorHandler(self.logger)
+            error_msg = error_handler.handle_error(
+                error=e,
+                context=context,
+                error_type="PaperCleaningError",
+                error_description=f"Missing required column during paper cleaning: {type(e).__name__}: {str(e)}",
+                recovery_suggestion=error_info["recovery"],
+                next_steps=error_info["next_steps"]
+            )
             # Return papers as-is to prevent complete failure
         except Exception as ex:
-            # User-friendly message explaining what's happening
-            self.logger.info("Unexpected error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.error(f"Unexpected error during arXiv paper cleaning: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                module="arxiv",
+                function="_clean_papers",
+                operation="paper_cleaning",
+                severity=ErrorSeverity.WARNING,
+                category=ErrorCategory.DATA
+            )
+            
+            error_info = get_standard_error_info("data_validation_failed")
+            error_handler = ErrorHandler(self.logger)
+            error_msg = error_handler.handle_error(
+                error=ex,
+                context=context,
+                error_type="PaperCleaningError",
+                error_description=f"Unexpected error during paper cleaning: {type(ex).__name__}: {str(ex)}",
+                recovery_suggestion=error_info["recovery"],
+                next_steps=error_info["next_steps"]
+            )
             # Return papers as-is to prevent complete failure
         
         return papers

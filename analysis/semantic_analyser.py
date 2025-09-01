@@ -3,6 +3,11 @@ from sentence_transformers import SentenceTransformer
 from sentence_transformers import util as sentence_util
 from os.path import exists
 from util import util
+from util.error_standards import (
+    ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory,
+    get_standard_error_info
+)
+from util.logging_standards import LogCategory
 from tqdm import tqdm
 import logging
 
@@ -23,16 +28,44 @@ def search(semantic_filters, folder_name, next_file, search_date, step):
             file_name = next_file
         return file_name
     except (KeyError, AttributeError, TypeError) as e:
-        # User-friendly message explaining what's happening
-        logger.info("Error in semantic search configuration. Using default file. Please see the log file for details.")
-        # Detailed logging for debugging
-        logger.debug(f"Semantic search configuration error: {type(e).__name__}: {str(e)}")
+        context = create_error_context(
+            module="semantic_analyser",
+            function="search",
+            operation="semantic_search_configuration",
+            severity=ErrorSeverity.WARNING,
+            category=ErrorCategory.CONFIGURATION
+        )
+        
+        error_info = get_standard_error_info("data_validation_failed")
+        error_handler = ErrorHandler(logger)
+        error_msg = error_handler.handle_error(
+            error=e,
+            context=context,
+            error_type="SemanticSearchConfigurationError",
+            error_description=f"Error in semantic search configuration: {type(e).__name__}: {str(e)}",
+            recovery_suggestion=error_info["recovery"],
+            next_steps=error_info["next_steps"]
+        )
         return next_file
     except Exception as ex:
-        # User-friendly message explaining what's happening
-        logger.info("Unexpected error in semantic search. Using default file. Please see the log file for details.")
-        # Detailed logging for debugging
-        logger.error(f"Unexpected semantic search error: {type(ex).__name__}: {str(ex)}")
+        context = create_error_context(
+            module="semantic_analyser",
+            function="search",
+            operation="semantic_search",
+            severity=ErrorSeverity.WARNING,
+            category=ErrorCategory.DATA
+        )
+        
+        error_info = get_standard_error_info("data_validation_failed")
+        error_handler = ErrorHandler(logger)
+        error_msg = error_handler.handle_error(
+            error=ex,
+            context=context,
+            error_type="SemanticSearchError",
+            error_description=f"Unexpected error in semantic search: {type(ex).__name__}: {str(ex)}",
+            recovery_suggestion=error_info["recovery"],
+            next_steps=error_info["next_steps"]
+        )
         return next_file
 
 
@@ -49,29 +82,76 @@ def bert_search(semantic_filters, folder_name, next_file, search_date, step):
             try:
                 model = SentenceTransformer('allenai-specter')
             except Exception as model_ex:
-                # User-friendly message explaining what's happening
-                logger.info("Error loading BERT model. Skipping semantic filtering. Please see the log file for details.")
-                # Detailed logging for debugging
-                logger.error(f"BERT model loading error: {type(model_ex).__name__}: {str(model_ex)}")
+                context = create_error_context(
+                    module="semantic_analyser",
+                    function="bert_search",
+                    operation="bert_model_loading",
+                    severity=ErrorSeverity.WARNING,
+                    category=ErrorCategory.SYSTEM
+                )
+                
+                error_info = get_standard_error_info("data_validation_failed")
+                error_handler = ErrorHandler(logger)
+                error_msg = error_handler.handle_error(
+                    error=model_ex,
+                    context=context,
+                    error_type="BERTModelLoadingError",
+                    error_description=f"Error loading BERT model: {type(model_ex).__name__}: {str(model_ex)}",
+                    recovery_suggestion=error_info["recovery"],
+                    next_steps=error_info["next_steps"]
+                )
                 return next_file
             
             try:
                 papers['concatenated'] = (papers['title'] + '[SEP]' + papers['abstract'])
                 papers['semantic_score'] = 0.0
                 papers_array = papers['concatenated'].values
-                logger.info("# Creating the embeddings for the preprocessed papers...")
+                logger.info(
+                    LogCategory.DATA,
+                    "semantic_analyser",
+                    "bert_search",
+                    "Creating the embeddings for the preprocessed papers..."
+                )
                 encoded_papers = model.encode(papers_array, convert_to_tensor=True, show_progress_bar=True)
             except (KeyError, ValueError, TypeError) as e:
-                # User-friendly message explaining what's happening
-                logger.info("Error preparing papers for BERT processing. Skipping semantic filtering. Please see the log file for details.")
-                # Detailed logging for debugging
-                logger.debug(f"Paper preparation error: {type(e).__name__}: {str(e)}")
+                context = create_error_context(
+                    module="semantic_analyser",
+                    function="bert_search",
+                    operation="paper_preparation",
+                    severity=ErrorSeverity.WARNING,
+                    category=ErrorCategory.DATA
+                )
+                
+                error_info = get_standard_error_info("data_validation_failed")
+                error_handler = ErrorHandler(logger)
+                error_msg = error_handler.handle_error(
+                    error=e,
+                    context=context,
+                    error_type="PaperPreparationError",
+                    error_description=f"Error preparing papers for BERT processing: {type(e).__name__}: {str(e)}",
+                    recovery_suggestion=error_info["recovery"],
+                    next_steps=error_info["next_steps"]
+                )
                 return next_file
             except Exception as ex:
-                # User-friendly message explaining what's happening
-                logger.info("Unexpected error preparing papers for BERT processing. Skipping semantic filtering. Please see the log file for details.")
-                # Detailed logging for debugging
-                logger.error(f"Unexpected paper preparation error: {type(ex).__name__}: {str(ex)}")
+                context = create_error_context(
+                    module="semantic_analyser",
+                    function="bert_search",
+                    operation="paper_preparation",
+                    severity=ErrorSeverity.WARNING,
+                    category=ErrorCategory.DATA
+                )
+                
+                error_info = get_standard_error_info("data_validation_failed")
+                error_handler = ErrorHandler(logger)
+                error_msg = error_handler.handle_error(
+                    error=ex,
+                    context=context,
+                    error_type="PaperPreparationError",
+                    error_description=f"Unexpected error preparing papers for BERT processing: {type(ex).__name__}: {str(ex)}",
+                    recovery_suggestion=error_info["recovery"],
+                    next_steps=error_info["next_steps"]
+                )
                 return next_file
             
             try:
@@ -84,26 +164,61 @@ def bert_search(semantic_filters, folder_name, next_file, search_date, step):
                         score = keyword['score']
                 
                 if 'description' not in locals() or not description:
-                    # User-friendly message explaining what's happening
-                    logger.info("No description found in semantic filters. Skipping semantic filtering. Please see the log file for details.")
-                    # Detailed logging for debugging
-                    logger.debug("Missing description in semantic filters")
+                    logger.warning(
+                        LogCategory.CONFIGURATION,
+                        "semantic_analyser",
+                        "bert_search",
+                        "No description found in semantic filters. Skipping semantic filtering."
+                    )
                     return next_file
                 
-                logger.info("# Abstracts semantic matching...")
+                logger.info(
+                    LogCategory.DATA,
+                    "semantic_analyser",
+                    "bert_search",
+                    "Abstracts semantic matching..."
+                )
                 query_embedding = model.encode(description, convert_to_tensor=True)
                 hits = sentence_util.semantic_search(query_embedding, encoded_papers, top_k=len(papers_array))
             except (KeyError, ValueError, TypeError) as e:
-                # User-friendly message explaining what's happening
-                logger.info("Error in semantic search configuration. Skipping semantic filtering. Please see the log file for details.")
-                # Detailed logging for debugging
-                logger.debug(f"Semantic search configuration error: {type(e).__name__}: {str(e)}")
+                context = create_error_context(
+                    module="semantic_analyser",
+                    function="bert_search",
+                    operation="semantic_search_configuration",
+                    severity=ErrorSeverity.WARNING,
+                    category=ErrorCategory.CONFIGURATION
+                )
+                
+                error_info = get_standard_error_info("data_validation_failed")
+                error_handler = ErrorHandler(logger)
+                error_msg = error_handler.handle_error(
+                    error=e,
+                    context=context,
+                    error_type="SemanticSearchConfigurationError",
+                    error_description=f"Error in semantic search configuration: {type(e).__name__}: {str(e)}",
+                    recovery_suggestion=error_info["recovery"],
+                    next_steps=error_info["next_steps"]
+                )
                 return next_file
             except Exception as ex:
-                # User-friendly message explaining what's happening
-                logger.info("Unexpected error in semantic search. Skipping semantic filtering. Please see the log file for details.")
-                # Detailed logging for debugging
-                logger.error(f"Unexpected semantic search error: {type(ex).__name__}: {str(ex)}")
+                context = create_error_context(
+                    module="semantic_analyser",
+                    function="bert_search",
+                    operation="semantic_search",
+                    severity=ErrorSeverity.WARNING,
+                    category=ErrorCategory.DATA
+                )
+                
+                error_info = get_standard_error_info("data_validation_failed")
+                error_handler = ErrorHandler(logger)
+                error_msg = error_handler.handle_error(
+                    error=ex,
+                    context=context,
+                    error_type="SemanticSearchError",
+                    error_description=f"Unexpected error in semantic search: {type(ex).__name__}: {str(ex)}",
+                    recovery_suggestion=error_info["recovery"],
+                    next_steps=error_info["next_steps"]
+                )
                 return next_file
             
             try:

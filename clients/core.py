@@ -7,6 +7,11 @@ from os.path import exists
 from util import util
 from tqdm import tqdm
 import logging
+from util.error_standards import (
+    ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory,
+    get_standard_error_info
+)
+from util.logging_standards import LogCategory
 
 
 class CoreClient(DatabaseClient):
@@ -67,7 +72,7 @@ class CoreClient(DatabaseClient):
         raw_papers = self._retry_request(self.client.request, self.api_url, 'post', request, headers)
         expected_papers = self._get_expected_papers(raw_papers)
         
-        self.logger.info(f"Expected papers from {self.database_name}: {expected_papers}...")
+        self.logger.info(LogCategory.DATABASE, "core", "_plan_requests", f"Expected papers from {self.database_name}: {expected_papers}...")
         
         # Calculate number of requests needed
         times = int(expected_papers / self.max_papers) - 1
@@ -77,9 +82,9 @@ class CoreClient(DatabaseClient):
         
         # Check quota constraints
         if times >= self.quota:
-            self.logger.info(f"The number of expected papers requires {times} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
+            self.logger.info(LogCategory.DATABASE, "core", "_plan_requests", f"The number of expected papers requires {times} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
             if len(syntactic_filters) > 0:
-                self.logger.info("Trying to reduce the number of requests using syntactic filters.")
+                self.logger.info(LogCategory.DATABASE, "core", "_plan_requests", "Trying to reduce the number of requests using syntactic filters.")
                 que = ''
                 for word in syntactic_filters:
                     que = que.replace('<AND>last', '<AND> ')
@@ -90,17 +95,17 @@ class CoreClient(DatabaseClient):
                 headers = {'Authorization': 'Bearer ' + self.api_access}
                 raw_papers = self._retry_request(self.client.request, self.api_url, 'post', request, headers)
                 expected_papers = self._get_expected_papers(raw_papers)
-                self.logger.info(f"Expected papers from {self.database_name} using syntactic filters: {expected_papers}...")
+                self.logger.info(LogCategory.DATABASE, "core", "_plan_requests", f"Expected papers from {self.database_name} using syntactic filters: {expected_papers}...")
                 times = int(expected_papers / self.max_papers) - 1
                 mod = int(expected_papers) % self.max_papers
                 if mod > 0:
                     times = times + 1
                 if times >= self.quota:
-                    self.logger.info(f"The number of expected papers requires {times} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
-                    self.logger.info("Skipping to next repository. Try to redefine your search queries and syntactic filters. Using dates to limit your search can help in case you are not.")
+                    self.logger.info(LogCategory.DATABASE, "core", "_plan_requests", f"The number of expected papers requires {times} requests which exceeds the {self.database_name} quota of {self.quota} requests per day.")
+                    self.logger.info(LogCategory.DATABASE, "core", "_plan_requests", "Skipping to next repository. Try to redefine your search queries and syntactic filters. Using dates to limit your search can help in case you are not.")
                     return pd.DataFrame()
             else:
-                self.logger.info("Skipping to next repository. Please use syntactic filters to avoid this problem. Using dates to limit your search can help in case you are not.")
+                self.logger.info(LogCategory.DATABASE, "core", "_plan_requests", "Skipping to next repository. Please use syntactic filters to avoid this problem. Using dates to limit your search can help in case you are not.")
                 return pd.DataFrame()
         
         # Execute requests
@@ -160,19 +165,34 @@ class CoreClient(DatabaseClient):
                 total = int(json_results['totalHits'])
             except (json.JSONDecodeError, KeyError) as e:
                 # User-friendly message explaining what's happening
-                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.debug(f"Data parsing error in CORE response: {type(e).__name__}: {str(e)}")
+                context = create_error_context(
+                    "core", "_get_expected_papers", 
+                    ErrorSeverity.WARNING, 
+                    ErrorCategory.DATA,
+                    f"Data parsing error in CORE response: {type(e).__name__}: {str(e)}"
+                )
+                error_info = get_standard_error_info("data_validation_failed")
+                ErrorHandler.handle_error(e, context, error_info, self.logger)
             except (ValueError, TypeError) as e:
                 # User-friendly message explaining what's happening
-                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.debug(f"Data type error in CORE response: {type(e).__name__}: {str(e)}")
+                context = create_error_context(
+                    "core", "_get_expected_papers", 
+                    ErrorSeverity.WARNING, 
+                    ErrorCategory.DATA,
+                    f"Data type error in CORE response: {type(e).__name__}: {str(e)}"
+                )
+                error_info = get_standard_error_info("data_validation_failed")
+                ErrorHandler.handle_error(e, context, error_info, self.logger)
             except Exception as ex:
                 # User-friendly message explaining what's happening
-                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.error(f"Unexpected error parsing CORE response: {type(ex).__name__}: {str(ex)}")
+                context = create_error_context(
+                    "core", "_get_expected_papers", 
+                    ErrorSeverity.ERROR, 
+                    ErrorCategory.DATA,
+                    f"Unexpected error parsing CORE response: {type(ex).__name__}: {str(ex)}"
+                )
+                error_info = get_standard_error_info("unexpected_error")
+                ErrorHandler.handle_error(ex, context, error_info, self.logger)
         else:
             self._log_api_error(raw_papers, self.api_url)
         return total
@@ -199,14 +219,24 @@ class CoreClient(DatabaseClient):
                 papers_request['query_value'] = query_value.replace('<AND>', 'AND').replace('<OR>', 'OR')
             except (json.JSONDecodeError, KeyError) as e:
                 # User-friendly message explaining what's happening
-                self.logger.info("Error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.debug(f"Data parsing error in CORE response: {type(e).__name__}: {str(e)}")
+                context = create_error_context(
+                    "core", "_process_raw_papers", 
+                    ErrorSeverity.WARNING, 
+                    ErrorCategory.DATA,
+                    f"Data parsing error in CORE response: {type(e).__name__}: {str(e)}"
+                )
+                error_info = get_standard_error_info("data_validation_failed")
+                ErrorHandler.handle_error(e, context, error_info, self.logger)
             except Exception as ex:
                 # User-friendly message explaining what's happening
-                self.logger.info("Unexpected error parsing the API response. Skipping to next request. Please see the log file for details: " + self.file_handler)
-                # Detailed logging for debugging
-                self.logger.error(f"Unexpected error parsing CORE response: {type(ex).__name__}: {str(ex)}")
+                context = create_error_context(
+                    "core", "_process_raw_papers", 
+                    ErrorSeverity.ERROR, 
+                    ErrorCategory.DATA,
+                    f"Unexpected error parsing CORE response: {type(ex).__name__}: {str(ex)}"
+                )
+                error_info = get_standard_error_info("unexpected_error")
+                ErrorHandler.handle_error(ex, context, error_info, self.logger)
         else:
             self._log_api_error(raw_papers, self.api_url)
         
@@ -214,7 +244,7 @@ class CoreClient(DatabaseClient):
 
     def _filter_papers(self, papers: pd.DataFrame, dates, start_date, end_date) -> pd.DataFrame:
         """Filter papers based on criteria."""
-        self.logger.info("Filtering papers...")
+        self.logger.info(LogCategory.DATA, "core", "_filter_papers", "Filtering papers...")
         try:
             # Filter by title
             papers.loc[:, 'title'] = papers['title'].replace('', float("NaN"))
@@ -228,48 +258,78 @@ class CoreClient(DatabaseClient):
             
         except (ValueError, TypeError) as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Data type error during CORE paper filtering: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "core", "_filter_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Data type error during CORE paper filtering: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Continue with unfiltered papers rather than failing completely
         except KeyError as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error filtering papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Missing required column during CORE paper filtering: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "core", "_filter_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Missing required column during CORE paper filtering: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         except Exception as ex:
             # User-friendly message explaining what's happening
-            self.logger.info("Unexpected error filtering papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.error(f"Unexpected error during CORE paper filtering: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                "core", "_filter_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.DATA,
+                f"Unexpected error during CORE paper filtering: {type(ex).__name__}: {str(ex)}"
+            )
+            error_info = get_standard_error_info("unexpected_error")
+            ErrorHandler.handle_error(ex, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         
         return papers
 
     def _clean_papers(self, papers: pd.DataFrame) -> pd.DataFrame:
         """Clean and standardize paper data."""
-        self.logger.info("Cleaning papers...")
+        self.logger.info(LogCategory.DATA, "core", "_clean_papers", "Cleaning papers...")
         try:
             papers.replace('', float("NaN"), inplace=True)
             papers.dropna(how='all', axis=1, inplace=True)
         except (ValueError, TypeError) as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Data type error during CORE paper cleaning: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "core", "_clean_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Data type error during CORE paper cleaning: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Continue with uncleaned papers rather than failing completely
         except KeyError as e:
             # User-friendly message explaining what's happening
-            self.logger.info("Error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.debug(f"Missing required column during CORE paper cleaning: {type(e).__name__}: {str(e)}")
+            context = create_error_context(
+                "core", "_clean_papers", 
+                ErrorSeverity.WARNING, 
+                ErrorCategory.DATA,
+                f"Missing required column during CORE paper cleaning: {type(e).__name__}: {str(e)}"
+            )
+            error_info = get_standard_error_info("data_validation_failed")
+            ErrorHandler.handle_error(e, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         except Exception as ex:
             # User-friendly message explaining what's happening
-            self.logger.info("Unexpected error cleaning papers. Please see the log file for details: " + self.file_handler)
-            # Detailed logging for debugging
-            self.logger.error(f"Unexpected error during CORE paper cleaning: {type(ex).__name__}: {str(ex)}")
+            context = create_error_context(
+                "core", "_clean_papers", 
+                ErrorSeverity.ERROR, 
+                ErrorCategory.DATA,
+                f"Unexpected error during CORE paper cleaning: {type(ex).__name__}: {str(ex)}"
+            )
+            error_info = get_standard_error_info("unexpected_error")
+            ErrorHandler.handle_error(ex, context, error_info, self.logger)
             # Return papers as-is to prevent complete failure
         
         return papers
