@@ -10,7 +10,7 @@ from util.error_standards import (
     ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory,
     get_standard_error_info
 )
-from util.logging_standards import LogCategory
+from util.logging_standards import LogCategory, get_compat_logger, get_current_sals_logger
 
 
 class ArxivClient(DatabaseClient):
@@ -28,6 +28,12 @@ class ArxivClient(DatabaseClient):
         )
         self.api_url = 'http://export.arxiv.org/api/query?search_query='
         self.client = Generic()
+        # Normalize logger to a compat logger to accept both styles
+        try:
+            sals = get_current_sals_logger()
+            self.logger = get_compat_logger() if sals is None else get_compat_logger()
+        except Exception:
+            pass
         
     def _has_api_access(self) -> bool:
         """ArXiv is open access, so no API key is needed."""

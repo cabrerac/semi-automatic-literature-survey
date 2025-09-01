@@ -57,12 +57,6 @@ class LogFormatter:
         LogLevel.DEBUG: "[DEBUG] {asctime} | {category} | {module}.{function} | {message}"
     }
     
-    # User-friendly format for console output
-    USER_FORMAT = "[{levelname}] {message}"
-    
-    # Detailed format for file logging
-    DETAILED_FORMAT = "[{levelname}] {asctime} | {category} | {module}.{function} | {message} | {extra_info}"
-    
     @staticmethod
     def format_message(level: LogLevel, 
                       category: LogCategory,
@@ -133,8 +127,8 @@ class SaLSLogger:
         console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setLevel(self.console_level.value)
         
-        # Create formatter for console
-        console_formatter = logging.Formatter(LogFormatter.USER_FORMAT)
+        # Create formatter for console - use a simpler format since we handle custom fields in our log method
+        console_formatter = logging.Formatter("[%(levelname)s] %(message)s")
         console_handler.setFormatter(console_formatter)
         
         self.logger.addHandler(console_handler)
@@ -155,8 +149,8 @@ class SaLSLogger:
         )
         file_handler.setLevel(self.file_level.value)
         
-        # Create formatter for file
-        file_formatter = logging.Formatter(LogFormatter.DETAILED_FORMAT)
+        # Create formatter for file - use a simpler format since we handle custom fields in our log method
+        file_formatter = logging.Formatter("[%(levelname)s] %(asctime)s | %(message)s")
         file_handler.setFormatter(file_formatter)
         
         self.logger.addHandler(file_handler)
@@ -171,7 +165,7 @@ class SaLSLogger:
             print_to_console: bool = False) -> None:
         """Log a message with consistent formatting."""
         
-        # Format the message
+        # Format the message with our custom formatter for console output
         formatted_message = LogFormatter.format_message(
             level=level,
             category=category,
@@ -181,17 +175,18 @@ class SaLSLogger:
             extra_info=extra_info
         )
         
-        # Log according to level
+        # Log according to level - pass the original message to Python's logger
+        # Python's logger will format it with its own formatter
         if level == LogLevel.CRITICAL:
-            self.logger.critical(formatted_message)
+            self.logger.critical(message)
         elif level == LogLevel.ERROR:
-            self.logger.error(formatted_message)
+            self.logger.error(message)
         elif level == LogLevel.WARNING:
-            self.logger.warning(formatted_message)
+            self.logger.warning(message)
         elif level == LogLevel.INFO:
-            self.logger.info(formatted_message)
+            self.logger.info(message)
         else:  # DEBUG
-            self.logger.debug(formatted_message)
+            self.logger.debug(message)
         
         # Optionally print to console for user-facing messages
         if print_to_console and level in [LogLevel.CRITICAL, LogLevel.ERROR, LogLevel.WARNING, LogLevel.INFO]:
@@ -278,12 +273,28 @@ def setup_sals_logger(name: str,
                      console_level: LogLevel = LogLevel.INFO,
                      file_level: LogLevel = LogLevel.DEBUG) -> SaLSLogger:
     """Setup a standardized SaLS logger."""
-    return SaLSLogger(
+    new_logger = SaLSLogger(
         name=name,
         log_file=log_file,
         console_level=console_level,
         file_level=file_level
     )
+
+    # Attach the same handlers to legacy 'logger' so existing modules print to console and files
+    try:
+        legacy_logger = logging.getLogger('logger')
+        legacy_logger.setLevel(logging.DEBUG)
+        legacy_logger.handlers.clear()
+        for handler in new_logger.logger.handlers:
+            legacy_logger.addHandler(handler)
+        legacy_logger.propagate = False
+    except Exception:
+        pass
+
+    # Keep a reference to the current SaLS logger
+    global _CURRENT_SALS_LOGGER
+    _CURRENT_SALS_LOGGER = new_logger
+    return new_logger
 
 
 # Standard logging configuration
@@ -298,6 +309,98 @@ def get_standard_logging_config() -> Dict[str, Any]:
         "encoding": "utf-8"
     }
 
+
+# Keep reference to the most recently configured SaLS logger
+_CURRENT_SALS_LOGGER: Optional[SaLSLogger] = None
+
+def get_current_sals_logger() -> Optional[SaLSLogger]:
+    """Return the last configured SaLSLogger, if any."""
+    return _CURRENT_SALS_LOGGER
+
+# Compatibility logger that accepts both SaLSLogger-style and std logging-style calls
+class CompatLogger:
+    def __init__(self, sals_logger: Optional[SaLSLogger], std_logger: logging.Logger):
+        self._sals = sals_logger
+        self._std = std_logger
+        try:
+            self._std.setLevel(logging.INFO)
+        except Exception:
+            pass
+
+    def _route(self, level: LogLevel, *args, **kwargs):
+        # SaLS-style: (category, module, function, message, extra_info=None, print_to_console=False)
+        if len(args) >= 4 and isinstance(args[0], LogCategory):
+            category, module, function, message = args[:4]
+            extra_info = args[4] if len(args) >= 5 else kwargs.get('extra_info')
+            print_to_console = args[5] if len(args) >= 6 else kwargs.get('print_to_console', False)
+            if self._sals:
+                self._sals.log(level, category, module, function, message, extra_info, print_to_console)
+            else:
+                rendered = LogFormatter.format_message(level, category, module, function, message, extra_info)
+                if level == LogLevel.CRITICAL:
+                    self._std.critical(rendered)
+                elif level == LogLevel.ERROR:
+                    self._std.error(rendered)
+                elif level == LogLevel.WARNING:
+                    self._std.warning(rendered)
+                elif level == LogLevel.INFO:
+                    self._std.info(rendered)
+                else:
+                    self._std.debug(rendered)
+                if print_to_console and level in [LogLevel.CRITICAL, LogLevel.ERROR, LogLevel.WARNING, LogLevel.INFO]:
+                    try:
+                        print(rendered)
+                    except Exception:
+                        pass
+            return
+
+        # Std-style: (msg, *fmt_args)
+        if len(args) >= 1:
+            msg = args[0]
+            fmt_args = args[1:] if len(args) > 1 else ()
+            try:
+                if level == LogLevel.CRITICAL:
+                    self._std.critical(msg, *fmt_args)
+                elif level == LogLevel.ERROR:
+                    self._std.error(msg, *fmt_args)
+                elif level == LogLevel.WARNING:
+                    self._std.warning(msg, *fmt_args)
+                elif level == LogLevel.INFO:
+                    self._std.info(msg, *fmt_args)
+                else:
+                    self._std.debug(msg, *fmt_args)
+            except Exception:
+                safe_msg = str(msg)
+                if level == LogLevel.CRITICAL:
+                    self._std.critical(safe_msg)
+                elif level == LogLevel.ERROR:
+                    self._std.error(safe_msg)
+                elif level == LogLevel.WARNING:
+                    self._std.warning(safe_msg)
+                elif level == LogLevel.INFO:
+                    self._std.info(safe_msg)
+                else:
+                    self._std.debug(safe_msg)
+
+    def info(self, *args, **kwargs):
+        self._route(LogLevel.INFO, *args, **kwargs)
+
+    def warning(self, *args, **kwargs):
+        self._route(LogLevel.WARNING, *args, **kwargs)
+
+    def error(self, *args, **kwargs):
+        self._route(LogLevel.ERROR, *args, **kwargs)
+
+    def debug(self, *args, **kwargs):
+        self._route(LogLevel.DEBUG, *args, **kwargs)
+
+    def critical(self, *args, **kwargs):
+        self._route(LogLevel.CRITICAL, *args, **kwargs)
+
+
+def get_compat_logger() -> CompatLogger:
+    """Return a logger that accepts both SaLSLogger-style and std logging-style calls."""
+    return CompatLogger(_CURRENT_SALS_LOGGER, logging.getLogger('sals_pipeline'))
 
 # Example usage:
 """

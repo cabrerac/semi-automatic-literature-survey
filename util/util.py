@@ -21,10 +21,83 @@ from .error_standards import (
     ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory,
     get_standard_error_info
 )
-from .logging_standards import LogCategory
+from .logging_standards import LogCategory, get_current_sals_logger
 
-# Configure logging
-logger = logging.getLogger('logger')
+# Configure logging with compatibility wrapper (accepts both SaLS-style and std-style calls)
+class _CompatLogger:
+    def __init__(self):
+        try:
+            self._sals = get_current_sals_logger()
+        except Exception:
+            self._sals = None
+        # Prefer the pipeline logger name; fallback to legacy name
+        self._std = logging.getLogger('sals_pipeline')
+        if not self._std.handlers:
+            self._std = logging.getLogger('logger')
+
+    def _refresh(self):
+        try:
+            self._sals = get_current_sals_logger()
+        except Exception:
+            self._sals = None
+
+    def info(self, *args, **kwargs):
+        if len(args) >= 4 and isinstance(args[0], LogCategory):
+            category, module, function, message = args[:4]
+            if self._sals is not None:
+                self._sals.info(category, module, function, message)
+            else:
+                self._std.info(f"[{category.value}] {module}.{function} | {message}")
+        else:
+            msg = args[0] if len(args) > 0 else ""
+            self._std.info(msg, *args[1:])
+
+    def warning(self, *args, **kwargs):
+        if len(args) >= 4 and isinstance(args[0], LogCategory):
+            category, module, function, message = args[:4]
+            if self._sals is not None:
+                self._sals.warning(category, module, function, message)
+            else:
+                self._std.warning(f"[{category.value}] {module}.{function} | {message}")
+        else:
+            msg = args[0] if len(args) > 0 else ""
+            self._std.warning(msg, *args[1:])
+
+    def error(self, *args, **kwargs):
+        if len(args) >= 4 and isinstance(args[0], LogCategory):
+            category, module, function, message = args[:4]
+            if self._sals is not None:
+                self._sals.error(category, module, function, message)
+            else:
+                self._std.error(f"[{category.value}] {module}.{function} | {message}")
+        else:
+            msg = args[0] if len(args) > 0 else ""
+            self._std.error(msg, *args[1:])
+
+    def debug(self, *args, **kwargs):
+        if len(args) >= 4 and isinstance(args[0], LogCategory):
+            category, module, function, message = args[:4]
+            if self._sals is not None:
+                self._sals.debug(category, module, function, message)
+            else:
+                self._std.debug(f"[{category.value}] {module}.{function} | {message}")
+        else:
+            msg = args[0] if len(args) > 0 else ""
+            self._std.debug(msg, *args[1:])
+
+    def critical(self, *args, **kwargs):
+        if len(args) >= 4 and isinstance(args[0], LogCategory):
+            category, module, function, message = args[:4]
+            if self._sals is not None:
+                self._sals.critical(category, module, function, message)
+            else:
+                self._std.critical(f"[{category.value}] {module}.{function} | {message}")
+        else:
+            msg = args[0] if len(args) > 0 else ""
+            self._std.critical(msg, *args[1:])
+
+
+logger = _CompatLogger()
 
 # Constants
 DEFAULT_ENCODING = 'utf-8'
@@ -769,6 +842,11 @@ def read_parameters(parameters_file_name: str) -> tuple[list, list, list, list, 
         - Missing filters → defaults to empty lists
     """
     try:
+        # Refresh compat logger to use the current SaLS logger if available
+        try:
+            logger._refresh()
+        except Exception:
+            pass
         # Read and parse YAML file with error handling
         try:
             with open(parameters_file_name) as file:
@@ -2121,15 +2199,11 @@ def clean_papers(file: str) -> None:
                     # Language detection with error handling
                     try:
                         doc = nlp(row['abstract'])
-                        detect_language = doc._.language
+                        detect_language = doc.lang_
                         
-                        if detect_language['language'] != 'en':
+                        if detect_language != 'en':
                             row['language'] = 'not english'
                             not_included = not_included + 1
-                        else:
-                            if detect_language['score'] < 0.99:
-                                row['language'] = 'not english'
-                                not_included = not_included + 1
                                 
                     except (AttributeError, KeyError, TypeError) as e:
                         logger.debug(
@@ -2241,7 +2315,7 @@ def clean_papers(file: str) -> None:
                 LogCategory.DATA,
                 "util",
                 "clean_papers",
-                f"Number of papers: {len(df)}"
+                f"Number of papers after cleaning: {len(df)}"
             )
             save(file, df, fr, 'w')
         except Exception as save_ex:

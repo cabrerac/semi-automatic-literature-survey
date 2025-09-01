@@ -6,7 +6,7 @@ from tqdm import tqdm
 from os.path import exists
 from util import util
 from util.error_standards import ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory, get_standard_error_info
-from util.logging_standards import LogCategory
+from util.logging_standards import LogCategory, get_current_sals_logger, get_compat_logger
 
 
 class DatabaseClient(ABC):
@@ -31,7 +31,9 @@ class DatabaseClient(ABC):
         self.client_fields = client_fields or {}
         self.offset_limit = offset_limit
         self.quota = quota
-        self.logger = logging.getLogger('logger')
+        # Use the standardized SaLS logger if available; fallback to std logger
+        sals = get_current_sals_logger()
+        self.logger = get_compat_logger()
         self.file_handler = ''
         
     def get_papers(self, query, syntactic_filters, synonyms, fields, types, dates, start_date, end_date, folder_name, search_date):
@@ -39,8 +41,14 @@ class DatabaseClient(ABC):
         Template method that defines the paper retrieval workflow.
         """
         # Set up file handler for logging
-        if len(self.logger.handlers) > 1:
-            self.file_handler = self.logger.handlers[1].baseFilename
+        # Resolve attached file handler, if any
+        try:
+            for h in getattr(self.logger, 'handlers', []):
+                if hasattr(h, 'baseFilename'):
+                    self.file_handler = h.baseFilename
+                    break
+        except Exception:
+            self.file_handler = ''
             
         query_name = list(query.keys())[0]
         query_value = query[query_name]

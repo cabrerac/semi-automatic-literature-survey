@@ -11,13 +11,21 @@ import logging
 
 
 file_handler = ''
-logger = logging.getLogger('logger')
+logger = logging.getLogger('sals_pipeline')
 
 
 class Generic:
     def request(self, query, method, data, headers):
         global file_handler
-        file_handler = logger.handlers[1].baseFilename
+        # Safely resolve the log file path from any file-based handler
+        file_handler = ''
+        try:
+            for handler in logger.handlers:
+                if hasattr(handler, 'baseFilename'):
+                    file_handler = handler.baseFilename
+                    break
+        except Exception:
+            file_handler = ''
         request_result = None
         time.sleep(1)
         headers['Content-type'] = 'application/json'

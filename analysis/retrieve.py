@@ -5,7 +5,7 @@ from util.error_standards import (
     ErrorHandler, create_error_context, ErrorSeverity, ErrorCategory,
     get_standard_error_info
 )
-from util.logging_standards import LogCategory
+from util.logging_standards import LogCategory, get_current_sals_logger
 from clients.arxiv import ArxivClient
 from clients.ieeexplore import IeeeXploreClient
 from clients.springer import SpringerClient
@@ -27,12 +27,12 @@ import logging
 fr = 'utf-8'
 lemma = WordNetLemmatizer()
 w_tokenizer = WhitespaceTokenizer()
-logger = logging.getLogger('logger')
+logger = logging.getLogger('sals_pipeline')
 
 
 def get_papers(queries, syntactic_filters, synonyms, databases, fields, types, folder_name, dates, start_date, end_date, search_date):
     global logger
-    logger = logging.getLogger('logger')
+    logger = get_current_sals_logger() or logging.getLogger('sals_pipeline')
     
     # Initialize client instances
     clients = {}
@@ -48,7 +48,6 @@ def get_papers(queries, syntactic_filters, synonyms, databases, fields, types, f
         clients['core'] = CoreClient()
     if 'semantic_scholar' in databases:
         clients['semantic_scholar'] = SemanticScholarClient()
-    # v1: Do not wire additional abstract-providing clients; reserved for v2
     
     for query in queries:
         try:
@@ -113,7 +112,6 @@ def get_papers(queries, syntactic_filters, synonyms, databases, fields, types, f
                 )
                 clients['semantic_scholar'].get_papers(query, syntactic_filters, {}, fields, types, dates, start_date, end_date, folder_name, search_date)
 
-            # v1: Additional abstract-providing clients are intentionally not invoked
             
         except Exception as ex:
             context = create_error_context(
@@ -135,11 +133,12 @@ def get_papers(queries, syntactic_filters, synonyms, databases, fields, types, f
                 next_steps=error_info["next_steps"]
             )
             continue
+    return True
 
 
 def snowballing(folder_name, search_date, step, dates, start_date, end_date, semantic_filters, removed_papers):
     global logger
-    logger = logging.getLogger('logger')
+    logger = get_current_sals_logger() or logging.getLogger('sals_pipeline')
     
     try:
         snowballing_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + '_snowballing_papers.csv'
@@ -238,7 +237,7 @@ def snowballing(folder_name, search_date, step, dates, start_date, end_date, sem
 
 def preprocess(queries, databases, folder_name, search_date, date_filter, start_date, end_date, step):
     global logger
-    logger = logging.getLogger('logger')
+    logger = get_current_sals_logger() or logging.getLogger('sals_pipeline')
     preprocessed_file_name = './papers/' + folder_name + '/' + str(search_date).replace('-', '_') + '/' + str(step) + \
                              '_preprocessed_papers.csv'
     if not exists(preprocessed_file_name):
@@ -634,6 +633,8 @@ def preprocess(queries, databases, folder_name, search_date, date_filter, start_
                             )
                             continue
         try:
+            if len(papers) == 0:
+                return None
             papers['type'] = 'preprocessed'
             papers['status'] = 'unknown'
             papers['id'] = list(range(1, len(papers) + 1))

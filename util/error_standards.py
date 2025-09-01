@@ -14,6 +14,7 @@ Standards ensure:
 """
 
 import logging
+import traceback
 from typing import Dict, List, Optional, Tuple, Union
 from enum import Enum
 
@@ -38,6 +39,7 @@ class ErrorCategory(Enum):
     SYSTEM = "SYSTEM"                        # System-level issues
     USER_INPUT = "USER_INPUT"                # User input validation
     RESOURCE = "RESOURCE"                    # Resource limitations (quotas, etc.)
+    PIPELINE = "PIPELINE"                    # Pipeline orchestration and step execution
 
 
 class ErrorContext:
@@ -87,12 +89,18 @@ class ErrorMessage:
                  error_type: str,
                  error_description: str,
                  recovery_suggestion: Optional[str] = None,
-                 next_steps: Optional[List[str]] = None):
+                 next_steps: Optional[List[str]] = None,
+                 exception_type: Optional[str] = None,
+                 exception_message: Optional[str] = None,
+                 short_traceback: Optional[str] = None):
         self.context = context
         self.error_type = error_type
         self.error_description = error_description
         self.recovery_suggestion = recovery_suggestion
         self.next_steps = next_steps or []
+        self.exception_type = exception_type
+        self.exception_message = exception_message
+        self.short_traceback = short_traceback
     
     def get_log_message(self) -> str:
         """Get formatted message for logging."""
@@ -127,6 +135,11 @@ class ErrorMessage:
         # Add main message
         message_parts.append(self.error_description)
         
+        # Add concise details
+        message_parts.append(f"Details: {self.error_type} | Where: {self.context.module}.{self.context.function} ({self.context.operation})")
+        if self.exception_type:
+            message_parts.append(f"Error: {self.exception_type}: {self.exception_message}")
+        
         # Add recovery suggestion
         if self.recovery_suggestion:
             message_parts.append(f"\n💡 {self.recovery_suggestion}")
@@ -144,7 +157,14 @@ class ErrorHandler:
     """Standard error handler for consistent error processing."""
     
     def __init__(self, logger: logging.Logger):
-        self.logger = logger
+        # Accept either a standard logging.Logger or a wrapper with `.logger`
+        try:
+            if not isinstance(logger, logging.Logger) and hasattr(logger, 'logger') and isinstance(logger.logger, logging.Logger):
+                self.logger = logger.logger
+            else:
+                self.logger = logger
+        except Exception:
+            self.logger = logging.getLogger('sals_pipeline')
     
     def handle_error(self, 
                     error: Exception,
@@ -156,29 +176,47 @@ class ErrorHandler:
         """Handle an error according to SaLS standards."""
         
         # Create error message
+        exc_type_name = type(error).__name__ if error else None
+        exc_message = str(error) if error else None
+        short_tb = None
+        try:
+            if error and getattr(error, "__traceback__", None):
+                tb_frames = traceback.extract_tb(error.__traceback__)
+                last_frames = tb_frames[-3:] if len(tb_frames) > 3 else tb_frames
+                formatted_frames = traceback.format_list(last_frames)
+                short_tb = "".join(formatted_frames).rstrip()
+                if exc_type_name:
+                    short_tb = f"{short_tb}\n{exc_type_name}: {exc_message}"
+        except Exception:
+            short_tb = None
         error_msg = ErrorMessage(
             context=context,
             error_type=error_type,
             error_description=error_description,
             recovery_suggestion=recovery_suggestion,
-            next_steps=next_steps
+            next_steps=next_steps,
+            exception_type=exc_type_name,
+            exception_message=exc_message,
+            short_traceback=short_tb
         )
         
-        # Log according to severity
+        # Log according to severity (include traceback for ERROR/CRITICAL)
         if context.severity == ErrorSeverity.CRITICAL:
-            self.logger.critical(error_msg.get_log_message())
+            if error:
+                self.logger.critical(error_msg.get_log_message(), exc_info=True)
+            else:
+                self.logger.critical(error_msg.get_log_message())
         elif context.severity == ErrorSeverity.ERROR:
-            self.logger.error(error_msg.get_log_message())
+            if error:
+                self.logger.error(error_msg.get_log_message(), exc_info=True)
+            else:
+                self.logger.error(error_msg.get_log_message())
         elif context.severity == ErrorSeverity.WARNING:
             self.logger.warning(error_msg.get_log_message())
         elif context.severity == ErrorSeverity.INFO:
             self.logger.info(error_msg.get_log_message())
         else:  # DEBUG
             self.logger.debug(error_msg.get_log_message())
-        
-        # Log exception details if available
-        if error:
-            self.logger.debug(f"Exception details: {type(error).__name__}: {str(error)}")
         
         return error_msg
     
@@ -201,7 +239,23 @@ class ErrorHandler:
         
         # Print to console for user-facing errors
         if print_to_console and error_msg.context.user_facing:
-            print(error_msg.get_user_message())
+            # Try to locate log file path from logger handlers
+            log_file_path = ""
+            try:
+                for h in getattr(self.logger, 'handlers', []):
+                    if hasattr(h, 'baseFilename'):
+                        log_file_path = h.baseFilename
+                        break
+            except Exception:
+                log_file_path = ""
+            user_message = error_msg.get_user_message()
+            # Append short traceback snippet if available
+            if error_msg.short_traceback:
+                indented = "\n".join("   " + line.rstrip() for line in error_msg.short_traceback.splitlines())
+                user_message += f"\n🧵 Traceback (last 3 frames):\n{indented}"
+            if log_file_path:
+                user_message += f"\n📄 See logs for full traceback: {log_file_path}"
+            print(user_message)
 
 
 # Standard error messages for common scenarios
