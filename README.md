@@ -121,7 +121,7 @@ A simple self-explanatory example of a search parameters file can be found in `.
 - **Error Recovery**: SaLS automatically detects configuration issues and provides recovery suggestions
 - Check error messages for specific guidance and automatic fallbacks
 
-A description of the semi-automatic methodology applied in a survey can be found in the paper ["Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective"](https://arxiv.org/abs/2302.04810) [4]. Another paper using this tool is [The Systems Engineering Approach in Times of Large Language Models](https://scholarspace.manoa.hawaii.edu/items/ccd98c8b-bb61-4a86-9cd4-4719078d028f)[5].
+A description of the semi-automatic methodology applied in a survey can be found in the paper ["Machine Learning Systems: A Survey from a Data-Oriented Perspective"](https://dl.acm.org/doi/10.1145/3769292) [4]. Another paper using this tool is [The Systems Engineering Approach in Times of Large Language Models](https://scholarspace.manoa.hawaii.edu/items/ccd98c8b-bb61-4a86-9cd4-4719078d028f)[5].
 
 # Query syntax
 
@@ -157,6 +157,7 @@ Validation and errors
 
 [3] SBERT.net Sentence Transformers. 2024. Semantic Search [Available online](https://www.sbert.net/examples/applications/semantic-search/README.html)
 
-[4] Christian Cabrera, Andrei Paleyes, Pierre Thodoroff, and Neil D. Lawrence. 2023. Real-world Machine Learning Systems: A survey from a Data-Oriented Architecture Perspective. arXiv preprint arXiv:2302.04810. [Available online](https://arxiv.org/abs/2302.04810)
+[4] Christian Cabrera, Andrei Paleyes, Pierre Thodoroff, and Neil D. Lawrence. 2025. Machine Learning Systems: A Survey from a Data-Oriented Perspective. ACM Computing Surveys. [Available online](https://dl.acm.org/doi/10.1145/3769292)
 
-[4] Christian Cabrera, Viviana Bastidas, Jennifer Schooling, and Neil D. Lawrence. 2023. The Systems Engineering Approach in Times of Large Language Models. Proceedings of the 58th Hawaii International Conference on System Sciences. [Available online](https://scholarspace.manoa.hawaii.edu/items/ccd98c8b-bb61-4a86-9cd4-4719078d028f)
+[4] Christian Cabrera, Viviana Bastidas, Jennifer Schooling, and Neil D. Lawrence. 2025. The Systems Engineering Approach in Times of Large Language Models. Proceedings of the 58th Hawaii International Conference on System Sciences. [Available online](https://scholarspace.manoa.hawaii.edu/items/ccd98c8b-bb61-4a86-9cd4-4719078d028f)
+
