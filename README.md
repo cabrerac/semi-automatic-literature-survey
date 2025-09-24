@@ -3,7 +3,7 @@
 This project implements SaLS: a semi-automatic tool to survey research papers based on the systematic methodology proposed by Kitchenham et al.[1, 2]. The goal of this project is to semi-automate the research papers survey process while providing a framework to enable surveys reproducibility and evolution. Two SaLS use cases are:
 
 - Cabrera, Christian, et al. *The Systems Engineering Approach in Times of Large Language Models.* Proceedings of the 58th Hawaii international conference on system sciences (2025) (To Appear). [Paper.](https://arxiv.org/abs/2411.09050v1) [Code.](https://github.com/cabrerac/semi-automatic-literature-survey/tree/sys-llms-survey)
-- Cabrera, Christian, et al. *Real-world machine learning systems: A survey from a data-oriented architecture perspective.* arXiv preprint arXiv:2302.04810 (2023) (Under Review) [Paper.](https://arxiv.org/abs/2302.04810) [Code.](https://github.com/cabrerac/semi-automatic-literature-survey/tree/doa-survey)
+- Cabrera, Christian, et al. *Machine Learning Systems: A Survey from a Data-Oriented Perspective.* ACM Computing Surveys (2025) [Paper.](https://dl.acm.org/doi/10.1145/3769292) [Code.](https://github.com/cabrerac/semi-automatic-literature-survey/tree/doa-survey)
 
 SaLS automatically retrives papers metadata based on queries that users provide. These queries are used to consume the search APIs exposed by the most popular research papers repositories in different domains. Currently, SaLS retrieves papers information from the following repositories:
 
@@ -160,4 +160,5 @@ Validation and errors
 [4] Christian Cabrera, Andrei Paleyes, Pierre Thodoroff, and Neil D. Lawrence. 2025. Machine Learning Systems: A Survey from a Data-Oriented Perspective. ACM Computing Surveys. [Available online](https://dl.acm.org/doi/10.1145/3769292)
 
 [4] Christian Cabrera, Viviana Bastidas, Jennifer Schooling, and Neil D. Lawrence. 2025. The Systems Engineering Approach in Times of Large Language Models. Proceedings of the 58th Hawaii International Conference on System Sciences. [Available online](https://scholarspace.manoa.hawaii.edu/items/ccd98c8b-bb61-4a86-9cd4-4719078d028f)
+
 
